@@ -1,0 +1,4 @@
+konfigurasjonsfiler
+===================
+
+Mine konfigurasjonsfiler
