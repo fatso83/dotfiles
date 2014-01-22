@@ -1,0 +1,4 @@
+" You can use ~/.gvimrc.before and ~/.vimrc.before for settings Janus 
+" itself uses, such as the leader setting. You may also use ~/.gvimrc.after 
+" and ~/.vimrc.after for any additional settings; it is also a good place for 
+" overriding Janus settings, as both files will be loaded at the end of Janus.

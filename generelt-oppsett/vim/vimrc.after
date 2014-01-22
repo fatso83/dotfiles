@@ -1,0 +1,13 @@
+set printoptions=portrait:n
+
+" associate *.vss (VectorScript) with Pascal filetype
+au BufRead,BufNewFile *.vss set filetype=pascal
+" associate Processing files with Java
+au BufRead,BufNewFile *.pde set filetype=java
+
+
+colorscheme darkblue
+
+set guifont=Monaco:h14
+set showcmd
+
