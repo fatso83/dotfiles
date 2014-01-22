@@ -1,0 +1,26 @@
+function set_bilde_tid
+{
+    if [ "$1" == "" ]; then
+        echo "usage: set_bilde_tid '2002:07:22 00:00:00' bilde1.jpg "
+    else
+        exiv2 -M "set Exif.Photo.DateTimeOriginal $1" $2
+    fi
+}
+
+
+function parent_pid
+{
+	ps -o ppid $$|grep -v PPID
+}
+
+function parent_process_name
+{
+  ps -o comm $(parent_pid)
+}
+
+function overfør
+{
+	tar c --use-compress-program=lzop $@ | \
+	ssh $other_host tar x --use-compress-program=lzop
+}
+

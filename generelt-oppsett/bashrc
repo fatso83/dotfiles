@@ -1,0 +1,58 @@
+function read_config {
+  if [ -a "$1" ]; then
+      . "$1"
+  else echo Missing $1
+  fi
+}
+
+function read_config_if_exists {
+  [ -a "$1" ] && . "$1"
+}
+
+declare -x CLICOLOR
+ulimit -c unlimited
+umask 022
+
+read_config "$HOME/.bash.d/bash_functions"
+read_config "$HOME/.bash.d/bash_aliases"
+read_config "$HOME/.bash.d/git-prompt.sh"
+read_config "$HOME/.bash.d/git-completion.bash"
+read_config_if_exists "$HOME/.bash.d/bashrc.local"
+
+# Color escape codes @see http://misc.flogisoft.com/bash/tip_colors_and_formatting
+X='\e[0m' #stop code for color escape
+green='\e[01;32m'
+blue='\e[01;34m'
+pink='\e[01;35m'
+dark_grey='\e[90m'
+
+dark_yellow='\e[38;5;178m'
+dark_red='\e[38;5;196m'
+
+#Se man bash i delen som heter "Prompting"
+user="${green}\u${X}"
+host="${dark_yellow}\h${X}"
+workdir="${pink}\w${X}"
+gitbranch="${dark_red}\$(__git_ps1 \" (%s)\")${X}"
+at="${dark_grey}at${X}"
+in="${dark_grey}in${X}"
+PS1="\n${user} ${at} ${host} ${in} ${workdir} ${gitbranch}\n\$ "
+
+
+# include selfmade binaries and scripts
+if [ -d ~/bin ] ; then
+    PATH=~/bin:"${PATH}"
+fi
+
+# include local node binaries
+if [ ! -z $(which npm 2>/dev/null) ]; then 
+    PATH="$(npm bin):${PATH}"
+fi
+
+if [ -d ~/scripts ] ; then
+	PATH=~/scripts:"$PATH"
+fi
+
+export PYTHONSTARTUP="$HOME/.pystartup"
+export MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=192m -ea"
+export HISTCONTROL=ignoredups

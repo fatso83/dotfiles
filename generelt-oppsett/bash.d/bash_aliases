@@ -1,0 +1,26 @@
+# Source in local aliases
+read_config_if_exists $HOME/.bash.d/bash_aliases.local
+
+alias timbuktu='ssh carl-erik@timbuktu.hopto.org'
+alias timbuktu_lokal='ssh carl-erik@192.168.10.2'
+alias ifi='ssh carlerik@login.ifi.uio.no'
+alias ntnu='ssh kopseng@login.stud.ntnu.no'
+
+# Ved masse søppel etter konvertering utf8<->cp1252
+alias strip-non-ascii='python -c "import sys,re;[sys.stdout.write(re.sub('\''[^\x09\x0A\x0D\x20-\x7F]'\'', '\'''\'', line)) for line in sys.stdin]"'
+
+alias urldecode='python -c "import sys, urllib as ul; print ul.unquote_plus(sys.argv[1])"'
+alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1])"'
+alias htmldecode='python -c "import sys, HTMLParser;h = HTMLParser.HTMLParser();print h.unescape(sys.argv[1])"'
+alias htmlencode='python3 -c "import sys, html; print(html.escape(sys.argv[1]))"'
+
+# Git stuff that is hard to remember
+alias g_unchanged='git update-index --assume-unchanged'
+
+alias v='ls -l'
+alias dir='ls --color=auto --format=vertical'
+alias vdir='ls --color=auto --format=long'
+alias rengjør='find ~ -type f (-name "*~" -exec rm {} \;'
+
+# Pretty print json
+alias prettify_json='python -mjson.tool'

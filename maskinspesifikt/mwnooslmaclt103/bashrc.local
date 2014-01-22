@@ -1,0 +1,4 @@
+#Se man bash i delen som heter "Prompting"
+#PS1="skinny \W \u\$  "
+
+export PATH=$PATH:"/Applications/Racket v5.3.3/bin:/usr/local/share/npm/bin"
