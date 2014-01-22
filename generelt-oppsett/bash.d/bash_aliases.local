@@ -1,4 +1,0 @@
-
-# Conditionals
-which mvim &>/dev/null && alias vim='mvim'
-
