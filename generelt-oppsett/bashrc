@@ -44,11 +44,6 @@ if [ -d ~/bin ] ; then
     PATH=~/bin:"${PATH}"
 fi
 
-# include local node binaries
-if [ ! -z $(which npm 2>/dev/null) ]; then 
-    PATH="$(npm bin):${PATH}"
-fi
-
 if [ -d ~/scripts ] ; then
 	PATH=~/scripts:"$PATH"
 fi
