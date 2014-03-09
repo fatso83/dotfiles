@@ -1,5 +1,4 @@
 alias npm="cmd /c npm"
 alias ipython="cmd /c ipython"
-alias ls="ls --color=auto"
 
 #export CYGWIN="nodosfilewarning"
