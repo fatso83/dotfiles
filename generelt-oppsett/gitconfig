@@ -3,7 +3,7 @@
 	email = carlerik@gmail.com
 [core]
 	editor = vim
-	excludesfile = /Users/carl-erik.kopseng/.gitignore_global
+	excludesfile = ~/.gitignore_global
 [color]
 	ui = true
 [push]
