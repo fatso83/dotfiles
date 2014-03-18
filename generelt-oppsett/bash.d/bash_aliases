@@ -1,6 +1,7 @@
 # Source in local aliases
 read_config_if_exists $HOME/.bash.d/bash_aliases.local
 
+
 alias timbuktu='ssh carl-erik@timbuktu.hopto.org'
 alias timbuktu_lokal='ssh carl-erik@192.168.10.2'
 alias ifi='ssh carlerik@login.ifi.uio.no'
@@ -17,6 +18,13 @@ alias htmlencode='python3 -c "import sys, html; print(html.escape(sys.argv[1]))"
 # Git stuff that is hard to remember
 alias g_unchanged='git update-index --assume-unchanged'
 
+#ignore patterns
+IGNORE=""
+for i in '*~' '*.pyc'; do 
+    IGNORE="$IGNORE --ignore=$i"
+done
+
+alias ls="ls $IGNORE --color "
 alias v='ls -l'
 alias dir='ls --color=auto --format=vertical'
 alias vdir='ls --color=auto --format=long'
@@ -24,3 +32,11 @@ alias rengjør='find ~ -type f (-name "*~" -exec rm {} \;'
 
 # Pretty print json
 alias prettify_json='python -mjson.tool'
+
+# node commands
+alias npm-exec='PATH=$(npm bin):$PATH'
+alias coffee='npm-exec coffee'
+alias grunt='npm-exec grunt'
+alias mocha='npm-exec mocha'
+alias karma='npm-exec karma'
+
