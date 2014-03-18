@@ -1,6 +1,5 @@
-# Source in local aliases
-read_config_if_exists $HOME/.bash.d/bash_aliases.local
 
+# Maskinalias
 alias timbuktu='ssh carl-erik@timbuktu.hopto.org'
 alias timbuktu_lokal='ssh carl-erik@192.168.10.2'
 alias ifi='ssh -X carlerik@login.ifi.uio.no'

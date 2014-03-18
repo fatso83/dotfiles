@@ -1,7 +1,0 @@
-# MacBook Pro Making Waves
-
-alias nuget='mono ~/bin/nuget.exe'
-
-# Conditionals
-which mvim &>/dev/null && alias vim='mvim'
-

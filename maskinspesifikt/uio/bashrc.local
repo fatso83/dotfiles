@@ -1,6 +1,5 @@
 alias jflap="java -jar ${HOME}/src/skole/INF2820/JFLAP_Thin.jar"
 alias emacspy="~trondth/bin/emacspy"
-alias ls='/bin/ls --color=auto'
 
 # lokale filer
 PYTHONPATH=$HOME/local/python2.6/site-packages
