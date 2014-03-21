@@ -14,6 +14,8 @@
   standup = log --since '1 day ago' --oneline --author carlerik@gmail.com # hack it with your email and uncomment
   jira = log --since '6am' --oneline --author carlerik@gmail.com # hack it with your email and uncomment
   mwlis = log --since '7 days ago' --author carlerik@gmail.com # hack it with your email and uncomment
+  svnlog = log --name-status
+
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 

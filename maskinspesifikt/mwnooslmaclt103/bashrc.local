@@ -2,3 +2,13 @@
 #PS1="skinny \W \u\$  "
 
 export PATH=$PATH:"/Applications/Racket v5.3.3/bin:/usr/local/share/npm/bin"
+source /usr/local/etc/autojump.bash
+# MacBook Pro Making Waves
+
+alias nuget='mono ~/bin/nuget.exe'
+
+# Conditionals
+which mvim &>/dev/null && alias vim='mvim'
+
+ANDROID_TOOLS=~/Applications/adt-bundle-mac-x86_64-20131030/sdk/platform-tools
+PATH="${ANDROID_TOOLS}:${PATH}"

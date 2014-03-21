@@ -44,8 +44,9 @@ if [ -d ~/bin ] ; then
     PATH=~/bin:"${PATH}"
 fi
 
-# include local node binaries
-if [ ! -z $(which npm 2>/dev/null) ]; then 
+# include local NodeJS binaries (not on Windows)
+npmdir="$(which npm 2>/dev/null)"
+if [[ ! -z "$npmdir" && $TERM != "cygwin" ]]; then 
     PATH="$(npm bin):${PATH}"
 fi
 

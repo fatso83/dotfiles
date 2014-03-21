@@ -1,5 +1,4 @@
-function set_bilde_tid
-{
+function set_bilde_tid {
     if [ "$1" == "" ]; then
         echo "usage: set_bilde_tid '2002:07:22 00:00:00' bilde1.jpg "
     else
@@ -8,19 +7,29 @@ function set_bilde_tid
 }
 
 
-function parent_pid
-{
+function parent_pid {
 	ps -o ppid $$|grep -v PPID
 }
 
-function parent_process_name
-{
+function parent_process_name {
   ps -o comm $(parent_pid)
 }
 
-function overfør
-{
-	tar c --use-compress-program=lzop $@ | \
-	ssh $other_host tar x --use-compress-program=lzop
+function compressed_transfer {
+  other_host="$1"
+  shift
+  files="$@"
+  if [[ -z "$other_host" || -z "$files" ]]; then
+    echo "compressed_transfer <user@remote> <file1 file2 ...>"
+    return 1
+  fi
+
+  if [[ -z `which lzop 2> /dev/null` ]]; then
+    echo "Missing lzop"
+    return 1
+  fi
+
+	tar c --use-compress-program=lzop "$files" | \
+	ssh "$other_host" tar x --use-compress-program=lzop
 }
 
