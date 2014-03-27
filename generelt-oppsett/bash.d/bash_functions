@@ -1,4 +1,4 @@
-function test() {
+function equals() {
         [[ "$1" == "$2" ]] && echo "OK" || echo "ERROR" $1 $2
 }
 
@@ -82,6 +82,15 @@ function compressed_transfer {
 
 	tar c --use-compress-program=lzop "$files" | \
 	ssh "$other_host" tar x --use-compress-program=lzop
+}
+
+function is_mac() {
+  cmd=`which uname`
+  if [ -z $cmd ];then
+    return 1;
+  else
+    $cmd |grep Darwin 1>/dev/null
+  fi
 }
 
 # vim: syntax=sh
