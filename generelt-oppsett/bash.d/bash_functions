@@ -1,4 +1,13 @@
-function test() {
+
+# Restore the original system path if for some reason some 
+# command in your ~/bin directory does not work
+function restore_path() {
+        PATH="${ORIGINAL_PATH}"
+        export PATH
+}
+
+# test_is_true "a" "a" -> "OK"
+function test_is_true() {
         [[ "$1" == "$2" ]] && echo "OK" || echo "ERROR" $1 $2
 }
 

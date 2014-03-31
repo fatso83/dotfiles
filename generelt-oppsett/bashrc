@@ -9,6 +9,11 @@ function read_config_if_exists {
   [ -a "$1" ] && . "$1"
 }
 
+# Needed for the utility function "restore_path"
+if [ -z $ORIGINAL_PATH ]; then
+        ORIGINAL_PATH="${PATH}"
+fi
+
 declare -x CLICOLOR
 ulimit -c unlimited
 umask 022
