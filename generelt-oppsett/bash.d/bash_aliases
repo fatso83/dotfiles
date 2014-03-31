@@ -17,13 +17,17 @@ alias htmlencode='python3 -c "import sys, html; print(html.escape(sys.argv[1]))"
 alias g_unchanged='git update-index --assume-unchanged'
 alias g_push_create_remote='git push -u <remote-name> <branch-name>'
 
-#ignore patterns
 IGNORE=""
-for i in '*~' '*.pyc'; do 
-    IGNORE="$IGNORE --ignore=$i"
-done
+if ! is_mac; then
+  #ignore patterns
+  for i in '*~' '*.pyc'; do 
+      IGNORE="$IGNORE --ignore=$i"
+  done
+fi
 
-alias ls="ls $IGNORE --color "
+alias ls="/bin/ls $IGNORE "
+
+# Color output - when CLICOLOR is defined, --color/-G is unneeded
 alias v='ls -l'
 alias dir='ls --format=vertical'
 alias vdir='ls --format=long'
