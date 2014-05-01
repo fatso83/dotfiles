@@ -10,7 +10,7 @@ function read_config_if_exists {
 }
 
 # Needed for the utility function "restore_path"
-if [ -z $ORIGINAL_PATH ]; then
+if [ -z "${ORIGINAL_PATH}" ]; then
         ORIGINAL_PATH="${PATH}"
 fi
 
