@@ -21,3 +21,9 @@ ln -sf "$PWD"/pystartup ${DEST}/.pystartup
 for file in "$PWD"/bash.d/*; do
   ln -sf $file ${BASH_DIR}/
 done
+
+if [ ! -e ${DEST}/.vim ]; then  
+    ln -sf $PWD/vim/dotvim ${DEST}/.vim
+fi
+ln -sf $PWD/vim/vimrc ${DEST}/.vimrc
+touch ${DEST}/.vimrc.local

@@ -50,6 +50,7 @@ compiled/
 .idea/
 *.iml
 atlassian-ide-plugin.xml
+.netrwhist
 
 # Project specific files that I do not want to check in changes to (withtout removing)
 *.min.js
