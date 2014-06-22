@@ -6,6 +6,9 @@ source /usr/local/etc/autojump.bash
 # MacBook Pro Making Waves
 
 alias nuget='mono ~/bin/nuget.exe'
+alias ci-server="ssh -Y framework@framework-ci.cloudapp.net"
+alias ci-tunnel='ssh  framework@framework-ci.cloudapp.net -L 40080:127.0.0.1:8080 -N'
+alias iso8601='date -u +"%Y-%m-%dT%H:%M:%SZ"'
 
 # Conditionals
 which mvim &>/dev/null && alias vim='mvim'

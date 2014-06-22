@@ -41,5 +41,5 @@ alias npm-exec='PATH=$(npm bin):$PATH'
 alias coffee='npm-exec coffee'
 alias grunt='npm-exec grunt'
 alias mocha='npm-exec mocha'
-alias karma='npm-exec karma'
+alias karma='$(npm bin)/../karma/bin/karma'
 
