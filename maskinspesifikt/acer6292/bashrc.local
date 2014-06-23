@@ -1,4 +1,11 @@
 alias npm="cmd /c npm"
+alias nodist="cmd /c nodist"
+alias node="cmd /c node"
 alias ipython="cmd /c ipython"
+alias winsudo='cmd /c "%HOMEPATH%\elevate.exe" '
+alias ls='ls --color'
+alias chrome='cmd /c "c:\Program Files (x86)\Google\Chrome\Application\chrome.exe"'
 
 #export CYGWIN="nodosfilewarning"
+
+export EDITOR=gvim
