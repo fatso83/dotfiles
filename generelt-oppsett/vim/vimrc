@@ -13,6 +13,7 @@ set guifont=Monaco:h14
 "" check out http://superuser.com/questions/693528/vim-is-there-a-downside-to-using-space-as-your-leader-key
 :let mapleader="," 
 set showcmd "" show leader commands
+set ruler
 
 "" Whitespace
 set nowrap                      " don't wrap lines
@@ -38,3 +39,5 @@ au BufRead,BufNewFile *.pde set filetype=java
 autocmd Filetype text setlocal wrap
 
 source ~/.vimrc.local
+execute pathogen#infect()
+
