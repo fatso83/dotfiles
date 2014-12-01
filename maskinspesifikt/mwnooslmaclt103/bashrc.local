@@ -9,9 +9,10 @@ alias nuget='mono ~/bin/nuget.exe'
 alias ci-server="ssh -Y framework@framework-ci.cloudapp.net"
 alias ci-tunnel='ssh  framework@framework-ci.cloudapp.net -L 40080:127.0.0.1:8080 -N'
 alias iso8601='date -u +"%Y-%m-%dT%H:%M:%SZ"'
+alias remove_downloaded_internet_warning='xattr -d -r com.apple.quarantine '
 
 # Conditionals
-which mvim &>/dev/null && alias vim='mvim'
+#alias vim='mvim'
 
 ANDROID_TOOLS=~/Applications/adt-bundle-mac-x86_64-20131030/sdk/platform-tools
 PATH="${ANDROID_TOOLS}:${PATH}"
