@@ -43,3 +43,5 @@ alias grunt='npm-exec grunt'
 alias mocha='npm-exec mocha'
 alias karma='$(npm bin)/../karma/bin/karma'
 
+alias webserver="python -m SimpleHTTPServer"
+alias servers='sudo lsof -iTCP -sTCP:LISTEN -P -n'
