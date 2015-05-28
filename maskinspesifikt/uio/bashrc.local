@@ -3,3 +3,9 @@ alias emacspy="~trondth/bin/emacspy"
 
 # lokale filer
 PYTHONPATH=$HOME/local/python2.6/site-packages
+
+PATH=$HOME/apps/node-v0.10.28-linux-x64/bin:$PATH
+
+
+LOCALE=nb_NO.utf8
+LANGUAGE=$LOCALE
