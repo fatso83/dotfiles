@@ -13,6 +13,7 @@ if [ ! -e "$BASH_DIR" ]; then
   mkdir ${BASH_DIR}
 fi
 
+ln -sf "$PWD"/profile ${DEST}/.profile
 ln -sf "$PWD"/bashrc ${DEST}/.bashrc
 ln -sf "$PWD"/gitconfig ${DEST}/.gitconfig
 ln -sf "$PWD"/gitignore_global ${DEST}/.gitignore_global
@@ -25,5 +26,6 @@ done
 if [ ! -e ${DEST}/.vim ]; then  
     ln -sf $PWD/vim/dotvim ${DEST}/.vim
 fi
+
 ln -sf $PWD/vim/vimrc ${DEST}/.vimrc
 touch ${DEST}/.vimrc.local

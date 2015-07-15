@@ -12,6 +12,9 @@ set guifont=Monaco:h14
 
 "" check out http://superuser.com/questions/693528/vim-is-there-a-downside-to-using-space-as-your-leader-key
 :let mapleader="," 
+"" Don't rely on Cmd working in vim. Learn to use <leader>c<space>
+"" http://stackoverflow.com/questions/9450905/how-to-bind-vim-through-tmux-to-cmd-key/9451636#9451636
+"" map <D-/> <plug>NERDCommenterToggle  
 set showcmd "" show leader commands
 set ruler
 
@@ -37,6 +40,9 @@ au BufRead,BufNewFile *.vss set filetype=pascal
 au BufRead,BufNewFile *.pde set filetype=java
 
 autocmd Filetype text setlocal wrap
+
+"" Set filetype text if unset
+autocmd BufEnter * if &filetype == "" | setlocal ft=txt | endif
 
 source ~/.vimrc.local
 execute pathogen#infect()

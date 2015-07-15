@@ -17,6 +17,7 @@
   jira = log --since '6am' --oneline --author carlerik@gmail.com # hack it with your email and uncomment
   mwlis = log --since '7 days ago' --author carlerik@gmail.com # hack it with your email and uncomment
   svnlog = log --name-status
+	root = rev-parse --show-toplevel
 
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"

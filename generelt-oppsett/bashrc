@@ -22,6 +22,7 @@ read_config "$HOME/.bash.d/bash_functions"
 read_config "$HOME/.bash.d/bash_aliases"
 read_config "$HOME/.bash.d/git-prompt.sh"
 read_config "$HOME/.bash.d/git-completion.bash"
+read_config "$HOME/.bash.d/npm-completion.bash"
 read_config_if_exists "$HOME/.bash.d/bashrc.local"
 read_config_if_exists "$HOME/.bash.d/color_codes.dat"
 
