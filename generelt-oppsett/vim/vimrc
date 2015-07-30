@@ -32,21 +32,27 @@ set smartcase                   " ... unless they contain at least one capital l
 
 set printoptions=portrait:n
 
+"" Pasting text - toggle between paste and insert mode using F2
+"" http://nvie.com/posts/how-i-boosted-my-vim/
+set pastetoggle=<F2>
 
 "" File type settings
+"" Set filetype text if unset
+autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
+
+" text files
+autocmd Filetype text set wrap | set linebreak
+
 " associate *.vss (VectorScript) with Pascal filetype
 au BufRead,BufNewFile *.vss set filetype=pascal
 " associate Processing files with Java
 au BufRead,BufNewFile *.pde set filetype=java
 
-autocmd Filetype text setlocal wrap
-
-"" Set filetype text if unset
-autocmd BufEnter * if &filetype == "" | setlocal ft=txt | endif
 
 source ~/.vimrc.local
 execute pathogen#infect()
 
+"" Not necessary, now that I know about `vim -x`
 "" ccrypt
 augroup CPT
   au!
