@@ -19,6 +19,8 @@ ln -sf "$PWD"/gitconfig ${DEST}/.gitconfig
 ln -sf "$PWD"/gitignore_global ${DEST}/.gitignore_global
 ln -sf "$PWD"/pystartup ${DEST}/.pystartup
 
+ln -sf "$PWD"/bash_completion.d ${DEST}/.bash_completion.d
+
 for file in "$PWD"/bash.d/*; do
   ln -sf $file ${BASH_DIR}/
 done

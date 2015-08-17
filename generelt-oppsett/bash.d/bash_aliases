@@ -1,9 +1,9 @@
 
 # Maskinalias
-alias timbuktu='ssh carl-erik@timbuktu.hopto.org'
-alias timbuktu_lokal='ssh carl-erik@192.168.10.2'
-alias ifi='ssh -X carlerik@login.ifi.uio.no'
-alias ntnu='ssh kopseng@login.stud.ntnu.no'
+alias timbuktu='mosh carl-erik@timbuktu.hopto.org'
+alias timbuktu_lokal='mosh carl-erik@192.168.10.2'
+alias ifi='mosh carlerik@vor.ifi.uio.no'
+alias ntnu='mosh kopseng@login.stud.ntnu.no'
 
 # Ved masse søppel etter konvertering utf8<->cp1252
 alias strip-non-ascii='python -c "import sys,re;[sys.stdout.write(re.sub('\''[^\x09\x0A\x0D\x20-\x7F]'\'', '\'''\'', line)) for line in sys.stdin]"'
