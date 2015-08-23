@@ -1,9 +1,9 @@
 " ============================================================================
 " File:        NERD_commenter.vim
 " Description: vim global plugin that provides easy code commenting
-" Maintainer:  Martin Grenfell <martin_grenfell at msn dot com>
-" Version:     2.2.2
-" Last Change: 09th October, 2010
+" Maintainer:  Martin Grenfell <martin.grenfell at gmail dot com>
+" Version:     2.3.0
+" Last Change: Wed Dec 14 08:00 AM 2011 EST
 " License:     This program is free software. It comes without any warranty,
 "              to the extent permitted by applicable law. You can redistribute
 "              it and/or modify it under the terms of the Do What The Fuck You
@@ -34,7 +34,7 @@ let loaded_nerd_comments = 1
 "   1 if the var is set, 0 otherwise
 function s:InitVariable(var, value)
     if !exists(a:var)
-        exec 'let ' . a:var . ' = ' . "'" . a:value . "'"
+        execute 'let ' . a:var . ' = ' . "'" . a:value . "'"
         return 1
     endif
     return 0
@@ -47,7 +47,7 @@ endfunction
 let s:spaceStr = ' '
 let s:lenSpaceStr = strlen(s:spaceStr)
 
-" Section: variable init calls {{{2
+" Section: variable initialization {{{2
 call s:InitVariable("g:NERDAllowAnyVisualDelims", 1)
 call s:InitVariable("g:NERDBlockComIgnoreEmpty", 0)
 call s:InitVariable("g:NERDCommentWholeLinesInVMode", 0)
@@ -58,13 +58,11 @@ call s:InitVariable("g:NERDMenuMode", 3)
 call s:InitVariable("g:NERDLPlace", "[>")
 call s:InitVariable("g:NERDUsePlaceHolders", 1)
 call s:InitVariable("g:NERDRemoveAltComs", 1)
-call s:InitVariable("g:NERDRemoveExtraSpaces", 1)
+call s:InitVariable("g:NERDRemoveExtraSpaces", 0)
 call s:InitVariable("g:NERDRPlace", "<]")
 call s:InitVariable("g:NERDSpaceDelims", 0)
-call s:InitVariable("g:NERDDelimiterRequests", 1)
 
 let s:NERDFileNameEscape="[]#*$%'\" ?`!&();<>\\"
-"vf ;;dA:hcs"'A {j^f(lyi(k$p0f{a A }0f{a 'left':jdd^
 
 let s:delimiterMap = {
     \ 'aap': { 'left': '#' },
@@ -81,10 +79,11 @@ let s:delimiterMap = {
     \ 'apachestyle': { 'left': '#' },
     \ 'asciidoc': { 'left': '//' },
     \ 'applescript': { 'left': '--', 'leftAlt': '(*', 'rightAlt': '*)' },
+    \ 'armasm': { 'left': ';' },
     \ 'asm68k': { 'left': ';' },
     \ 'asm': { 'left': ';', 'leftAlt': '#' },
     \ 'asn': { 'left': '--' },
-    \ 'aspvbs': { 'left': '''' },
+    \ 'aspvbs': { 'left': '''', 'leftAlt': '<!--', 'rightAlt': '-->' },
     \ 'asterisk': { 'left': ';' },
     \ 'asy': { 'left': '//' },
     \ 'atlas': { 'left': 'C', 'right': '$' },
@@ -99,10 +98,12 @@ let s:delimiterMap = {
     \ 'bindzone': { 'left': ';' },
     \ 'bst': { 'left': '%' },
     \ 'btm': { 'left': '::' },
+    \ 'cabal': { 'left': '--' },
     \ 'caos': { 'left': '*' },
     \ 'calibre': { 'left': '//' },
     \ 'catalog': { 'left': '--', 'right': '--' },
     \ 'c': { 'left': '/*','right': '*/', 'leftAlt': '//' },
+    \ 'cf': { 'left': '<!---', 'right': '--->' },
     \ 'cfg': { 'left': '#' },
     \ 'cg': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'ch': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
@@ -111,8 +112,11 @@ let s:delimiterMap = {
     \ 'clipper': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'clojure': { 'left': ';' },
     \ 'cmake': { 'left': '#' },
+    \ 'coffee': { 'left': '#' },
     \ 'conkyrc': { 'left': '#' },
+    \ 'context': { 'left': '%', 'leftAlt': '--' },
     \ 'cpp': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
+    \ 'cuda': { 'left': '/*','right': '*/', 'leftAlt': '//' },
     \ 'crontab': { 'left': '#' },
     \ 'cs': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'csp': { 'left': '--' },
@@ -144,15 +148,17 @@ let s:delimiterMap = {
     \ 'eiffel': { 'left': '--' },
     \ 'elf': { 'left': "'" },
     \ 'elmfilt': { 'left': '#' },
-    \ 'erlang': { 'left': '%' },
+    \ 'erlang': { 'left': '%', 'leftAlt': '%%' },
     \ 'eruby': { 'left': '<%#', 'right': '%>', 'leftAlt': '<!--', 'rightAlt': '-->' },
     \ 'expect': { 'left': '#' },
     \ 'exports': { 'left': '#' },
+    \ 'fancy': { 'left': '#' },
     \ 'factor': { 'left': '! ', 'leftAlt': '!# ' },
     \ 'fgl': { 'left': '#' },
     \ 'focexec': { 'left': '-*' },
     \ 'form': { 'left': '*' },
     \ 'foxpro': { 'left': '*' },
+    \ 'fsharp': { 'left': '(*', 'right': '*)', 'leftAlt': '//' },
     \ 'fstab': { 'left': '#' },
     \ 'fvwm': { 'left': '#' },
     \ 'fx': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
@@ -172,19 +178,22 @@ let s:delimiterMap = {
     \ 'gitconfig': { 'left': ';' },
     \ 'gitrebase': { 'left': '#' },
     \ 'gnuplot': { 'left': '#' },
+    \ 'go': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'groovy': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
-    \ 'gsp': { 'left': '<%--', 'right': '--%>' },
+    \ 'gsp': { 'left': '<%--', 'right': '--%>', 'leftAlt': '<!--','rightAlt': '-->'},
     \ 'gtkrc': { 'left': '#' },
     \ 'haskell': { 'left': '{-','right': '-}', 'leftAlt': '--' },
     \ 'hb': { 'left': '#' },
     \ 'h': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'haml': { 'left': '-#', 'leftAlt': '/' },
+    \ 'haxe': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'hercules': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'hog': { 'left': '#' },
     \ 'hostsaccess': { 'left': '#' },
     \ 'htmlcheetah': { 'left': '##' },
     \ 'htmldjango': { 'left': '<!--','right': '-->', 'leftAlt': '{#', 'rightAlt': '#}' },
     \ 'htmlos': { 'left': '#', 'right': '/#' },
+    \ 'hxml': { 'left': '#' },
     \ 'ia64': { 'left': '#' },
     \ 'icon': { 'left': '#' },
     \ 'idlang': { 'left': ';' },
@@ -194,6 +203,7 @@ let s:delimiterMap = {
     \ 'ishd': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'iss': { 'left': ';' },
     \ 'ist': { 'left': '%' },
+    \ 'jade': { 'left': '//-', 'leftAlt': '//' },
     \ 'java': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'javacc': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'javascript': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
@@ -206,9 +216,11 @@ let s:delimiterMap = {
     \ 'kscript': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'lace': { 'left': '--' },
     \ 'ldif': { 'left': '#' },
+    \ 'less': { 'left': '/*','right': '*/' },
+    \ 'lhaskell': { 'left': '>{-','right': '-}', 'leftAlt': '>-- ' },
     \ 'lilo': { 'left': '#' },
     \ 'lilypond': { 'left': '%' },
-    \ 'liquid': { 'left': '{%', 'right': '%}' },
+    \ 'liquid': { 'left': '{% comment %}', 'right': '{% endcomment %}' },
     \ 'lisp': { 'left': ';', 'leftAlt': '#|', 'rightAlt': '|#' },
     \ 'llvm': { 'left': ';' },
     \ 'lotos': { 'left': '(*', 'right': '*)' },
@@ -231,6 +243,7 @@ let s:delimiterMap = {
     \ 'matlab': { 'left': '%' },
     \ 'mel': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'mib': { 'left': '--' },
+    \ 'mirah': {'left': '#'},
     \ 'mkd': { 'left': '>' },
     \ 'mma': { 'left': '(*', 'right': '*)' },
     \ 'model': { 'left': '$', 'right': '$' },
@@ -239,12 +252,15 @@ let s:delimiterMap = {
     \ 'modula3': { 'left': '(*', 'right': '*)' },
     \ 'monk': { 'left': ';' },
     \ 'mush': { 'left': '#' },
+    \ 'mustache': { 'left': '{{!', 'right': '}}' },
     \ 'named': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'nasm': { 'left': ';' },
     \ 'nastran': { 'left': '$' },
     \ 'natural': { 'left': '/*' },
     \ 'ncf': { 'left': ';' },
     \ 'newlisp': { 'left': ';' },
+    \ 'nginx': { 'left': '#' },
+    \ 'nimrod': { 'left': '#' },
     \ 'nroff': { 'left': '\"' },
     \ 'nsis': { 'left': '#' },
     \ 'ntp': { 'left': '#' },
@@ -253,8 +269,10 @@ let s:delimiterMap = {
     \ 'objj': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'ocaml': { 'left': '(*', 'right': '*)' },
     \ 'occam': { 'left': '--' },
+    \ 'octave': { 'left': '%', 'leftAlt': '#' },
     \ 'omlet': { 'left': '(*', 'right': '*)' },
     \ 'omnimark': { 'left': ';' },
+    \ 'ooc': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'openroad': { 'left': '//' },
     \ 'opl': { 'left': "REM" },
     \ 'ora': { 'left': '#' },
@@ -264,6 +282,7 @@ let s:delimiterMap = {
     \ 'pcap': { 'left': '#' },
     \ 'pccts': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'pdf': { 'left': '%' },
+    \ 'perl': { 'left': '#' },
     \ 'pfmain': { 'left': '//' },
     \ 'php': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'pic': { 'left': ';' },
@@ -271,7 +290,7 @@ let s:delimiterMap = {
     \ 'pilrc': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'pine': { 'left': '#' },
     \ 'plm': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
-    \ 'plsql': { 'left': '--', 'leftAlt': '/*', 'rightAlt': '*/' },
+    \ 'plsql': { 'left': '-- ', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'po': { 'left': '#' },
     \ 'postscr': { 'left': '%' },
     \ 'pov': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
@@ -283,7 +302,8 @@ let s:delimiterMap = {
     \ 'ps1': { 'left': '#' },
     \ 'psf': { 'left': '#' },
     \ 'ptcap': { 'left': '#' },
-    \ 'python': { 'left': '#' },
+    \ 'puppet': { 'left': '#' },
+    \ 'python': { 'left': '# ', 'leftAlt': '#' },
     \ 'radiance': { 'left': '#' },
     \ 'ratpoison': { 'left': '#' },
     \ 'r': { 'left': '#' },
@@ -295,22 +315,29 @@ let s:delimiterMap = {
     \ 'rgb': { 'left': '!' },
     \ 'rib': { 'left': '#' },
     \ 'robots': { 'left': '#' },
+    \ 'rspec': { 'left': '#' },
+    \ 'ruby': { 'left': '#' },
     \ 'sa': { 'left': '--' },
     \ 'samba': { 'left': ';', 'leftAlt': '#' },
     \ 'sass': { 'left': '//', 'leftAlt': '/*' },
     \ 'sather': { 'left': '--' },
     \ 'scala': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
+    \ 'scons': { 'left': '#' },
+    \ 'scheme': { 'left': ';', 'leftAlt': '#|', 'rightAlt': '|#' },
     \ 'scilab': { 'left': '//' },
     \ 'scsh': { 'left': ';' },
+    \ 'scss': { 'left': '/*', 'right': '*/', 'leftAlt': '//' },
     \ 'sed': { 'left': '#' },
     \ 'sgmldecl': { 'left': '--', 'right': '--' },
     \ 'sgmllnx': { 'left': '<!--', 'right': '-->' },
+    \ 'sh': { 'left': '#' },
     \ 'sicad': { 'left': '*' },
     \ 'simula': { 'left': '%', 'leftAlt': '--' },
     \ 'sinda': { 'left': '$' },
     \ 'skill': { 'left': ';' },
     \ 'slang': { 'left': '%' },
     \ 'slice': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
+    \ 'slim': { 'left': '/', 'leftAlt': '/!' },
     \ 'slrnrc': { 'left': '%' },
     \ 'sm': { 'left': '#' },
     \ 'smarty': { 'left': '{*', 'right': '*}' },
@@ -325,13 +352,14 @@ let s:delimiterMap = {
     \ 'specman': { 'left': '//' },
     \ 'spectre': { 'left': '//', 'leftAlt': '*' },
     \ 'spice': { 'left': '$' },
-    \ 'sql': { 'left': '--' },
-    \ 'sqlforms': { 'left': '--' },
-    \ 'sqlj': { 'left': '--' },
+    \ 'sql': { 'left': '-- ' },
+    \ 'sqlforms': { 'left': '-- ' },
+    \ 'sqlj': { 'left': '-- ' },
     \ 'sqr': { 'left': '!' },
     \ 'squid': { 'left': '#' },
     \ 'st': { 'left': '"' },
     \ 'stp': { 'left': '--' },
+    \ 'supercollider': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'systemverilog': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'tads': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'tags': { 'left': ';' },
@@ -349,8 +377,10 @@ let s:delimiterMap = {
     \ 'tsscl': { 'left': '#' },
     \ 'tssgm': { 'left': "comment = '", 'right': "'" },
     \ 'txt2tags': { 'left': '%' },
+    \ 'twig': { 'left': '{#', 'right': '#}' },
     \ 'uc': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'uil': { 'left': '!' },
+    \ 'vala': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'vb': { 'left': "'" },
     \ 'velocity': { 'left': "##", 'right': "", 'leftAlt': '#*', 'rightAlt': '*#' },
     \ 'vera': { 'left': '/*','right': '*/', 'leftAlt': '//' },
@@ -376,12 +406,18 @@ let s:delimiterMap = {
     \ 'z8a': { 'left': ';' }
     \ }
 
+let g:NERDDelimiterMap = s:delimiterMap
+
+if exists("g:NERDCustomDelimiters")
+    call extend(s:delimiterMap, g:NERDCustomDelimiters)
+endif
+
 " Section: Comment mapping functions, autocommands and commands {{{1
 " ============================================================================
 " Section: Comment enabler autocommands {{{2
 " ============================================================================
 
-augroup commentEnablers
+augroup NERDCommenter
 
     "if the user enters a buffer or reads a buffer then we gotta set up
     "the comment delimiters for that new filetype
@@ -403,10 +439,24 @@ augroup END
 "    set for this buffer.
 "
 function s:SetUpForNewFiletype(filetype, forceReset)
+    let ft = a:filetype
+
+    "for compound filetypes, if we dont know how to handle the full filetype
+    "then break it down and use the first part that we know how to handle
+    if ft =~ '\.' && !has_key(s:delimiterMap, ft)
+        let filetypes = split(a:filetype, '\.')
+        for i in filetypes
+            if has_key(s:delimiterMap, i)
+                let ft = i
+                break
+            endif
+        endfor
+    endif
+
     let b:NERDSexyComMarker = ''
 
-    if has_key(s:delimiterMap, a:filetype)
-        let b:NERDCommenterDelims = s:delimiterMap[a:filetype]
+    if has_key(s:delimiterMap, ft)
+        let b:NERDCommenterDelims = s:delimiterMap[ft]
         for i in ['left', 'leftAlt', 'right', 'rightAlt']
             if !has_key(b:NERDCommenterDelims, i)
                 let b:NERDCommenterDelims[i] = ''
@@ -987,21 +1037,26 @@ function s:InvertComment(firstLine, lastLine)
     endwhile
 endfunction
 
-" Function: NERDComment(isVisual, type) function {{{2
+" Function: NERDComment(mode, type) function {{{2
 " This function is a Wrapper for the main commenting functions
 "
 " Args:
-"   -isVisual: a flag indicating whether the comment is requested in visual
-"    mode or not
-"   -type: the type of commenting requested. Can be 'sexy', 'invert',
-"    'minimal', 'toggle', 'alignLeft', 'alignBoth', 'norm',
-"    'nested', 'toEOL', 'append', 'insert', 'uncomment', 'yank'
-function! NERDComment(isVisual, type) range
+"   -mode: a character indicating the mode in which the comment is requested:
+"   'n' for Normal mode, 'x' for Visual mode
+"   -type: the type of commenting requested. Can be 'Sexy', 'Invert',
+"    'Minimal', 'Toggle', 'AlignLeft', 'AlignBoth', 'Comment',
+"    'Nested', 'ToEOL', 'Append', 'Insert', 'Uncomment', 'Yank'
+function! NERDComment(mode, type) range
+    let isVisual = a:mode =~ '[vsx]'
     " we want case sensitivity when commenting
     let oldIgnoreCase = &ignorecase
     set noignorecase
 
-    if a:isVisual
+    if !exists("g:did_load_ftplugin") || g:did_load_ftplugin != 1
+        call s:NerdEcho("filetype plugins should be enabled. See :help NERDComInstallation and :help :filetype-plugin-on", 0)
+    endif
+
+    if isVisual
         let firstLine = line("'<")
         let lastLine = line("'>")
         let firstCol = col("'<")
@@ -1011,32 +1066,32 @@ function! NERDComment(isVisual, type) range
         let lastLine = a:lastline
     endif
 
-    let countWasGiven = (a:isVisual == 0 && firstLine != lastLine)
+    let countWasGiven = (!isVisual && firstLine != lastLine)
 
-    let forceNested = (a:type == 'nested' || g:NERDDefaultNesting)
+    let forceNested = (a:type ==? 'Nested' || g:NERDDefaultNesting)
 
-    if a:type == 'norm' || a:type == 'nested'
-        if a:isVisual && visualmode() == ""
+    if a:type ==? 'Comment' || a:type ==? 'Nested'
+        if isVisual && visualmode() == "\<C-V>"
             call s:CommentBlock(firstLine, lastLine, firstCol, lastCol, forceNested)
-        elseif a:isVisual && visualmode() == "v" && (g:NERDCommentWholeLinesInVMode==0 || (g:NERDCommentWholeLinesInVMode==2 && s:HasMultipartDelims()))
+        elseif isVisual && visualmode() == "v" && (g:NERDCommentWholeLinesInVMode==0 || (g:NERDCommentWholeLinesInVMode==2 && s:HasMultipartDelims()))
             call s:CommentRegion(firstLine, firstCol, lastLine, lastCol, forceNested)
         else
             call s:CommentLines(forceNested, "none", firstLine, lastLine)
         endif
 
-    elseif a:type == 'alignLeft' || a:type == 'alignBoth'
+    elseif a:type ==? 'AlignLeft' || a:type ==? 'AlignBoth'
         let align = "none"
-        if a:type == "alignLeft"
+        if a:type ==? "AlignLeft"
             let align = "left"
-        elseif a:type == "alignBoth"
+        elseif a:type ==? "AlignBoth"
             let align = "both"
         endif
         call s:CommentLines(forceNested, align, firstLine, lastLine)
 
-    elseif a:type == 'invert'
+    elseif a:type ==? 'Invert'
         call s:InvertComment(firstLine, lastLine)
 
-    elseif a:type == 'sexy'
+    elseif a:type ==? 'Sexy'
         try
             call s:CommentLinesSexy(firstLine, lastLine)
         catch /NERDCommenter.Delimiters/
@@ -1045,16 +1100,16 @@ function! NERDComment(isVisual, type) range
             call s:NerdEcho("Sexy comment aborted. Nested sexy cannot be nested", 0)
         endtry
 
-    elseif a:type == 'toggle'
+    elseif a:type ==? 'Toggle'
         let theLine = getline(firstLine)
 
         if s:IsInSexyComment(firstLine) || s:IsCommentedFromStartOfLine(s:Left(), theLine) || s:IsCommentedFromStartOfLine(s:Left({'alt': 1}), theLine)
             call s:UncommentLines(firstLine, lastLine)
         else
-            call s:CommentLines(forceNested, "left", firstLine, lastLine)
+            call s:CommentLinesToggle(forceNested, firstLine, lastLine)
         endif
 
-    elseif a:type == 'minimal'
+    elseif a:type ==? 'Minimal'
         try
             call s:CommentLinesMinimal(firstLine, lastLine)
         catch /NERDCommenter.Delimiters/
@@ -1063,32 +1118,39 @@ function! NERDComment(isVisual, type) range
             call s:NerdEcho("Place holders are required but disabled.", 0)
         endtry
 
-    elseif a:type == 'toEOL'
+    elseif a:type ==? 'ToEOL'
         call s:SaveScreenState()
         call s:CommentBlock(firstLine, firstLine, col("."), col("$")-1, 1)
         call s:RestoreScreenState()
 
-    elseif a:type == 'append'
+    elseif a:type ==? 'Append'
         call s:AppendCommentToLine()
 
-    elseif a:type == 'insert'
+    elseif a:type ==? 'Insert'
         call s:PlaceDelimitersAndInsBetween()
 
-    elseif a:type == 'uncomment'
+    elseif a:type ==? 'Uncomment'
         call s:UncommentLines(firstLine, lastLine)
 
-    elseif a:type == 'yank'
-        if a:isVisual
+    elseif a:type ==? 'Yank'
+        if isVisual
             normal! gvy
         elseif countWasGiven
             execute firstLine .','. lastLine .'yank'
         else
             normal! yy
         endif
-        execute firstLine .','. lastLine .'call NERDComment('. a:isVisual .', "norm")'
+        execute firstLine .','. lastLine .'call NERDComment("'. a:mode .'", "Comment")'
     endif
 
     let &ignorecase = oldIgnoreCase
+
+    if isVisual
+        let nlines = lastLine - firstLine
+        silent! call repeat#set("V" . nlines . "jo" . "\<Plug>NERDCommenter". a:type)
+    else
+        silent! call repeat#set("\<Plug>NERDCommenter". a:type)
+    endif
 endfunction
 
 " Function: s:PlaceDelimitersAndInsBetween() function {{{2
@@ -1124,15 +1186,8 @@ function s:PlaceDelimitersAndInsBetween()
         execute ":normal! " . lenRight . "h"
     else
         execute ":normal! " . insOrApp . left
-
-        " if we are tacking the delim on the EOL then we gotta add a space
-        " after it cos when we go out of insert mode the cursor will move back
-        " one and the user wont be in position to type the comment.
-        if isDelimOnEOL
-            execute 'normal! a '
-        endif
     endif
-    normal! l
+    silent! normal! l
 
     "if needed convert spaces back to tabs and adjust the cursors col
     "accordingly
@@ -1142,7 +1197,11 @@ function s:PlaceDelimitersAndInsBetween()
         call cursor(line("."), tabbedCol)
     endif
 
-    startinsert
+    if isDelimOnEOL && lenRight == 0
+        startinsert!
+    else
+        startinsert
+    endif
 endfunction
 
 " Function: s:RemoveDelimiters(left, right, line) {{{2
@@ -1364,6 +1423,12 @@ endfunction
 function s:UncommentLineNormal(line)
     let line = a:line
 
+    "get the positions of all delim types on the line
+    let indxLeft = s:FindDelimiterIndex(s:Left(), line)
+    let indxLeftAlt = s:FindDelimiterIndex(s:Left({'alt': 1}), line)
+    let indxRight = s:FindDelimiterIndex(s:Right(), line)
+    let indxRightAlt = s:FindDelimiterIndex(s:Right({'alt': 1}), line)
+
     "get the comment status on the line so we know how it is commented
     let lineCommentStatus =  s:IsCommentedOuttermost(s:Left(), s:Right(), s:Left({'alt': 1}), s:Right({'alt': 1}), line)
 
@@ -1378,34 +1443,23 @@ function s:UncommentLineNormal(line)
     "it is not properly commented with any delims so we check if it has
     "any random left or right delims on it and remove the outtermost ones
     else
-        "get the positions of all delim types on the line
-        let indxLeft = s:FindDelimiterIndex(s:Left(), line)
-        let indxLeftAlt = s:FindDelimiterIndex(s:Left({'alt': 1}), line)
-        let indxRight = s:FindDelimiterIndex(s:Right(), line)
-        let indxRightAlt = s:FindDelimiterIndex(s:Right({'alt': 1}), line)
-
         "remove the outter most left comment delim
         if indxLeft != -1 && (indxLeft < indxLeftAlt || indxLeftAlt == -1)
             let line = s:RemoveDelimiters(s:Left(), '', line)
-        elseif indxLeftAlt != -1
+        elseif indxLeftAlt != -1 && g:NERDRemoveAltComs
             let line = s:RemoveDelimiters(s:Left({'alt': 1}), '', line)
         endif
 
         "remove the outter most right comment delim
         if indxRight != -1 && (indxRight < indxRightAlt || indxRightAlt == -1)
             let line = s:RemoveDelimiters('', s:Right(), line)
-        elseif indxRightAlt != -1
+        elseif indxRightAlt != -1 && g:NERDRemoveAltComs
             let line = s:RemoveDelimiters('', s:Right({'alt': 1}), line)
         endif
     endif
 
 
-    let indxLeft = s:FindDelimiterIndex(s:Left(), line)
-    let indxLeftAlt = s:FindDelimiterIndex(s:Left({'alt': 1}), line)
     let indxLeftPlace = s:FindDelimiterIndex(g:NERDLPlace, line)
-
-    let indxRightPlace = s:FindDelimiterIndex(g:NERDRPlace, line)
-    let indxRightAlt = s:FindDelimiterIndex(s:Right({'alt': 1}), line)
     let indxRightPlace = s:FindDelimiterIndex(g:NERDRPlace, line)
 
     let right = s:Right()
@@ -1469,7 +1523,7 @@ function s:AddLeftDelimAligned(delim, theLine, alignIndx)
         let theLine = repeat(' ', a:alignIndx - strlen(theLine))
     endif
 
-    return strpart(theLine, 0, a:alignIndx) . a:delim . " " . strpart(theLine, a:alignIndx)
+    return strpart(theLine, 0, a:alignIndx) . a:delim . strpart(theLine, a:alignIndx)
 endfunction
 
 " Function: s:AddRightDelim(delim, theLine) {{{2
@@ -2400,10 +2454,10 @@ endfunction
 function s:NerdEcho(msg, typeOfMsg)
     if a:typeOfMsg == 0
         echohl WarningMsg
-        echo 'NERDCommenter:' . a:msg
+        echom 'NERDCommenter:' . a:msg
         echohl None
     elseif a:typeOfMsg == 1
-        echo 'NERDCommenter:' . a:msg
+        echom 'NERDCommenter:' . a:msg
     endif
 endfunction
 
@@ -2659,128 +2713,62 @@ function s:UntabbedCol(line, col)
     let lineTabsToSpaces = substitute(lineTruncated, '\t', s:TabSpace(), 'g')
     return strlen(lineTabsToSpaces)
 endfunction
-" Section: Comment mapping setup {{{1
+" Section: Comment mapping and menu item setup {{{1
 " ===========================================================================
 
-" switch to/from alternative delimiters
-nnoremap <plug>NERDCommenterAltDelims :call <SID>SwitchToAlternativeDelimiters(1)<cr>
-
-" comment out lines
-nnoremap <silent> <plug>NERDCommenterComment :call NERDComment(0, "norm")<cr>
-vnoremap <silent> <plug>NERDCommenterComment <ESC>:call NERDComment(1, "norm")<cr>
-
-" toggle comments
-nnoremap <silent> <plug>NERDCommenterToggle :call NERDComment(0, "toggle")<cr>
-vnoremap <silent> <plug>NERDCommenterToggle <ESC>:call NERDComment(1, "toggle")<cr>
-
-" minimal comments
-nnoremap <silent> <plug>NERDCommenterMinimal :call NERDComment(0, "minimal")<cr>
-vnoremap <silent> <plug>NERDCommenterMinimal <ESC>:call NERDComment(1, "minimal")<cr>
-
-" sexy comments
-nnoremap <silent> <plug>NERDCommenterSexy :call NERDComment(0, "sexy")<CR>
-vnoremap <silent> <plug>NERDCommenterSexy <ESC>:call NERDComment(1, "sexy")<CR>
-
-" invert comments
-nnoremap <silent> <plug>NERDCommenterInvert :call NERDComment(0, "invert")<CR>
-vnoremap <silent> <plug>NERDCommenterInvert <ESC>:call NERDComment(1, "invert")<CR>
-
-" yank then comment
-nmap <silent> <plug>NERDCommenterYank :call NERDComment(0, "yank")<CR>
-vmap <silent> <plug>NERDCommenterYank <ESC>:call NERDComment(1, "yank")<CR>
-
-" left aligned comments
-nnoremap <silent> <plug>NERDCommenterAlignLeft :call NERDComment(0, "alignLeft")<cr>
-vnoremap <silent> <plug>NERDCommenterAlignLeft <ESC>:call NERDComment(1, "alignLeft")<cr>
-
-" left and right aligned comments
-nnoremap <silent> <plug>NERDCommenterAlignBoth :call NERDComment(0, "alignBoth")<cr>
-vnoremap <silent> <plug>NERDCommenterAlignBoth <ESC>:call NERDComment(1, "alignBoth")<cr>
-
-" nested comments
-nnoremap <silent> <plug>NERDCommenterNest :call NERDComment(0, "nested")<cr>
-vnoremap <silent> <plug>NERDCommenterNest <ESC>:call NERDComment(1, "nested")<cr>
-
-" uncomment
-nnoremap <silent> <plug>NERDCommenterUncomment :call NERDComment(0, "uncomment")<cr>
-vnoremap <silent> <plug>NERDCommenterUncomment :call NERDComment(1, "uncomment")<cr>
-
-" comment till the end of the line
-nnoremap <silent> <plug>NERDCommenterToEOL :call NERDComment(0, "toEOL")<cr>
-
-" append comments
-nmap <silent> <plug>NERDCommenterAppend :call NERDComment(0, "append")<cr>
-
-" insert comments
-inoremap <silent> <plug>NERDCommenterInInsert <SPACE><BS><ESC>:call NERDComment(0, "insert")<CR>
-
-
-function! s:CreateMaps(target, combo)
-    if !hasmapto(a:target, 'n')
-        exec 'nmap ' . a:combo . ' ' . a:target
+" Create menu items for the specified modes.  If a:combo is not empty, then
+" also define mappings and show a:combo in the menu items.
+function! s:CreateMaps(modes, target, desc, combo)
+    " Build up a map command like
+    " 'noremap <silent> <plug>NERDCommenterComment :call NERDComment("n", "Comment")'
+    let plug = '<plug>NERDCommenter' . a:target
+    let plug_start = 'noremap <silent> ' . plug . ' :call NERDComment("'
+    let plug_end = '", "' . a:target . '")<cr>'
+    " Build up a menu command like
+    " 'menu <silent> comment.Comment<Tab>\\cc <plug>NERDCommenterComment'
+    let menuRoot = get(['', 'comment', '&comment', '&Plugin.&comment'],
+                \ g:NERDMenuMode, '')
+    let menu_command = 'menu <silent> ' . menuRoot . '.' . escape(a:desc, ' ')
+    if strlen(a:combo)
+        let leader = exists('g:mapleader') ? g:mapleader : '\'
+        let menu_command .= '<Tab>' . escape(leader, '\') . a:combo
     endif
-
-    if !hasmapto(a:target, 'v')
-        exec 'vmap ' . a:combo . ' ' . a:target
-    endif
+    let menu_command .= ' ' . (strlen(a:combo) ? plug : a:target)
+    " Execute the commands built above for each requested mode.
+    for mode in (a:modes == '') ? [''] : split(a:modes, '\zs')
+        if strlen(a:combo)
+            execute mode . plug_start . mode . plug_end
+            if g:NERDCreateDefaultMappings && !hasmapto(plug, mode)
+                execute mode . 'map <leader>' . a:combo . ' ' . plug
+            endif
+        endif
+        " Check if the user wants the menu to be displayed.
+        if g:NERDMenuMode != 0
+            execute mode . menu_command
+        endif
+    endfor
 endfunction
+call s:CreateMaps('nx', 'Comment',    'Comment', 'cc')
+call s:CreateMaps('nx', 'Toggle',     'Toggle', 'c<space>')
+call s:CreateMaps('nx', 'Minimal',    'Minimal', 'cm')
+call s:CreateMaps('nx', 'Nested',     'Nested', 'cn')
+call s:CreateMaps('n',  'ToEOL',      'To EOL', 'c$')
+call s:CreateMaps('nx', 'Invert',     'Invert', 'ci')
+call s:CreateMaps('nx', 'Sexy',       'Sexy', 'cs')
+call s:CreateMaps('nx', 'Yank',       'Yank then comment', 'cy')
+call s:CreateMaps('n',  'Append',     'Append', 'cA')
+call s:CreateMaps('',   ':',          '-Sep-', '')
+call s:CreateMaps('nx', 'AlignLeft',  'Left aligned', 'cl')
+call s:CreateMaps('nx', 'AlignBoth',  'Left and right aligned', 'cb')
+call s:CreateMaps('',   ':',          '-Sep2-', '')
+call s:CreateMaps('nx', 'Uncomment',  'Uncomment', 'cu')
+call s:CreateMaps('n',  'AltDelims',  'Switch Delimiters', 'ca')
+call s:CreateMaps('i',  'Insert',     'Insert Comment Here', '')
+call s:CreateMaps('',   ':',          '-Sep3-', '')
+call s:CreateMaps('',   ':help NERDCommenterContents<CR>', 'Help', '')
 
-if g:NERDCreateDefaultMappings
-    call s:CreateMaps('<plug>NERDCommenterComment',    '<leader>cc')
-    call s:CreateMaps('<plug>NERDCommenterToggle',     '<leader>c<space>')
-    call s:CreateMaps('<plug>NERDCommenterMinimal',    '<leader>cm')
-    call s:CreateMaps('<plug>NERDCommenterSexy',       '<leader>cs')
-    call s:CreateMaps('<plug>NERDCommenterInvert',     '<leader>ci')
-    call s:CreateMaps('<plug>NERDCommenterYank',       '<leader>cy')
-    call s:CreateMaps('<plug>NERDCommenterAlignLeft',  '<leader>cl')
-    call s:CreateMaps('<plug>NERDCommenterAlignBoth',  '<leader>cb')
-    call s:CreateMaps('<plug>NERDCommenterNest',       '<leader>cn')
-    call s:CreateMaps('<plug>NERDCommenterUncomment',  '<leader>cu')
-    call s:CreateMaps('<plug>NERDCommenterToEOL',      '<leader>c$')
-    call s:CreateMaps('<plug>NERDCommenterAppend',     '<leader>cA')
+inoremap <silent> <plug>NERDCommenterInsert <SPACE><BS><ESC>:call NERDComment('i', "insert")<CR>
 
-    if !hasmapto('<plug>NERDCommenterAltDelims', 'n')
-        nmap <leader>ca <plug>NERDCommenterAltDelims
-    endif
-endif
-
-
-
-" Section: Menu item setup {{{1
-" ===========================================================================
-"check if the user wants the menu to be displayed
-if g:NERDMenuMode != 0
-
-    let menuRoot = ""
-    if g:NERDMenuMode == 1
-        let menuRoot = 'comment'
-    elseif g:NERDMenuMode == 2
-        let menuRoot = '&comment'
-    elseif g:NERDMenuMode == 3
-        let menuRoot = '&Plugin.&comment'
-    endif
-
-    function! s:CreateMenuItems(target, desc, root)
-        exec 'nmenu <silent> ' . a:root . '.' . a:desc . ' ' . a:target
-        exec 'vmenu <silent> ' . a:root . '.' . a:desc . ' ' . a:target
-    endfunction
-    call s:CreateMenuItems("<plug>NERDCommenterComment",    'Comment', menuRoot)
-    call s:CreateMenuItems("<plug>NERDCommenterToggle",     'Toggle', menuRoot)
-    call s:CreateMenuItems('<plug>NERDCommenterMinimal',    'Minimal', menuRoot)
-    call s:CreateMenuItems('<plug>NERDCommenterNest',       'Nested', menuRoot)
-    exec 'nmenu <silent> '. menuRoot .'.To\ EOL <plug>NERDCommenterToEOL'
-    call s:CreateMenuItems('<plug>NERDCommenterInvert',     'Invert', menuRoot)
-    call s:CreateMenuItems('<plug>NERDCommenterSexy',       'Sexy', menuRoot)
-    call s:CreateMenuItems('<plug>NERDCommenterYank',       'Yank\ then\ comment', menuRoot)
-    exec 'nmenu <silent> '. menuRoot .'.Append <plug>NERDCommenterAppend'
-    exec 'menu <silent> '. menuRoot .'.-Sep-    :'
-    call s:CreateMenuItems('<plug>NERDCommenterAlignLeft',  'Left\ aligned', menuRoot)
-    call s:CreateMenuItems('<plug>NERDCommenterAlignBoth',  'Left\ and\ right\ aligned', menuRoot)
-    exec 'menu <silent> '. menuRoot .'.-Sep2-    :'
-    call s:CreateMenuItems('<plug>NERDCommenterUncomment',  'Uncomment', menuRoot)
-    exec 'nmenu <silent> '. menuRoot .'.Switch\ Delimiters <plug>NERDCommenterAltDelims'
-    exec 'imenu <silent> '. menuRoot .'.Insert\ Comment\ Here <plug>NERDCommenterInInsert'
-    exec 'menu <silent> '. menuRoot .'.-Sep3-    :'
-    exec 'menu <silent>'. menuRoot .'.Help :help NERDCommenterContents<CR>'
-endif
+" switch to/from alternative delimiters (does not use wrapper function)
+nnoremap <plug>NERDCommenterAltDelims :call <SID>SwitchToAlternativeDelimiters(1)<cr>
 " vim: set foldmethod=marker :

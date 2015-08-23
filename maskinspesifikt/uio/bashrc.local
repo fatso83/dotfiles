@@ -7,5 +7,10 @@ PYTHONPATH=$HOME/local/python2.6/site-packages
 PATH=$HOME/apps/node-v0.10.28-linux-x64/bin:$PATH
 
 
-LOCALE=nb_NO.utf8
-LANGUAGE=$LOCALE
+#LOCALE=nb_NO.utf8
+#LANGUAGE=$LOCALE
+
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US.UTF-8"
+export __TMP=foo
+
