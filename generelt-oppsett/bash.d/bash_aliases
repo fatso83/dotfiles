@@ -43,5 +43,12 @@ alias grunt='npm-exec grunt'
 alias mocha='npm-exec mocha'
 alias karma='$(npm bin)/../karma/bin/karma'
 
+# webdev
 alias webserver="python -m SimpleHTTPServer"
 alias servers='sudo lsof -iTCP -sTCP:LISTEN -P -n'
+
+# time
+alias epoch='date -j -f "%a %b %d %T %Z %Y" "`date`" "+%s"'
+
+# SOCKS proxy
+alias socks_proxy='ssh -v -D 22222 carl-erik@timbuktu.hopto.org -N'

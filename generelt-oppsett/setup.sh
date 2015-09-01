@@ -18,6 +18,7 @@ ln -sf "$PWD"/bashrc ${DEST}/.bashrc
 ln -sf "$PWD"/gitconfig ${DEST}/.gitconfig
 ln -sf "$PWD"/gitignore_global ${DEST}/.gitignore_global
 ln -sf "$PWD"/pystartup ${DEST}/.pystartup
+ln -sf "$PWD"/tmux.conf ${DEST}/.tmux.conf
 
 ln -sf "$PWD"/bash_completion.d ${DEST}/.bash_completion.d
 

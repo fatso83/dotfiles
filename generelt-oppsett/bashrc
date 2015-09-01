@@ -49,3 +49,6 @@ fi
 export PATH="/usr/local/bin:$PATH"
 export PYTHONSTARTUP="$HOME/.pystartup"
 export HISTCONTROL=ignoredups
+
+export NVM_DIR="/Users/carl-erik.kopseng/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
