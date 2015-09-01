@@ -1,6 +1,7 @@
 #!/bin/bash
 # Run to setup with ./setup.sh
-MAIN_DIR="$HOME" DEST="${MAIN_DIR}"
+MAIN_DIR="$HOME" 
+DEST="${MAIN_DIR}"
 BASH_DIR="${MAIN_DIR}/.bash.d"
 PWD="`pwd`"
 
@@ -20,6 +21,7 @@ ln -sf "$PWD"/gitignore_global ${DEST}/.gitignore_global
 ln -sf "$PWD"/pystartup ${DEST}/.pystartup
 ln -sf "$PWD"/tmux.conf ${DEST}/.tmux.conf
 
+rm ${DEST}/.bash_completion.d
 ln -sf "$PWD"/bash_completion.d ${DEST}/.bash_completion.d
 
 for file in "$PWD"/bash.d/*; do
