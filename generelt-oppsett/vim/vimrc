@@ -1,10 +1,25 @@
 "" Based on tips from  VIM Revisited (after dropping Janus)
 "" http://mislav.uniqpath.com/2011/12/vim-revisited/
 
-set nocompatible                " choose no compatibility with legacy vi
+" Changelog
+" 2015-09-24 Swapped Pathogen for Vundle. Simplicity!
+"            Tipped from: http://lepture.com/en/2012/vundle-vs-pathogen
+set nocompatible               " be iMproved
+filetype off                   " required!
+"filetype plugin indent on       " load file type plugins + indentation
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required! 
+Bundle 'VundleVim/Vundle.vim'
+
+" My bundles
+Bundle 'leafgarland/typescript-vim'
+
 syntax enable
 set encoding=utf-8
-filetype plugin indent on       " load file type plugins + indentation
 
 "" GUI
 colorscheme darkblue
@@ -36,12 +51,19 @@ set printoptions=portrait:n
 "" http://nvie.com/posts/how-i-boosted-my-vim/
 set pastetoggle=<F2>
 
+" Remember last position
+if has("autocmd")
+    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+
 "" File type settings
 "" Set filetype text if unset
 autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
 
 " text files
 autocmd Filetype text set wrap | set linebreak
+autocmd Filetype markdown set wrap | set linebreak
 
 " associate *.vss (VectorScript) with Pascal filetype
 au BufRead,BufNewFile *.vss set filetype=pascal
@@ -49,14 +71,16 @@ au BufRead,BufNewFile *.vss set filetype=pascal
 au BufRead,BufNewFile *.pde set filetype=java
 
 
-let g:pathogen_disabled = []
-source ~/.vimrc.local
+"let g:pathogen_disabled = []
+"source ~/.vimrc.local
+"
+"if !has("macunix")
+"    call add(g:pathogen_disabled, 'copy-as-rtf')
+"endif
+"
+"execute pathogen#infect()
 
-if !has("macunix")
-    call add(g:pathogen_disabled, 'copy-as-rtf')
-endif
-
-execute pathogen#infect()
-
+" Auto-reload vimrc on changes
+autocmd! bufwritepost .vimrc source %
 
 

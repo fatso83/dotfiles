@@ -40,8 +40,9 @@ alias prettify_json='python -mjson.tool'
 alias npm-exec='PATH=$(npm bin):$PATH'
 alias coffee='npm-exec coffee'
 alias grunt='npm-exec grunt'
+alias gulp='npm-exec gulp'
 alias mocha='npm-exec mocha'
-alias karma='$(npm bin)/../karma/bin/karma'
+alias karma='npm-exec karma'
 
 # webdev
 alias webserver="python -m SimpleHTTPServer"
