@@ -5,8 +5,8 @@
 " 2015-09-24 Swapped Pathogen for Vundle. Simplicity!
 "            Tipped from: http://lepture.com/en/2012/vundle-vs-pathogen
 set nocompatible               " be iMproved
-filetype off                   " required!
-"filetype plugin indent on       " load file type plugins + indentation
+"filetype off                   " required!
+filetype plugin indent on       " load file type plugins + indentation
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
@@ -17,6 +17,7 @@ Bundle 'VundleVim/Vundle.vim'
 
 " My bundles
 Bundle 'leafgarland/typescript-vim'
+Bundle 'Valloric/YouCompleteMe'
 
 syntax enable
 set encoding=utf-8
