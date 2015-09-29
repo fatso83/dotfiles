@@ -5,19 +5,44 @@
 " 2015-09-24 Swapped Pathogen for Vundle. Simplicity!
 "            Tipped from: http://lepture.com/en/2012/vundle-vs-pathogen
 set nocompatible               " be iMproved
-"filetype off                   " required!
-filetype plugin indent on       " load file type plugins + indentation
+filetype off                   " required!
 
+" set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#rc()
+call vundle#begin()
 
 " let Vundle manage Vundle
 " required! 
-Bundle 'VundleVim/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim'
 
 " My bundles
-Bundle 'leafgarland/typescript-vim'
-Bundle 'Valloric/YouCompleteMe'
+" YouCompleteMe has a compiled back-end
+" https://github.com/Valloric/YouCompleteMe#mac-os-x-super-quick-installation
+" Same with instant-markdown: npm -g update instant-markdown-d
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'suan/vim-instant-markdown'
+Plugin 'copy-as-rtf'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'pangloss/vim-javascript'
+
+" All of your Plugins must be added before the following line
+call vundle#end()
+filetype plugin indent on       " load file type plugins + indentation
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just
+" :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to
+" auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
 
 syntax enable
 set encoding=utf-8
