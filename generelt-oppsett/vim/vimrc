@@ -21,10 +21,11 @@ Plugin 'VundleVim/Vundle.vim'
 " Same with instant-markdown: npm -g update instant-markdown-d
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'suan/vim-instant-markdown'
-Plugin 'copy-as-rtf'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'pangloss/vim-javascript'
+Plugin 'copy-as-rtf'
+Plugin 'editorconfig-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()

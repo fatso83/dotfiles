@@ -21,8 +21,10 @@ umask 022
 read_config "$HOME/.bash.d/bash_functions"
 read_config "$HOME/.bash.d/bash_aliases"
 read_config "$HOME/.bash.d/git-prompt.sh"
-read_config "$HOME/.bash.d/git-completion.bash"
-read_config "$HOME/.bash.d/npm-completion.bash"
+read_config "$HOME/.bash_completion.d/git-completion.bash"
+read_config "$HOME/.bash_completion.d/npm-completion.bash"
+read_config "$HOME/.bash_completion.d/azure-completion.bash"
+read_config "$HOME/.bash_completion.d/tmux"
 read_config_if_exists "$HOME/.bash.d/bashrc.local"
 read_config_if_exists "$HOME/.bash.d/color_codes.dat"
 
@@ -49,6 +51,9 @@ fi
 export PATH="/usr/local/bin:$PATH"
 export PYTHONSTARTUP="$HOME/.pystartup"
 export HISTCONTROL=ignoredups
+
+export VISUAL='vim'
+export EDITOR='vim'
 
 export NVM_DIR="/Users/carl-erik.kopseng/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

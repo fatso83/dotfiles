@@ -56,3 +56,4 @@ alias epoch='date -j -f "%a %b %d %T %Z %Y" "`date`" "+%s"'
 # SOCKS proxy
 alias socks_proxy='ssh -v -D 22222 carl-erik@timbuktu.hopto.org -N'
 alias socks_proxy_all='ssh -v -D :22222 carl-erik@timbuktu.hopto.org -N'
+alias html2text='python -c "import sys,html2text;sys.stdout.write(html2text.html2text(sys.stdin.read()))"'
