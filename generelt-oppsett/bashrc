@@ -1,3 +1,7 @@
+# short circuit the sourcing for non-interactive shells
+# http://superuser.com/questions/183870/difference-between-bashrc-and-bash-profile
+[[ $- != *i* ]] && return
+
 function read_config {
   if [ -a "$1" ]; then
       . "$1"
