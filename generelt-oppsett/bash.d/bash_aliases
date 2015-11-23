@@ -1,9 +1,11 @@
 
 # Maskinalias
-alias timbuktu='LC_ALL=no_NO.UTF-8 mosh carl-erik@timbuktu.hopto.org'
-alias timbuktu_lokal='LC_ALL=no_NO.UTF-8 mosh carl-erik@192.168.10.2'
+# alias timbuktu='LC_ALL=no_NO.UTF-8 mosh carl-erik@timbuktu.hopto.org'
+# alias timbuktu_lokal='LC_ALL=no_NO.UTF-8 mosh carl-erik@192.168.10.2'
 #alias ifi='LC_ALL=no_NO.UTF-8 mosh carlerik@vor.ifi.uio.no'
 #alias ntnu='LC_ALL=no_NO.UTF-8 mosh kopseng@login.stud.ntnu.no'
+alias timbuktu='LC_ALL=no_NO.UTF-8 ssh carl-erik@timbuktu.hopto.org'
+alias timbuktu_lokal='LC_ALL=no_NO.UTF-8 ssh carl-erik@192.168.10.2'
 alias ifi='LC_ALL=no_NO.UTF-8 ssh carlerik@vor.ifi.uio.no'
 alias ntnu='LC_ALL=no_NO.UTF-8 ssh kopseng@login.stud.ntnu.no'
 
@@ -18,6 +20,7 @@ alias htmlencode='python3 -c "import sys, html; print(html.escape(sys.argv[1]))"
 # Git stuff that is hard to remember
 alias g_unchanged='git update-index --assume-unchanged'
 alias g_push_create_remote='git push -u <remote-name> <branch-name>'
+alias git='hub'
 
 IGNORE=""
 if ! is_mac; then
