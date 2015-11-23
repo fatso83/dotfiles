@@ -18,7 +18,7 @@ alias g_unchanged='git update-index --assume-unchanged'
 alias g_push_create_remote='git push -u <remote-name> <branch-name>'
 
 # Use Hub if installed
-if which hub 2>&1 > /dev/null; then
+if which hub > /dev/null 2>&1; then
     alias git='hub'
 fi
 
