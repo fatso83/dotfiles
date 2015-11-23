@@ -1,13 +1,9 @@
 
 # Maskinalias
-# alias timbuktu='LC_ALL=no_NO.UTF-8 mosh carl-erik@timbuktu.hopto.org'
-# alias timbuktu_lokal='LC_ALL=no_NO.UTF-8 mosh carl-erik@192.168.10.2'
-#alias ifi='LC_ALL=no_NO.UTF-8 mosh carlerik@vor.ifi.uio.no'
-#alias ntnu='LC_ALL=no_NO.UTF-8 mosh kopseng@login.stud.ntnu.no'
-alias timbuktu='LC_ALL=no_NO.UTF-8 ssh carl-erik@timbuktu.hopto.org'
-alias timbuktu_lokal='LC_ALL=no_NO.UTF-8 ssh carl-erik@192.168.10.2'
-alias ifi='LC_ALL=no_NO.UTF-8 ssh carlerik@vor.ifi.uio.no'
-alias ntnu='LC_ALL=no_NO.UTF-8 ssh kopseng@login.stud.ntnu.no'
+alias timbuktu='ssh carl-erik@timbuktu.hopto.org'
+alias timbuktu_lokal='ssh carl-erik@192.168.10.2'
+alias ifi='ssh carlerik@vor.ifi.uio.no'
+alias ntnu='ssh kopseng@login.stud.ntnu.no'
 
 # Ved masse søppel etter konvertering utf8<->cp1252
 alias strip-non-ascii='python -c "import sys,re;[sys.stdout.write(re.sub('\''[^\x09\x0A\x0D\x20-\x7F]'\'', '\'''\'', line)) for line in sys.stdin]"'
