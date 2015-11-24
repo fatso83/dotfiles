@@ -2,9 +2,9 @@
 # http://superuser.com/questions/183870/difference-between-bashrc-and-bash-profile
 [[ $- != *i* ]] && return
 
-# To enable debug printing, set this to 1.
+# To enable debug printing, just uncomment this
 # You can then use `debug` or `t_debug` statements to echo debug info
-DEBUG=0
+# DEBUG=yup
 
 function read_config {
   if [ -a "$1" ]; then

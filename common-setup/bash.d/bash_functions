@@ -11,12 +11,13 @@ function test_is_true() {
         [[ "$1" == "$2" ]] && echo "OK" || echo "ERROR" $1 $2
 }
 
+# @see http://stackoverflow.com/questions/3601515/how-to-check-if-a-variable-is-set-in-bash
 function debug() {
-        [[ -n $DEBUG ]] && echo $@ >/dev/stderr
+        [[ x == ${DEBUG+x} ]] && echo $@ >/dev/stderr
 }
 
 function t_debug() {
-        [[ -n $DEBUG ]] && echo [$(timer_now)] $@ >/dev/stderr
+        [[ x == ${DEBUG+x} ]] && echo [$(timer_now)] $@ >/dev/stderr
 }
 
 #These timer_* functions relies on a utility called `millis`
