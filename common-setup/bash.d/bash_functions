@@ -15,6 +15,30 @@ function debug() {
         [[ -n $DEBUG ]] && echo $@ >/dev/stderr
 }
 
+#These timer_* functions relies on a utility called `millis`
+#@see https://gist.github.com/fatso83/86e94e91926d1311f3fa
+__timer='unset'
+function timer_start(){
+    __timer=$(millis)
+}
+
+function timer_reset(){
+    timer_start
+}
+
+# Get the current amount of elapsed seconds
+function timer_now(){
+    if [[ $__timer == 'unset' ]]; then
+        echo "Timer is unset. Use timer_start"
+        return 1
+    fi
+
+    local diff;
+    local now=$(millis)
+    let diff=$now-$__timer
+    echo $diff
+}
+
 
 # Needed? You can just $(ls $( echo $(echo $(echo /bin/ls)))) 
 
@@ -34,10 +58,9 @@ function nested_expansion() {
         echo $res
 }
 
-#test
-#test $(nested_expansion "echo 4") 4
-#test $(nested_expansion echo "echo 4") 4
-#test $(nested_expansion ls "echo /dev/zero*") "/dev/zero"
+#test $(nested_expansion "echo 4") = 4
+#test $(nested_expansion echo "echo 4") = 4
+#test $(nested_expansion ls "echo /dev/zero*") = "/dev/zero"
 
 
 # Dereference variables
