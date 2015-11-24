@@ -28,6 +28,8 @@ for file in "$PWD"/bash.d/*; do
   ln -sf $file ${BASH_DIR}/
 done
 
+# Remove any existing symlink - will fail if it is a dir
+rm ${DEST}/.vim 2>/dev/null
 if [ ! -e ${DEST}/.vim ]; then  
     ln -sf $PWD/vim/dotvim ${DEST}/.vim
 fi

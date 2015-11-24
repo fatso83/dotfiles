@@ -15,6 +15,10 @@ function debug() {
         [[ -n $DEBUG ]] && echo $@ >/dev/stderr
 }
 
+function t_debug() {
+        [[ -n $DEBUG ]] && echo [$(timer_now)] $@ >/dev/stderr
+}
+
 #These timer_* functions relies on a utility called `millis`
 #@see https://gist.github.com/fatso83/86e94e91926d1311f3fa
 __timer='unset'

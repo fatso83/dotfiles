@@ -2,6 +2,10 @@
 # http://superuser.com/questions/183870/difference-between-bashrc-and-bash-profile
 [[ $- != *i* ]] && return
 
+# To enable debug printing, set this to 1.
+# You can then use `debug` or `t_debug` statements to echo debug info
+DEBUG=0
+
 function read_config {
   if [ -a "$1" ]; then
       . "$1"
@@ -22,14 +26,33 @@ declare -x CLICOLOR
 ulimit -c unlimited
 umask 022
 
-read_config "$HOME/.bash.d/bash_aliases"
+# include selfmade binaries and scripts
+# Needed for some of the utility functions
+if [ -d ~/bin ] ; then
+    PATH=~/bin:"${PATH}"
+fi
+
+if [ -d ~/scripts ] ; then
+	PATH=~/scripts:"$PATH"
+fi
+
+
+
 read_config "$HOME/.bash.d/bash_functions"
+read_config "$HOME/.bash.d/bash_aliases"
+timer_start
+t_debug Executing '$HOME'/.bashrc
+
 read_config "$HOME/.bash.d/git-prompt.sh"
-read_config "$HOME/.bash_completion.d/git"
-read_config "$HOME/.bash_completion.d/npm"
-read_config "$HOME/.bash_completion.d/azure"
-read_config "$HOME/.bash_completion.d/tmux"
+
+for f in "${HOME}"/.bash_completion.d/*; do
+    t_debug $f
+    read_config "$f"
+done
+
+t_debug Reading bashrc.local 
 read_config_if_exists "$HOME/.bash.d/bashrc.local"
+t_debug Reading color codes
 read_config_if_exists "$HOME/.bash.d/color_codes.dat"
 
 
@@ -57,15 +80,6 @@ export HISTFILE=~/.bash_eternal_history
 # http://superuser.com/questions/20900/bash-history-loss
 PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
-# include selfmade binaries and scripts
-if [ -d ~/bin ] ; then
-    PATH=~/bin:"${PATH}"
-fi
-
-if [ -d ~/scripts ] ; then
-	PATH=~/scripts:"$PATH"
-fi
-
 export PATH="/usr/local/bin:$PATH"
 export PYTHONSTARTUP="$HOME/.pystartup"
 export HISTCONTROL=ignoredups
@@ -73,5 +87,8 @@ export HISTCONTROL=ignoredups
 export VISUAL='vim'
 export EDITOR='vim'
 
+t_debug Load NVM
 export NVM_DIR="/Users/carl-erik.kopseng/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+t_debug Finished .bashrc
