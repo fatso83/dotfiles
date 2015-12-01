@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # I might have some actual content here at some time, 
 # looking up per-machine stuff, but not right now
 
