@@ -54,7 +54,10 @@ alias webserver="python -m SimpleHTTPServer"
 alias servers='sudo lsof -iTCP -sTCP:LISTEN -P -n'
 
 # time
-alias epoch='date %s'
+alias epoch=millis #  tool that we compile ourselves
+
+# find external ip
+alias my-ip='curl http://ipinfo.io/ip'
 
 # SOCKS proxy
 alias socks_proxy='ssh -v -D 22222 carl-erik@timbuktu.hopto.org -N'
