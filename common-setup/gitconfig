@@ -1,6 +1,11 @@
 [user]
     name = Carl-Erik Kopseng
     email = carlerik@gmail.com
+
+# https://www.semipol.de/2013/08/26/sharing-the-git-config-across-different-computers-with-individual-modifications.html
+[include]
+    path = .gitlocal
+
 [core]
     editor = vim
     excludesfile = ~/.gitignore_global
