@@ -11,7 +11,7 @@ int main(void)
 {
   struct timeval time_now;
     gettimeofday(&time_now,NULL);
-    printf ("%ld%03d\n",time_now.tv_sec,time_now.tv_usec/1000);
+    printf ("%ld%03d\n",time_now.tv_sec, (int) time_now.tv_usec/1000);
 
     return 0;
 }

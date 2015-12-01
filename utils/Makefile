@@ -7,4 +7,7 @@ clean:
 	rm millis
 
 install: all
-	mkdir ${HOME}/bin 2>/dev/null;	mv ./millis ${HOME}/bin/
+	@mkdir ${HOME}/bin 2>/dev/null;	\
+		mv ./millis ${HOME}/bin/ \
+		&& echo "Installed millis in ${HOME}/bin"
+
