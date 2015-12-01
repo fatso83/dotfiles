@@ -36,8 +36,3 @@ fi
 
 ln -sf $PWD/vim/vimrc ${DEST}/.vimrc
 touch ${DEST}/.vimrc.local
-
-# Add the little `millis` util for cross-platform millisecond support
-pushd ../utils
-make install
-popd
