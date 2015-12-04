@@ -35,4 +35,7 @@ if [ ! -e ${DEST}/.vim ]; then
 fi
 
 ln -sf $PWD/vim/vimrc ${DEST}/.vimrc
+
+git submodule update --init --recursive
+
 touch ${DEST}/.vimrc.local
