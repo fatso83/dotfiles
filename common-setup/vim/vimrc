@@ -24,8 +24,10 @@ Plugin 'suan/vim-instant-markdown'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'pangloss/vim-javascript'
-Plugin 'copy-as-rtf'
 Plugin 'editorconfig-vim'
+if !has("macunix")
+    Plugin 'copy-as-rtf'
+endif
 
 " All of your Plugins must be added before the following line
 call vundle#end()
@@ -97,15 +99,6 @@ au BufRead,BufNewFile *.vss set filetype=pascal
 " associate Processing files with Java
 au BufRead,BufNewFile *.pde set filetype=java
 
-
-"let g:pathogen_disabled = []
-"source ~/.vimrc.local
-"
-"if !has("macunix")
-"    call add(g:pathogen_disabled, 'copy-as-rtf')
-"endif
-"
-"execute pathogen#infect()
 
 " Auto-reload vimrc on changes
 autocmd! bufwritepost .vimrc source %
