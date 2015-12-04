@@ -42,7 +42,10 @@ git submodule update --init --recursive
 # Compiles YouCompleteMe with semenatic support for C-family languages
 # This needs to happen each time the YCM repo has been deleted
 pushd ~.vim/bundle/YouCompleteMe
-./install.py --clang-completer
+./install.py --clang-completer --gocode-completer
 popd
+
+# Semantic Typescript support for YCM
+npm install -g typescript
 
 touch ${DEST}/.vimrc.local
