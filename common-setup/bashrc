@@ -36,11 +36,15 @@ if [ -d ~/scripts ] ; then
 	PATH=~/scripts:"$PATH"
 fi
 
-
-
+# Read in utility functions (like t_debug, and timer_start)
 read_config "$HOME/.bash.d/bash_functions"
 read_config "$HOME/.bash.d/bash_aliases"
+
+# For debugging info on timing
 timer_start
+
+read_config_if_exists "$HOME/.bashrc.local"
+
 t_debug Executing '$HOME'/.bashrc
 
 read_config "$HOME/.bash.d/git-prompt.sh"
@@ -50,8 +54,6 @@ for f in "${HOME}"/.bash_completion.d/*; do
     read_config "$f"
 done
 
-t_debug Reading bashrc.local 
-read_config_if_exists "$HOME/.bash.d/bashrc.local"
 t_debug Reading color codes
 read_config_if_exists "$HOME/.bash.d/color_codes.dat"
 
