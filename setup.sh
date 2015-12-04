@@ -3,8 +3,9 @@
 # looking up per-machine stuff, but not right now
 
 # Just delegate down
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-pushd common-setup > /dev/null
+pushd "$SCRIPT_DIR/common-setup" > /dev/null
 echo Installing common setup
 ./setup.sh
 popd > /dev/null
@@ -12,7 +13,7 @@ popd > /dev/null
 
 # Add the little `millis` util for cross-platform millisecond support
 echo Adding scripts and binary utilities
-pushd utils > /dev/null
+pushd "$SCRIPT_DIR/utils" > /dev/null
 make install 
 popd > /dev/null
 

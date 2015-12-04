@@ -3,7 +3,8 @@
 MAIN_DIR="$HOME" 
 DEST="${MAIN_DIR}"
 BASH_DIR="${MAIN_DIR}/.bash.d"
-PWD="`pwd`"
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 
 if [ ! -e "$MAIN_DIR" ]; then
   echo Destination ${MAIN_DIR} does not exist
@@ -15,37 +16,44 @@ if [ ! -e "$BASH_DIR" ]; then
 fi
 
 rm ${DEST}/.bash_completion.d
-ln -sf "$PWD"/bash_completion.d ${DEST}/.bash_completion.d
+ln -sf "$SCRIPT_DIR"/bash_completion.d ${DEST}/.bash_completion.d
 
-ln -sf "$PWD"/profile ${DEST}/.profile
-ln -sf "$PWD"/bashrc ${DEST}/.bashrc
-ln -sf "$PWD"/gitconfig ${DEST}/.gitconfig
-ln -sf "$PWD"/gitignore_global ${DEST}/.gitignore_global
-ln -sf "$PWD"/pystartup ${DEST}/.pystartup
-ln -sf "$PWD"/tmux.conf ${DEST}/.tmux.conf
+ln -sf "$SCRIPT_DIR"/profile ${DEST}/.profile
+ln -sf "$SCRIPT_DIR"/bashrc ${DEST}/.bashrc
+ln -sf "$SCRIPT_DIR"/gitconfig ${DEST}/.gitconfig
+ln -sf "$SCRIPT_DIR"/gitignore_global ${DEST}/.gitignore_global
+ln -sf "$SCRIPT_DIR"/pystartup ${DEST}/.pystartup
+ln -sf "$SCRIPT_DIR"/tmux.conf ${DEST}/.tmux.conf
 
-for file in "$PWD"/bash.d/*; do
+for file in "$SCRIPT_DIR"/bash.d/*; do
   ln -sf $file ${BASH_DIR}/
 done
 
 # Remove any existing symlink - will fail if it is a dir
 rm ${DEST}/.vim 2>/dev/null
 if [ ! -e ${DEST}/.vim ]; then  
-    ln -sf $PWD/vim/dotvim ${DEST}/.vim
+    ln -sf $SCRIPT_DIR/vim/dotvim ${DEST}/.vim
 fi
 
-ln -sf $PWD/vim/vimrc ${DEST}/.vimrc
+ln -sf $SCRIPT_DIR/vim/vimrc ${DEST}/.vimrc
 
 # Checks out the Vundle submodule
 git submodule update --init --recursive
 
+vim -c "BundleInstall"
+
 # Compiles YouCompleteMe with semenatic support for C-family languages
 # This needs to happen each time the YCM repo has been deleted
-pushd ~.vim/bundle/YouCompleteMe
-./install.py --clang-completer --gocode-completer
-popd
+echo "Compiling YouCompleteMe"
+
+# Check if YCM has been compiled already - if so, drop compiling again
+if [[ ! -e ~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_client_support.so ]]; then
+    pushd ~/.vim/bundle/YouCompleteMe
+    ./install.py --clang-completer --gocode-completer
+    popd
+fi
 
 # Semantic Typescript support for YCM
-npm install -g typescript
+which tsc > /dev/null || npm install -g typescript
 
 touch ${DEST}/.vimrc.local
