@@ -25,7 +25,7 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'pangloss/vim-javascript'
 Plugin 'editorconfig-vim'
-if !has("macunix")
+if has("macunix")
     Plugin 'copy-as-rtf'
 endif
 
