@@ -36,6 +36,13 @@ fi
 
 ln -sf $PWD/vim/vimrc ${DEST}/.vimrc
 
+# Checks out the Vundle submodule
 git submodule update --init --recursive
+
+# Compiles YouCompleteMe with semenatic support for C-family languages
+# This needs to happen each time the YCM repo has been deleted
+pushd ~.vim/bundle/YouCompleteMe
+./install.py --clang-completer
+popd
 
 touch ${DEST}/.vimrc.local
