@@ -40,7 +40,8 @@ ln -sf $SCRIPT_DIR/vim/vimrc ${DEST}/.vimrc
 # Checks out the Vundle submodule
 git submodule update --init --recursive
 
-vim -c "BundleInstall"
+# Installs all Vundle and quits all windows
+vim +PluginInstall +qall
 
 # Check if YCM has been compiled already - if so, drop compiling again
 if [[ ! -e ~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_client_support.so ]]; then
