@@ -1,3 +1,8 @@
+// target Windows 7 and later
+// must be defined before windows.h
+// @see https://msdn.microsoft.com/en-us/library/windows/desktop/aa383745(v=vs.85).aspx
+#define _WIN32_WINNT _WIN32_WINNT_WIN7
+
 #include <stdio.h>
 #include <windows.h>
 #include <shellapi.h>
@@ -14,6 +19,9 @@
 #pragma comment( lib, "kernel32.lib" )
 #pragma comment( lib, "user32.lib" )
 #pragma comment( lib, "gdi32.lib" )
+
+// use our adapter
+extern "C" void cygwin_posix_to_win32_path_list(const char *posix, char * win32);
 
 bool  gDirSpecified     = false;
 bool  gParamsSpecified  = false;
