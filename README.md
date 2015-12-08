@@ -16,4 +16,4 @@ git clone https://github.com/fatso83/dotfiles
 
 ## Per machine settings
 
-See `per-machine-config/README.md`
+See `per-host-config/README.md`
