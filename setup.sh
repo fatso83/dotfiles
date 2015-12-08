@@ -22,3 +22,6 @@ popd > /dev/null
 
 # Restore current directory of user
 popd > /dev/null
+
+echo -e "${blue}Sourcing new setup$X"
+source ~/.bashrc

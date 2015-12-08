@@ -7,6 +7,8 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 pushd $SCRIPT_DIR > /dev/null
 
+source "$BASH_DIR"/color_codes.dat
+
 if [ ! -e "$MAIN_DIR" ]; then
   echo Destination ${MAIN_DIR} does not exist
   exit 1
@@ -42,13 +44,15 @@ ln -sf $SCRIPT_DIR/vim/vimrc ${DEST}/.vimrc
 git submodule update --init --recursive
 
 # Installs all Vundle and quits all windows
+    echo  -n -e "${blue}Installing all VIM plugins$X "
+    echo -e "${dark_grey}(might take some time the first time ... )$X"
 vim +PluginInstall +qall
 
 # Check if YCM has been compiled already - if so, drop compiling again
 if [[ ! -e ~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_client_support.so ]]; then
 	# Compiles YouCompleteMe with semenatic support for C-family languages
 	# This needs to happen each time the YCM repo has been deleted
-	echo "Compiling YouCompleteMe"
+    echo -e "${blue}Compiling YouCompleteMe$X (takes a minute or two)"
 
 	pushd ~/.vim/bundle/YouCompleteMe
 	./install.py --clang-completer --gocode-completer
