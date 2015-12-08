@@ -65,7 +65,7 @@ workdir="${pink}\w${X}"
 gitbranch="${dark_red}\$(__git_ps1 \" (%s)\")${X}"
 at="${dark_grey}at${X}"
 in="${dark_grey}in${X}"
-PS1="\n${user} ${at} ${host} ${in} ${workdir} ${gitbranch}\n\$ "
+export PS1="\n${user} ${at} ${host} ${in} ${workdir} ${gitbranch}\n\$ "
 
 # From http://stackoverflow.com/questions/9457233/unlimited-bash-history
 # Eternal bash history.
