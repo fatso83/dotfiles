@@ -13,3 +13,7 @@ I really hate code or configuration that I don't understand. It might do magical
 git clone https://github.com/fatso83/dotfiles
 ./dotfiles/setup.sh # and wait until completion ...
 ```
+
+## Per machine settings
+
+See `per-machine-config/README.md`

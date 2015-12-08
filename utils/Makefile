@@ -8,6 +8,4 @@ clean:
 
 install: all
 	@mkdir ${HOME}/bin 2>/dev/null;	\
-		cp ./millis ${HOME}/bin/ \
-		&& echo "Installed millis in ${HOME}/bin"
-
+		cp ./millis ${HOME}/bin/

@@ -5,6 +5,7 @@ DEST="${MAIN_DIR}"
 BASH_DIR="${MAIN_DIR}/.bash.d"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+pushd $SCRIPT_DIR > /dev/null
 
 if [ ! -e "$MAIN_DIR" ]; then
   echo Destination ${MAIN_DIR} does not exist
@@ -58,3 +59,5 @@ fi
 which tsc > /dev/null || npm install -g typescript
 
 touch ${DEST}/.vimrc.local
+
+popd > /dev/null

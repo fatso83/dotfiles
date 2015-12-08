@@ -4,18 +4,21 @@
 
 # Just delegate down
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+pushd "$SCRIPT_DIR" > /dev/null
 
-pushd "$SCRIPT_DIR/common-setup" > /dev/null
-echo Installing common setup
-./setup.sh
-popd > /dev/null
+# Get some color codes for printing
+source common-setup/bash.d/color_codes.dat
 
+echo -e ${blue}Installing common setup$X
+common-setup/setup.sh
 
 # Add the little `millis` util for cross-platform millisecond support
-echo Adding scripts and binary utilities
+echo -e ${blue}Adding scripts and binary utilities${X}
 pushd "$SCRIPT_DIR/utils" > /dev/null
 make install 
 popd > /dev/null
 
-#echo TODO: Install per-machine config
-# perhaps look up some token?
+"$SCRIPT_DIR"/per-host-config/setup.sh
+
+# Restore current directory of user
+popd > /dev/null
