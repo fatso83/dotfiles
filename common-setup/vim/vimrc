@@ -24,7 +24,7 @@ Plugin 'suan/vim-instant-markdown'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'pangloss/vim-javascript'
-Plugin 'editorconfig-vim'
+Plugin 'editorconfig/editorconfig-vim'
 if has("macunix")
     Plugin 'copy-as-rtf'
 endif

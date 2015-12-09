@@ -44,23 +44,32 @@ ln -sf $SCRIPT_DIR/vim/vimrc ${DEST}/.vimrc
 git submodule update --init --recursive
 
 # Installs all Vundle and quits all windows
-    echo  -n -e "${blue}Installing all VIM plugins$X "
-    echo -e "${dark_grey}(might take some time the first time ... )$X"
+echo  -n -e "${blue}Installing all VIM plugins$X "
+echo -e "${dark_grey}(might take some time the first time ... )$X"
 vim +PluginInstall +qall
 
 # Check if YCM has been compiled already - if so, drop compiling again
-if [[ ! -e ~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_client_support.so ]]; then
+# The ".*" matches both *.dll and *.so 
+ycm_lib=$(echo ~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_core.* )
+if [[ ! -e "$ycm_lib" ]]; then
 	# Compiles YouCompleteMe with semenatic support for C-family languages
 	# This needs to happen each time the YCM repo has been deleted
     echo -e "${blue}Compiling YouCompleteMe$X (takes a minute or two)"
+    exit
 
 	pushd ~/.vim/bundle/YouCompleteMe
+
+    echo Fetching patch for 64 bit CygWin support
+    pushd third_party/ycmd
+    git apply $SCRIPT_DIR/cygwin-ycm.patch
+    popd
+
 	./install.py --clang-completer --gocode-completer
 	popd
 fi
 
 # Semantic Typescript support for YCM
-which tsc > /dev/null || npm install -g typescript
+which tsc > /dev/null 2>&1 || npm install -g typescript
 
 touch ${DEST}/.vimrc.local
 
