@@ -1,3 +1,4 @@
+alias open="cygstart"
 alias npm="cmd /c npm"
 alias nodist="cmd /c nodist"
 alias node="cmd /c node"
