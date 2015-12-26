@@ -10,3 +10,4 @@ alias chrome='cmd /c "c:\Program Files (x86)\Google\Chrome\Application\chrome.ex
 #export CYGWIN="nodosfilewarning"
 
 export EDITOR=gvim
+alias gam="python ~/hjemmemappe/Dropbox/gam/gam.py"
