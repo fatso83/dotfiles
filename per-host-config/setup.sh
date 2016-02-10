@@ -16,7 +16,7 @@ if [[ ! -e $MACHINE_NAME_FILE ]]; then
     exit 1
 fi
 
-MACHINE=$(cat $MACHINE_NAME_FILE)
+MACHINE=$(cat "$MACHINE_NAME_FILE")
 
 if [[ -e "$MACHINE" ]]; then 
     echo -e "${blue}Setting up local settings for this machine$X"

@@ -5,7 +5,7 @@ DEST="${MAIN_DIR}"
 BASH_DIR="${MAIN_DIR}/.bash.d"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-pushd $SCRIPT_DIR > /dev/null
+pushd "$SCRIPT_DIR" > /dev/null
 
 source "$BASH_DIR"/color_codes.dat
 
@@ -15,30 +15,31 @@ if [ ! -e "$MAIN_DIR" ]; then
 fi
 
 if [ ! -e "$BASH_DIR" ]; then
-  mkdir ${BASH_DIR}
+  mkdir "${BASH_DIR}"
 fi
 
-rm ${DEST}/.bash_completion.d
-ln -sf "$SCRIPT_DIR"/bash_completion.d ${DEST}/.bash_completion.d
+rm -r "$DEST"/.bash_completion.d
+ln -s "$SCRIPT_DIR"/bash_completion.d "$DEST"/.bash_completion.d 
+exit
 
-ln -sf "$SCRIPT_DIR"/profile ${DEST}/.profile
-ln -sf "$SCRIPT_DIR"/bashrc ${DEST}/.bashrc
-ln -sf "$SCRIPT_DIR"/gitconfig ${DEST}/.gitconfig
-ln -sf "$SCRIPT_DIR"/gitignore_global ${DEST}/.gitignore_global
-ln -sf "$SCRIPT_DIR"/pystartup ${DEST}/.pystartup
-ln -sf "$SCRIPT_DIR"/tmux.conf ${DEST}/.tmux.conf
+ln -sf "$SCRIPT_DIR"/profile "$DEST"/.profile
+ln -sf "$SCRIPT_DIR"/bashrc "$DEST"/.bashrc
+ln -sf "$SCRIPT_DIR"/gitconfig "$DEST"/.gitconfig
+ln -sf "$SCRIPT_DIR"/gitignore_global "$DEST"/.gitignore_global
+ln -sf "$SCRIPT_DIR"/pystartup "$DEST"/.pystartup
+ln -sf "$SCRIPT_DIR"/tmux.conf "$DEST"/.tmux.conf
 
 for file in "$SCRIPT_DIR"/bash.d/*; do
-  ln -sf $file ${BASH_DIR}/
+  ln -sf "$file" "${BASH_DIR}"/
 done
 
 # Remove any existing symlink - will fail if it is a dir
-rm ${DEST}/.vim 2>/dev/null
-if [ ! -e ${DEST}/.vim ]; then  
-    ln -sf $SCRIPT_DIR/vim/dotvim ${DEST}/.vim
+rm "$DEST"/.vim 2>/dev/null
+if [ ! -e "$DEST"/.vim ]; then  
+    ln -sf "$SCRIPT_DIR"/vim/dotvim "$DEST"/.vim
 fi
 
-ln -sf $SCRIPT_DIR/vim/vimrc ${DEST}/.vimrc
+ln -sf "$SCRIPT_DIR"/vim/vimrc "$DEST"/.vimrc
 
 # Checks out the Vundle submodule
 git submodule update --init --recursive
@@ -71,6 +72,6 @@ fi
 # Semantic Typescript support for YCM
 which tsc > /dev/null 2>&1 || npm install -g typescript
 
-touch ${DEST}/.vimrc.local
+touch "$DEST"/.vimrc.local
 
 popd > /dev/null
