@@ -1,0 +1,48 @@
+#!/usr/bin/env node
+
+/**
+ * Find the MOD11 checking digit to a number
+ * 
+ * See wikipedia for details
+ *
+ * @param tenDigitString {string} a ten digit string
+ * @returns {string} the checking digit, possibly '-'
+ */
+function mod11(tenDigitString){
+    if(! tenDigitString.match(/^\d{10}/)) { 
+        throw new TypeError('Expected ten digit string');
+    }
+
+    var reversedDigits = tenDigitString.split('').reverse();
+    var numbers = reversedDigits.map( function( val, idx ) {
+        return parseInt(val,10)*[2,3,4,5,6,7][idx%6]
+    })
+    var crossProduct = numbers.reduce(function(prev,current){  return prev + current; }, 0); 
+
+    if(crossProduct % 11 === 10) {
+        return '-';
+    } else {
+        return  11-(crossProduct % 11);
+    }
+}
+
+function randomDigit() {
+    return Math.random()*10 >> 0;
+}
+
+function generate10digits(){
+    var i = 10;
+    var digits = [];
+    while( i-- ) digits.push( randomDigit() );
+    return digits.join('');
+}
+
+
+var number = generate10digits();
+var paddedNumber = number + mod11(number);
+console.log(paddedNumber);
+
+/* 
+ * VIM modeline
+ * vim: set ft=javascript ts=4 :
+ */

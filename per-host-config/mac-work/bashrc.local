@@ -15,6 +15,4 @@ alias btsync_tunnel="timbuktu_lokal -L 8888:0.0.0.0:8888 -N"
 # Conditionals
 #alias vim='mvim'
 
-ANDROID_TOOLS=~/Applications/adt-bundle-mac-x86_64-20131030/sdk/platform-tools
-PATH="${ANDROID_TOOLS}:${PATH}"
-
+alias gam="python $HOME/Dropbox/gam/gam.py"

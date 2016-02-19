@@ -1,0 +1,23 @@
+#!/bin/bash
+# Add all files that are marked as "deleted" to be staged for removal
+
+# Extended regex flag for GNU sed
+regex_flag="-r"
+
+# BSD sed
+if [[ $(uname) == "Darwin" ]]; then
+    regex_flag="-E"
+fi
+
+git status \
+    | grep 'deleted' \
+    \
+    \
+    | sed  $regex_flag -n -e 's/[[:space:]]+deleted:[[:space:]]+//g
+    s/ /\\ /g
+    /.*/p
+    ' \
+    \
+    \
+    | xargs git rm 
+

@@ -1,6 +1,6 @@
 
 # Maskinalias
-alias timbuktu='ssh carl-erik@timbuktu.hopto.org'
+alias timbuktu='ssh carl-erik@timbuktu.kopseng.no'
 alias timbuktu_lokal='ssh carl-erik@192.168.10.2'
 alias ifi='ssh carlerik@vor.ifi.uio.no'
 alias ntnu='ssh kopseng@login.stud.ntnu.no'
@@ -16,6 +16,7 @@ alias htmlencode='python3 -c "import sys, html; print(html.escape(sys.argv[1]))"
 # Git stuff that is hard to remember
 alias g_unchanged='git update-index --assume-unchanged'
 alias g_push_create_remote='git push -u <remote-name> <branch-name>'
+alias g_head_sha='git rev-parse --short HEAD'
 
 # Use Hub if installed
 if which hub > /dev/null 2>&1; then
@@ -60,6 +61,6 @@ alias epoch=millis #  tool that we compile ourselves
 alias my-ip='curl http://ipinfo.io/ip'
 
 # SOCKS proxy
-alias socks_proxy='ssh -v -D 22222 carl-erik@timbuktu.hopto.org -N'
-alias socks_proxy_all='ssh -v -D :22222 carl-erik@timbuktu.hopto.org -N'
+alias socks_proxy='ssh -v -D 22222 carl-erik@timbuktu.kopseng.no -N'
+alias socks_proxy_all='ssh -v -D :22222 carl-erik@timbuktu.kopseng.no -N'
 alias html2text='python -c "import sys,html2text;sys.stdout.write(html2text.html2text(sys.stdin.read()))"'
