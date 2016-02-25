@@ -7,7 +7,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 pushd "$SCRIPT_DIR" > /dev/null
 
-source "$BASH_DIR"/color_codes.dat
+source "$SCRIPT_DIR/bash.d/color_codes.dat"
 
 if [ ! -e "$MAIN_DIR" ]; then
   echo Destination ${MAIN_DIR} does not exist
@@ -20,7 +20,6 @@ fi
 
 rm -r "$DEST"/.bash_completion.d
 ln -s "$SCRIPT_DIR"/bash_completion.d "$DEST"/.bash_completion.d 
-exit
 
 ln -sf "$SCRIPT_DIR"/profile "$DEST"/.profile
 ln -sf "$SCRIPT_DIR"/bashrc "$DEST"/.bashrc
@@ -56,7 +55,6 @@ if [[ ! -e "$ycm_lib" ]]; then
 	# Compiles YouCompleteMe with semenatic support for C-family languages
 	# This needs to happen each time the YCM repo has been deleted
     echo -e "${blue}Compiling YouCompleteMe$X (takes a minute or two)"
-    exit
 
 	pushd ~/.vim/bundle/YouCompleteMe
 
