@@ -37,4 +37,9 @@ and export that setup to  a file. I could then just have some task
 that added a registry setting that made ConEmu/Cmder use that config
 instead of the admin-writable setting it uses as the default.
 
+Registry export/import: 
+- http://superuser.com/a/450157/69121
+- http://conemu.github.io/en/Settings.html#Where_settings_are_stored
 
+LoadCfgFile file   | Use specified xml file as configuration storage.
+- http://conemu.github.io/en/ConEmuArgs.html
