@@ -57,3 +57,6 @@
 	cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge $LOCAL $REMOTE
 [rerere]
 	enabled = true
+[credential]
+    # One week in-mem caching of HTTPS credentials
+    helper = cache --timeout=604800
