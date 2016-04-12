@@ -14,5 +14,10 @@ alias btsync_tunnel="timbuktu_lokal -L 8888:0.0.0.0:8888 -N"
 
 # Conditionals
 #alias vim='mvim'
+alias rm=trash
 
 alias gam="python $HOME/Dropbox/gam/gam.py"
+
+# Make Ctrl-S work again (incremental search forwards)
+# http://stackoverflow.com/questions/791765/unable-to-forward-search-bash-history-similarly-as-with-ctrl-r
+stty -ixon

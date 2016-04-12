@@ -22,6 +22,7 @@ if [[ -e "$MACHINE" ]]; then
     echo -e "${blue}Setting up local settings for this machine$X"
     cd $MACHINE
     ln -sf `pwd`/bashrc.local "$HOME/.bashrc.local"
+    ln -sf `pwd`/gitlocal "$HOME/.gitlocal"
     [[ -e ./setup.sh ]] && ./setup.sh
 else
     echo -e "${dark_red}Missing local settings directory: $SCRIPT_DIR/$MACHINE$X" >> /dev/stderr

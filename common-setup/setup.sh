@@ -63,7 +63,10 @@ if [[ ! -e "$ycm_lib" ]]; then
     git apply $SCRIPT_DIR/cygwin-ycm.patch
     popd
 
-	./install.py --clang-completer --gocode-completer
+    # clang = c languages (needed for C, javascript, C#... )
+    # Omnisharp = C#
+    # golang = Go
+	./install.py --clang-completer --omnisharp-completer 
 	popd
 fi
 
