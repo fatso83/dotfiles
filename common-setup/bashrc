@@ -96,4 +96,4 @@ export NVM_DIR="/Users/carl-erik.kopseng/.nvm"
 t_debug Finished .bashrc
 
 [ -s "/Users/carl-erik.kopseng/.dnx/dnvm/dnvm.sh" ] && . "/Users/carl-erik.kopseng/.dnx/dnvm/dnvm.sh" # Load dnvm
-source ~/azure.completion.sh
+source ~/.bash_completion.d/azure
