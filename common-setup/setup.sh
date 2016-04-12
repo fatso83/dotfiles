@@ -58,15 +58,10 @@ if [[ ! -e "$ycm_lib" ]]; then
 
 	pushd ~/.vim/bundle/YouCompleteMe
 
-    echo Fetching patch for 64 bit CygWin support
-    pushd third_party/ycmd
-    git apply $SCRIPT_DIR/cygwin-ycm.patch
-    popd
-
     # clang = c languages (needed for C, javascript, C#... )
     # Omnisharp = C#
     # golang = Go
-	./install.py --clang-completer --omnisharp-completer 
+	./install.py --clang-completer --omnisharp-completer  --gocode-completer
 	popd
 fi
 
