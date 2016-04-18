@@ -16,18 +16,19 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 " My bundles
-" YouCompleteMe has a compiled back-end
-" https://github.com/Valloric/YouCompleteMe#mac-os-x-super-quick-installation
-" Same with instant-markdown: npm -g update instant-markdown-d
-Plugin 'Valloric/YouCompleteMe'
+if has("macunix")
+    Plugin 'copy-as-rtf'
+
+    " YouCompleteMe has a compiled back-end
+    " https://github.com/Valloric/YouCompleteMe#mac-os-x-super-quick-installation
+    Plugin 'Valloric/YouCompleteMe'
+endif
+" Needs backend: npm -g update instant-markdown-d
 Plugin 'suan/vim-instant-markdown'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'pangloss/vim-javascript'
 Plugin 'editorconfig/editorconfig-vim'
-if has("macunix")
-    Plugin 'copy-as-rtf'
-endif
 
 " All of your Plugins must be added before the following line
 call vundle#end()
