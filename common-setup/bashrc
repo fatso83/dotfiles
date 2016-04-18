@@ -67,6 +67,22 @@ at="${dark_grey}at${X}"
 in="${dark_grey}in${X}"
 export PS1="\n${user} ${at} ${host} ${in} ${workdir} ${gitbranch}\n\$ "
 
+# Start ssh-agent
+# Unsafe on shared machines: http://rabexc.org/posts/pitfalls-of-ssh-agents
+ssh-add -l &>/dev/null
+if [ "$?" == 2 ]; then
+  test -r ~/.ssh-agent && \
+    eval "$(<~/.ssh-agent)" >/dev/null
+
+  ssh-add -l &>/dev/null
+  if [ "$?" == 2 ]; then
+    (umask 066; ssh-agent > ~/.ssh-agent)
+    eval "$(<~/.ssh-agent)" >/dev/null
+    ssh-add
+  fi
+fi
+
+
 # From http://stackoverflow.com/questions/9457233/unlimited-bash-history
 # Eternal bash history.
 # ---------------------
