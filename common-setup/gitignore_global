@@ -2,8 +2,8 @@
 ###################
 *.com
 *.class
-*.dll
-*.exe
+#*.dll
+#*.exe
 *.o
 *.so
 *.pyc
