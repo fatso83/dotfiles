@@ -38,7 +38,7 @@
 
 [credential]
     # One week in-mem caching of HTTPS credentials
-	helper = cache --timeout=7200
+	helper = cache --timeout=604800
 
 
 
