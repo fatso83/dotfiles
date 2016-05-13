@@ -2,14 +2,9 @@
     name = Carl-Erik Kopseng
     email = carlerik@gmail.com
 
-# https://www.semipol.de/2013/08/26/sharing-the-git-config-across-different-computers-with-individual-modifications.html
-[include]
-    path = .gitlocal
-
 [core]
     editor = vim
     excludesfile = ~/.gitignore_global
-    autocrlf = input
 [color]
     ui = true
 [push]
@@ -43,4 +38,17 @@
 
 [credential]
     # One week in-mem caching of HTTPS credentials
-    helper = cache --timeout=604800
+	helper = cache --timeout=7200
+
+
+
+
+################################################################################
+# This should probably stay at the end to overwrite global defaults
+################################################################################
+#
+# https://www.semipol.de/2013/08/26/sharing-the-git-config-across-different-computers-with-individual-modifications.html
+[include]
+    path = .gitlocal
+
+# Do not add stuff here. 

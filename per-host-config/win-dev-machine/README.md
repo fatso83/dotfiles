@@ -1,14 +1,18 @@
 # Development setup for a Windows box
 
 ```
-# Install Choco
-iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
+# Install Scoop
+See [scoop.sh](http://scoop.sh).
 
-# Remove some prompting: how? choco ... ?
+```
+iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
+```
+Needs Powershell 3
+
 
 # Cygwin setup
-choco install cygwin    # Unix environment in Windows
-choco install cyg-get   # apt-get for Cygwin
+scoop install cygwin    # Unix environment in Windows
+scoop install cyg-get   # apt-get for Cygwin
 cyg-get git             # Use Cygwin's own git
 
 # Some build tools used when getting stuff from scratch
@@ -17,12 +21,12 @@ cyg-get gcc
 cyg-get g++
 cyg-get vim
 
-choco install conemu    # Better console emulator
-choco install cmder     # ConEmu with better defaults
-choco install vim       # global vim install
-choco install git       # global Git install
+scoop install conemu    # Better console emulator
+scoop install cmder     # ConEmu with better defaults
+scoop install vim       # global vim install
+scoop install git       # global Git install
 
-choco install nodejs    # Basis for all front-end tooling
+scoop install nodejs    # Basis for all front-end tooling
 ```
 
 ## Custom stuff not setup
