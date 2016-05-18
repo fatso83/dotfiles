@@ -48,21 +48,23 @@ echo  -n -e "${blue}Installing all VIM plugins$X "
 echo -e "${dark_grey}(might take some time the first time ... )$X"
 vim +PluginInstall +qall
 
-# Check if YCM has been compiled already - if so, drop compiling again
-# The ".*" matches both *.dll and *.so 
-ycm_lib=$(echo ~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_core.* )
-if [[ ! -e "$ycm_lib" ]]; then
-	# Compiles YouCompleteMe with semenatic support for C-family languages
-	# This needs to happen each time the YCM repo has been deleted
-    echo -e "${blue}Compiling YouCompleteMe$X (takes a minute or two)"
+if [[ -e ~/.vim/bundle/YouCompleteMe ]]; then
+    # Check if YCM has been compiled already - if so, drop compiling again
+    # The ".*" matches both *.dll and *.so 
+    ycm_lib=$(echo ~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_core.* )
+    if [[ ! -e "$ycm_lib" ]]; then
+        # Compiles YouCompleteMe with semenatic support for C-family languages
+        # This needs to happen each time the YCM repo has been deleted
+        echo -e "${blue}Compiling YouCompleteMe$X (takes a minute or two)"
 
-	pushd ~/.vim/bundle/YouCompleteMe
+        pushd ~/.vim/bundle/YouCompleteMe
 
-    # clang = c languages (needed for C, javascript, C#... )
-    # Omnisharp = C#
-    # golang = Go
-	./install.py --clang-completer --omnisharp-completer  --gocode-completer
-	popd
+        # clang = c languages (needed for C, javascript, C#... )
+        # Omnisharp = C#
+        # golang = Go
+        ./install.py --clang-completer --omnisharp-completer  --gocode-completer
+        popd
+    fi
 fi
 
 # Semantic Typescript support for YCM
