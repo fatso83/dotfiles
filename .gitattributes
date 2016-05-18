@@ -1,0 +1,21 @@
+# consistent line endings
+
+# References:
+# http://stackoverflow.com/questions/26407408/dealing-with-eol-characters-in-cygwin-git-and-git-for-windows-accessing-the-same
+# https://help.github.com/articles/dealing-with-line-endings/#per-repository-settings
+# https://github.com/mono/mono/blob/master/.gitattributes
+
+# unix newlines as standard
+*   text=auto
+
+# don't do anything to line-endings for Windows files.  Let CRLFs go into the repo, and CRLF on checkout
+*.bat       -crlf
+*.ps1       -crlf
+*.sln       -crlf
+*.*proj*    -crlf
+
+
+# To view the effect:
+# $ rm .git/index     # Remove the index to force Git to
+# $ git reset         # re-scan the working directory
+# $ git status        # Show files that will be normalized
