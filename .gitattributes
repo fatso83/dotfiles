@@ -5,7 +5,7 @@
 # https://help.github.com/articles/dealing-with-line-endings/#per-repository-settings
 # https://github.com/mono/mono/blob/master/.gitattributes
 
-# unix newline normalization as standard
+# line endings are normalized to LF on _checkin_.
 *   text=auto
 
 # don't fuck with binaries
@@ -15,7 +15,8 @@
 *.ps1       eol=crlf
 
 *.sh        eol=lf
-
+*.dat       eol=lf
+*.vimrc     eol=lf
 
 # To view the effect:
 # $ rm .git/index     # Remove the index to force Git to
