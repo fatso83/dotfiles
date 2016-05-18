@@ -5,6 +5,8 @@
 [core]
     editor = vim
     excludesfile = ~/.gitignore_global
+    autocrlf = false
+
 [color]
     ui = true
 [push]
