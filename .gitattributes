@@ -5,14 +5,16 @@
 # https://help.github.com/articles/dealing-with-line-endings/#per-repository-settings
 # https://github.com/mono/mono/blob/master/.gitattributes
 
-# unix newlines as standard
+# unix newline normalization as standard
 *   text=auto
 
-# don't do anything to line-endings for Windows files.  Let CRLFs go into the repo, and CRLF on checkout
-*.bat       -crlf
-*.ps1       -crlf
-*.sln       -crlf
-*.*proj*    -crlf
+# don't fuck with binaries
+*.jpg   -text
+
+*.bat       eol=crlf
+*.ps1       eol=crlf
+
+*.sh        eol=lf
 
 
 # To view the effect:
