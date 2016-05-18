@@ -14,9 +14,7 @@
 *.bat       eol=crlf
 *.ps1       eol=crlf
 
-*.sh        eol=lf
-*.dat       eol=lf
-*.vimrc     eol=lf
+common-setup/**  eol=lf
 
 # To view the effect:
 # $ rm .git/index     # Remove the index to force Git to
