@@ -166,5 +166,3 @@ source ~/.bash_completion.d/azure
 t_debug "Reading local settings for this machine"
 # This needs to be at the bottom to be able to override earlier settings/variables/functions
 read_config_if_exists "$HOME/.bashrc.local"
-
-t_debug Finished .bashrc

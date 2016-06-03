@@ -8,6 +8,9 @@ alias ls='ls --color'
 alias chrome='cmd /c "c:\Program Files (x86)\Google\Chrome\Application\chrome.exe"'
 
 #export CYGWIN="nodosfilewarning"
+t_debug Reading local settings
 
 export EDITOR=gvim
 alias gam="python ~/hjemmemappe/Dropbox/gam/gam.py"
+
+export PS1="\n${workdir}\n\$ "
