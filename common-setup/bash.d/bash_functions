@@ -11,40 +11,6 @@ function test_is_true() {
         [[ "$1" == "$2" ]] && echo "OK" || echo "ERROR" $1 $2
 }
 
-# @see http://stackoverflow.com/questions/3601515/how-to-check-if-a-variable-is-set-in-bash
-function debug() {
-        [[ x == ${DEBUG+x} ]] && echo $@ >/dev/stderr
-}
-
-function t_debug() {
-        [[ x == ${DEBUG+x} ]] && echo [$(timer_now)] $@ >/dev/stderr
-}
-
-#These timer_* functions relies on a utility called `millis`
-#@see https://gist.github.com/fatso83/86e94e91926d1311f3fa
-__timer='unset'
-function timer_start(){
-    __timer=$(millis)
-}
-
-function timer_reset(){
-    timer_start
-}
-
-# Get the current amount of elapsed seconds
-function timer_now(){
-    if [[ $__timer == 'unset' ]]; then
-        echo "Timer is unset. Use timer_start"
-        return 1
-    fi
-
-    local diff;
-    local now=$(millis)
-    let diff=$now-$__timer
-    echo $diff
-}
-
-
 # Needed? You can just $(ls $( echo $(echo $(echo /bin/ls)))) 
 
 # Purpose: Easily nest multiple expansions without too much escaping

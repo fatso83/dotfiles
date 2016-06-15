@@ -1,10 +1,64 @@
+# To enable debug printing, just set the DEBUG environment variable
+# You can then use `debug` or `t_debug` statements to echo debug info
+
 # short circuit the sourcing for non-interactive shells
 # http://superuser.com/questions/183870/difference-between-bashrc-and-bash-profile
 [[ $- != *i* ]] && return
 
-# To enable debug printing, just uncomment this
-# You can then use `debug` or `t_debug` statements to echo debug info
-# DEBUG=yup
+################################################################################
+# Prolog start
+#
+# These timer_* functions rely on a utility called `millis`
+# @see https://gist.github.com/fatso83/86e94e91926d1311f3fa
+################################################################################
+
+# @see http://stackoverflow.com/questions/3601515/how-to-check-if-a-variable-is-set-in-bash
+function debug() {
+        [[ x == ${DEBUG+x} ]] && echo $@ >/dev/stderr
+}
+
+function t_debug() {
+        [[ x == ${DEBUG+x} ]] && echo [$(timer_now)] $@ >/dev/stderr
+}
+function timer_start(){
+    __timer=$(millis)
+}
+function timer_start_if_unset(){
+    if [[ x$__timer == x ]]; then
+        debug Timer was unset. Initializing timer.
+        timer_start
+    fi
+}
+function timer_now(){
+    if [[ x$__timer == x ]]; then
+        echo "Timer is unset. Use timer_start"
+        return 1
+    fi
+
+    local diff;
+    local now=$(millis)
+    let diff=$now-$__timer
+    echo $diff
+}
+
+# include selfmade binaries and scripts
+# Needed for some of the utility functions
+if [ -d ~/bin ] ; then
+    PATH=~/bin:"${PATH}"
+fi
+
+# For debugging info on timing
+timer_start_if_unset
+
+t_debug Executing '$HOME'/.bashrc
+
+################################################################################
+# Prolog finished
+################################################################################
+
+declare -x CLICOLOR
+ulimit -c unlimited
+umask 022
 
 function read_config {
   if [ -a "$1" ]; then
@@ -22,33 +76,19 @@ if [ -z "${ORIGINAL_PATH}" ]; then
         ORIGINAL_PATH="${PATH}"
 fi
 
-declare -x CLICOLOR
-ulimit -c unlimited
-umask 022
-
-# include selfmade binaries and scripts
-# Needed for some of the utility functions
-if [ -d ~/bin ] ; then
-    PATH=~/bin:"${PATH}"
-fi
-
-if [ -d ~/scripts ] ; then
-	PATH=~/scripts:"$PATH"
-fi
-
-# Read in utility functions (like t_debug, and timer_start)
+t_debug "Reading utility functions"
 read_config "$HOME/.bash.d/bash_functions"
+
+t_debug "Reading aliases"
 read_config "$HOME/.bash.d/bash_aliases"
 
-# For debugging info on timing
-timer_start
-
+t_debug "Reading local settings for this machine"
 read_config_if_exists "$HOME/.bashrc.local"
 
-t_debug Executing '$HOME'/.bashrc
-
+t_debug "Reading utils for git prompt"
 read_config "$HOME/.bash.d/git-prompt.sh"
 
+t_debug "Reading bash completion files"
 for f in "${HOME}"/.bash_completion.d/*; do
     t_debug $f
     read_config "$f"
@@ -59,12 +99,12 @@ read_config_if_exists "$HOME/.bash.d/colors"
 
 
 #Se man bash i delen som heter "Prompting"
-user="${green}\u${X}"
-host="${dark_yellow}\h${X}"
-workdir="${pink}\w${X}"
-gitbranch="${dark_red}\$(__git_ps1 \" (%s)\")${X}"
-at="${dark_grey}at${X}"
-in="${dark_grey}in${X}"
+user=$(green "\u")
+host=$(dark_yellow "\h")
+workdir=$(pink "\w")
+gitbranch=$(dark_red \$\(__git_ps1  "\(%s\)" \))
+at=$(dark_grey at)
+in=$(dark_grey in)
 export PS1="\n${user} ${at} ${host} ${in} ${workdir} ${gitbranch}\n\$ "
 
 # Start ssh-agent
@@ -105,11 +145,20 @@ export HISTCONTROL=ignoredups
 export VISUAL='vim'
 export EDITOR='vim'
 
+if [ -d ~/scripts ] ; then
+    echo $(dark_yellow "Deprecated! Try to avoid ~/scripts in favor of ~/bin")
+	PATH=~/scripts:"$PATH"
+fi
+
+
 t_debug Load NVM
 export NVM_DIR="/Users/carl-erik.kopseng/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-t_debug Finished .bashrc
-
+t_debug "Load DNVM (.NET VM manager)"
 [ -s "/Users/carl-erik.kopseng/.dnx/dnvm/dnvm.sh" ] && . "/Users/carl-erik.kopseng/.dnx/dnvm/dnvm.sh" # Load dnvm
+
+t_debug "Loading Azure completion"
 source ~/.bash_completion.d/azure
+
+t_debug Finished .bashrc
