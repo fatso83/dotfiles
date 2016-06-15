@@ -29,6 +29,7 @@
     co = checkout
     cam = commit --all --message
     cm = commit --message
+    fap = fetch --all --prune
 
     # log aliases
     
