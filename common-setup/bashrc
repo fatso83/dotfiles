@@ -55,7 +55,7 @@ for f in "${HOME}"/.bash_completion.d/*; do
 done
 
 t_debug Reading color codes
-read_config_if_exists "$HOME/.bash.d/color_codes.dat"
+read_config_if_exists "$HOME/.bash.d/colors"
 
 
 #Se man bash i delen som heter "Prompting"

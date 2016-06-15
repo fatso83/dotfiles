@@ -7,7 +7,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 pushd "$SCRIPT_DIR" > /dev/null
 
-source "$SCRIPT_DIR/bash.d/color_codes.dat"
+source "$SCRIPT_DIR/bash.d/colors"
 
 if [ ! -e "$MAIN_DIR" ]; then
   echo Destination ${MAIN_DIR} does not exist

@@ -8,7 +8,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd "$SCRIPT_DIR" > /dev/null
 
 # Get some color codes
-source ../common-setup/bash.d/color_codes.dat
+source ../common-setup/bash.d/colors
 
 if [[ ! -e $MACHINE_NAME_FILE ]]; then
     echo -e "${dark_red}Missing name of this machine in $MACHINE_NAME_FILE${X}" >> /dev/stderr

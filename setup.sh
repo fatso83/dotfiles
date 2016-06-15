@@ -7,7 +7,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd "$SCRIPT_DIR" > /dev/null
 
 # Get some color codes for printing
-source common-setup/bash.d/color_codes.dat
+source common-setup/bash.d/colors
 
 echo -e ${blue}Installing common setup$X
 common-setup/setup.sh

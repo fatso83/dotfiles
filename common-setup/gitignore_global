@@ -37,7 +37,7 @@
 ehthumbs.db
 Thumbs.db
 #http://blog.bitfluent.com/post/173740409/ignoring-icon-in-gitignore
-Icon
+Icon
 #.gitignore
 
 # Temporary files
