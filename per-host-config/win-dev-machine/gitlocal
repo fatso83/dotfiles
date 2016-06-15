@@ -1,0 +1,3 @@
+[core]
+    # auto-converts lf=>crlf on checkout and crlf=>lf on checkin
+    autocrlf = true

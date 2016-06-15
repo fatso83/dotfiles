@@ -5,7 +5,16 @@
 [core]
     editor = vim
     excludesfile = ~/.gitignore_global
-    autocrlf = false
+
+    # auto-converts crlf=>lf on checkin
+    autocrlf = input
+    
+    # gitattributes in each repo is a better solution: https://git-scm.com/docs/gitattributes
+    # Just `echo '* text=auto' >> .gitattributes` # will normalize all text files
+    #
+    # Excerpt from https://help.github.com/articles/dealing-with-line-endings:
+    #    > The advantage of a .gitattributes file is that your line configurations are associated with your repository. 
+    #    > You don't need to worry about whether or not collaborators have the same line ending settings that you do.
 
 [color]
     ui = true

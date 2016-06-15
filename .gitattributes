@@ -4,9 +4,14 @@
 # http://stackoverflow.com/questions/26407408/dealing-with-eol-characters-in-cygwin-git-and-git-for-windows-accessing-the-same
 # https://help.github.com/articles/dealing-with-line-endings/#per-repository-settings
 # https://github.com/mono/mono/blob/master/.gitattributes
+# https://git-scm.com/docs/gitattributes
 
 # line endings are normalized to LF on _checkin_.
+# this just applies to what git thinks are text files
 *   text=auto
+
+# except ... for the special .gitignore_global
+common-setup/gitignore_global -text
 
 # don't fuck with binaries
 *.jpg   -text
@@ -14,6 +19,7 @@
 *.bat       eol=crlf
 *.ps1       eol=crlf
 
+# everything - including stuff Git don't think is text - is normalized
 common-setup/**  eol=lf
 
 # To view the effect:
