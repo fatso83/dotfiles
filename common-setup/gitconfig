@@ -9,6 +9,7 @@
 
 [color]
     ui = true
+
 [push]
     default = simple
 
@@ -28,6 +29,7 @@
 
     # other
     root = rev-parse --show-toplevel
+    head-sha = rev-parse --short HEAD
 
 [pull]
     rebase = true
