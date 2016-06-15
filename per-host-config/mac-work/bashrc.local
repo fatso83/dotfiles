@@ -21,3 +21,4 @@ alias gam="python $HOME/Dropbox/gam/gam.py"
 # Make Ctrl-S work again (incremental search forwards)
 # http://stackoverflow.com/questions/791765/unable-to-forward-search-bash-history-similarly-as-with-ctrl-r
 stty -ixon
+alias timbuktu_btsync="(sleep 2 && open http://localhost:8888)& ssh -L8888:127.0.0.1:8888 carl-erik@timbuktu.kopseng.no -N"
