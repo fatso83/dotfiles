@@ -24,6 +24,12 @@
 
 [alias] 
 
+    au = add --update
+    st = status
+    co = checkout
+    cam = commit --all --message
+    cm = commit --message
+
     # log aliases
     
     ## show branching graphically as ascii art
