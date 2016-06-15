@@ -23,6 +23,7 @@ if [[ -e "$MACHINE" ]]; then
     cd $MACHINE
     ln -sf `pwd`/bashrc.local "$HOME/.bashrc.local"
     ln -sf `pwd`/gitlocal "$HOME/.gitlocal"
+    ln -sf `pwd`/vimrc.local "$HOME/.vimrc.local"
     [[ -e ./setup.sh ]] && ./setup.sh
 else
     echo -e $(dark_red "Missing local settings directory: $SCRIPT_DIR/$MACHINE" >> /dev/stderr)

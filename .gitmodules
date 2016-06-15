@@ -1,3 +1,6 @@
 [submodule "common-setup/vim/dotvim/bundle/Vundle.vim"]
 	path = common-setup/vim/dotvim/bundle/Vundle.vim
 	url = https://github.com/VundleVim/Vundle.vim
+[submodule "common-setup/solarized"]
+	path = common-setup/solarized
+	url = https://github.com/altercation/solarized
