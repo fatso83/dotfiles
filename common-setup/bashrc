@@ -82,9 +82,6 @@ read_config "$HOME/.bash.d/bash_functions"
 t_debug "Reading aliases"
 read_config "$HOME/.bash.d/bash_aliases"
 
-t_debug "Reading local settings for this machine"
-read_config_if_exists "$HOME/.bashrc.local"
-
 t_debug "Reading utils for git prompt"
 read_config "$HOME/.bash.d/git-prompt.sh"
 
@@ -99,13 +96,18 @@ read_config_if_exists "$HOME/.bash.d/colors"
 
 
 #Se man bash i delen som heter "Prompting"
-user=$(green "\u")
-host=$(dark_yellow "\h")
-workdir=$(pink "\w")
-gitbranch=$(dark_red \$\(__git_ps1  "\(%s\)" \))
-at=$(dark_grey at)
-in=$(dark_grey in)
-export PS1="\n${user} ${at} ${host} ${in} ${workdir} ${gitbranch}\n\$ "
+set_prompt(){
+    local user=$(green "\u")
+    local host=$(dark_yellow "\h")
+    local workdir=$(pink "\w")
+    local gitbranch=$(dark_red \$\(__git_ps1  "\(%s\)" \))
+    local at=$(dark_grey at)
+    local in=$(dark_grey in)
+    export PS1="\n${user} ${at} ${host} ${in} ${workdir} ${gitbranch}\n\$ "
+}
+
+# Now set it. If any of these colors are later overridden, then just rerun `set_prompt`
+set_prompt
 
 # Start ssh-agent
 # Unsafe on shared machines: http://rabexc.org/posts/pitfalls-of-ssh-agents
@@ -160,5 +162,9 @@ t_debug "Load DNVM (.NET VM manager)"
 
 t_debug "Loading Azure completion"
 source ~/.bash_completion.d/azure
+
+t_debug "Reading local settings for this machine"
+# This needs to be at the bottom to be able to override earlier settings/variables/functions
+read_config_if_exists "$HOME/.bashrc.local"
 
 t_debug Finished .bashrc
