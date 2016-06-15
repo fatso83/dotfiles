@@ -44,8 +44,8 @@ ln -sf "$SCRIPT_DIR"/vim/vimrc "$DEST"/.vimrc
 git submodule update --init --recursive
 
 # Installs all Vundle and quits all windows
-echo  -n -e "${blue}Installing all VIM plugins$X "
-echo -e "${dark_grey}(might take some time the first time ... )$X"
+echo  -n -e $(blue "Installing all VIM plugins")
+echo -e $(dark_grey "(might take some time the first time ... )")
 vim +PluginInstall +qall
 
 if [[ -e ~/.vim/bundle/YouCompleteMe ]]; then
@@ -55,7 +55,7 @@ if [[ -e ~/.vim/bundle/YouCompleteMe ]]; then
     if [[ ! -e "$ycm_lib" ]]; then
         # Compiles YouCompleteMe with semenatic support for C-family languages
         # This needs to happen each time the YCM repo has been deleted
-        echo -e "${blue}Compiling YouCompleteMe$X (takes a minute or two)"
+        echo -e $(blue "Compiling YouCompleteMe") "(takes a minute or two)"
 
         pushd ~/.vim/bundle/YouCompleteMe
 

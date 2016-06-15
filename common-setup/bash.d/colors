@@ -1,11 +1,35 @@
 # Color escape codes @see http://misc.flogisoft.com/bash/tip_colors_and_formatting
 # Use \033 instead of \e. Workes better across platforms
 # \e works in PS1 prompts, but not other places
-X='\033[0m' #stop code for color escape
-green='\033[01;32m'
-blue='\033[01;34m'
-pink='\033[01;35m'
-dark_grey='\033[90m'
+c_X='\033[0m' #stop code for color escape
+c_green='\033[01;32m'
+c_blue='\033[01;34m'
+c_pink='\033[01;35m'
+c_dark_grey='\033[90m'
 
-dark_yellow='\033[38;5;178m'
-dark_red='\033[38;5;196m'
+c_dark_yellow='\033[38;5;178m'
+c_dark_red='\033[38;5;196m'
+
+green(){
+    echo -n  -e  ${c_green}$@${c_X}
+}
+
+blue(){
+    echo -n  -e  ${c_blue}$@${c_X}
+}
+
+pink(){
+    echo -n  -e  ${c_pink}$@${c_X}
+}
+
+dark_grey(){
+    echo -n  -e  ${c_dark_grey}$@${c_X}
+}
+
+dark_yellow(){
+    echo -n  -e  ${c_dark_yellow}$@${c_X}
+}
+
+dark_red(){
+    echo -n  -e  ${c_dark_red}$@${c_X}
+}

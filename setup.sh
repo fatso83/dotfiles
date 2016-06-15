@@ -9,11 +9,11 @@ pushd "$SCRIPT_DIR" > /dev/null
 # Get some color codes for printing
 source common-setup/bash.d/colors
 
-echo -e ${blue}Installing common setup$X
+echo -e $(blue "Installing common setup")
 common-setup/setup.sh
 
 # Add the little `millis` util for cross-platform millisecond support
-echo -e ${blue}Adding scripts and binary utilities${X}
+echo -e $(blue "Adding scripts and binary utilities")
 pushd "$SCRIPT_DIR/utils" > /dev/null
 make install 
 popd > /dev/null
