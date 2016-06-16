@@ -10,11 +10,12 @@
 # this just applies to what git thinks are text files
 *   text=auto
 
-# except ... for the special .gitignore_global
+# except ... for the special .gitignore_global due to the weird Icon^M file
 common-setup/gitignore_global -text
 
 # don't fuck with binaries
 *.jpg   -text
+*.exe   -text
 
 *.bat       eol=crlf
 *.ps1       eol=crlf
