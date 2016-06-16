@@ -8,7 +8,7 @@
 
 # line endings are normalized to LF on _checkin_.
 # this just applies to what git thinks are text files
-*   text=auto
+*   text=lf
 
 # except ... for the special .gitignore_global due to the weird Icon^M file
 common-setup/gitignore_global -text

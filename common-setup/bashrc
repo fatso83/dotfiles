@@ -14,11 +14,11 @@
 
 # @see http://stackoverflow.com/questions/3601515/how-to-check-if-a-variable-is-set-in-bash
 function debug() {
-        [[ x == ${DEBUG+x} ]] && echo $@ >/dev/stderr
+        [[ x == ${DEBUG+x} ]] && echo $@ >&2
 }
 
 function t_debug() {
-        [[ x == ${DEBUG+x} ]] && echo [$(timer_now)] $@ >/dev/stderr
+        [[ x == ${DEBUG+x} ]] && echo [$(timer_now)] $@ >&2
 }
 function timer_start(){
     __timer=$(millis)
