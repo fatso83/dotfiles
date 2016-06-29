@@ -30,7 +30,6 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'pangloss/vim-javascript'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'PProvost/vim-ps1.git' " powershell
-Plugin 'altercation/vim-colors-solarized' " color scheme
 
 " All of your Plugins must be added before the following line
 call vundle#end()
@@ -55,7 +54,6 @@ set encoding=utf-8
 
 "" GUI
 " This is a default scheme that works well
-" The solarized theme is better, but requires terminal support
 " Override in ~/vimrc.local
 colorscheme darkblue
 set guifont=Monaco:h14
