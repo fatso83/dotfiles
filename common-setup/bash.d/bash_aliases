@@ -36,9 +36,7 @@ alias ls="/bin/ls $IGNORE "
 t_debug small utils and aliases
 # Color output - when CLICOLOR is defined, --color/-G is unneeded
 alias v='ls -l'
-alias dir='ls --format=vertical'
-alias vdir='ls --format=long'
-alias clean-temp='find -E ~ -regex ".*~$|.*-ck.js|.*.tmp" -exec rm {} \;'
+alias clean-temp='find -E ~ -type f -and -regex ".*~$|.*-ck.js|.*.tmp" -exec rm {} \;'
 
 # Pretty print json
 alias prettify_json='python -mjson.tool'
