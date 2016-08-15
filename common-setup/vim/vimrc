@@ -107,4 +107,7 @@ au BufRead,BufNewFile *.pde set filetype=java
 " Auto-reload vimrc on changes
 autocmd! bufwritepost .vimrc source %
 
+" Make vim work as a crontab editor: http://vim.wikia.com/wiki/Editing_crontab
+au BufEnter /private/tmp/crontab.* setl backupcopy=yes
+
 source ~/.vimrc.local
