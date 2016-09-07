@@ -102,6 +102,8 @@ autocmd Filetype markdown set wrap | set linebreak
 au BufRead,BufNewFile *.vss set filetype=pascal
 " associate Processing files with Java
 au BufRead,BufNewFile *.pde set filetype=java
+" associate *.ts with TypeScript
+au BufRead,BufNewFile *.ts set filetype=typescript
 
 
 " Auto-reload vimrc on changes
