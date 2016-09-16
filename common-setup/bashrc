@@ -103,7 +103,7 @@ set_prompt(){
     local gitbranch=$(dark_red \$\(__git_ps1  "\(%s\)" \))
     local at=$(dark_grey at)
     local in=$(dark_grey in)
-    export PS1="\n${user} ${at} ${host} ${in} ${workdir} ${gitbranch}\n\$ "
+    export PS1="\n${user} ${at} ${host} ${in} ${workdir} ${gitbranch}"$'\n\$ '
 }
 
 # Now set it. If any of these colors are later overridden, then just rerun `set_prompt`
@@ -166,5 +166,3 @@ source ~/.bash_completion.d/azure
 t_debug "Reading local settings for this machine"
 # This needs to be at the bottom to be able to override earlier settings/variables/functions
 read_config_if_exists "$HOME/.bashrc.local"
-
-#export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
