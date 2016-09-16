@@ -5,6 +5,9 @@ alias timbuktu_lokal='ssh carl-erik@192.168.10.2'
 alias ifi='ssh carlerik@vor.ifi.uio.no'
 alias ntnu='ssh kopseng@login.stud.ntnu.no'
 
+# Auto-åpne Bittorrent Sync
+alias timbuktu_btsync="(sleep 2 && open http://localhost:8888)& ssh -L8888:127.0.0.1:8888 carl-erik@timbuktu.kopseng.no -N"
+
 # Ved masse søppel etter konvertering utf8<->cp1252
 alias strip-non-ascii='python -c "import sys,re;[sys.stdout.write(re.sub('\''[^\x09\x0A\x0D\x20-\x7F]'\'', '\'''\'', line)) for line in sys.stdin]"'
 

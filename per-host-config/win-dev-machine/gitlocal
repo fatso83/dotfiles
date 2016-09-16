@@ -6,5 +6,9 @@
     # is supposed to make git faster on windows. I have seen no such effect ...
     preloadindex = true
     fscache = true
+
+    # Ignore changes in executable modes, etc
+    # Very useful when sharing directories between Cygwin and Windows Git
+    fileMode = false
 [gc]
     auto = 256
