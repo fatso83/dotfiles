@@ -21,7 +21,7 @@ alias html2text='python -c "import sys,html2text;sys.stdout.write(html2text.html
 
 # Use Hub if installed. Just using `hub` instead of `which hub` cuts 2 seconds of Cygwin load time
 t_debug Use hub if available
-if hub > /dev/null 2>&1; then
+if /usr/local/bin/hub help > /dev/null 2>&1; then
     alias git='hub'
 fi
 
