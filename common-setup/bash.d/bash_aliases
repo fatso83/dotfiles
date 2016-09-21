@@ -44,6 +44,9 @@ alias clean-temp='find -E ~ -type f -and -regex ".*~$|.*-ck.js|.*.tmp" -exec rm 
 # Pretty print json
 alias prettify_json='python -mjson.tool'
 
+# Indent text before sending it to Stack Overflow
+alias indent4="sed -E 's/(^.*)/    \1/'"
+
 t_debug "aliases: setting up node aliases"
 # node commands - important that these are enclosed in single quotes to avoid expansion!
 alias npm-exec='PATH=$(npm bin):$PATH'
