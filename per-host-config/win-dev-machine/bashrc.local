@@ -13,4 +13,12 @@ t_debug Reading local settings
 export EDITOR=gvim
 alias gam="python ~/hjemmemappe/Dropbox/gam/gam.py"
 
-#export PS1="\n${workdir}\n\$ "
+# Add Mingw64 tools on Mingw64 (Git Bash)
+if [[ x$MSYSTEM == xMINGW64 ]]; then
+    PYTHONBIN="/c/Program Files/Python35"
+    MINGWBIN="/c/Program Files/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin"
+    PATH="$MINGWBIN:$PYTHONBIN:$PATH"
+
+    echo 1 $PYTHONBIN
+    echo 2 $PATH
+fi
