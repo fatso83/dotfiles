@@ -30,6 +30,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'pangloss/vim-javascript'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'PProvost/vim-ps1.git' " powershell
+Plugin 'OrangeT/vim-csharp.git' "razor, c#
 
 " All of your Plugins must be added before the following line
 call vundle#end()
