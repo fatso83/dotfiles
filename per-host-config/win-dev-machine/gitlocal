@@ -1,3 +1,6 @@
+[user]
+    email = carl-erik.kopseng@makingwaves.com
+
 [core]
     # auto-converts lf=>crlf on checkout and crlf=>lf on checkin
     # This makes sense if you are on normal Windows, but NOT in Cygwin
