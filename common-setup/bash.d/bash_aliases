@@ -1,3 +1,11 @@
+t_debug "Reading aliases"
+
+# Bash setup
+alias edit-rc="vim ~/.bashrc"
+alias edit-alias="vim ~/.bash.d/bash_aliases"
+alias source-rc="source ~/.bashrc"
+alias source-alias="source ~/.bash.d/bash_aliases"
+
 # Maskinalias
 t_debug ssh aliases
 alias timbuktu='ssh carl-erik@timbuktu.kopseng.no'
@@ -75,7 +83,8 @@ alias servers='sudo lsof -iTCP -sTCP:LISTEN -P -n'
 alias epoch=millis #  tool that we compile ourselves
 
 # find external ip
-alias my-ip='curl http://ipinfo.io/ip'
+alias my-ip='curl -s http://ipinfo.io/ip'
+alias my-ip-json='curl -s http://ifconfig.co/json'
 
 # SOCKS proxy
 alias socks_proxy='ssh -v -D 22222 carl-erik@timbuktu.kopseng.no -N'
@@ -85,5 +94,6 @@ alias socks_proxy_all='ssh -v -D :22222 carl-erik@timbuktu.kopseng.no -N'
 # https://github.com/holman/dotfiles/commit/666cb053e9d27d279c4643dce1ca09c2f8b69f2e
 # The -r flag to less is uses to make it work with the color escape codes
 alias gd='git diff --color | sed "s/^\([^-+ ]*\)[-+ ]/\\1/" | less -r'
+alias gclone='git clone '
 
 t_debug global aliases finished

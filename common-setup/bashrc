@@ -153,16 +153,6 @@ if [ -d ~/scripts ] ; then
 fi
 
 
-t_debug Load NVM
-export NVM_DIR="/Users/carl-erik.kopseng/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-t_debug "Load DNVM (.NET VM manager)"
-[ -s "/Users/carl-erik.kopseng/.dnx/dnvm/dnvm.sh" ] && . "/Users/carl-erik.kopseng/.dnx/dnvm/dnvm.sh" # Load dnvm
-
-t_debug "Loading Azure completion"
-source ~/.bash_completion.d/azure
-
 t_debug "Reading local settings for this machine"
 # This needs to be at the bottom to be able to override earlier settings/variables/functions
 read_config_if_exists "$HOME/.bashrc.local"

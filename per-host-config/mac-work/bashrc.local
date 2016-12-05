@@ -1,13 +1,11 @@
 #Se man bash i delen som heter "Prompting"
 #PS1="skinny \W \u\$  "
+t_debug "Load personalized bashrc for mac"
 
-export PATH=$PATH:"/Applications/Racket v5.3.3/bin:/usr/local/share/npm/bin"
+export PATH=$PATH:"/Applications/Racket v5.3.3/bin"
 #source /usr/local/etc/autojump.bash
-# MacBook Pro Making Waves
 
 alias nuget='mono ~/bin/nuget.exe'
-alias ci-server="ssh -Y framework@framework-ci.cloudapp.net"
-alias ci-tunnel='ssh  framework@framework-ci.cloudapp.net -L 40080:127.0.0.1:8080 -N'
 alias iso8601='date -u +"%Y-%m-%dT%H:%M:%SZ"'
 alias remove_downloaded_internet_warning='xattr -d -r com.apple.quarantine '
 alias btsync_tunnel="timbuktu_lokal -L 8888:0.0.0.0:8888 -N"
@@ -30,3 +28,10 @@ stty -ixon
 # set_prompt
 
 export LLVM="/usr/local/opt/emscripten/libexec/llvm/bin"
+
+t_debug Load NVM
+export NVM_DIR="/Users/carl-erik.kopseng/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+t_debug "Load DNVM (.NET VM manager)"
+[ -s "/Users/carl-erik.kopseng/.dnx/dnvm/dnvm.sh" ] && . "/Users/carl-erik.kopseng/.dnx/dnvm/dnvm.sh" # Load dnvm
