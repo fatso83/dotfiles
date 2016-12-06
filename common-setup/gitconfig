@@ -72,3 +72,5 @@
     path = .gitlocal
 
 # Do not add stuff here. 
+[mergetool]
+	keepBackup = false
