@@ -6,7 +6,7 @@
 	trustExitCode = false
 	cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge $PWD/$BASE $PWD/$REMOTE $PWD/$LOCAL $PWD/$MERGED
 [mergetool "wsmerge"]
-    cmd = wstorm merge  \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+    cmd = wstorm merge   \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
     trustExitCode = false
 [mergetool "sourcetree"]
     cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
