@@ -68,7 +68,12 @@ if [[ -e ~/.vim/bundle/YouCompleteMe ]]; then
 fi
 
 # Semantic Typescript support for YCM
-which tsc > /dev/null 2>&1 || npm install -g typescript
+ts_cmd='npm install -g typescript'
+if which npm > /dev/null 2>&1 ; then
+    which tsc > /dev/null 2>&1 || bash -c "$ts_cmd"
+else
+    echo "Install NodeJS and run '$ts_cmd' to get TypeScript support in Vim"
+fi
 
 touch "$DEST"/.vimrc.local
 
