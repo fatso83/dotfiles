@@ -25,10 +25,12 @@ if has("macunix")
 endif
 " Needs backend: npm -g update instant-markdown-d
 Plugin 'suan/vim-instant-markdown'
-Plugin 'leafgarland/typescript-vim'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'pangloss/vim-javascript'
+Plugin 'scrooloose/nerdtree'
 Plugin 'editorconfig/editorconfig-vim'
+" Syntax highlighting
+Plugin 'leafgarland/typescript-vim'
+Plugin 'pangloss/vim-javascript'
 Plugin 'PProvost/vim-ps1.git' " powershell
 Plugin 'OrangeT/vim-csharp.git' "razor, c#
 
