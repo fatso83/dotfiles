@@ -59,10 +59,12 @@ if [[ -e ~/.vim/bundle/YouCompleteMe ]]; then
 
         pushd ~/.vim/bundle/YouCompleteMe
 
-        # clang = c languages (needed for C, javascript, C#... )
-        # Omnisharp = C#
-        # golang = Go
-        ./install.py --clang-completer --omnisharp-completer  --gocode-completer
+        # Enable auto-completion support for all available languages
+        # (TypeScript, Javascript, Rust, C#, ...)
+         ./install.py --all
+
+         # six smooths out differences between python 2 and 3
+         pip install six
         popd
     fi
 fi
@@ -79,7 +81,7 @@ touch "$DEST"/.vimrc.local
 
 # Install NeoVim config (we don't have to worry about XDG_CONFIG_HOME stuff
 [[ ! -e "$DEST"/.config ]] && mkdir "$DEST/.config"
-ln -s ~/.vim ~/.config/nvim
-ln -s ~/.vimrc ~/.config/nvim/init.vim
+ln -sf ~/.vim ~/.config/nvim
+ln -sf ~/.vimrc ~/.config/nvim/init.vim
 
 popd > /dev/null
