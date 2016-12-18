@@ -47,6 +47,8 @@ set printoptions=portrait:n
 "" http://nvie.com/posts/how-i-boosted-my-vim/
 set pastetoggle=<F2>
 
+
+
 " Remember last position
 if has("autocmd")
     au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -82,6 +84,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " Open/Close NerdTree with Ctrl-N, but only in Normal mode
 nmap <C-n> :NERDTreeToggle<CR>
 
+" Tips mostly from nvie.com/
 set showmatch     " When in insert mode, this will momentarily flash the cursor back to the opening bracket
 set matchtime=1   " just jump for 100 ms
 
@@ -92,12 +95,15 @@ set smartcase     " ignore case if search pattern is all lowercase, case-sensiti
 set smarttab      " insert tabs on the start of a line according to shiftwidth, not tabstop
 set hlsearch      " highlight search terms
 set incsearch     " show search matches as you type
-
 set history=1000         " remember more commands and search history
 set undolevels=1000      " use many muchos levels of undo
 set wildignore=*.swp,*.bak,*.pyc,*.class
 set title                " change the terminal's title
 set visualbell           " don't beep
 set noerrorbells         " don't beep
+" Clear highlighted search text by just typing ",/"
+nmap <silent> <leader>/ :nohlsearch<CR>  
+" Use sudo after you opened a file, in case you forgot
+cmap w!! w !sudo tee % >/dev/null
 
 source ~/.vimrc.local
