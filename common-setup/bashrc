@@ -110,6 +110,9 @@ set_prompt(){
 set_prompt
 
 # Start ssh-agent
+# This somehow started failing on OS X at some time, as `ssh-add -l`
+# never exits with status 2, always 1
+# The fix on OS X is simply to add the keys using the keychain like this: `ssh-add -K`
 # Unsafe on shared machines: http://rabexc.org/posts/pitfalls-of-ssh-agents
 ssh-add -l &>/dev/null
 if [ "$?" == 2 ]; then
