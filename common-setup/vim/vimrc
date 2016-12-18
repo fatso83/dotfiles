@@ -115,4 +115,12 @@ autocmd! bufwritepost .vimrc source %
 " Make vim work as a crontab editor: http://vim.wikia.com/wiki/Editing_crontab
 au BufEnter /private/tmp/crontab.* setl backupcopy=yes
 
+" Make NERDTree open automatically if no files were specified
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" Open/Close NerdTree with Ctrl-N, but only in Normal mode
+nmap <C-n> :NERDTreeToggle<CR>
+
+
 source ~/.vimrc.local
