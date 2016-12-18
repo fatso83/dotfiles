@@ -106,4 +106,7 @@ nmap <silent> <leader>/ :nohlsearch<CR>
 " Use sudo after you opened a file, in case you forgot
 cmap w!! w !sudo tee % >/dev/null
 
+" Disable mouse integration by default to make copy-paste easy. Toggle with F12
+set mouse=
+
 source ~/.vimrc.local

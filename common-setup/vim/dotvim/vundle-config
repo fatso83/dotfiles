@@ -32,6 +32,7 @@ Plugin 'suan/vim-instant-markdown'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'ctrlpvim/ctrlp.vim' "does fuzzy matching to open files
+Plugin 'nvie/vim-togglemouse' " F12 will switch mouse mode between terminal and vim
 Plugin 'editorconfig/editorconfig-vim'
 " Syntax highlighting
 Plugin 'leafgarland/typescript-vim'
