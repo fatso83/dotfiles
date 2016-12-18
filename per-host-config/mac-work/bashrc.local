@@ -15,7 +15,7 @@ alias remove_downloaded_internet_warning='xattr -d -r com.apple.quarantine '
 alias btsync_tunnel="timbuktu_lokal -L 8888:0.0.0.0:8888 -N"
 
 # Conditionals
-#alias vim='mvim'
+alias vim='nvim'
 alias rm=trash
 
 alias gam="python $HOME/Dropbox/gam/gam.py"
