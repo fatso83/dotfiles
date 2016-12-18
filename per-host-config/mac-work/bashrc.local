@@ -23,6 +23,7 @@ alias gam="python $HOME/Dropbox/gam/gam.py"
 alias vsphere='open https://10.1.1.124:9443/vsphere-client'
 
 # connect to frost ark server on localhost:9999
+alias frostark_mosh='LC_ALL=en_US.UTF-8 mosh --ssh="ssh -i ~/.ssh/frostark-sync-server.pem" ubuntu@ec2-52-211-72-132.eu-west-1.compute.amazonaws.com tmux'
 alias frostark_btsync_tunnel='(sleep 2 && open http://localhost:9999)& ssh -i ~/.ssh/frostark-sync-server.pem ubuntu@ec2-52-211-72-132.eu-west-1.compute.amazonaws.com -N -L 9999:127.0.0.1:8888'
 
 # Make Ctrl-S work again (incremental search forwards)

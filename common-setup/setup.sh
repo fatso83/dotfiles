@@ -77,4 +77,9 @@ fi
 
 touch "$DEST"/.vimrc.local
 
+# Install NeoVim config (we don't have to worry about XDG_CONFIG_HOME stuff
+[[ ! -e "$DEST"/.config ]] && mkdir "$DEST/.config"
+ln -s ~/.vim ~/.config/nvim
+ln -s ~/.vimrc ~/.config/nvim/init.vim
+
 popd > /dev/null

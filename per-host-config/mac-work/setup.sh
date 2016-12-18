@@ -22,6 +22,11 @@ if ! which macvim > /dev/null; then
     brew install macvim
 fi
 
+# Latest NeoVim
+if ! which nvim> /dev/null; then
+    brew install neovim/neovim/neovim
+fi
+
 # CMake
 if ! which cmake > /dev/null; then
     brew install cmake
