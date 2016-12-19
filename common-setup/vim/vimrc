@@ -112,9 +112,12 @@ set mouse=
 
 " Use Git command for listing files, use find otherwise
 " http://stackoverflow.com/a/26729140/200987
-let g:ctrlp_user_command = [
-    \ '.git', 'cd %s && git ls-files . -co --exclude-standard', 
-    \ 'find %s -type f'			
-    \ ]
+"let g:ctrlp_user_command = [
+    "\ '.git', 'cd %s && git ls-files . -co --exclude-standard', 
+    "\ 'find %s -type f'			
+    "\ ]
+" Just use the Silver Searcher. Comparable in speed to Git, but works
+" everywhere
+let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
 source ~/.vimrc.local
