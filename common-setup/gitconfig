@@ -31,6 +31,8 @@
     cm = commit --message
     fap = fetch --all --prune
 
+    files = "![ x$# != x1 ]&&echo "commit-ish required" >&2 || git diff --name-status \"$1\"^ \"$1\" #"
+
     # log aliases
     
     ## show branching graphically as ascii art
