@@ -32,8 +32,8 @@ for file in "$SCRIPT_DIR"/bash.d/*; do
   ln -sf "$file" "${BASH_DIR}"/
 done
 
-# Remove any existing symlink - will fail if it is a dir
-rm "$DEST"/.vim 2>/dev/null
+# Remove any existing symlink (or dir on mingw) - will fail if it is a dir
+rm -rf "$DEST"/.vim 2>/dev/null
 if [ ! -e "$DEST"/.vim ]; then  
     ln -sf "$SCRIPT_DIR"/vim/dotvim "$DEST"/.vim
 fi
@@ -81,6 +81,7 @@ touch "$DEST"/.vimrc.local
 
 # Install NeoVim config (we don't have to worry about XDG_CONFIG_HOME stuff
 [[ ! -e "$DEST"/.config ]] && mkdir "$DEST/.config"
+rm -rf ~/.config/nvim 
 ln -sf ~/.vim ~/.config/nvim
 ln -sf ~/.vimrc ~/.config/nvim/init.vim
 
