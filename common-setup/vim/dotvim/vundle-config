@@ -37,8 +37,10 @@ Plugin 'editorconfig/editorconfig-vim'
 " Syntax highlighting
 Plugin 'leafgarland/typescript-vim'
 Plugin 'pangloss/vim-javascript'
-Plugin 'PProvost/vim-ps1.git' " powershell
-Plugin 'OrangeT/vim-csharp.git' "razor, c#
+Plugin 'PProvost/vim-ps1' " powershell
+Plugin 'OrangeT/vim-csharp' "razor, c#
+" color schemes
+Plugin 'romainl/Apprentice'
 
 " All of your Plugins must be added before the following line
 call vundle#end()
