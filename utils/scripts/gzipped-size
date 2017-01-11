@@ -1,0 +1,14 @@
+#!/bin/bash
+# vim: set ft=sh
+
+size(){
+    if [[ $(uname) = Darwin ]]; then
+        stat -Lf %z -- "$1"
+    else
+        stat -c %s -- "$1"
+    fi
+}
+
+for f in $@; do 
+    echo "$f : $(gzip -c $f | wc -c) bytes (versus $(size $f) bytes)"
+done
