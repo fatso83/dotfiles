@@ -1,13 +1,7 @@
 #!/bin/bash
 # vim: set ft=sh
-
-size(){
-    if [[ $(uname) = Darwin ]]; then
-        stat -Lf %z -- "$1"
-    else
-        stat -c %s -- "$1"
-    fi
-}
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source $DIR/cross-platform-utils.bashlib
 
 for f in $@; do 
     echo "$f : $(gzip -c $f | wc -c) bytes (versus $(size $f) bytes)"
