@@ -5,3 +5,4 @@ macvim
 tmux
 cmake
 node
+reattach-to-user-namespace --with-wrap-pbcopy-and-pbpaste
