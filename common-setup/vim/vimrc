@@ -71,6 +71,8 @@ au BufRead,BufNewFile *.vss set filetype=pascal
 au BufRead,BufNewFile *.pde set filetype=java
 " associate *.ts with TypeScript
 au BufRead,BufNewFile *.ts set filetype=typescript
+" associate *.kit with Html
+au BufRead,BufNewFile *.kit set filetype=html
 
 
 " Auto-reload vimrc on changes
