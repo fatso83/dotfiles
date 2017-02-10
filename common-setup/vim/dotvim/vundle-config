@@ -33,6 +33,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'ctrlpvim/ctrlp.vim' "does fuzzy matching to open files
 Plugin 'nvie/vim-togglemouse' " F12 will switch mouse mode between terminal and vim
 Plugin 'editorconfig/editorconfig-vim'
+Plugin 'mwnx/vimcrypt' " GPG & OpenSSL support (AES, ...)
 " Syntax highlighting
 Plugin 'leafgarland/typescript-vim'
 Plugin 'pangloss/vim-javascript'
