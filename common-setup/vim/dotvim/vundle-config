@@ -1,5 +1,4 @@
 " Plugin setup
-" vi: ft=vim
 "
 " Brief help
 " :PluginList       - lists configured plugins
@@ -45,3 +44,4 @@ Plugin 'romainl/Apprentice'
 " All of your Plugins must be added before the following line
 call vundle#end()
 
+" vi: ft=vim

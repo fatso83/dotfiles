@@ -5,6 +5,8 @@
 " 2015-09-24 Swapped Pathogen for Vundle. Simplicity!
 "            Tipped from: http://lepture.com/en/2012/vundle-vs-pathogen
 set nocompatible               " be iMproved
+set modeline
+set modelines=5                " The number of lines to search for a modeline, must be non-0
 filetype off                   " required!
 
 source ~/.vim/vundle-config
