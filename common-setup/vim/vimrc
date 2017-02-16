@@ -124,4 +124,10 @@ set mouse=
 " everywhere
 let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
+" Elm settings - see https://github.com/elmcast/elm-vim
+let g:elm_format_autosave = 1 "reformat on autosave
+let g:ycm_semantic_triggers = {
+     \ 'elm' : ['.'],
+     \}
+
 source ~/.vimrc.local
