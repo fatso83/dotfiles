@@ -111,6 +111,10 @@ nmap <silent> <leader>/ :nohlsearch<CR>
 " Use sudo after you opened a file, in case you forgot
 cmap w!! w !sudo tee % >/dev/null
 
+" Lucas F. Costa: http://lucasfcosta.com/2017/01/23/Quick-vIM-Tips-That-Will-Save-Your-Life.html
+set relativenumber             " Show relative line numbers
+set number                     " Show current line number
+
 " Disable mouse integration by default to make copy-paste easy. Toggle with F12
 set mouse=
 
