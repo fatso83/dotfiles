@@ -31,6 +31,7 @@
     cm = commit --message
     fap = fetch --all --prune
 
+    # List all the files touched in this commit 
     files = "![ x$# != x1 ]&&echo "commit-ish required" >&2 || git diff --name-status \"$1\"^ \"$1\" #"
 
     # log aliases
