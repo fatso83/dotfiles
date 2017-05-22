@@ -38,6 +38,7 @@
     
     ## show branching graphically as ascii art
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    lgng = log --pretty=format:'%d %s (%cr) <%an>' # ng = no graph
 
     svnlog = log --name-status
 
