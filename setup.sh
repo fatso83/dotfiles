@@ -14,11 +14,10 @@ common-setup/setup.sh
 
 # Add the little `millis` util for cross-platform millisecond support
 echo -e $(blue "Adding scripts and binary utilities")
-pushd "$SCRIPT_DIR/utils" > /dev/null
-make install 
-popd > /dev/null
+utils/setup.sh
 
-"$SCRIPT_DIR"/per-host-config/setup.sh
+echo "Install config specific to this machine"
+per-host-config/setup.sh
 
 # Restore current directory of user
 popd > /dev/null
