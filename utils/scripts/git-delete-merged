@@ -1,0 +1,89 @@
+#!/bin/bash
+# Delete all 
+
+echo $DEBUG
+if [[ x$DEBUG != x ]]; then
+    set -o verbose
+fi
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source $SCRIPT_DIR/cross-platform-utils.bashlib
+DRY_RUN=1
+
+usage(){
+    echo 'git-delete-merged [--doit] <remote> [<branches to skip>]'
+    echo
+    echo 'Example: git-delete-merged --doit origin deploy-branch,demo'
+    echo
+    echo 'By default, "master" and "develop" are skipped'
+    echo 'Specifying core.protected-branches in your git config, or'
+    echo 'listing them on the command line with commas will override this'
+}
+
+skipped(){
+    default='master,develop'
+    override="$(git config --get core.protected-branches)"
+
+    # command line args trumps git config
+    if [[ x$2 != x ]]; then
+        override=$2
+    fi
+
+    if [[ x$override != x ]]; then
+        echo "$override" 
+    else 
+        echo "$default"
+    fi
+}
+
+print-branches(){
+    for b in $@; do
+        echo "   $b"
+    done
+}
+
+main(){
+    if [[ $1 == "--doit" ]];then
+        shift
+        DRY_RUN=0
+    fi
+
+    branches=$(
+                git branch -r --merged \
+                | grep "  $1"  \
+                | sed-ere -n 's/  \w*\/(.*)/\1/p' \
+                | egrep -v "$(skipped $@ | sed 's/,/|/g')" \
+                | paste
+              )
+
+    if [[ x$branches == x ]];then
+        echo "No branches to delete on $1"
+        exit 1
+    fi
+
+    if [[ x$DRY_RUN == x1 ]]; then
+        echo "NOT DELETING any branches. Pass --doit to go through with action."
+        echo
+        echo "Would have deleted the following branches:"
+        print-branches $branches
+        echo
+        echo "Would have skipped these branches: "
+        print-branches $(skipped $@ | tr ',' ' ')
+    else
+        echo "Deleting the following branches on $1."
+        print-branches $branches
+        echo
+        echo "Pausing for 2 seconds ... Press Ctrl-C to quit"
+        sleep 2
+        git push --no-verify --delete $1 $branches
+    fi
+}
+
+if [[ $# > 0 ]]; then
+    main "$@"
+else
+    usage
+    exit 1
+fi
+
+# vim: set ft=sh
