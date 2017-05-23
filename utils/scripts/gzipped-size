@@ -2,7 +2,9 @@
 # vim: set ft=sh
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $DIR/cross-platform-utils.bashlib
+FILES="$(ls)"
+MAX_NAME_SZ="$(for f in $FILES; do echo $f|wc -c; done | sort -n | tail -1)"
 
 for f in $@; do 
-    echo "$f : $(gzip -c $f | wc -c) bytes (versus $(size $f) bytes)"
+    printf "%-${MAX_NAME_SZ}s : %s bytes (versus %s bytes)\n"  $f $(gzip -c $f | wc -c) "$(size $f)"
 done
