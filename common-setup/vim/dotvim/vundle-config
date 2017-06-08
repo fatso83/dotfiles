@@ -34,7 +34,7 @@ Plugin 'ctrlpvim/ctrlp.vim' "does fuzzy matching to open files
 Plugin 'nvie/vim-togglemouse' " F12 will switch mouse mode between terminal and vim
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'mwnx/vimcrypt' " GPG & OpenSSL support (AES, ...)
-Plugin 'Townk/vim-autoclose'
+Plugin 'Raimondi/delimitMate'
 Plugin 'alvan/vim-closetag'
 " Syntax highlighting
 Plugin 'leafgarland/typescript-vim'
