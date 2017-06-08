@@ -1,6 +1,5 @@
 #Se man bash i delen som heter "Prompting"
-#PS1="skinny \W \u\$  "
-t_debug "Load personalized bashrc for mac"
+t_debug "Load personalized bashrc for Ubuntu dev machine"
 
 #source /usr/local/etc/autojump.bash
 
@@ -11,16 +10,9 @@ fi
 
 alias nuget='mono ~/bin/nuget.exe'
 alias iso8601='date -u +"%Y-%m-%dT%H:%M:%SZ"'
-alias remove_downloaded_internet_warning='xattr -d -r com.apple.quarantine '
 alias btsync_tunnel="timbuktu_lokal -L 8888:0.0.0.0:8888 -N"
 
-# Conditionals
 alias vim='nvim'
-#alias rm=trash
-
-alias gam="python $HOME/Dropbox/gam/gam.py"
-
-alias vsphere='open https://10.1.1.124:9443/vsphere-client'
 
 # connect to frost ark server on localhost:9999
 alias frostark_mosh='LC_ALL=en_US.UTF-8 mosh --ssh="ssh -i ~/.ssh/frostark-sync-server.pem" ubuntu@ec2-52-211-72-132.eu-west-1.compute.amazonaws.com tmux attach'
@@ -31,17 +23,3 @@ alias timbuktu_mosh='LC_ALL=en_US.UTF-8 mosh --ssh="ssh -p 60022" carl-erik@timb
 # Make Ctrl-S work again (incremental search forwards)
 # http://stackoverflow.com/questions/791765/unable-to-forward-search-bash-history-similarly-as-with-ctrl-r
 stty -ixon
-
-# With Solarized theme for iTerm2, dark_grey is invisible, while "normal white" is dark_grey (well at least grey)
-# Redefine
-# c_dark_grey='\033[39m'
-# set_prompt
-
-export LLVM="/usr/local/opt/emscripten/libexec/llvm/bin"
-
-t_debug Load NVM
-export NVM_DIR="/Users/carl-erik.kopseng/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-t_debug "Load DNVM (.NET VM manager)"
-[ -s "/Users/carl-erik.kopseng/.dnx/dnvm/dnvm.sh" ] && . "/Users/carl-erik.kopseng/.dnx/dnvm/dnvm.sh" # Load dnvm

@@ -25,6 +25,8 @@ if [[ -e "$MACHINE" ]]; then
     ln -sf `pwd`/gitlocal "$HOME/.gitlocal"
     ln -sf `pwd`/vimrc.local "$HOME/.vimrc.local"
     [[ -e ./setup.sh ]] && ./setup.sh
+
+    echo -e $(dark_yellow) "You might need to re-run the global setup as build tools might not have been available"
 else
     echo -e $(dark_red "Missing local settings directory: $SCRIPT_DIR/$MACHINE" >> /dev/stderr)
     exit 1

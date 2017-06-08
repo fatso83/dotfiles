@@ -49,6 +49,10 @@ echo -e $(dark_grey "(might take some time the first time ... )")
 vim +PluginInstall +qall
 
 if [[ -e ~/.vim/bundle/YouCompleteMe ]]; then
+    if [[ $(uname) == "Linux" ]]; then
+        sudo apt-get install -y python-dev python3-dev
+    fi
+
     # Check if YCM has been compiled already - if so, drop compiling again
     # The ".*" matches both *.dll and *.so 
     ycm_lib=$(echo ~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_core.* )
