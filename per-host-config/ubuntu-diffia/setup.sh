@@ -16,7 +16,13 @@ pip install --upgrade pip
 while read line; do pip install $line; done < python.local 
 
 # install ruby packages
-while read line; do sudo gem install $line; done < ruby.local 
+while read line; do 
+    if gem list -i $line > /dev/null; then
+        continue
+    fi
+
+    sudo gem install $line; 
+done < ruby.local 
 
 # restore current directory
-popd
+popd > /dev/null
