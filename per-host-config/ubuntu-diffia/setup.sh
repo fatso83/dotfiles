@@ -7,7 +7,7 @@ pushd "$SCRIPT_DIR" > /dev/null
 sudo chown -R $(whoami) /usr/local
 
 # install local apps
-while read line; do sudo apt install -y $line; done < apps.local 
+sudo apt install -y $(cat apps.local)
 
 # upgrade PIP
 pip install --upgrade pip
