@@ -15,5 +15,8 @@ pip install --upgrade pip
 # install python packages
 while read line; do pip install $line; done < python.local 
 
+# install ruby packages
+while read line; do sudo gem install $line; done < ruby.local 
+
 # restore current directory
 popd
