@@ -13,7 +13,7 @@ sudo apt install -y $(cat apps.local)
 pip install --upgrade pip
 
 # install python packages
-while read line; do pip install $line; done < python.local 
+pip install -r python.local 
 
 # install ruby packages
 while read line; do 
