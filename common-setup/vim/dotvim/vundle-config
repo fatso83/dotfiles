@@ -42,6 +42,8 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'PProvost/vim-ps1' " powershell
 Plugin 'OrangeT/vim-csharp' "razor, c#
+Plugin 'inkarkat/vim-ingo-library' " dependency for SyntaxRange
+Plugin 'vim-scripts/SyntaxRange' " :[range]SyntaxInclude {filetype}
 "Plugin 'lambdatoast/elm.vim'
 Plugin 'elmcast/elm-vim'
 " color schemes
