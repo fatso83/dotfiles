@@ -4,6 +4,10 @@
 " Changelog
 " 2015-09-24 Swapped Pathogen for Vundle. Simplicity!
 "            Tipped from: http://lepture.com/en/2012/vundle-vs-pathogen
+
+" Resets all auto commands before adding them - important when sourcing twice
+autocmd! 
+
 set nocompatible               " be iMproved
 set modeline
 set modelines=5                " The number of lines to search for a modeline, must be non-0
@@ -50,7 +54,6 @@ set printoptions=portrait:n
 set pastetoggle=<F2>
 
 
-
 " Remember last position
 if has("autocmd")
     au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -78,6 +81,7 @@ au BufRead,BufNewFile *.kit set filetype=html
 " Auto-reload vimrc on changes
 autocmd! bufwritepost .vimrc source %
 autocmd! bufwritepost vimrc source %
+autocmd! bufwritepost vundle-config source %
 
 " Make vim work as a crontab editor: http://vim.wikia.com/wiki/Editing_crontab
 au BufEnter /private/tmp/crontab.* setl backupcopy=yes
@@ -88,6 +92,10 @@ au BufEnter /private/tmp/crontab.* setl backupcopy=yes
 
 " Open/Close NerdTree with Ctrl-N, but only in Normal mode
 nmap <C-n> :NERDTreeToggle<CR>
+
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+" https://stackoverflow.com/a/7078429/200987
+cmap w!! w !sudo tee > /dev/null %
 
 " Tips mostly from nvie.com/
 set showmatch     " When in insert mode, this will momentarily flash the cursor back to the opening bracket
