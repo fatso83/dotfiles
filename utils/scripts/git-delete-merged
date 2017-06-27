@@ -52,8 +52,7 @@ main(){
                 git branch -r --merged \
                 | grep "  $1"  \
                 | sed-ere -n 's/  \w*\/(.*)/\1/p' \
-                | egrep -v "$(skipped $@ | sed 's/,/|/g')" \
-                | paste
+                | egrep -v "$(skipped $@ | sed 's/,/|/g')" 
               )
 
     if [[ x$branches == x ]];then
