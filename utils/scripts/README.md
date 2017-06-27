@@ -2,17 +2,24 @@
 
 ## Git scripts
 
-```bash
-$ git delete-merged 
+### `git delete-merged`
 
-git-delete-merged [--doit] <remote> [<branches to skip>]
+Deletes local or remote branches that have been merged, but skips (pre-)configured branches.
+
+```bash
+git-delete-merged [--doit] [[--local]|<remote>] [<branches to skip>]
 
 Example: git-delete-merged --doit origin deploy-branch,demo
+Example: git-delete-merged --doit --local 
 
 By default, "master" and "develop" are skipped
 Specifying core.protected-branches in your git config, or
 listing them on the command line with commas will override this
 ```
+
+### `git branch-overview`
+
+Lists the branch tips of the various branches.
 
 ```bash
 $  git branch-overview
@@ -21,6 +28,10 @@ $  git branch-overview
  (origin/sunnaas, sunnaas) right name for nurse Gianina, changed from Tone Møller (3 months ago) <Soheil>
 ```
 
+### `git find-by-name-in-log`
+
+Finds files by name in the log.
+
 ```bash
 $ git find-by-name-in-log README
 e807f94231ac08d81b661a992bf034c3ded1ff81:100644 blob 783313a55ecec0227cf4cdf6076eab9ed6315b02	README.md
@@ -28,6 +39,10 @@ e807f94231ac08d81b661a992bf034c3ded1ff81:100644 blob ac034405fd2ab26c7e5367734b4
 e807f94231ac08d81b661a992bf034c3ded1ff81:100644 blob 222a36dbb420f252627cb5141bfddedbc45aee28	per-host-config/win-dev-machine/README.md
 e807f94231ac08d81b661a992bf034c3ded1ff81:100755 blob 189faa86ff98454e07856f95978ee9ac44082ac8	per-host-config/win-dev-machine/conemu-terminals/README.md
 ```
+
+### `git rm-deleted`
+
+Darn, you just `rm file1.txt`, instead of `git rm file1.txt`? This will add them to the staged area for deletion.
 
 ```bash
 git rm-deleted # deletes from index files that are missing (manually removed) 
