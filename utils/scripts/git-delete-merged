@@ -61,7 +61,6 @@ main(){
                         "$(skipped $@ | sed-ere -e 's/,/|/g' -e 's/(\w+)/^\1$/g' )" \
                     | paste -s
                 )
-        >&2 echo 'branches: ' "$branches" 
 
     else 
         branches=$(
