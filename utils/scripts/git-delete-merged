@@ -1,9 +1,9 @@
 #!/bin/bash
 # Delete all 
 
-echo $DEBUG
 if [[ x$DEBUG != x ]]; then
-    set -o verbose
+    PS4='$LINENO: '
+    set -x
 fi
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -11,7 +11,7 @@ source $SCRIPT_DIR/cross-platform-utils.bashlib
 DRY_RUN=1
 
 usage(){
-    echo 'git-delete-merged [--doit] <remote> [<branches to skip>]'
+    echo 'git-delete-merged [--doit] <[--local] | <remote>> [<branches to skip>]'
     echo
     echo 'Example: git-delete-merged --doit origin deploy-branch,demo'
     echo
@@ -20,6 +20,8 @@ usage(){
     echo 'listing them on the command line with commas will override this'
 }
 
+# @args: <origin|--local> branch1 branch2 branch-to-keep ...
+# @returns branch1 branch2
 skipped(){
     default='master,develop'
     override="$(git config --get core.protected-branches)"
@@ -48,15 +50,35 @@ main(){
         DRY_RUN=0
     fi
 
-    branches=$(
-                git branch -r --merged \
-                | grep "  $1"  \
-                | sed-ere -n 's/  \w*\/(.*)/\1/p' \
-                | egrep -v "$(skipped $@ | sed 's/,/|/g')" 
-              )
+    no_branches_msg="No branches to delete"
+    delete_branches_msg="Deleting the following branches"
+
+    if [[ $1 == "--local" ]];then
+        branches=$(
+                    git branch --merged \
+                    | sed-ere -n 's/..(.*)/\1/p' \
+                    | egrep -v \
+                        "$(skipped $@ | sed-ere -e 's/,/|/g' -e 's/(\w+)/^\1$/g' )" \
+                    | paste -s
+                )
+        >&2 echo 'branches: ' "$branches" 
+
+    else 
+        branches=$(
+                    git branch -r --merged \
+                    | grep "  $1"  \
+                    | sed-ere -n 's/  \w*\/(.*)/\1/p' \
+                    | egrep -v \
+                        "$(skipped $@ | sed-ere -e 's/,/|/g' -e 's/(\w+)/^\1$/g' )" \
+                    | paste -s
+                )
+        no_branches_msg="${no_branches_msg} on $1"
+        delete_branches_msg="${delete_branches_msg} on $1"
+    fi
+
 
     if [[ x$branches == x ]];then
-        echo "No branches to delete on $1"
+        echo $no_branches_msg
         exit 1
     fi
 
@@ -69,12 +91,17 @@ main(){
         echo "Would have skipped these branches: "
         print-branches $(skipped $@ | tr ',' ' ')
     else
-        echo "Deleting the following branches on $1."
+        echo "$delete_branches_msg"
         print-branches $branches
         echo
         echo "Pausing for 2 seconds ... Press Ctrl-C to quit"
         sleep 2
-        git push --no-verify --delete $1 $branches
+
+        if [[ $1 == "--local" ]];then
+            git branch -d $branches
+        else 
+            git push --no-verify --delete $1 $branches
+        fi
     fi
 }
 
