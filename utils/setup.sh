@@ -10,7 +10,7 @@ source ../common-setup/bash.d/colors
 make install 
 
 # scripts
-cp scripts/* $HOME/bin/
+ln -f scripts/* $HOME/bin/
 
 # Restore current directory of user
 popd > /dev/null
