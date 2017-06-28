@@ -4,3 +4,6 @@
 [submodule "common-setup/solarized"]
 	path = common-setup/solarized
 	url = https://github.com/altercation/solarized
+[submodule "common-setup/matcher"]
+	path = common-setup/matcher
+	url = git@github.com:burke/matcher

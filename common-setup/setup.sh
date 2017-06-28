@@ -89,4 +89,10 @@ rm -rf ~/.config/nvim
 ln -sf ~/.vim ~/.config/nvim
 ln -sf ~/.vimrc ~/.config/nvim/init.vim
 
+# Install a better matcher for Ctrl-P
+cd matcher
+make 
+make install PREFIX=$HOME
+cd ..
+
 popd > /dev/null

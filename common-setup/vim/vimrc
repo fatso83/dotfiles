@@ -126,15 +126,7 @@ set number                     " Show current line number
 " Disable mouse integration by default to make copy-paste easy. Toggle with F12
 set mouse=
 
-" Use Git command for listing files, use find otherwise
-" http://stackoverflow.com/a/26729140/200987
-"let g:ctrlp_user_command = [
-    "\ '.git', 'cd %s && git ls-files . -co --exclude-standard', 
-    "\ 'find %s -type f'			
-    "\ ]
-" Just use the Silver Searcher. Comparable in speed to Git, but works
-" everywhere
-let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+source ~/.vim/ctrlp-config
 
 " Elm settings - see https://github.com/elmcast/elm-vim
 let g:elm_format_autosave = 1 "reformat on autosave
