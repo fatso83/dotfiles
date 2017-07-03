@@ -139,4 +139,8 @@ let g:ycm_semantic_triggers = {
      \ 'elm' : ['.'],
      \}
 
+" js settings
+let g:javascript_plugin_jsdoc = 1
+
+
 source ~/.vimrc.local
