@@ -90,6 +90,9 @@ au BufEnter /private/tmp/crontab.* setl backupcopy=yes
 " autocmd StdinReadPre * let s:std_in=1
 " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
+" Make the local current directory reflect the currently open buffer
+autocmd BufEnter * lcd %:p:h
+
 " Open/Close NerdTree with Ctrl-N, but only in Normal mode
 nmap <C-n> :NERDTreeToggle<CR>
 
@@ -122,6 +125,8 @@ cmap w!! w !sudo tee % >/dev/null
 " Lucas F. Costa: http://lucasfcosta.com/2017/01/23/Quick-vIM-Tips-That-Will-Save-Your-Life.html
 set relativenumber             " Show relative line numbers
 set number                     " Show current line number
+" https://twitter.com/mantoni/status/880079687946522625
+set suffixesadd+=.js           " Makes gf work for relative files as well
 
 " Disable mouse integration by default to make copy-paste easy. Toggle with F12
 set mouse=
