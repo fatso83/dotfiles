@@ -28,5 +28,11 @@ while read line; do
     sudo gem install $line; 
 done < ruby.local 
 
+# setup i3
+rm -r ~/.config/i3
+ln -s $SCRIPT_DIR/i3-config ~/.config/i3
+
+sudo apt autoremove
+
 # restore current directory
 popd > /dev/null
