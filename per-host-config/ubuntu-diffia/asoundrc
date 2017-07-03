@@ -1,0 +1,22 @@
+# Set the Nforce 2 USB card as the default
+# https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture#Set_the_default_sound_card
+pcm.!default {
+    type hw
+    card N2
+}
+
+ctl.!default {
+    type hw
+    card N2
+}
+
+# create by vokoscreen 2.4.0
+
+pcm.pulse {
+  type pulse
+}
+
+ctl.pulse {
+  type pulse
+}
+

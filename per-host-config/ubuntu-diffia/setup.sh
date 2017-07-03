@@ -32,6 +32,12 @@ done < ruby.local
 rm -r ~/.config/i3
 ln -s $SCRIPT_DIR/i3-config ~/.config/i3
 
+# fix Alsa for Nforce
+ln -sf $SCRIPT_DIR/asoundrc ~/.asoundrc
+
+# for i3 - use custom Chrome to have argument added always
+cp google-chrome ~/bin/
+
 sudo apt autoremove
 
 # restore current directory
