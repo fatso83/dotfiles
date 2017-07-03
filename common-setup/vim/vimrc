@@ -93,6 +93,14 @@ au BufEnter /private/tmp/crontab.* setl backupcopy=yes
 " Make the local current directory reflect the currently open buffer
 autocmd BufEnter * lcd %:p:h
 
+" Silence NerdTree errors - might have been introduced by the above
+" https://github.com/scrooloose/nerdtree/issues/162#issuecomment-107643011
+" nmap <silent> <Leader>t :call g:WorkaroundNERDTreeToggle()<CR>
+
+" function! g:WorkaroundNERDTreeToggle()
+   "try | NERDTreeToggle | catch | silent! NERDTree | endtry
+" endfunction
+
 " Open/Close NerdTree with Ctrl-N, but only in Normal mode
 nmap <C-n> :NERDTreeToggle<CR>
 
