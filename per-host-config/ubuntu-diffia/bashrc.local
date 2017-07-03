@@ -3,12 +3,6 @@ t_debug "Load personalized bashrc for Ubuntu dev machine"
 
 #source /usr/local/etc/autojump.bash
 
-#Add SSH keys using the keychain
-if ! ssh-add -l > /dev/null;then
-    ssh-add -K
-fi
-
-alias nuget='mono ~/bin/nuget.exe'
 alias iso8601='date -u +"%Y-%m-%dT%H:%M:%SZ"'
 alias btsync_tunnel="timbuktu_lokal -L 8888:0.0.0.0:8888 -N"
 
