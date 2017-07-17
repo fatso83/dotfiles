@@ -41,12 +41,6 @@ function timer_now(){
     echo $diff
 }
 
-# include selfmade binaries and scripts
-# Needed for some of the utility functions
-if [ -d ~/bin ] ; then
-    PATH=~/bin:"${PATH}"
-fi
-
 # For debugging info on timing
 timer_start_if_unset
 

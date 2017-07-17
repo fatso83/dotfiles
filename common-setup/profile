@@ -5,12 +5,20 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-#export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
+# Ruby/RVM stuff
+#export PATH="$PATH:$HOME/.rvm/bin" 
 #[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 if [ "$0" = "/usr/sbin/lightdm-session" -a "$DESKTOP_SESSION" = "i3" ]; then
     export $(gnome-keyring-daemon --start --components=ssh)
 fi
 
+
+# include selfmade binaries and scripts
+# Needed for some of the utility functions
+if [ -d ~/bin ] ; then
+    PATH=~/bin:"${PATH}"
+fi
+
+# Add Rust stuff
 export PATH="$HOME/.cargo/bin:$PATH"
