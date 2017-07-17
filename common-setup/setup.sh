@@ -28,6 +28,11 @@ ln -sf "$SCRIPT_DIR"/gitignore_global "$DEST"/.gitignore_global
 ln -sf "$SCRIPT_DIR"/pystartup "$DEST"/.pystartup
 ln -sf "$SCRIPT_DIR"/tmux.conf "$DEST"/.tmux.conf
 
+# create needed dirs
+[[ ! -e "$DEST/.tmux" ]] && mkdir "$DEST/.tmux";
+[[ ! -e "$DEST/.tmux/plugins" ]] && mkdir "$DEST/.tmux/plugins";
+[[ ! -e "$DEST/.tmux/plugins/tpm" ]] && git clone https://github.com/tmux-plugins/tpm "$DEST"/.tmux/plugins/tpm 
+
 for file in "$SCRIPT_DIR"/bash.d/*; do
   ln -sf "$file" "${BASH_DIR}"/
 done
