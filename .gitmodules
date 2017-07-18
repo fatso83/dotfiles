@@ -6,7 +6,7 @@
 	url = https://github.com/altercation/solarized
 [submodule "common-setup/matcher"]
 	path = common-setup/matcher
-	url = git@github.com:burke/matcher
+	url = https://github.com/burke/matcher
 [submodule "per-host-config/ubuntu-diffia/i3-config"]
 	path = per-host-config/ubuntu-diffia/i3-config
-	url = ssh://git@github.com/fatso83/i3-config.git
+	url = https://github.com/fatso83/i3-config.git
