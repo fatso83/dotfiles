@@ -41,6 +41,16 @@ function timer_now(){
     echo $diff
 }
 
+# include selfmade binaries and scripts
+# Needed for some of the utility functions in this rc file, therefore 
+# cannot be in the profile file, which is read later on
+# Otherwise, we will for instance get "millis: command not found" on
+# every new terminal, even though it is found on the CLI when testing
+if [ -d ~/bin ] ; then
+    PATH=~/bin:"${PATH}"
+fi
+
+
 # For debugging info on timing
 timer_start_if_unset
 

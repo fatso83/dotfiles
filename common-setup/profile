@@ -13,12 +13,5 @@ if [ "$0" = "/usr/sbin/lightdm-session" -a "$DESKTOP_SESSION" = "i3" ]; then
     export $(gnome-keyring-daemon --start --components=ssh)
 fi
 
-
-# include selfmade binaries and scripts
-# Needed for some of the utility functions
-if [ -d ~/bin ] ; then
-    PATH=~/bin:"${PATH}"
-fi
-
 # Add Rust stuff
 export PATH="$HOME/.cargo/bin:$PATH"
