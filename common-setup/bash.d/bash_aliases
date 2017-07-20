@@ -40,7 +40,7 @@ if /usr/local/bin/hub help > /dev/null 2>&1; then
     alias git='hub'
 fi
 
-t_debug Use mac specifics
+t_debug Add custom ignore pattern for GNU ls
 IGNORE=""
 if ! is_mac; then
   #ignore patterns
