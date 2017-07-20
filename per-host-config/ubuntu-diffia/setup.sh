@@ -9,6 +9,13 @@ source ../../common-setup/bash.d/colors
 # make /usr/local owned by me
 sudo chown -R $(whoami) /usr/local
 
+# Cannot use this yet, must find way to check if PPA 
+# already has been added
+#echo -e $(blue Installing PPA)
+#sudo apt install software-properties-common
+#sudo add-apt-repository ppa:neovim-ppa/stable
+#sudo apt-get update
+
 # 
 echo -e $(blue Installing local apps ...)
 sudo apt install -y $(cat apps.local)
