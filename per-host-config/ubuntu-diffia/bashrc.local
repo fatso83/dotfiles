@@ -1,4 +1,6 @@
-#Se man bash i delen som heter "Prompting"
+# vi: ft=sh
+
+#See man bash: "Prompting"
 t_debug "Load personalized bashrc for Ubuntu dev machine"
 
 #source /usr/local/etc/autojump.bash
@@ -19,3 +21,22 @@ alias open=xdg-open
 # Make Ctrl-S work again (incremental search forwards)
 # http://stackoverflow.com/questions/791765/unable-to-forward-search-bash-history-similarly-as-with-ctrl-r
 stty -ixon
+alias iso8601-local='date +"%Y-%m-%dT%H:%M:%S%z"'
+
+# Trims whitespace at start and end of line
+alias trim="sed '/^[[:space:]]*$/d'"
+
+# Based on https://stackoverflow.com/a/12579554/200987
+function remove-last-newline(){
+    local file=$(mktemp)
+    cat > $file
+    if [[ $(tail -c1 $file | wc -l) == 1 ]]; then
+        head -c -1 $file > $file.tmp
+        mv $file.tmp $file
+    fi
+    cat $file
+    rm $file&
+}
+
+alias pbcopy='remove-last-newline | xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
