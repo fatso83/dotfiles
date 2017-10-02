@@ -9,14 +9,10 @@ source ../../common-setup/bash.d/colors
 # make /usr/local owned by me
 sudo chown -R $(whoami) /usr/local
 
-# Cannot use this yet, must find way to check if PPA 
-# already has been added
-#echo -e $(blue Installing PPA)
-#sudo apt install software-properties-common
-#sudo add-apt-repository ppa:neovim-ppa/stable
-#sudo apt-get update
+echo -e $(blue Installing PPA)
+sudo apt install software-properties-common
+sudo add-apt-repository -u ppa:neovim-ppa/stable # will now ASK if you want to add it
 
-# 
 echo -e $(blue Installing local apps ...)
 sudo apt install -y $(cat apps.local)
 
@@ -34,6 +30,15 @@ while read line; do
 
     sudo gem install $line; 
 done < ruby.local 
+
+
+if ! $(which n >> /dev/null); then
+    # upgrade Node
+    npm install -g n
+    n stable
+fi
+echo -e $(blue Installing Node packages ...)
+npm -g install $(cat node.local)
 
 # setup i3
 rm -r ~/.config/i3

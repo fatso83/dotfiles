@@ -25,3 +25,6 @@ per-host-config/setup.sh
 
 # Restore current directory of user
 popd > /dev/null
+
+# Re-read BASH settings
+source ~/.bashrc
