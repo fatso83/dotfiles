@@ -11,7 +11,9 @@ sudo chown -R $(whoami) /usr/local
 
 echo -e $(blue Installing PPA)
 sudo apt install software-properties-common
-sudo add-apt-repository -u ppa:neovim-ppa/stable # will now ASK if you want to add it
+if ! $(grep -r neovim-ppa  /etc/apt/ >> /dev/null); then
+    sudo add-apt-repository -u ppa:neovim-ppa/stable # will now ASK if you want to add it
+fi
 
 echo -e $(blue Installing local apps ...)
 sudo apt install -y --no-install-recommends $(cat apps.local)
