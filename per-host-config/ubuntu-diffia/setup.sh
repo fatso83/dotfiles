@@ -57,10 +57,12 @@ if ! $(which hub >> /dev/null); then
     echo -e $(blue "Installing Github's Hub...")
     VERSION="2.2.9"
     BASENAME="hub-linux-amd64-$VERSION"
-    wget https://github.com/github/hub/releases/download/v${VERSION}/${BASENAME}.tgz
-    tar xvzf $BASENAME.tgz
-    cd $BASENAME
+    wget "https://github.com/github/hub/releases/download/v${VERSION}/${BASENAME}.tgz"
+    tar xvzf "$BASENAME.tgz"
+    cd "$BASENAME"
     sudo ./install
+    cd ..
+    rimraf "${BASENAME}"*
 fi
 
 # restore current directory
