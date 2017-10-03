@@ -14,7 +14,7 @@ sudo apt install software-properties-common
 sudo add-apt-repository -u ppa:neovim-ppa/stable # will now ASK if you want to add it
 
 echo -e $(blue Installing local apps ...)
-sudo apt install -y $(cat apps.local)
+sudo apt install -y --no-install-recommends $(cat apps.local)
 
 # upgrade PIP
 pip install --upgrade pip
@@ -51,6 +51,17 @@ ln -sf $SCRIPT_DIR/asoundrc ~/.asoundrc
 cp google-chrome ~/bin/
 
 sudo apt autoremove
+
+# install Github 'hub'
+if ! $(which hub >> /dev/null); then
+    echo -e $(blue "Installing Github's Hub...")
+    VERSION="2.2.9"
+    BASENAME="hub-linux-amd64-$VERSION"
+    wget https://github.com/github/hub/releases/download/v${VERSION}/${BASENAME}.tgz
+    tar xvzf $BASENAME.tgz
+    cd $BASENAME
+    sudo ./install
+fi
 
 # restore current directory
 popd > /dev/null

@@ -1,9 +1,11 @@
 cmake
 conky
 cowsay
+curl
 dunst
 feh
 fortune
+gnome-panel
 i3
 make
 mono-devel
@@ -13,6 +15,7 @@ neovim
 npm
 powertop
 python-pip
+python-gpgme
 ruby
 rxvt-unicode
 silversearcher-ag
@@ -20,4 +23,5 @@ synapse
 thunar
 tmux
 tree
+wget
 xclip 
