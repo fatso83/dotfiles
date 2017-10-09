@@ -40,3 +40,4 @@ function remove-last-newline(){
 
 alias pbcopy='remove-last-newline | xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
+alias emojis='open https://www.webpagefx.com/tools/emoji-cheat-sheet/ &>/dev/null'
