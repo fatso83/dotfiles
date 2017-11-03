@@ -28,4 +28,4 @@ file="package/$2"
 quotedurl=$(npm show --json $pkg | pick_json -e 'dist.tarball')
 url=$(eval echo $quotedurl)
 
-curl $url | tar $TAR_OPTS $file
+curl -s $url | tar $TAR_OPTS $file
