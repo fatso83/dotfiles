@@ -50,6 +50,9 @@ git rm-deleted # deletes from index files that are missing (manually removed)
 
 ## Other 
 
+### Gzipped size
+
+Get the gzipped size of the files passed as arguments
 ```bash
 $ gzipped-size *
 cross-platform-utils.bashlib     : 364 bytes (versus 558 bytes)
@@ -62,3 +65,19 @@ git-setup-local-repo-aliases.sh  : 558 bytes (versus 840 bytes)
 gzipped-size                     : 285 bytes (versus 341 bytes)
 README.md                        : 260 bytes (versus 357 bytes)
 ``` 
+
+### `get-npm-file`
+Checks out the tarball from NPM and extracts the file(s)
+
+```
+USAGE
+
+    get-npm-file.sh [--to-stdout] some-pkg[@version] [file]
+
+    Gets a file (or all if none is given) from an NPM package
+```
+
+#### Example: show the peerDependencies of a package
+```bash
+`get-npm-file --to-stdout sinon-test@2.1.1 package.json | pick_json -e 'peerDependencies'`
+```
