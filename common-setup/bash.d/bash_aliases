@@ -93,7 +93,8 @@ alias socks_proxy_all='ssh -v -D :22222 carl-erik@timbuktu.kopseng.no -N'
 # Git aliases
 # https://github.com/holman/dotfiles/commit/666cb053e9d27d279c4643dce1ca09c2f8b69f2e
 # The -r flag to less is uses to make it work with the color escape codes
-alias gd='git diff --color | sed "s/^\([^-+ ]*\)[-+ ]/\\1/" | less -r'
-alias gclone='git clone '
+alias strip-diff-prefix='sed "s/^\([^-+ ]*\)[-+ ]/\\1/"' 
+alias gd='git diff --color | strip-diff-prefix | less -r'
+alias gdw='git diff --color --word-diff | less -r'
 
 t_debug global aliases finished
