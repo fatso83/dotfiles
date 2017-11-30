@@ -9,8 +9,8 @@ source ../../common-setup/bash.d/colors
 # make /usr/local owned by me
 sudo chown -R $(whoami) /usr/local
 
-echo -e $(blue Installing PPA)
-sudo apt install software-properties-common
+echo -e $(blue Installing PPA software)
+sudo apt-get install software-properties-common
 
 echo -e $(blue Adding external package repositories ...)
 while read line; do 
@@ -23,17 +23,21 @@ while read line; do
     fi
 
     sudo add-apt-repository --yes "$line"
+    APT_SHOULD_UPDATE=yes
 done < repos.local 
 
 # Add keys
+echo -e $(blue Adding keys for PPAs ...)
 wget -q -O - https://davesteele.github.io/key-366150CE.pub.txt | sudo apt-key add -
 
 echo -e $(blue Updating package lists ...)
-sudo apt-get update
+if [[ -n $APT_SHOULD_UPDATE ]]; then
+    sudo apt-get update
+fi
 
 
 echo -e $(blue Installing local apps ...)
-sudo apt install -y --no-install-recommends $(cat apps.local)
+sudo apt-get install -y --no-install-recommends $(cat apps.local)
 
 # upgrade PIP
 pip install --upgrade pip
@@ -57,7 +61,7 @@ if ! $(which n >> /dev/null); then
     n stable
 fi
 
-#echo -e $(blue Installing Node packages ...)
+echo -e $(blue Installing Node packages ...)
 if which pick_json > /dev/null; then
     installed=$(mktemp)
     npm list -g --depth 1 --json | pick_json -k -e dependencies > $installed
@@ -83,7 +87,7 @@ ln -sf $SCRIPT_DIR/asoundrc ~/.asoundrc
 # for i3 - use custom Chrome to have argument added always
 cp google-chrome ~/bin/
 
-sudo apt autoremove
+sudo apt-get install autoremove
 
 # install Github 'hub'
 if ! $(which hub >> /dev/null); then
