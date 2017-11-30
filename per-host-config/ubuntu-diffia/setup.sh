@@ -56,8 +56,22 @@ if ! $(which n >> /dev/null); then
     npm install -g n
     n stable
 fi
-echo -e $(blue Installing Node packages ...)
-npm -g install $(cat node.local)
+
+#echo -e $(blue Installing Node packages ...)
+if which pick_json > /dev/null; then
+    installed=$(mktemp)
+    npm list -g --depth 1 --json | pick_json -k -e dependencies > $installed
+
+    #filters out patterns that are present in the other file, see https://stackoverflow.com/questions/4780203/deleting-lines-from-one-file-which-are-in-another-file
+    node_apps=$(grep -v -f $installed node.local)
+else
+    node_apps="$(cat node.local)"
+fi
+# if non-zero, https://unix.stackexchange.com/a/146945/18594
+if [[ -n "${node_apps// }" ]]; then
+    npm -g install $node_apps 
+fi
+
 
 # setup i3
 rm -r ~/.config/i3
