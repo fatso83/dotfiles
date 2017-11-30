@@ -12,7 +12,6 @@ sudo chown -R $(whoami) /usr/local
 echo -e $(blue Installing PPA)
 sudo apt install software-properties-common
 
-
 echo -e $(blue Adding external package repositories ...)
 while read line; do 
     if $(grep -r "$line"  /etc/apt/ >> /dev/null); then
