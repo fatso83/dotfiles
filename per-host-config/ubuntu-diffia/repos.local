@@ -1,2 +1,4 @@
-neovim-ppa/stable
-peek-developers/stable
+ppa:neovim-ppa/stable
+ppa:peek-developers/stable
+deb http://davesteele.github.io/gnome-gmail/repo gnome-gmailppa main
+

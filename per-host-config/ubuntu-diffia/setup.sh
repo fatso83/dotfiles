@@ -14,12 +14,22 @@ sudo apt install software-properties-common
 
 echo -e $(blue Adding external package repositories ...)
 while read line; do 
-    if $(grep -r "$line"  /etc/apt/ >> /dev/null); then
+
+    # strip first four chars: 'ppa:' or 'deb '
+    ppa=$(echo $line | sed 's/^....//')
+
+    if $(grep -r "$ppa"  /etc/apt/ >> /dev/null); then
         continue
     fi
 
-    sudo add-apt-repository --yes ppa:$line
+    sudo add-apt-repository --yes "$line"
 done < repos.local 
+
+# Add keys
+wget -q -O - https://davesteele.github.io/key-366150CE.pub.txt | sudo apt-key add -
+
+echo -e $(blue Updating package lists ...)
+sudo apt-get update
 
 
 echo -e $(blue Installing local apps ...)
