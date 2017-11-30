@@ -149,6 +149,10 @@ let g:ycm_semantic_triggers = {
 
 " js settings
 let g:javascript_plugin_jsdoc = 1
+" enable auto sort import on write
+" see https://github.com/ruanyl/vim-sort-imports#available-cmd
+let g:import_sort_auto = 1
+
 
 
 source ~/.vimrc.local
