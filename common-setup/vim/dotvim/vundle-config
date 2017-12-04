@@ -38,6 +38,7 @@ Plugin 'mwnx/vimcrypt' " GPG & OpenSSL support (AES, ...)
 Plugin 'Raimondi/delimitMate'
 Plugin 'alvan/vim-closetag'
 Plugin 'janko-m/vim-test'
+Plugin 'ruanyl/vim-sort-imports'
 " Syntax highlighting
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'leafgarland/typescript-vim'
