@@ -29,6 +29,7 @@ done < repos.local
 # Add keys
 echo -e $(blue Adding keys for PPAs ...)
 wget -q -O - https://davesteele.github.io/key-366150CE.pub.txt | sudo apt-key add -
+wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
 
 echo -e $(blue Updating package lists ...)
 if [[ -n $APT_SHOULD_UPDATE ]]; then
@@ -87,7 +88,7 @@ ln -sf $SCRIPT_DIR/asoundrc ~/.asoundrc
 # for i3 - use custom Chrome to have argument added always
 cp google-chrome ~/bin/
 
-sudo apt-get install autoremove
+sudo apt-get autoremove --yes
 
 # install Github 'hub'
 if ! $(which hub >> /dev/null); then
