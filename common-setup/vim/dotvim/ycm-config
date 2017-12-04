@@ -34,4 +34,8 @@ let g:ycm_key_invoke_completion = '<C-Space>'
 
 nnoremap <F11> :YcmForceCompileAndDiagnostics <CR>
 
+if !exists('g:ycm_semantic_triggers')
+   let g:ycm_semantic_triggers = {}
+endif
+
 " vi: ft=vim

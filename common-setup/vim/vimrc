@@ -140,7 +140,9 @@ set suffixesadd+=.js           " Makes gf work for relative files as well
 " Disable mouse integration by default to make copy-paste easy. Toggle with F12
 set mouse=
 
+" These needs to be before later configuration for objects to be defined
 source ~/.vim/ctrlp-config
+source ~/.vim/ycm-config
 
 " Elm settings - see https://github.com/elmcast/elm-vim
 let g:elm_format_autosave = 1 "reformat on autosave
@@ -159,7 +161,5 @@ nmap <silent> <leader>T :TestFile<CR>
 nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
 nmap <silent> <leader>g :TestVisit<CR>
-
-source ~/.vim/vundle-config
 
 source ~/.vimrc.local
