@@ -82,6 +82,7 @@ au BufRead,BufNewFile *.kit set filetype=html
 autocmd! bufwritepost .vimrc source %
 autocmd! bufwritepost vimrc source %
 autocmd! bufwritepost vundle-config source %
+autocmd! bufwritepost ycm-config source %
 
 " Make vim work as a crontab editor: http://vim.wikia.com/wiki/Editing_crontab
 au BufEnter /private/tmp/crontab.* setl backupcopy=yes
@@ -143,9 +144,7 @@ source ~/.vim/ctrlp-config
 
 " Elm settings - see https://github.com/elmcast/elm-vim
 let g:elm_format_autosave = 1 "reformat on autosave
-let g:ycm_semantic_triggers = {
-     \ 'elm' : ['.'],
-     \}
+let g:ycm_semantic_triggers.elm = ['.']
 
 " js settings
 let g:javascript_plugin_jsdoc = 1
@@ -160,5 +159,7 @@ nmap <silent> <leader>T :TestFile<CR>
 nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
 nmap <silent> <leader>g :TestVisit<CR>
+
+source ~/.vim/vundle-config
 
 source ~/.vimrc.local
