@@ -154,5 +154,11 @@ let g:javascript_plugin_jsdoc = 1
 let g:import_sort_auto = 1
 
 
+" vim-test settings
+nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>a :TestSuite<CR>
+nmap <silent> <leader>l :TestLast<CR>
+nmap <silent> <leader>g :TestVisit<CR>
 
 source ~/.vimrc.local
