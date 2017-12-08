@@ -1,6 +1,4 @@
 #!/bin/bash
-# I might have some actual content here at some time, 
-# looking up per-machine stuff, but not right now
 
 # Just delegate down
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
