@@ -53,6 +53,9 @@ echo  -n -e $(blue "Installing all VIM plugins")
 echo -e $(dark_grey "(might take some time the first time ... )")
 vim +PluginInstall +qall
 
+# Vim Fugitive setup
+vim -u NONE -c "helptags vim-fugitive/doc" -c q
+
 # YouCompleteMe setup
 ycm_dir=~/.vim/bundle/YouCompleteMe
 if [[ -e "$ycm_dir" ]]; then

@@ -51,6 +51,8 @@ Plugin 'vim-scripts/SyntaxRange' " :[range]SyntaxInclude {filetype}
 Plugin 'elmcast/elm-vim'
 " color schemes
 Plugin 'romainl/Apprentice'
+" git plugin
+Plugin 'tpope/vim-fugitive'
 
 " All of your Plugins must be added before the following line
 call vundle#end()
