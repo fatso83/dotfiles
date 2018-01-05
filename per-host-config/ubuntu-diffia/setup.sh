@@ -18,7 +18,7 @@ while read line; do
     # strip first four chars: 'ppa:' or 'deb '
     ppa=$(echo $line | sed 's/^....//')
 
-    if $(grep -r "$ppa"  /etc/apt/ >> /dev/null); then
+    if $(grep -r -F "$ppa"  /etc/apt/ >> /dev/null); then
         continue
     fi
 
