@@ -153,7 +153,8 @@ let g:javascript_plugin_jsdoc = 1
 " enable auto sort import on write
 " see https://github.com/ruanyl/vim-sort-imports#available-cmd
 let g:import_sort_auto = 1
-
+" temporary fix for JSX: https://github.com/pangloss/vim-javascript/issues/955#issuecomment-356350901
+let g:jsx_ext_required = 0
 
 " vim-test settings
 nmap <silent> <leader>t :TestNearest<CR>

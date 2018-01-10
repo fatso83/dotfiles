@@ -43,6 +43,7 @@ Plugin 'ruanyl/vim-sort-imports'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx' " fixes JSX: https://github.com/pangloss/vim-javascript/issues/955#issuecomment-356350901
 Plugin 'PProvost/vim-ps1' " powershell
 Plugin 'OrangeT/vim-csharp' "razor, c#
 Plugin 'inkarkat/vim-ingo-library' " dependency for SyntaxRange
