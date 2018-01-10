@@ -37,8 +37,10 @@ Plugin 'editorconfig/editorconfig-vim'
 Plugin 'mwnx/vimcrypt' " GPG & OpenSSL support (AES, ...)
 Plugin 'Raimondi/delimitMate'
 Plugin 'alvan/vim-closetag'
-Plugin 'janko-m/vim-test'
+Plugin 'janko-m/vim-test' " Not really using ... remove?
 Plugin 'ruanyl/vim-sort-imports'
+Plugin 'sbdchd/neoformat' " Used with prettier
+'
 " Syntax highlighting
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'leafgarland/typescript-vim'

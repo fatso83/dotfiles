@@ -155,6 +155,9 @@ let g:javascript_plugin_jsdoc = 1
 let g:import_sort_auto = 1
 " temporary fix for JSX: https://github.com/pangloss/vim-javascript/issues/955#issuecomment-356350901
 let g:jsx_ext_required = 0
+" auto-format
+autocmd BufWritePre *.js Neoformat
+autocmd BufWritePre *.jsx Neoformat
 
 " vim-test settings
 nmap <silent> <leader>t :TestNearest<CR>

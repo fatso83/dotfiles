@@ -71,6 +71,7 @@ alias gulp='$(npm bin)/gulp'
 alias mocha='$(npm bin)/mocha'
 alias karma='$(npm bin)/karma'
 alias eslint='$(npm bin)/eslint'
+alias prettier='$(npm bin)/prettier'
 
 t_debug "aliases: finished setting up node aliases"
 
