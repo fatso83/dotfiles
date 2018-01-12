@@ -1,0 +1,4 @@
+#!/bin/sh
+FILE_ID="$1"
+
+echo "https://docs.google.com/document/d/$FILE_ID/export?format=pdf"
