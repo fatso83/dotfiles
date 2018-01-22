@@ -10,6 +10,7 @@ gcc
 gnome-gmail
 gnome-panel
 google-chrome-stable
+htop
 i3
 make
 mono-devel
@@ -28,5 +29,6 @@ synapse
 thunar
 tmux
 tree
+uuid
 wget
 xclip 
