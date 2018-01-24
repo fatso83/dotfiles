@@ -77,6 +77,12 @@ au BufRead,BufNewFile *.ts set filetype=typescript
 " associate *.kit with Html
 au BufRead,BufNewFile *.kit set filetype=html
 
+" Use nginx syntax highlighting
+au BufRead,BufNewFile *.nginx set ft=nginx
+au BufRead,BufNewFile */etc/nginx/* set ft=nginx
+au BufRead,BufNewFile */usr/local/nginx/conf/* set ft=nginx
+au BufRead,BufNewFile nginx.conf set ft=nginx
+
 
 " Auto-reload vimrc on changes
 autocmd! bufwritepost .vimrc source %
