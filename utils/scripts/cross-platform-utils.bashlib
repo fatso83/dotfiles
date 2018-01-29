@@ -1,23 +1,20 @@
 # Bash utility functions for BSD (Mac) and GNU (Linux, Mingw, CygWin)
 # that shouldn't be necessary to reimplement
+#
+# We use aliases defined at startup rather than functions to avoid
+# repeating the overhead of runtime detection each time a command is invoked
 
-# size in bytes
-util.size(){
-    if [[ $(uname) = Darwin ]]; then
-        stat -Lf %z -- "$1"
-    else
-        stat -c %s -- "$1"
-    fi
-}
+if [[ $(uname) != Darwin ]]; then
 
-# Interpret regular expressions as extended (modern) regular expressions 
-# rather than basic regular expressions (BRE's).  The re_format(7) manual page fully describes both formats.
-util.esed(){
-    if [[ $(uname) = Darwin ]]; then
-        sed -E "$@"
-    else
-        sed -r "$@"
-    fi
-}
+    # Interpret regular expressions as extended (modern) regular expressions 
+    # rather than basic regular expressions (BRE's).  The re_format(7) manual page fully describes both formats.
+    alias util.esed='sed -r "$@"'
+
+    # size in bytes
+    alias util.size='stat -c %s -- "$1"'
+else
+    alias util.esed='sed -E "$@"'
+    alias util.size='stat -Lf %z -- "$1"'
+fi
 
 # vim: set ft=sh
