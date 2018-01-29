@@ -56,9 +56,9 @@ main(){
     if [[ $1 == "--local" ]];then
         branches=$(
                     git branch --merged \
-                    | sed-ere -n 's/..(.*)/\1/p' \
+                    | util.esed -n 's/..(.*)/\1/p' \
                     | egrep -v \
-                        "$(skipped $@ | sed-ere -e 's/,/|/g' -e 's/(\w+)/^\1$/g' )" \
+                        "$(skipped $@ | util.esed -e 's/,/|/g' -e 's/(\w+)/^\1$/g' )" \
                     | paste -s
                 )
 
@@ -66,9 +66,9 @@ main(){
         branches=$(
                     git branch -r --merged \
                     | grep "  $1"  \
-                    | sed-ere -n 's/  \w*\/(.*)/\1/p' \
+                    | util.esed -n 's/  \w*\/(.*)/\1/p' \
                     | egrep -v \
-                        "$(skipped $@ | sed-ere -e 's/,/|/g' -e 's/(\w+)/^\1$/g' )" \
+                        "$(skipped $@ | util.esed -e 's/,/|/g' -e 's/(\w+)/^\1$/g' )" \
                     | paste -s
                 )
         no_branches_msg="${no_branches_msg} on $1"

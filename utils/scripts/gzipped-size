@@ -6,5 +6,5 @@ FILES="$(ls)"
 MAX_NAME_SZ="$(for f in $FILES; do echo $f|wc -c; done | sort -n | tail -1)"
 
 for f in $@; do 
-    printf "%-${MAX_NAME_SZ}s : %s bytes (versus %s bytes)\n"  $f $(gzip -c $f | wc -c) "$(size $f)"
+    printf "%-${MAX_NAME_SZ}s : %s bytes (versus %s bytes)\n"  $f $(gzip -c $f | wc -c) "$(util.size $f)"
 done

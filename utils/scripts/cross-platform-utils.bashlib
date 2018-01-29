@@ -2,7 +2,7 @@
 # that shouldn't be necessary to reimplement
 
 # size in bytes
-size(){
+util.size(){
     if [[ $(uname) = Darwin ]]; then
         stat -Lf %z -- "$1"
     else
@@ -12,7 +12,7 @@ size(){
 
 # Interpret regular expressions as extended (modern) regular expressions 
 # rather than basic regular expressions (BRE's).  The re_format(7) manual page fully describes both formats.
-sed-ere(){
+util.esed(){
     if [[ $(uname) = Darwin ]]; then
         sed -E "$@"
     else
