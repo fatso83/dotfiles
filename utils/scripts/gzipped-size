@@ -1,10 +1,43 @@
 #!/bin/bash
-# vim: set ft=sh
+#
+# Print statistics on gzipped vs uncompressed size of files
+#
+# Example:
+#    $ cat dotfiles-install.gif | gzipped-size  .gitattributes - README.md 
+#    .gitattributes  : 560 bytes (versus 973 bytes)
+#    stdin           : 312712 bytes (versus 329123 bytes)
+#    README.md       : 682 bytes (versus 1184 bytes)
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $DIR/cross-platform-utils.bashlib
-FILES="$(ls)"
+
+FILES="$@"
 MAX_NAME_SZ="$(for f in $FILES; do echo $f|wc -c; done | sort -n | tail -1)"
 
+handle_stdin(){
+    local tmp=$(mktemp)
+    local gz_sz="$(tee $tmp | gzip -c - | wc -c)"
+    local sz="$(wc -c $tmp)"
+    print_stats "stdin" $tmp
+}
+
+print_stats(){
+    local name="$1"
+    local file="$2"
+    printf "%-${MAX_NAME_SZ}s : %s bytes (versus %s bytes)\n"  "$name" "$(gzip -c $file | wc -c)" "$(util.size $file)"
+}
+
+if [[ -z $FILES ]]; then
+    handle_stdin
+    exit
+fi
+
 for f in $@; do 
-    printf "%-${MAX_NAME_SZ}s : %s bytes (versus %s bytes)\n"  $f $(gzip -c $f | wc -c) "$(util.size $f)"
+    if [[ $f == "-" ]]; then
+        handle_stdin
+    else
+        print_stats "$f" "$f"
+    fi
 done
+
+# vim: set ft=sh
