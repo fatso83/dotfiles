@@ -86,7 +86,7 @@ if [[ -e "$ycm_dir" ]]; then
 	# Javascript support
 	pushd third_party/ycmd/third_party/tern_runtime > /dev/null
 	npm install --production
-	popd
+	popd > /dev/null
 
 	# Semantic Typescript support for YCM
 	ts_cmd='npm install -g typescript'
@@ -97,7 +97,7 @@ if [[ -e "$ycm_dir" ]]; then
 	fi
 
 	# restore to cwd outside of if block
-	popd
+	popd > /dev/null
 fi
 
 touch "$DEST"/.vimrc.local
