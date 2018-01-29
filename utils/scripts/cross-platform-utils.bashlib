@@ -4,17 +4,20 @@
 # We use aliases defined at startup rather than functions to avoid
 # repeating the overhead of runtime detection each time a command is invoked
 
+# to make aliases expand in non-interactive sub-shells
+shopt -s expand_aliases
+
 if [[ $(uname) != Darwin ]]; then
 
     # Interpret regular expressions as extended (modern) regular expressions 
     # rather than basic regular expressions (BRE's).  The re_format(7) manual page fully describes both formats.
-    alias util.esed='sed -r "$@"'
+    alias util.esed='sed -r '
 
     # size in bytes
-    alias util.size='stat -c %s -- "$1"'
+    alias util.size='stat -c %s -- '
 else
-    alias util.esed='sed -E "$@"'
-    alias util.size='stat -Lf %z -- "$1"'
+    alias util.esed='sed -E '
+    alias util.size='stat -Lf %z -- '
 fi
 
 # vim: set ft=sh
