@@ -25,7 +25,7 @@
 [alias] 
 
     au = add --update
-    st = status
+    st = status -sb     # show short format and branch info
     co = checkout
     cam = commit --all --message
     cm = commit --message
