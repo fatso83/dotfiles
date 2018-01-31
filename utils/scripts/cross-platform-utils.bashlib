@@ -3,11 +3,13 @@
 #
 # We use aliases defined at startup rather than functions to avoid
 # repeating the overhead of runtime detection each time a command is invoked
+#
+# Depends on is_mac from the startup functions
 
 # to make aliases expand in non-interactive sub-shells
 shopt -s expand_aliases
 
-if [[ $(uname) != Darwin ]]; then
+if ! is_mac; then
 
     # Interpret regular expressions as extended (modern) regular expressions 
     # rather than basic regular expressions (BRE's).  The re_format(7) manual page fully describes both formats.
