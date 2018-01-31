@@ -6,51 +6,6 @@ function restore_path() {
         export PATH
 }
 
-# test_is_true "a" "a" -> "OK"
-function test_is_true() {
-        [[ "$1" == "$2" ]] && echo "OK" || echo "ERROR" $1 $2
-}
-
-# Needed? You can just $(ls $( echo $(echo $(echo /bin/ls)))) 
-
-# Purpose: Easily nest multiple expansions without too much escaping
-# Example usage: Nest expansion of two which statements with a ls
-#        $ left_nested ls which "which javac"
-#        /usr/lib/jdk/java-1.7.0/bin/javac
-function nested_expansion() {
-        res="" 
-        let i=$#
-
-        while (( $i > 0 )); do
-                res=$(eval '$'$i $res);
-                debug $res
-                let i=$i-1;
-        done
-        echo $res
-}
-
-#test $(nested_expansion "echo 4") = 4
-#test $(nested_expansion echo "echo 4") = 4
-#test $(nested_expansion ls "echo /dev/zero*") = "/dev/zero"
-
-
-# Dereference variables
-# Example:
-#       $ a=b b=c c=d d=e e=blah
-#       $ deref 3 a res; echo "$res"
-#       d
-#       $ deref 5 a res; echo "$res"
-#       blah
-# @see http://unix.stackexchange.com/questions/68042/double-and-triple-substitution-in-bash-and-zsh
-deref() {
-        if [ "$1" -le 0 ]; then
-                eval "$3=\$2"
-        else
-                eval "deref $(($1 - 1)) \"\${$2}\" \"\$3\""
-        fi
-}
-
-
 function set_bilde_tid
 {
     if [ "$1" == "" ]; then
@@ -60,14 +15,6 @@ function set_bilde_tid
     fi
 }
 
-
-function parent_pid {
-	ps -o ppid $$|grep -v PPID
-}
-
-function parent_process_name {
-  ps -o comm $(parent_pid)
-}
 
 function compressed_transfer {
   other_host="$1"
