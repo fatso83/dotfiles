@@ -6,6 +6,10 @@ pushd "$SCRIPT_DIR" > /dev/null
 # Get some color codes
 source ../../common-setup/bash.d/colors
 
+function strip-comments(){
+    grep -v '^#' $@
+}
+
 # make /usr/local owned by me
 sudo chown -R $(whoami) /usr/local
 
@@ -38,7 +42,7 @@ fi
 
 
 echo -e $(blue Installing local apps ...)
-sudo apt-get install -y --no-install-recommends $(cat apps.local)
+sudo apt-get install -y --no-install-recommends $(strip-comments apps.local)
 
 # upgrade PIP
 pip install --upgrade pip
