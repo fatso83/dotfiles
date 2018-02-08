@@ -5,6 +5,7 @@ cowsay
 curl
 dunst
 exiv2
+fail2ban
 feh
 fortune
 g++

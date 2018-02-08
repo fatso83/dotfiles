@@ -71,5 +71,9 @@ fi
 # install /etc files
 cp ./postfix-main.cf /etc/postfix/main.cf
 
+# activate certain scripts
+# we cannot activate this without knowing we have a working mail system installed in advance, see postfix
+#sudo chmod +x /etc/fail2ban/action.d/complain.conf
+
 # restore current directory
 popd > /dev/null
