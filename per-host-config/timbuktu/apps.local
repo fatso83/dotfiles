@@ -1,3 +1,4 @@
+ca-certificates 
 cmake
 conky
 cowsay
@@ -9,7 +10,10 @@ fortune
 g++
 gcc
 htop
+libsasl2-2 
+libsasl2-modules
 lzop
+mailutils 
 make
 mono-devel
 mono-xbuild
@@ -18,8 +22,8 @@ neovim
 npm
 peek
 powertop
-python-pip
 python-gpgme
+python-pip
 ruby
 rxvt-unicode
 silversearcher-ag

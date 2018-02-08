@@ -19,8 +19,8 @@ sudo apt-get install -y --no-install-recommends $(strip-comments apps.local)
 # upgrade PIP
 pip install --upgrade pip
 
-echo -e $(blue Installing python packages ...)
-pip install -r python.local 
+#echo -e $(blue Installing python packages ...)
+#pip install -r python.local 
 
 echo -e $(blue Installing ruby packages ...)
 while read line; do 
@@ -67,6 +67,9 @@ if ! $(which hub >> /dev/null); then
     cd ..
     rimraf "${BASENAME}"*
 fi
+
+# install /etc files
+cp ./postfix-main.cf /etc/postfix/main.cf
 
 # restore current directory
 popd > /dev/null
