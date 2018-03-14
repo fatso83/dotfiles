@@ -111,6 +111,31 @@ alias socks_proxy_all='ssh -v -D :22222 carl-erik@timbuktu.kopseng.no -N'
 # Used with the git alias functions; gd, gds, gdw, gdws
 alias strip-diff-prefix='sed "s/^\([^-+ ]*\)[-+ ]/\\1/"' 
 
+# "reminder aliases" for how to suspend and continue a process
+alias processes-suspend='killall -sSTOP '
+alias processes-start='killall -sSTART '
+
+function psgrep() { ps -ef | grep -i "$@"; };
+
+# Trims whitespace at start and end of line
+alias trim="sed '/^[[:space:]]*$/d'"
+
+# Based on https://stackoverflow.com/a/12579554/200987
+function remove-last-newline(){
+    local file=$(mktemp)
+    cat > $file
+    if [[ $(tail -c1 $file | wc -l) == 1 ]]; then
+        head -c -1 $file > $file.tmp
+        mv $file.tmp $file
+    fi
+    cat $file
+    rm $file&
+}
+
+
+# System shortcuts
+alias apt='sudo apt'
+
 # Restore the original system path if for some reason some 
 # command in your ~/bin directory does not work
 function restore_path() {
