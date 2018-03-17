@@ -48,7 +48,8 @@ alias urldecode='python -c "import sys, urllib as ul; print ul.unquote_plus(sys.
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1])"'
 alias htmldecode='python -c "import sys, HTMLParser;h = HTMLParser.HTMLParser();print h.unescape(sys.argv[1])"'
 alias htmlencode='python3 -c "import sys, html; print(html.escape(sys.argv[1]))"'
-alias html2text='python -c "import sys,html2text;sys.stdout.write(html2text.html2text(sys.stdin.read()))"'
+alias html2text='python -c "import sys,html2text;sys.stdout.write(html2text.html2text(sys.stdin.read().decode(\"utf-8\")))"'
+
 
 # Use Hub if installed. Just using `hub` instead of `which hub` cuts 2 seconds of Cygwin load time
 t_debug Use hub if available
