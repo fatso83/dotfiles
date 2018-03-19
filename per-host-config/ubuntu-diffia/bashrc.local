@@ -61,3 +61,4 @@ function pomodoro(){
     bugme; 
     dark_grey "\nPomodoro finished\n"; 
 }
+alias tmux="tmux -S /tmp/persisted-tmux "
