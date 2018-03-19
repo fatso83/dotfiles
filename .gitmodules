@@ -10,3 +10,6 @@
 [submodule "per-host-config/ubuntu-diffia/i3-config"]
 	path = per-host-config/ubuntu-diffia/i3-config
 	url = https://github.com/fatso83/i3-config.git
+[submodule "utils/signal-reset"]
+	path = utils/signal-reset
+	url = git@github.com:thomaslee/signal-reset.git

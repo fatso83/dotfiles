@@ -9,6 +9,15 @@ source ../common-setup/bash.d/colors
 # millis
 make install 
 
+# signal-reset
+if ! which signal-reset > /dev/null; then
+    echo signal-reset not found ... building.
+    pushd signal-reset > /dev/null
+    make
+    cp signal-reset $HOME/bin/
+    popd > /dev/null
+fi
+
 # scripts
 ln -f scripts/* $HOME/bin/
 
