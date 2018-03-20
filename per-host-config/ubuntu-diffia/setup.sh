@@ -117,5 +117,8 @@ if ! $(which hub >> /dev/null); then
     rimraf "${BASENAME}"*
 fi
 
+# Get icons for Caprine and PomoDone due to the Ubuntu XDG_... bug
+ sudo cp desktop/*.desktop /usr/share/applications/
+
 # restore current directory
 popd > /dev/null

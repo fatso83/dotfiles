@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Caprine
+Comment=Elegant Facebook Messenger desktop app
+Exec=env XDG_CURRENT_DESKTOP=Unity /opt/Caprine/caprine %U
+Terminal=false
+Type=Application
+Icon=caprine
+Categories=Chat;
