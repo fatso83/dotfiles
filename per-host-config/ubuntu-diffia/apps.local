@@ -20,6 +20,7 @@ mono-xbuild
 mono-xsp4
 neovim
 npm
+packer
 peek
 powertop
 python-pip
