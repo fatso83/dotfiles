@@ -114,4 +114,8 @@ make
 make install PREFIX=$HOME
 cd ..
 
+# Make a config file for ngrok
+[[ ! -e "$DEST"/.ngrok2 ]] && mkdir "$DEST/.ngrok2"
+ln -sf $SCRIPT_DIR/ngrok.yml $DEST/.ngrok2/ngrok.yml
+
 popd > /dev/null
