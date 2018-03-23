@@ -117,6 +117,9 @@ if ! $(which hub >> /dev/null); then
     rimraf "${BASENAME}"*
 fi
 
+# install QR copier
+go get github.com/claudiodangelis/qr-filetransfer
+
 # Get icons for Caprine and PomoDone due to the Ubuntu XDG_... bug
  sudo cp desktop/*.desktop /usr/share/applications/
 
