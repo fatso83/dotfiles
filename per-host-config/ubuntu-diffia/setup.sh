@@ -121,7 +121,7 @@ fi
 go get github.com/claudiodangelis/qr-filetransfer
 
 # Get icons for Caprine and PomoDone due to the Ubuntu XDG_... bug
- sudo cp desktop/*.desktop /usr/share/applications/
+ ./desktop/setup.sh
 
 # restore current directory
 popd > /dev/null
