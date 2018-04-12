@@ -1,6 +1,6 @@
 # Compiled source #
 ###################
-*.com
+# *.com I don't use Windows.
 *.class
 #*.dll
 #*.exe
