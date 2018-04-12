@@ -1,5 +1,9 @@
 # vim: syntax=sh
 
+if ! declare -p t_debug > /dev/null 2> /dev/null; then
+    source ~/.bash.d/core_utils
+fi
+
 t_debug "Reading aliases and functions"
 
 function is_mac() {
