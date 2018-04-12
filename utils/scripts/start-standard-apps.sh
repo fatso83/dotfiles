@@ -3,6 +3,6 @@
 slack&
 caprine&
 signal-reset webstorm&
-pomodoneapp&
+XDG_CURRENT_DESKTOP=Unity pomodoneapp&
 firefox&
 google-chrome&
