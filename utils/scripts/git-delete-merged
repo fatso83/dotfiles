@@ -68,6 +68,7 @@ main(){
         branches=$(
                     git branch -r --merged \
                     | grep "  $remote"  \
+                    | egrep -v "HEAD ->"  \
                     | util.esed -n 's/  \w*\/(.*)/\1/p' \
                     | egrep -v \
                         "$(skipped $skip | util.esed -e 's/,/|/g' -e 's/(\w+)/^\1$/g' )" \
