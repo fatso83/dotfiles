@@ -102,7 +102,7 @@ main(){
         if [[ -n $local ]];then
             git branch -d $branches
         else 
-            git push --no-verify --delete $1 $branches
+            git push --no-verify --delete $remote $branches
         fi
     fi
 }
