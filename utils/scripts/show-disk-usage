@@ -1,0 +1,26 @@
+#!/bin/bash
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$SCRIPT_DIR/easyoptions.sh"
+
+## Show disk usage of folders 
+##
+##  Usage: @script.name <directory>
+##
+##  Options:
+##      --help          Show help
+##      --depth=X       The depth of the subfolders to list for
+
+if [[ ${#arguments[@]} != 1 ]]; then
+    $0 --help
+    exit 1
+fi
+
+DEPTH=1
+if [[ -n $depth ]]; then
+    DEPTH=$depth
+fi
+
+FOLDER=${arguments[0]}
+
+find $FOLDER -maxdepth $DEPTH -mindepth $DEPTH -type d | xargs du -csh | sort -h
