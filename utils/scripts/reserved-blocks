@@ -1,0 +1,39 @@
+#!/bin/bash
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$SCRIPT_DIR/easyoptions.sh"
+
+## Show reserved blocks
+##
+##  Usage: @script.name <partition>
+##
+##  Options:
+##      --help          Show help
+##      --list          Will list partitions
+##      --set=<X>      Set the reserved space to X percent
+##
+##  Example:  @script.name /dev/nvme0n1p6 
+if [[ -n $list ]]; then
+    sudo fdisk -l \
+        | sed -e '/Disk.*loop/,+5d'
+    exit $?
+fi
+
+if [[ ${#arguments[@]} != 1 ]]; then
+    $0 --help
+    exit 1
+fi
+
+
+disk=${arguments[0]}
+
+if [[ ! -e $disk ]]; then
+    echo "No such file $disk" > /dev/stderr
+    exit 1
+fi
+
+if [[ -n $set ]]; then
+     sudo tune2fs -m $set $disk 
+     exit $?
+ fi
+
+sudo dumpe2fs -h "$disk" 2> /dev/null | awk -F ':' '{ if($1 == "Reserved block count") { rescnt=$2 } } { if($1 == "Block count") { blkcnt=$2 } } END { print "Reserved blocks: "(rescnt/blkcnt)*100"%" }'
