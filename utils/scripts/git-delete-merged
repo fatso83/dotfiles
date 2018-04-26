@@ -50,11 +50,18 @@ print-branches(){
 }
 
 # filters out the skipped branches and wraps each branch name in a regex with start/stop markers
+# @returns a list of branch names as exact regexes: '^foo$ ^bar$ ^baz$'
 filter-branches(){
     egrep -v \
-        "$(skipped $skip | util.esed -e 's/,/|/g' -e 's/([a-zA-Z0-9_-]+)/^\1$/g' )" \
-    | egrep "$match" \
-    | paste -s
+        "$(skipped $skip |  # get the skipped branches
+
+            # replace 'a,b,c' with regex 'a|b|c'
+            # then replace 'a|b|c' with '^a$|^b$|^c$'
+            util.esed -e 's/,/|/g' \
+                      -e 's/([a-zA-Z0-9_-]+)/^\1$/g' 
+        )" | # sub-shell end 
+        egrep "$match" | # just keep lines matching $match
+        paste -s # actually not totally sure about this
 }
 
 main(){
@@ -67,18 +74,18 @@ main(){
 
     if [[ -n $local ]];then
         branches=$(
-                    git branch --merged \
-                    | util.esed -n 's/..(.*)/\1/p' \
-                    | filter-branches
+                    git branch --merged |  # show local, merged branches 
+                        util.esed -n 's/..(.*)/\1/p' | # remove first two characters
+                        filter-branches    # remove skipped and filter on matches
                 )
 
     else 
         branches=$(
-                    git branch -r --merged \
-                    | grep "  $remote"  \
-                    | egrep -v "HEAD ->"  \
-                    | util.esed -n 's/  \w*\/(.*)/\1/p' \
-                    | filter-branches
+                    git branch -r --merged  |  # show remote merged branches
+                        grep "  $remote"    |  # just keep lines with remote
+                        egrep -v "HEAD ->"  |  # remove irrelevant noise
+                        util.esed -n 's/  \w*\/(.*)/\1/p' | # remove the remote/ bit
+                        filter-branches        # remove skipped and filter on matches
                 )
         no_branches_msg="${no_branches_msg} on ${remote}"
         delete_branches_msg="${delete_branches_msg} on ${remote}"
