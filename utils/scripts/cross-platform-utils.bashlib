@@ -9,7 +9,7 @@
 # to make aliases expand in non-interactive sub-shells
 shopt -s expand_aliases
 
-if ! declare -p is_mac > /dev/null 2> /dev/null; then
+if ! declare -f -p is_mac > /dev/null 2> /dev/null; then
     source ~/.bash.d/bash_aliases_functions
 fi
 
