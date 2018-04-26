@@ -13,7 +13,8 @@ DRY_RUN=1
 
 ##  Usage: @script.name [--doit] <[--local] | --remote <remote>> [--branches-to-skip <branches to skip>]
 ## 
-##  Example: git-delete-merged --doit origin deploy-branch,demo
+##  Example to delete all branches on GitHub matching 'patch-': 
+##          git-delete-merged --doit --remote github --match patch-
 ## 
 ##  By default, "master" and "develop" are skipped
 ##  Specifying core.protected-branches in your git config, or
@@ -24,6 +25,7 @@ DRY_RUN=1
 ##      -l, --local             Operate on local branches
 ##      --remote=my-remote      Operate on remote branches on the remote repo
 ##      --skip=branches         The list of branches to skip. Default is "master,develop"
+##      --match=<regex>         Only delete branch names matching <regex>
 
 skipped(){
     default='master,develop'
@@ -47,6 +49,13 @@ print-branches(){
     done
 }
 
+filter-branches(){
+    egrep -v \
+        "$(skipped $skip | util.esed -e 's/,/|/g' -e 's/(\w+)/^\1$/g' )" \
+    | egrep "$match" \
+    | paste -s
+}
+
 main(){
     if [[ -n $doit ]];then
         DRY_RUN=0
@@ -59,9 +68,7 @@ main(){
         branches=$(
                     git branch --merged \
                     | util.esed -n 's/..(.*)/\1/p' \
-                    | egrep -v \
-                        "$(skipped $skip | util.esed -e 's/,/|/g' -e 's/(\w+)/^\1$/g' )" \
-                    | paste -s
+                    | filter-branches
                 )
 
     else 
@@ -70,9 +77,7 @@ main(){
                     | grep "  $remote"  \
                     | egrep -v "HEAD ->"  \
                     | util.esed -n 's/  \w*\/(.*)/\1/p' \
-                    | egrep -v \
-                        "$(skipped $skip | util.esed -e 's/,/|/g' -e 's/(\w+)/^\1$/g' )" \
-                    | paste -s
+                    | filter-branches
                 )
         no_branches_msg="${no_branches_msg} on ${remote}"
         delete_branches_msg="${delete_branches_msg} on ${remote}"
