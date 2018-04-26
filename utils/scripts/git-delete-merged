@@ -49,9 +49,10 @@ print-branches(){
     done
 }
 
+# filters out the skipped branches and wraps each branch name in a regex with start/stop markers
 filter-branches(){
     egrep -v \
-        "$(skipped $skip | util.esed -e 's/,/|/g' -e 's/(\w+)/^\1$/g' )" \
+        "$(skipped $skip | util.esed -e 's/,/|/g' -e 's/([a-zA-Z0-9_-]+)/^\1$/g' )" \
     | egrep "$match" \
     | paste -s
 }
@@ -116,6 +117,26 @@ usage(){
     $0 --help 
     exit 1
 }
+
+# mini test-suite
+if [[ -n $self_test ]]; then
+    function verify(){
+        if [[ $? = 0 ]];then
+            echo OK
+        else
+            echo fail && exit 1
+        fi
+    }
+    echo '#filter-branches test'
+
+    skip="foo,bar,p1" branches="b1\nfoo\nbar\np1"
+    [[ $(/bin/echo -e "$branches" | filter-branches) == "b1" ]]
+    verify
+
+    skip="foo-bar,p1" branches="b1\nfoo-bar\np1"
+    [[ $(/bin/echo -e "$branches" | filter-branches) == "b1" ]] && echo OK || echo fail && exit 1
+    verify
+fi
 
 if [[ -n $local && -n $remote ]]; then
     /bin/echo -e "\n ERROR: Can\'t specify both remote and local options!\n"
