@@ -6,6 +6,10 @@ pushd "$SCRIPT_DIR" > /dev/null
 # Get some color codes for printing
 source ../common-setup/bash.d/colors
 
+if [[ ! -e ~/bin ]]; then
+    mkdir ~/bin
+fi
+
 # millis
 make install 
 
