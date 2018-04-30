@@ -28,6 +28,7 @@ packer
 peek
 powertop
 
+postgresql
 
 # https://github.com/pypa/pip/issues/5240
 # python-pip
