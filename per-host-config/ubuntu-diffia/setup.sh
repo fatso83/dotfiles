@@ -86,7 +86,7 @@ snap list 2>/dev/null |  awk '{if (NR>1){print $1}}' > $installed
 #filters out patterns that are present in the other file, see https://stackoverflow.com/questions/4780203/deleting-lines-from-one-file-which-are-in-another-file
 snaps=$(grep -v -f $installed snaps.local)
 for pkg in $snaps; do
-    snap install $pkg
+    sudo snap install $pkg --classic
 done
 
 echo -e $(blue Installing Node packages ...)
