@@ -133,7 +133,6 @@ fi
 # Get SDKMAN
 export SDKMAN_DIR="/home/carlerik/.sdkman"
 [[ -s "/home/carlerik/.sdkman/bin/sdkman-init.sh" ]] && source "/home/carlerik/.sdkman/bin/sdkman-init.sh"
-echo sourced
 if ! type sdk > /dev/null 2> /dev/null; then # if the `sdk` function doesn't exist
     curl -s "https://get.sdkman.io" | bash # installs SDKMAN
 fi
