@@ -24,8 +24,14 @@ npm
 packer
 peek
 powertop
-python-pip
-python-gpgme
+
+
+# https://github.com/pypa/pip/issues/5240
+# python-pip
+
+# not found in 18.04
+# python-gpgme 
+
 ruby
 rxvt-unicode
 silversearcher-ag

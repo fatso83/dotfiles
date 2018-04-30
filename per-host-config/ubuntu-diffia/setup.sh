@@ -6,6 +6,11 @@ pushd "$SCRIPT_DIR" > /dev/null
 # Get some color codes
 source ../../common-setup/bash.d/colors
 
+function try-or-fail(){
+    "$@"
+    [[ $? != 0 ]] && exit 1
+}
+
 function strip-comments(){
     grep -v '^#' $@
 }
@@ -42,10 +47,18 @@ fi
 
 
 echo -e $(blue Installing local apps ...)
-sudo apt-get install -y --no-install-recommends $(strip-comments apps.local)
+try-or-fail sudo apt-get install -y --no-install-recommends $(strip-comments apps.local)
 
+
+# https://github.com/pypa/pip/issues/5240
 # upgrade PIP
-pip install --upgrade pip
+# pip install --upgrade pip
+blue "Installing local apps\n"
+if ! which pip > /dev/null; then
+    curl https://bootstrap.pypa.io/get-pip.py | python3
+    $SCRIPT_DIR/setup.sh  # restart this script
+    exit $?
+fi
 
 echo -e $(blue Installing python packages ...)
 pip install -r python.local 
