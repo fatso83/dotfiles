@@ -19,9 +19,15 @@ function strip-comments(){
 sudo chown -R $(whoami) /usr/local
 
 echo -e $(blue Installing PPA software)
-sudo apt-get install software-properties-common
+sudo apt-get install software-properties-common # Installs 'add-apt-repository'
 
-echo -e $(blue Adding external package repositories ...)
+# Add keys
+blue "Adding keys for PPAs ...\n"
+wget -q -O - https://davesteele.github.io/key-366150CE.pub.txt | sudo apt-key add -
+wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
+wget -q -O - https://repo.jotta.us/public.gpg | sudo apt-key add -
+
+blue "Adding external package repositories ...\n"
 while read line; do 
 
     # strip first four chars: 'ppa:' or 'deb '
@@ -35,11 +41,6 @@ while read line; do
     APT_SHOULD_UPDATE=yes
 done < repos.local 
 
-# Add keys
-echo -e $(blue Adding keys for PPAs ...)
-wget -q -O - https://davesteele.github.io/key-366150CE.pub.txt | sudo apt-key add -
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
-wget -O - https://repo.jotta.us/public.gpg | sudo apt-key add -
 
 echo -e $(blue Updating package lists ...)
 if [[ -n $APT_SHOULD_UPDATE ]]; then
