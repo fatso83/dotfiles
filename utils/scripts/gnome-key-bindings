@@ -1,0 +1,192 @@
+#!/bin/bash
+# Author Carl-Erik Kopseng <carlerik@gmail.com>
+# Based on https://askubuntu.com/a/461812/165026
+
+## List/disable/enable/set gnome-key-bindings
+## 
+## @script.name [-h | option] [value]
+##
+## Options
+##    --list              Lists all the current keybindings
+##    --set=key           Set a specific keybinding
+##    --unset=key         Unsets a specific keybinding
+##    --unset-all         Unsets all keybindings
+##    --except=REGEX      Filter out keys matching REGEX from being unset
+##    --print-default     Prints the default shortcuts per Ubuntu 18.04
+##
+## Example:
+##      gnome-key-bindings --unset-all --except "close|switch-applications|switch-input-source|show-desktop"
+
+# EasyOptions borked on the following, probably due to not handling single quotes
+# Example: 
+#      @script.name --set=switch-applications-backward "'<Shift><Super>Tab', '<Shift><Alt>Tab'"
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$SCRIPT_DIR/easyoptions.sh"
+
+PREFIX=org.gnome.desktop.wm.keybindings
+
+print-default(){
+    echo "cycle-windows-backward 	['<Shift><Alt>Escape']"
+    echo "minimize 	['<Super>h']"
+    echo "move-to-workspace-7 @as 	[]"
+    echo "move-to-workspace-8 @as 	[]"
+    echo "move-to-workspace-9 @as 	[]"
+    echo "move-to-monitor-left 	['<Super><Shift>Left']"
+    echo "move-to-workspace-5 @as 	[]"
+    echo "move-to-workspace-6 @as 	[]"
+    echo "move-to-workspace-10 @as 	[]"
+    echo "move-to-workspace-11 @as 	[]"
+    echo "move-to-workspace-12 @as 	[]"
+    echo "move-to-center @as 	[]"
+    echo "unmaximize 	['<Super>Down', '<Alt>F5']"
+    echo "panel-main-menu 	['<Alt>F1']"
+    echo "cycle-windows 	['<Alt>Escape']"
+    echo "cycle-panels-backward 	['<Shift><Control><Alt>Escape']"
+    echo "panel-run-dialog 	['<Alt>F2']"
+    echo "switch-to-workspace-down 	['<Super>Page_Down', '<Control><Alt>Down']"
+    echo "move-to-corner-ne @as 	[]"
+    echo "move-to-side-e @as 	[]"
+    echo "move-to-workspace-right 	['<Control><Shift><Alt>Right']"
+    echo "always-on-top @as 	[]"
+    echo "move-to-workspace-up 	['<Super><Shift>Page_Up', '<Control><Shift><Alt>Up']"
+    echo "raise @as 	[]"
+    echo "maximize 	['<Super>Up']"
+    echo "cycle-group-backward 	['<Shift><Alt>F6']"
+    echo "move-to-side-n @as 	[]"
+    echo "move-to-side-s @as 	[]"
+    echo "maximize-horizontally @as 	[]"
+    echo "move-to-side-w @as 	[]"
+    echo "move-to-corner-nw @as 	[]"
+    echo "switch-windows @as 	[]"
+    echo "begin-move @as 	[]"
+    echo "move-to-monitor-down 	['<Super><Shift>Down']"
+    echo "switch-windows-backward @as 	[]"
+    echo "move-to-workspace-left 	['<Control><Shift><Alt>Left']"
+    echo "move-to-corner-se @as 	[]"
+    echo "activate-window-menu 	['<Alt>space']"
+    echo "switch-input-source 	['<Super>space']"
+    echo "toggle-above @as 	[]"
+    echo "move-to-monitor-right 	['<Super><Shift>Right']"
+    echo "switch-input-source-backward 	['<Shift><Super>space']"
+    echo "move-to-workspace-last 	['<Super><Shift>End']"
+    echo "lower @as 	[]"
+    echo "cycle-panels 	['<Control><Alt>Escape']"
+    echo "toggle-fullscreen @as 	[]"
+    echo "toggle-on-all-workspaces @as 	[]"
+    echo "move-to-monitor-up 	['<Super><Shift>Up']"
+    echo "move-to-corner-sw @as 	[]"
+    echo "toggle-shaded @as 	[]"
+    echo "switch-to-workspace-1 	['<Super>Home']"
+    echo "switch-to-workspace-2 @as 	[]"
+    echo "switch-to-workspace-3 @as 	[]"
+    echo "switch-to-workspace-4 @as 	[]"
+    echo "raise-or-lower @as 	[]"
+    echo "switch-panels 	['<Control><Alt>Tab']"
+    echo "switch-panels-backward 	['<Shift><Control><Alt>Tab']"
+    echo "switch-applications-backward 	['<Shift><Super>Tab', '<Shift><Alt>Tab']"
+    echo "maximize-vertically @as 	[]"
+    echo "switch-to-workspace-7 @as 	[]"
+    echo "switch-to-workspace-5 @as 	[]"
+    echo "show-desktop 	['<Primary><Super>d', '<Primary><Alt>d', '<Super>d']"
+    echo "switch-to-workspace-8 @as 	[]"
+    echo "switch-to-workspace-9 @as 	[]"
+    echo "switch-to-workspace-6 @as 	[]"
+    echo "switch-applications 	['<Super>Tab', '<Alt>Tab']"
+    echo "switch-to-workspace-10 @as 	[]"
+    echo "switch-to-workspace-11 @as 	[]"
+    echo "switch-to-workspace-12 @as 	[]"
+    echo "switch-to-workspace-left 	['<Control><Alt>Left']"
+    echo "toggle-maximized 	['<Alt>F10']"
+    echo "set-spew-mark @as 	[]"
+    echo "begin-resize 	['<Alt>F8']"
+    echo "move-to-workspace-down 	['<Super><Shift>Page_Down', '<Control><Shift><Alt>Down']"
+    echo "switch-to-workspace-last 	['<Super>End']"
+    echo "switch-group-backward 	['<Shift><Super>Above_Tab', '<Shift><Alt>Above_Tab']"
+    echo "switch-group 	['<Super>Above_Tab', '<Alt>Above_Tab']"
+    echo "cycle-group 	['<Alt>F6']"
+    echo "close 	['<Alt>F4']"
+    echo "switch-to-workspace-up 	['<Super>Page_Up', '<Control><Alt>Up']"
+    echo "move-to-workspace-1 	['<Super><Shift>Home']"
+    echo "move-to-workspace-2 @as 	[]"
+    echo "move-to-workspace-3 @as 	[]"
+    echo "move-to-workspace-4 @as 	[]"
+    echo "switch-to-workspace-right 	['<Control><Alt>Right']"
+}
+
+assert-args(){
+    if [[ ${#arguments[*]} == 0 ]]; then
+        $0 -h
+        exit 1
+    fi
+}
+
+print-existing(){
+    gsettings list-recursively "$PREFIX" | 
+        perl -pe 's/(.*)\s*(\[.*?\])\s*$/$1\t$2\n/' | 
+        while IFS=$'\t' read -r key val; do echo -e "$key\t$val"; done | 
+            strip-prefix
+}
+
+strip-prefix(){
+    sed -e "s/$PREFIX //"
+}
+
+remove-unset(){
+    grep -v -F "['']"
+}
+
+remove-crap(){
+    egrep -v '@as.*\[\]' 
+}
+
+function remove-matches(){
+    egrep -v "$except"
+}
+
+unset-all(){
+
+    filter=cat      #no filter
+    if [[ -n $except ]]; then 
+        filter=remove-matches
+    fi
+
+    print-existing | 
+        $filter |
+        while IFS=$'\t' read -r key val; do 
+            unset-key $key;
+        done;
+}
+
+# unset key 
+unset-key(){
+    set-key "$1" "''"
+}
+
+# set key value
+set-key(){
+    gsettings set $PREFIX $1 "[$2]"
+}
+
+if [[ -n $print_default ]]; then
+    print-default
+    exit
+fi
+
+if [[ -n $list ]]; then
+    print-existing | remove-unset | remove-crap 
+    exit
+fi
+
+if [[ -n $unset_all ]]; then
+    unset-all > /dev/null && exit
+fi
+
+if [[ -n $set ]]; then
+    assert-args
+    set-key $set ${arguments[0]} && exit
+fi
+
+if [[ -n $unset ]]; then
+    unset-key $unset && exit
+fi

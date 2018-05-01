@@ -144,9 +144,6 @@ sdk install java 8.0.163-zulu
 # install QR copier
 go get github.com/claudiodangelis/qr-filetransfer
 
-# Install Jottacloud backup software
-
-
 # Get icons for Caprine and PomoDone due to the Ubuntu XDG_... bug
  ./desktop/setup.sh
 
