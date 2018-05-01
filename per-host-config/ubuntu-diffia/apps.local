@@ -1,3 +1,6 @@
+apt-transport-https 
+ca-certificates
+
 cmake
 conky
 cowsay
@@ -9,11 +12,15 @@ fortune
 g++
 gcc
 #gnome-gmail
+
+git-extras 
+
 gnome-panel
 golang-go
 google-chrome-stable
 htop
 i3
+jotta-cli
 lzop
 make
 

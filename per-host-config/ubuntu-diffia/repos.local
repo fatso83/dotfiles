@@ -2,4 +2,4 @@ ppa:neovim-ppa/stable
 ppa:peek-developers/stable
 deb http://davesteele.github.io/gnome-gmail/repo gnome-gmailppa main
 deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
-
+deb https://repo.jotta.us/debian debian main

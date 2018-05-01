@@ -39,6 +39,7 @@ done < repos.local
 echo -e $(blue Adding keys for PPAs ...)
 wget -q -O - https://davesteele.github.io/key-366150CE.pub.txt | sudo apt-key add -
 wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
+wget -O - https://repo.jotta.us/public.gpg | sudo apt-key add -
 
 echo -e $(blue Updating package lists ...)
 if [[ -n $APT_SHOULD_UPDATE ]]; then
@@ -141,6 +142,9 @@ sdk install java 8.0.163-zulu
 
 # install QR copier
 go get github.com/claudiodangelis/qr-filetransfer
+
+# Install Jottacloud backup software
+
 
 # Get icons for Caprine and PomoDone due to the Ubuntu XDG_... bug
  ./desktop/setup.sh
