@@ -1,5 +1,21 @@
 # Utility scripts
 
+This is not a exhaustive list of the scripts. Look in the actual folder to see 
+what is there. Also, some options may have been added/removed/changed, so
+run `the-command --help` to see actual options.
+
+## Installing a script standalone
+Generally, you can download standalone versions of these by following this general recipe:
+
+```
+BASE="https://raw.githubusercontent.com/fatso83/dotfiles/master/utils/scripts"
+curl -s $BASE/easyoptions.sh -o easyoptions.sh
+curl -s $BASE/easyoptions.rb -o easyoptions.rb
+curl -s $BASE/gnome-key-bindings -o gnome-key-bindings
+chmod +x ./gnome-key-bindings
+sudo mv ./gnome-key-bindings easyoptions.* /usr/local/bin/
+```
+
 ## Git scripts
 
 ### `git delete-merged`
