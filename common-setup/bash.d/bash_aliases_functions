@@ -159,6 +159,7 @@ function gds() {  git diff --staged --color $@ | strip-diff-prefix | less -r; }
 function gdw() {  git diff          --color --word-diff $@         | less -r; }
 function gdws() { git diff --staged --color --word-diff $@         | less -r; }
 alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
+alias glg='git lg' 
 
 t_debug "global aliases and functions finished"
 
