@@ -190,3 +190,5 @@ fi
 if [[ -n $unset ]]; then
     unset-key $unset && exit
 fi
+
+$0 --help
