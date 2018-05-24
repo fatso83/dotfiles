@@ -11,7 +11,7 @@ done
 
 
 blue "Removing (almost) all Gnome key bindings ...\n" # crashes with IntelliJ products
-../../../utils/scripts/gnome-key-bindings --unset-all --except 'close|switch-applications|switch-input-source|show-desktop'
+../../../utils/scripts/gnome-key-bindings --unset-all --except 'close|switch-applications|switch-input-source|show-desktop|maximize'
 
 
 popd  > /dev/null

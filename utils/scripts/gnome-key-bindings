@@ -14,8 +14,14 @@
 ##    --except=REGEX      Filter out keys matching REGEX from being unset
 ##    --print-default     Prints the default shortcuts per Ubuntu 18.04
 ##
-## Example:
-##      gnome-key-bindings --unset-all --except "close|switch-applications|switch-input-source|show-desktop"
+## Examples:
+##
+##      Clearing all keys except a few:
+##        gnome-key-bindings --unset-all --except "close|switch-applications|switch-input-source|show-desktop"
+##
+##      Setting a shortcut
+##        gnome-key-bindings --set=maximize '<Super>Up'
+##
 
 # EasyOptions borked on the following, probably due to not handling single quotes
 # Example: 
@@ -165,7 +171,7 @@ unset-key(){
 
 # set key value
 set-key(){
-    gsettings set $PREFIX $1 "[$2]"
+    gsettings set $PREFIX $1 "['$2']"
 }
 
 if [[ -n $print_default ]]; then
