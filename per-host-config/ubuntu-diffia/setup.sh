@@ -147,5 +147,8 @@ go get github.com/claudiodangelis/qr-filetransfer
 # Get icons for Caprine and PomoDone due to the Ubuntu XDG_... bug
  ./desktop/setup.sh
 
+# Use PowerTOP suggestions for saving power
+sudo cp powertop.service /etc/systemd/system/
+
 # restore current directory
 popd > /dev/null
