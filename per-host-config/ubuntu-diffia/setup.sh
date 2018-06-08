@@ -150,5 +150,9 @@ go get github.com/claudiodangelis/qr-filetransfer
 # Use PowerTOP suggestions for saving power
 sudo cp powertop.service /etc/systemd/system/
 
+# Use rc.local for small tweaks
+sudo systemctl start rc-local.service
+sudo cp rc.local /etc/
+
 # restore current directory
 popd > /dev/null
