@@ -162,6 +162,7 @@ let g:import_sort_auto = 1
 " temporary fix for JSX: https://github.com/pangloss/vim-javascript/issues/955#issuecomment-356350901
 let g:jsx_ext_required = 0
 " auto-format
+" Disable using :RepoVimrcEdit and !autocmd
 autocmd BufWritePre *.js Neoformat
 autocmd BufWritePre *.jsx Neoformat
 

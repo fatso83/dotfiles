@@ -63,6 +63,8 @@ function pomodoro(){
 }
 alias tmux="tmux -S /tmp/persisted-tmux "
 
+# Open JIRA issues: `nim 434` opens NIM-434 in the browser
+function nim() { xdg-open http://diffia.atlassian.net/browse/NIM-$1;  }
 
 export GOPATH=$HOME/go
 
