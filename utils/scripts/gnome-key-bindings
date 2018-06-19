@@ -20,7 +20,7 @@
 ##        gnome-key-bindings --unset-all --except "close|switch-applications|switch-input-source|show-desktop"
 ##
 ##      Setting a shortcut
-##        gnome-key-bindings --set=maximize '<Super>Up'
+##        gnome-key-bindings --set=maximize "<Super>Up"
 ##
 
 # EasyOptions borked on the following, probably due to not handling single quotes
