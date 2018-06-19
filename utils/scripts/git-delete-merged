@@ -11,6 +11,16 @@ source $SCRIPT_DIR/cross-platform-utils.bashlib
 source $SCRIPT_DIR/easyoptions.sh
 DRY_RUN=1
 
+# Check if we are running in a git repo
+GIT_OK=$(git status 2> /dev/stdout)
+if [[ $? != 0 ]]; then
+    echo $GIT_OK > /dev/stderr
+    echo "This command must be run within a git repo!"
+    exit 1
+fi
+
+UPSTREAM=$(git branch  -avv | util.esed -n -e '/\*/s/\*\s+\S+\s+\S+\s+\[(\S+)\/(\S+)\].*/\1\/\2/p')
+
 ##  Usage: @script.name [--doit] <[--local] | --remote <remote>> [--branches-to-skip <branches to skip>]
 ## 
 ##  Example to delete all branches on GitHub matching 'patch-': 
@@ -60,8 +70,8 @@ filter-branches(){
             util.esed -e 's/,/|/g' \
                       -e 's/([a-zA-Z0-9_-]+)/^\1$/g' 
         )" | # sub-shell end 
-        egrep "$match" | # just keep lines matching $match
-        paste -s # actually not totally sure about this
+        egrep "$match" | # just keep lines matching $match - if unset, it matches all
+        paste -s # actually not totally sure about why this is here anymore ...
 }
 
 main(){
@@ -81,9 +91,10 @@ main(){
 
     else 
         branches=$(
-                    git branch -r --merged  |  # show remote merged branches
-                        grep "  $remote"    |  # just keep lines with remote
-                        egrep -v "HEAD ->"  |  # remove irrelevant noise
+                    git branch -r --merged   |  # show remote merged branches
+                        grep "  $remote"     |  # just keep lines with remote
+                        egrep -v "$UPSTREAM" |  # it's usually an error to remove the branch you are on
+                        egrep -v "HEAD ->"   |  # remove irrelevant noise
                         util.esed -n 's/  \w*\/(.*)/\1/p' | # remove the remote/ bit
                         filter-branches        # remove skipped and filter on matches
                 )
