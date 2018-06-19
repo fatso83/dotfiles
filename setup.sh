@@ -25,4 +25,4 @@ per-host-config/setup.sh
 popd > /dev/null
 
 # Re-read BASH settings
-source ~/.bashrc
+green "\n\nRemember to 'source ~/.bashrc'!"
