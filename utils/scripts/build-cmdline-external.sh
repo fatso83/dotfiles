@@ -14,7 +14,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$SCRIPT_DIR/easyoptions.sh"
 
 SCRIPT="${arguments[0]}"
-COMMIT="$(git rev-parse --short HEAD)"
+COMMIT="master"
  
 if [[ -n $commit ]]; then
     COMMIT=$commit
