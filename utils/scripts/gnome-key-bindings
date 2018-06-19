@@ -160,13 +160,13 @@ unset-all(){
     print-existing | 
         $filter |
         while IFS=$'\t' read -r key val; do 
-            unset-key $key;
+            unset-key "$key";
         done;
 }
 
 # unset key 
 unset-key(){
-    set-key "$1" "''"
+    set-key "$1" ""
 }
 
 # set key value
@@ -185,7 +185,9 @@ if [[ -n $list ]]; then
 fi
 
 if [[ -n $unset_all ]]; then
-    unset-all > /dev/null && exit
+    unset-all > /dev/null \
+        && exit
+    exit 1 # if we get here it means there has been an error
 fi
 
 if [[ -n $set ]]; then
