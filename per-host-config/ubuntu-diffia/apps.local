@@ -44,6 +44,7 @@ postgresql
 # python-gpgme 
 
 ruby
+ruby-dev
 rxvt-unicode
 silversearcher-ag
 synapse
