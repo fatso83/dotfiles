@@ -1,4 +1,5 @@
 apt-transport-https 
+
 ca-certificates
 
 cmake
@@ -35,6 +36,7 @@ npm
 packer
 peek
 powertop
+powershell-preview
 
 postgresql
 

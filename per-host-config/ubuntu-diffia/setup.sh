@@ -23,9 +23,10 @@ sudo apt-get install software-properties-common # Installs 'add-apt-repository'
 
 # Add keys
 blue "Adding keys for PPAs ...\n"
-wget -q -O - https://davesteele.github.io/key-366150CE.pub.txt | sudo apt-key add -
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
-wget -q -O - https://repo.jotta.us/public.gpg | sudo apt-key add -
+curl -s https://davesteele.github.io/key-366150CE.pub.txt | sudo apt-key add -
+curl -s https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
+curl -s https://repo.jotta.us/public.gpg | sudo apt-key add -
+curl -s https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
 
 blue "Adding external package repositories ...\n"
 while read line; do 
