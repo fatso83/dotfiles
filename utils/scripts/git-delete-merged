@@ -20,6 +20,7 @@ if [[ $? != 0 ]]; then
 fi
 
 UPSTREAM=$(git branch  -avv | util.esed -n -e '/\*/s/\*\s+\S+\s+\S+\s+\[(\S+)\/(\S+)\].*/\1\/\2/p')
+CURRENT=$(git branch -a | sed -n '/^*/s/^* //p')
 
 ##  Usage: @script.name [--doit] <[--local] | --remote <remote>> [--branches-to-skip <branches to skip>]
 ## 
@@ -86,6 +87,7 @@ main(){
         branches=$(
                     git branch --merged |  # show local, merged branches 
                         util.esed -n 's/..(.*)/\1/p' | # remove first two characters
+                        egrep -v "$CURRENT" |  # it's usually an error to remove the branch you are on   '
                         filter-branches    # remove skipped and filter on matches
                 )
 
@@ -93,9 +95,9 @@ main(){
         branches=$(
                     git branch -r --merged   |  # show remote merged branches
                         grep "  $remote"     |  # just keep lines with remote
-                        egrep -v "$UPSTREAM" |  # it's usually an error to remove the branch you are on
+                        egrep -v "$UPSTREAM" |  # it's usually an error to remove the branch you are on   '
                         egrep -v "HEAD ->"   |  # remove irrelevant noise
-                        util.esed -n 's/  \w*\/(.*)/\1/p' | # remove the remote/ bit
+                        util.esed -n 's/  \w*\/(.*)/\1/p' | # remove the remote/ bit 
                         filter-branches        # remove skipped and filter on matches
                 )
         no_branches_msg="${no_branches_msg} on ${remote}"
