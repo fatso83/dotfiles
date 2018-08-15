@@ -54,3 +54,6 @@ atlassian-ide-plugin.xml
 
 # Project specific files that I do not want to check in changes to (withtout removing)
 *.min.js
+
+## Node
+node_modules
