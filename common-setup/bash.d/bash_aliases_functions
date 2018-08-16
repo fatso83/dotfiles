@@ -163,5 +163,8 @@ function gdws() { git diff --staged --color --word-diff $@         | less -r; }
 alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias glg='git lg' 
 
+# Nice util for listing all declared functions. You use `type` to print them
+alias list-functions='declare | egrep '\''^[[:alpha:]][[:alnum:]_]* ()'\''; echo -e "\nTo print a function definition, issue \`type function-name\` "'
+
 t_debug "global aliases and functions finished"
 
