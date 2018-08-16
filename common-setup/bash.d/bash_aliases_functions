@@ -30,8 +30,6 @@ alias source-alias="source ~/.bash.d/bash_aliases"
 t_debug ssh aliases
 alias timbuktu='ssh carl-erik@timbuktu.kopseng.no'
 alias timbuktu_lokal='ssh carl-erik@192.168.10.2'
-alias ifi='ssh carlerik@vor.ifi.uio.no'
-alias ntnu='ssh kopseng@login.stud.ntnu.no'
 
 # Auto-åpne Bittorrent Sync
 alias timbuktu_btsync="(sleep 2 && open http://localhost:8888)& ssh -L8888:127.0.0.1:8888 carl-erik@timbuktu.kopseng.no -N"
@@ -54,6 +52,10 @@ alias htmldecode='python -c "import sys, HTMLParser;h = HTMLParser.HTMLParser();
 alias htmlencode='python3 -c "import sys, html; print(html.escape(sys.argv[1]))"'
 alias html2text='python -c "import sys,html2text;sys.stdout.write(html2text.html2text(sys.stdin.read().decode(\"utf-8\")))"'
 
+t_debug Use htop if available
+if which htop > /dev/null; then
+    alias top='htop'
+fi
 
 # Use Hub if installed. Just using `hub` instead of `which hub` cuts 2 seconds of Cygwin load time
 t_debug Use hub if available
