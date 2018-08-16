@@ -59,8 +59,9 @@ Plugin 'tpope/vim-fugitive'
 " github plugin
 Plugin 'tpope/vim-rhubarb'
 
-" Per-repo settings - for instance, disable AutoCmd *.js
-Bundle 'captbaritone/repo-vimrc'
+" DISABLED! This disables the autocmd that remembers where I last was
+"" Per-repo settings - for instance, disable AutoCmd *.js
+"" Bundle 'captbaritone/repo-vimrc'
 
 " All of your Plugins must be added before the following line
 call vundle#end()
