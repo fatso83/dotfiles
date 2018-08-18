@@ -14,6 +14,7 @@ parser.add_argument("--id", type=str)
 parser.add_argument("--secret", type=str)
 parser.add_argument("--from", type=str, dest="from_nmbr")
 parser.add_argument("--unicode", action="store_const", const=True, help="Use unicode to encode the message")
+parser.add_argument("--force-text", action="store_const", const=True, help="Force normal GSM 03.38 encoding. Unsupported characters are replaced with '?'")
 parser.add_argument("--stats", action="store_const", const=True, help="Show last sent messages")
 parser.add_argument("--debug", action="store_const", const=True, help="Prints the raw return")
 parser.add_argument("--max-parts", type=int, default=3, help="In case the message is too long to fit, increase this. Each part is 157 characters - 67 if unicode")
@@ -46,8 +47,8 @@ if not msg:
     print("No message given. See params --msg and --file")
     exit(1)
 
-if not smsutil.is_valid_gsm(msg) and not parsed.unicode:
-    print("This message contains characters not in the normal set of SMS characters. Use the `--unicode` flag.")
+if not smsutil.is_valid_gsm(msg) and not parsed.unicode and not parsed.force_text:
+    print("This message contains characters not in the normal set of SMS characters. Use the `--unicode` or `--force-text` flag.")
     exit(1)
 
 
@@ -66,10 +67,6 @@ payload = {
     "longMessageMaxParts": parsed.max_parts
 }
 
-print(payload)
-exit(0)
-
 r = requests.post(url, json=payload, auth=(sms_id, sms_secret), timeout=1)
 if r.status_code is not 201 or parsed.debug:
     print(r.text)
-
