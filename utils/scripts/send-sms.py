@@ -2,6 +2,7 @@
 import requests
 import os
 import argparse
+import smsutil
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -24,6 +25,10 @@ if parsed.msg and parsed.file:
 msg = parsed.msg or parsed.file.read()
 if not msg:
     print("No message given. See params --msg and --file")
+    exit(1)
+
+if not smsutil.is_valid_gsm(msg) and not parsed.unicode:
+    print("This message contains characters not in the normal set of SMS characters. Use the `--unicode` flag.")
     exit(1)
 
 try:
