@@ -135,4 +135,8 @@ t_debug "Reading local settings for this machine"
 # This needs to be at the bottom to be able to override earlier settings/variables/functions
 read_config_if_exists "$HOME/.bashrc.local"
 
-[ -a "$HOME/.bulksms.auth" ] && . "$HOME/.bulksms.auth"
+if [ -a "$HOME/.bulksms.auth" ]; then
+    . "$HOME/.bulksms.auth"
+    export BULKSMS_ID 
+    export BULKSMS_SECRET
+fi

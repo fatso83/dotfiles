@@ -35,6 +35,7 @@ if parsed.stats:
 
 if not parsed.phone:
     print("You need to specify --phone")
+    exit(1)
 
 if parsed.msg and parsed.file:
     print("Cannot specify both a msg and a file to read from!")
