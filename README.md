@@ -1,5 +1,6 @@
 My dot files
 ========================
+[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/fatso83)
 
 These are my config files for Bash, VIM, Python, and more.
 
