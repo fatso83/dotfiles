@@ -25,5 +25,9 @@ fi
 # scripts
 ln -f scripts/* $HOME/bin/
 
+# Dependencies for scripts
+pip3 install smsutil
+pip3 install requests 
+
 # Restore current directory of user
 popd > /dev/null

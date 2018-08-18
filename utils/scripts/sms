@@ -4,6 +4,8 @@
 #
 # Usage: sms +4712345678
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 if [[ $# != 2 ]]; then
     echo "Usage: sms \"+4712345678\" 'Hey, we can handle ØÆÅ!\n\nThis is EEEAZY!'"
     exit 1
@@ -16,13 +18,5 @@ fi
 
 source ~/.bulksms.auth
 
-read -r -d '' DATA <<- EOM
-{
-    "to":   "$1",
-    "from": "+4740065078" ,
-    "encoding": "UNICODE",
-    "body": "$2"
-}
-EOM
+python3 $DIR/send-sms.py --phone "$1"  --id $BULKSMS_ID --secret $BULKSMS_SECRET  --msg "$2"
 
-curl -v -u "$BULKSMS_ID:$BULKSMS_SECRET"  -H 'Content-Type: application/json'   https://api.bulksms.com/v1/messages --data "$DATA"
