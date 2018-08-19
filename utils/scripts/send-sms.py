@@ -4,6 +4,8 @@ import os
 import argparse
 import smsutil
 
+url = "https://api.bulksms.com/v1/messages"
+
 parser = argparse.ArgumentParser()
 parser.add_argument(
         "--phone", type=str, action="append", 
@@ -56,7 +58,6 @@ numbers = ["+47" + p if len(p) is 8 else p for p in parsed.phone]
 from_nmbr = parsed.from_nmbr or "+4740065078"
 
 encoding = "TEXT" if not parsed.unicode else "UNICODE"
-url = "https://api.bulksms.com/v1/messages"
 
 # See http://developer.bulksms.com/json/v1/
 payload = {
