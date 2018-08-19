@@ -69,7 +69,7 @@ if ! $(which hub >> /dev/null); then
 fi
 
 # install /etc files
-cp ./postfix-main.cf /etc/postfix/main.cf
+sudo cp ./postfix-main.cf /etc/postfix/main.cf
 
 # activate certain scripts
 # we cannot activate this without knowing we have a working mail system installed in advance, see postfix
