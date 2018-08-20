@@ -5,6 +5,8 @@ import argparse
 import smsutil
 
 url = "https://api.bulksms.com/v1/messages"
+profile_url = "https://api.bulksms.com/v1/profile"
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -17,7 +19,8 @@ parser.add_argument("--secret", type=str)
 parser.add_argument("--from", type=str, dest="from_nmbr")
 parser.add_argument("--unicode", action="store_const", const=True, help="Use unicode to encode the message")
 parser.add_argument("--force-text", action="store_const", const=True, help="Force normal GSM 03.38 encoding. Unsupported characters are replaced with '?'")
-parser.add_argument("--stats", action="store_const", const=True, help="Show last sent messages")
+parser.add_argument("--history", action="store_const", const=True, help="Show last sent messages")
+parser.add_argument("--profile", action="store_const", const=True, help="Show profile - including credits")
 parser.add_argument("--debug", action="store_const", const=True, help="Prints the raw return")
 parser.add_argument("--max-parts", type=int, default=3, help="In case the message is too long to fit, increase this. Each part is 153 characters - 67 if unicode")
 parsed = parser.parse_args()
@@ -31,13 +34,19 @@ except Exception as e:
     print("Need environment variables BULKSMS_ID and BULKSMS_SECRET set" )
     exit(1)
 
-if parsed.stats:
+if parsed.profile:
+    r = requests.get(profile_url, auth=(sms_id, sms_secret), timeout=1)
+    print(r.text)
+    exit(0)
+
+if parsed.history:
     r = requests.get(url, auth=(sms_id, sms_secret), timeout=1)
     print(r.text)
     exit(0)
 
 if not parsed.phone:
     print("You need to specify --phone")
+    parser.print_help()
     exit(1)
 
 if parsed.msg and parsed.file:
