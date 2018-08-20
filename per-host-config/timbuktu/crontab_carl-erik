@@ -1,0 +1,20 @@
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+MAILTO="carlerik+timbuktu@gmail.com"
+
+#* 8-17  * * *  curl -s  -H 'Cookie: ASP.NET_SessionId=4skbqj4dcaejbdarjxl2huqc;  XMasLotteryId=fb6fb2bd-6b54-4ab4-b565-ebdba3a73777; ARRAffinity_NG=9784bceb606e8340b7e46f4bcab5c43d553575b79e04c35931e45ed1452beed3;Path=/;' https://meny.no/api/xmas/luck > /dev/null
+#* 8-17  * * *  curl -s  --data @/tmp/data.txt -H 'Cookie: ASP.NET_SessionId=4skbqj4dcaejbdarjxl2huqc;  XMasLotteryId=fb6fb2bd-6b54-4ab4-b565-ebdba3a73777; ARRAffinity_NG=9784bceb606e8340b7e46f4bcab5c43d553575b79e04c35931e45ed1452beed3;Path=/;'  https://meny.no/api/xmas/winnerform > /dev/null
+
+#*/10 7-23  * * *  timeout 30s python  ~/kode/studweb/studweb.py --quiet --mail
+
+# log jira lunch every day
+#00 11 * * 1-5 /home/carl-erik/bin/log-lunch today > /dev/null
+
+# log jira standup 
+#45 10 * * 1-4 /home/carl-erik/bin/log-meetings today > /dev/null
+
+# output env 
+#* * * * * env > /tmp/env.output
+#* * * * * which pick_json > /tmp/which.pick_json
+
+*/5 * * * * curl -s 'https://www.sunwind.no/Outlet/'  | python3 -c "import sys,html2text;sys.stdout.write(u' ' + html2text.html2text(sys.stdin.read()))"   | grep -i solventilator |  egrep -v Solventilator-og-ventilasjon                                                   
+
