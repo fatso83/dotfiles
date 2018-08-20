@@ -19,7 +19,7 @@ parser.add_argument("--unicode", action="store_const", const=True, help="Use uni
 parser.add_argument("--force-text", action="store_const", const=True, help="Force normal GSM 03.38 encoding. Unsupported characters are replaced with '?'")
 parser.add_argument("--stats", action="store_const", const=True, help="Show last sent messages")
 parser.add_argument("--debug", action="store_const", const=True, help="Prints the raw return")
-parser.add_argument("--max-parts", type=int, default=3, help="In case the message is too long to fit, increase this. Each part is 157 characters - 67 if unicode")
+parser.add_argument("--max-parts", type=int, default=3, help="In case the message is too long to fit, increase this. Each part is 153 characters - 67 if unicode")
 parsed = parser.parse_args()
 
 try:
@@ -32,7 +32,7 @@ except Exception as e:
     exit(1)
 
 if parsed.stats:
-    r = requests.get(url, json=payload, auth=(sms_id, sms_secret), timeout=1)
+    r = requests.get(url, auth=(sms_id, sms_secret), timeout=1)
     print(r.text)
     exit(0)
 
