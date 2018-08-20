@@ -17,10 +17,11 @@ echo -e $(blue Installing local apps ...)
 sudo apt-get install -y --no-install-recommends $(strip-comments apps.local)
 
 # upgrade PIP
-pip install --upgrade pip
+# if there are problems with pip, run curl https://bootstrap.pypa.io/get-pip.py | python3
+pip3 install --upgrade pip
 
-#echo -e $(blue Installing python packages ...)
-#pip install -r python.local 
+echo -e $(blue Installing python packages ...)
+pip3 install -r python.local 
 
 echo -e $(blue Installing ruby packages ...)
 while read line; do 

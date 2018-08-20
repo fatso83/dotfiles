@@ -16,5 +16,5 @@ MAILTO="carlerik+timbuktu@gmail.com"
 #* * * * * env > /tmp/env.output
 #* * * * * which pick_json > /tmp/which.pick_json
 
-*/5 * * * * curl -s 'https://www.sunwind.no/Outlet/'  | python3 -c "import sys,html2text;sys.stdout.write(u' ' + html2text.html2text(sys.stdin.read()))"   | grep -i solventilator |  egrep -v Solventilator-og-ventilasjon                                                   
+*/5 * * * * cronic curl -s 'https://www.sunwind.no/Outlet/'  | python3 -c "import sys,html2text;sys.stdout.write(u' ' + html2text.html2text(sys.stdin.read()))"   | grep -i solventilator |  egrep -v Solventilator-og-ventilasjon                                                   
 

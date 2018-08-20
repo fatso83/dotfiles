@@ -3,6 +3,7 @@ cmake
 conky
 cowsay
 curl
+cronic
 dunst
 exiv2
 fail2ban
