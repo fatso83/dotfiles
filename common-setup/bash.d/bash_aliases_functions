@@ -163,6 +163,10 @@ function gdws() { git diff --staged --color --word-diff $@         | less -r; }
 alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias glg='git lg' 
 
+# View commits in GitHub 
+function gh-commit(){ [[ -n $1 ]] && open "https://github.com/diffia/dx-nuflo/commit/$1"; }
+function gh-compare(){ [[ -n $1 && -n $2 ]] &&  open "https://github.com/diffia/dx-nuflo/compare/$1...$2"; }
+
 # Nice util for listing all declared functions. You use `type` to print them
 alias list-functions='declare | egrep '\''^[[:alpha:]][[:alnum:]_]* ()'\''; echo -e "\nTo print a function definition, issue \`type function-name\` "'
 
