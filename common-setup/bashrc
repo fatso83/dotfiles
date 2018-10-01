@@ -140,3 +140,6 @@ if [ -a "$HOME/.bulksms.auth" ]; then
     export BULKSMS_ID 
     export BULKSMS_SECRET
 fi
+
+# added by travis gem
+[ -f /home/carlerik/.travis/travis.sh ] && source /home/carlerik/.travis/travis.sh
