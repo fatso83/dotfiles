@@ -151,6 +151,12 @@ go get github.com/claudiodangelis/qr-filetransfer
 # Use PowerTOP suggestions for saving power
 sudo cp powertop.service /etc/systemd/system/
 
+# Enable the service, if first time
+if ! service powertop status > /dev/null 2>&1; then
+    sudo systemctl daemon-reload
+    sudo systemctl enable powertop.service
+fi
+
 # Use rc.local for small tweaks
 sudo systemctl start rc-local.service
 sudo cp rc.local /etc/
