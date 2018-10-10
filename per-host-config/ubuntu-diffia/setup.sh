@@ -123,7 +123,7 @@ sudo apt-get autoremove --yes
 # install Github 'hub'
 if ! $(which hub >> /dev/null); then
     echo -e $(blue "Installing Github's Hub...")
-    VERSION="2.3.0-pre10"
+    VERSION="2.5.1"
     BASENAME="hub-linux-amd64-$VERSION"
     wget "https://github.com/github/hub/releases/download/v${VERSION}/${BASENAME}.tgz"
     tar xvzf "$BASENAME.tgz"
