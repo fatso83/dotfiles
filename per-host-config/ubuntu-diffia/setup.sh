@@ -133,6 +133,19 @@ if ! $(which hub >> /dev/null); then
     rimraf "${BASENAME}"*
 fi
 
+# install GitHub LFS support
+if ! $(which git-lfs >> /dev/null); then
+    echo -e $(blue "Installing Git LFS client...")
+    VERSION="2.4.2"
+    BASENAME="git-lfs-linux-amd64-$VERSION.tar.gz"
+    wget "https://github.com/git-lfs/git-lfs/releases/download/v${VERSION}/${BASENAME}.tgz"
+    tar xvzf "$BASENAME.tgz"
+    cd "$BASENAME"
+    sudo ./install.sh
+    cd ..
+    rimraf "${BASENAME}"*
+fi
+
 # Get SDKMAN
 export SDKMAN_DIR="/home/carlerik/.sdkman"
 [[ -s "/home/carlerik/.sdkman/bin/sdkman-init.sh" ]] && source "/home/carlerik/.sdkman/bin/sdkman-init.sh"
