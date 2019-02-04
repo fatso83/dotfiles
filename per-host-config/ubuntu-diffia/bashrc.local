@@ -5,6 +5,8 @@ t_debug "Load personalized bashrc for Ubuntu dev machine"
 
 #source /usr/local/etc/autojump.bash
 
+source ~/.tlf # phone numbers
+
 alias iso8601='date -u +"%Y-%m-%dT%H:%M:%SZ"'
 alias btsync_tunnel="timbuktu_lokal -L 8888:0.0.0.0:8888 -N"
 
@@ -69,6 +71,8 @@ function pomodoro(){
     dark_grey "\nPomodoro finished\n"; 
 }
 alias tmux="tmux -S /tmp/persisted-tmux "
+
+alias babel-node='$(npm bin)/babel-node'
 
 # Open JIRA issues: `nim 434` opens NIM-434 in the browser
 function nim() { xdg-open http://diffia.atlassian.net/browse/NIM-$1;  }
