@@ -152,8 +152,7 @@ export SDKMAN_DIR="/home/carlerik/.sdkman"
 if ! type sdk > /dev/null 2> /dev/null; then # if the `sdk` function doesn't exist
     curl -s "https://get.sdkman.io" | bash # installs SDKMAN
 fi
-sdk install java 9.0.4-zulu
-sdk install java 8.0.163-zulu
+sdk install java 11.0.2-open
 
 # install QR copier
 go get github.com/claudiodangelis/qr-filetransfer
