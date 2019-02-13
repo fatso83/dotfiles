@@ -159,7 +159,7 @@ unset-all(){
 
     print-existing | 
         $filter |
-        while IFS=$'\t' read -r key val; do 
+        while IFS=$'\t ' read -r key val; do 
             unset-key "$key";
         done;
 }
@@ -171,7 +171,8 @@ unset-key(){
 
 # set key value
 set-key(){
-    gsettings set $PREFIX $1 "['$2']"
+    gsettings set $PREFIX $1 "['$2']" \
+        || ( >&2 echo "Failing command: gsettings set $PREFIX $1 \"['$2']\""  && return 1 )
 }
 
 if [[ -n $print_default ]]; then
