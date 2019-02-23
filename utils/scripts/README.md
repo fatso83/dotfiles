@@ -97,3 +97,25 @@ USAGE
 ```bash
 `get-npm-file --to-stdout sinon-test@2.1.1 package.json | pick_json -e 'peerDependencies'`
 ```
+
+### `inotify-consumers`
+Lists all the owners of inotify watchers and their watcher count. This is useful, for instance,
+to estimate how much higher to set the max threshold (Ubuntu default 8K - way too little.)
+
+A sensible setting is typically 100'000 or more on a development machine.
+
+#### Example
+```
+inotify-consumers  |head
+
+   INOTIFY
+   WATCHER
+    COUNT     PID     CMD
+----------------------------------------
+    8409    15705  node /home/carlerik/dev/nimble-frontend/node_modules/.bin/webpack --config config/webpack.dev.js
+    6875    20089  /snap/webstorm/76/bin/fsnotifier64
+      85     2727  /usr/lib/gnome-settings-daemon/gsd-xsettings
+      28     2885  /usr/lib/gvfs/gvfsd-trash --spawner :1.22 /org/gtk/gvfs/exec_spaw/0
+      17     2392  /lib/systemd/systemd --user
+```
+
