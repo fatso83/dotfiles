@@ -1,6 +1,11 @@
 #!/bin/sh
 
 # Get the procs sorted by the number of inotify watchers
+#
+# From `man find`: 
+#    %h     Leading directories of file's name (all but the last element).  If the file name contains no slashes  (since  it
+#           is in the current directory) the %h specifier expands to `.'.
+#    %f     File's name with any leading directories removed (only the last element).
 lines=$(
     find /proc/*/fd \
     -lname anon_inode:inotify \
