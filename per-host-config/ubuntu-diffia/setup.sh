@@ -3,6 +3,9 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd "$SCRIPT_DIR" > /dev/null
 
+# exit on errors
+set -e 
+
 # Get some color codes
 source ../../common-setup/bash.d/colors
 
@@ -137,10 +140,12 @@ fi
 if ! $(which git-lfs >> /dev/null); then
     echo -e $(blue "Installing Git LFS client...")
     VERSION="2.4.2"
-    BASENAME="git-lfs-linux-amd64-$VERSION.tar.gz"
-    wget "https://github.com/git-lfs/git-lfs/releases/download/v${VERSION}/${BASENAME}.tgz"
-    tar xvzf "$BASENAME.tgz"
-    cd "$BASENAME"
+    NAME="git-lfs"
+    OS="linux-amd64"
+    BASENAME="${NAME}-${OS}-$VERSION"
+    wget "https://github.com/git-lfs/git-lfs/releases/download/v${VERSION}/${BASENAME}.tar.gz"
+    tar xvzf "$BASENAME.tar.gz"
+    cd "${NAME}-${VERSION}"
     sudo ./install.sh
     cd ..
     rimraf "${BASENAME}"*
