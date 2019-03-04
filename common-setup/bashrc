@@ -147,9 +147,4 @@ t_debug Travis setup
 # added by travis gem
 [ -f /home/carlerik/.travis/travis.sh ] && source /home/carlerik/.travis/travis.sh
 
-t_debug NVM setup
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 t_debug Finished bash setup
