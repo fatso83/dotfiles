@@ -1,3 +1,4 @@
+# To debug how long init takes, run "DEBUG=1 source-rc"
 function debug() {
         [[ x == ${DEBUG+x} ]] && echo $@ >&2
 }
@@ -26,4 +27,4 @@ function timer_now(){
     echo $diff
 }
 
-# vim: set ft=sh
+# vi: ft=sh

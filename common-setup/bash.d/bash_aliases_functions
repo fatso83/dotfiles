@@ -119,6 +119,9 @@ alias socks_proxy_all='ssh -v -D :22222 carl-erik@timbuktu.kopseng.no -N'
 # Used with the git alias functions; gd, gds, gdw, gdws
 alias strip-diff-prefix='sed "s/^\([^-+ ]*\)[-+ ]/\\1/"' 
 
+# For stack overflow pasting
+alias stack-overflow='sed -e "s/diffia/mycomp/g" -e "s/carlerik/myuser/g" | indent4 | pbcopy; pbpaste'
+
 # "reminder aliases" for how to suspend and continue a process
 alias processes-suspend='killall -sSTOP '
 alias processes-start='killall -sSTART '
