@@ -18,7 +18,7 @@ alias frostark_btsync_tunnel='(sleep 2 && open http://localhost:9999)& ssh -i ~/
 alias timbuktu_mosh='LC_ALL=en_US.UTF-8 mosh --ssh="ssh -p 60022" carl-erik@timbuktu.kopseng.no tmux attach'
 
 # makes the usual 'open' command from osx work in linux as well
-alias open=xdg-open
+function open() { xdg-open $@; }; 
 
 # Make Ctrl-S work again (incremental search forwards)
 # http://stackoverflow.com/questions/791765/unable-to-forward-search-bash-history-similarly-as-with-ctrl-r
