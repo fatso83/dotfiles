@@ -18,6 +18,9 @@ alias frostark_btsync_tunnel='(sleep 2 && open http://localhost:9999)& ssh -i ~/
 alias timbuktu_mosh='LC_ALL=en_US.UTF-8 mosh --ssh="ssh -p 60022" carl-erik@timbuktu.kopseng.no tmux attach'
 
 # makes the usual 'open' command from osx work in linux as well
+# Defining it as a function overwrites the `open` definition used in other functions,
+# unlike the alias definition which expands at function definition.
+# @see https://askubuntu.com/questions/1123186/how-can-i-use-an-alias-in-a-function/1123188#1123188
 function open() { xdg-open $@; }; 
 
 # Make Ctrl-S work again (incremental search forwards)
