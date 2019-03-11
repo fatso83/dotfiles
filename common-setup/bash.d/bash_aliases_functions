@@ -96,6 +96,7 @@ alias mochify='$(npm bin)/mochify'
 alias karma='$(npm bin)/karma'
 alias eslint='$(npm bin)/eslint'
 alias prettier='$(npm bin)/prettier'
+alias faucet='$(npm bin)/faucet'
 
 t_debug "aliases: finished setting up node aliases"
 
