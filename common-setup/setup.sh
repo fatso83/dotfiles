@@ -48,10 +48,9 @@ ln -sf "$SCRIPT_DIR"/vim/vimrc "$DEST"/.vimrc
 # Checks out the Vundle submodule
 git submodule update --init --recursive
 
-# Installs all Vundle and quits all windows
 echo  -n -e $(blue "Installing all VIM plugins")
 echo -e $(dark_grey "(might take some time the first time ... )")
-vim +PluginInstall +qall
+vim +PlugInstall +qall
 
 # Vim Fugitive setup
 vim -u NONE -c "helptags vim-fugitive/doc" -c q

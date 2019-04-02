@@ -2,6 +2,7 @@
 "" http://mislav.uniqpath.com/2011/12/vim-revisited/
 
 " Changelog
+" 2019-04-02 Swapped Vundle for vim-plug. Needed post-install hooks 
 " 2015-09-24 Swapped Pathogen for Vundle. Simplicity!
 "            Tipped from: http://lepture.com/en/2012/vundle-vs-pathogen
 
@@ -21,7 +22,7 @@ let g:ale_fix_on_save = 1
 " " This setting must be set BEFORE ALE is loaded.
 " let g:ale_completion_enabled = 1
 
-source ~/.vim/vundle-config
+source ~/.vim/plugins-config
 filetype plugin indent on       " load file type plugins + indentation
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -95,7 +96,7 @@ au BufRead,BufNewFile nginx.conf set ft=nginx
 " Auto-reload vimrc on changes
 autocmd! bufwritepost .vimrc source %
 autocmd! bufwritepost vimrc source %
-autocmd! bufwritepost vundle-config source %
+autocmd! bufwritepost plugins-config source %
 autocmd! bufwritepost ycm-config source %
 
 " Make vim work as a crontab editor: http://vim.wikia.com/wiki/Editing_crontab
