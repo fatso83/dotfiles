@@ -4,7 +4,7 @@ Description=PowerTOP auto tune
 [Service]
 Type=idle
 Environment="TERM=dumb"
-ExecStart=/usr/sbin/powertop --auto-tune
+ExecStart=/home/carlerik/bin/powertop-with-blacklist.sh
 
 [Install]
 WantedBy=multi-user.target
