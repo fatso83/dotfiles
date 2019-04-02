@@ -41,3 +41,4 @@ export LLVM="/usr/local/opt/emscripten/libexec/llvm/bin"
 
 t_debug "Load DNVM (.NET VM manager)"
 [ -s "/Users/carl-erik.kopseng/.dnx/dnvm/dnvm.sh" ] && . "/Users/carl-erik.kopseng/.dnx/dnvm/dnvm.sh" # Load dnvm
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
