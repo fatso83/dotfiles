@@ -9,11 +9,6 @@ set -e
 # Get some color codes
 source ../../common-setup/bash.d/colors
 
-function try-or-fail(){
-    "$@"
-    [[ $? != 0 ]] && exit 1
-}
-
 function strip-comments(){
     grep -v '^#' $@
 }
@@ -53,7 +48,7 @@ fi
 
 
 echo -e $(blue Installing local apps ...)
-try-or-fail sudo apt-get install -y --no-install-recommends $(strip-comments apps.local)
+sudo apt-get install -y --no-install-recommends $(strip-comments apps.local)
 
 
 # https://github.com/pypa/pip/issues/5240
@@ -85,6 +80,9 @@ if ! $(which n >> /dev/null); then
     n stable
 fi
 
+# Install Yarn - used for instance by coc.vim
+curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
+
 echo -e $(blue Installing Snaps ...) # universal linux packages
 installed=$(mktemp)
 snap list 2>/dev/null |  awk '{if (NR>1){print $1}}' > $installed
@@ -112,8 +110,8 @@ fi
 
 
 # setup i3
-rm -r ~/.config/i3
-ln -s $SCRIPT_DIR/i3-config ~/.config/i3
+#rm -r ~/.config/i3
+#ln -s $SCRIPT_DIR/i3-config ~/.config/i3
 
 # fix Alsa for Nforce
 ln -sf $SCRIPT_DIR/asoundrc ~/.asoundrc
