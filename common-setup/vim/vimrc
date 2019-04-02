@@ -97,7 +97,7 @@ au BufRead,BufNewFile nginx.conf set ft=nginx
 autocmd! bufwritepost .vimrc source %
 autocmd! bufwritepost vimrc source %
 autocmd! bufwritepost plugins-config source %
-autocmd! bufwritepost ycm-config source %
+autocmd! bufwritepost coc-config source %
 
 " Make vim work as a crontab editor: http://vim.wikia.com/wiki/Editing_crontab
 au BufEnter /private/tmp/crontab.* setl backupcopy=yes
@@ -157,11 +157,11 @@ set mouse=
 
 " These needs to be before later configuration for objects to be defined
 source ~/.vim/ctrlp-config
-source ~/.vim/ycm-config
+source ~/.vim/coc-config
 
 " Elm settings - see https://github.com/elmcast/elm-vim
 let g:elm_format_autosave = 1 "reformat on autosave
-let g:ycm_semantic_triggers.elm = ['.']
+"let g:ycm_semantic_triggers.elm = ['.']
 
 " js settings
 let g:javascript_plugin_jsdoc = 1
@@ -175,15 +175,9 @@ let g:jsx_ext_required = 0
 " autocmd BufWritePre *.js Neoformat
 autocmd BufWritePre *.jsx Neoformat
 
-" vim-test settings
-nmap <silent> <leader>t :TestNearest<CR>
-nmap <silent> <leader>T :TestFile<CR>
-nmap <silent> <leader>a :TestSuite<CR>
-nmap <silent> <leader>l :TestLast<CR>
-nmap <silent> <leader>g :TestVisit<CR>
+" Understand JSONC (json with comments)
+autocmd FileType json syntax match Comment +\/\/.\+$+
 
-" Also need to check out these YCM and Tern alternatives
-" ncm2, coc.vim
 
 " Set up neomake as well: It is intended to replace the built-in :make command and provides functionality similar to plugins like syntastic and dispatch.vim. It is primarily used to run code linters and compilers from within Vim, but can be used to run any program.
 

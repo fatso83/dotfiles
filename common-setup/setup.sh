@@ -55,48 +55,12 @@ vim +PlugInstall +qall
 # Vim Fugitive setup
 vim -u NONE -c "helptags vim-fugitive/doc" -c q
 
-# YouCompleteMe setup
-ycm_dir=~/.vim/bundle/YouCompleteMe
-if [[ -e "$ycm_dir" ]]; then
-    if [[ $(uname) == "Linux" ]]; then
-        sudo apt-get install -y python-dev python3-dev
-    fi
-
-    
-	pushd "$ycm_dir" > /dev/null
-
-    # Check if YCM has been compiled already - if so, drop compiling again
-    # The ".*" matches both *.dll and *.so 
-    ycm_lib=$(echo third_party/ycmd/ycm_core.* )
-    if [[ ! -e "$ycm_lib" ]]; then
-        # Compiles YouCompleteMe with semenatic support for C-family languages
-        # This needs to happen each time the YCM repo has been deleted
-        echo -e $(blue "Compiling YouCompleteMe") "(takes a minute or two)"
-
-
-        # Enable auto-completion support for all available languages
-        # (TypeScript, Javascript, Rust, C#, ...)
-         ./install.py --all
-
-         # six smooths out differences between python 2 and 3
-         pip install six
-    fi
-
-	# Javascript support
-	pushd third_party/ycmd/third_party/tern_runtime > /dev/null
-	npm install --production
-	popd > /dev/null
-
-	# Semantic Typescript support for YCM
-	ts_cmd='npm install -g typescript'
-	if which npm > /dev/null 2>&1 ; then
-		which tsc > /dev/null 2>&1 || bash -c "$ts_cmd"
-	else
-		echo "Install NodeJS and run '$ts_cmd' to get TypeScript support in Vim"
-	fi
-
-	# restore to cwd outside of if block
-	popd > /dev/null
+# Needed for Typescript support in CoC and YCM using tsserver
+ts_cmd='npm install -g typescript'
+if which npm > /dev/null 2>&1 ; then
+    which tsc > /dev/null 2>&1 || bash -c "$ts_cmd"
+else
+    echo "Install NodeJS and run '$ts_cmd' to get TypeScript support in Vim"
 fi
 
 touch "$DEST"/.vimrc.local

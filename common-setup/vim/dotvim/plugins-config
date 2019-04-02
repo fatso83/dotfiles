@@ -7,11 +7,7 @@ call plug#begin('~/.vim/plugged')
 if has("macunix")
     Plug 'copy-as-rtf'
 endif
-if has("unix")
-    " YouCompleteMe has a compiled back-end
-    " https://github.com/Valloric/YouCompleteMe#mac-os-x-super-quick-installation
-    Plug 'Valloric/YouCompleteMe'
-endif
+
 " Needs backend: npm -g update instant-markdown-d
 Plug 'suan/vim-instant-markdown', { 'for': 'markdown'}
 Plug 'scrooloose/nerdcommenter'
