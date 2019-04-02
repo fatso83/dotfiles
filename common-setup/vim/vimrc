@@ -13,6 +13,14 @@ set modeline
 set modelines=5                " The number of lines to search for a modeline, must be non-0
 filetype off                   " required!
 
+
+" Automatically do :ALEFix
+" http://liuchengxu.org/posts/use-vim-as-a-python-ide/
+let g:ale_fix_on_save = 1
+" Enable completion where available.
+" " This setting must be set BEFORE ALE is loaded.
+" let g:ale_completion_enabled = 1
+
 source ~/.vim/vundle-config
 filetype plugin indent on       " load file type plugins + indentation
 " To ignore plugin indent changes, instead use:
@@ -173,4 +181,14 @@ nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
 nmap <silent> <leader>g :TestVisit<CR>
 
+" Also need to check out these YCM and Tern alternatives
+" ncm2, coc.vim
+
+" Set up neomake as well: It is intended to replace the built-in :make command and provides functionality similar to plugins like syntastic and dispatch.vim. It is primarily used to run code linters and compilers from within Vim, but can be used to run any program.
+
+" Set up fzf instead of Ctrl-P
+" fzf and fzf.vim
+
 source ~/.vimrc.local
+
+" vi: ft=vim
