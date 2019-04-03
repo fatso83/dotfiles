@@ -107,7 +107,8 @@ au BufEnter /private/tmp/crontab.* setl backupcopy=yes
 " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " Make the local current directory reflect the currently open buffer
-autocmd BufEnter * lcd %:p:h
+" Disabled on 2019-04-03: Breaks fugitive.vim :(
+" autocmd BufEnter * lcd %:p:h
 
 " Silence NerdTree errors - might have been introduced by the above
 " https://github.com/scrooloose/nerdtree/issues/162#issuecomment-107643011
