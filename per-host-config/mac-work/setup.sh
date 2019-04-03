@@ -1,34 +1,34 @@
 #!/bin/sh
 
+# exit on errors
+set -e
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+pushd "$SCRIPT_DIR" > /dev/null
+
+# Get some color codes
+source ../../common-setup/bash.d/colors
+
 # Homebrew
 if ! which brew > /dev/null; then
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
     brew update
-fi
-
-# Node / NPM
-if ! which npm > /dev/null; then
-    brew install node
-fi
-
-# Node Version Manager
-if ! which n > /dev/null; then
-    npm install -g n
-    n latest
-fi
-
-# Latest vim
-if ! which macvim > /dev/null; then
-    brew install macvim
-fi
-
-# Latest NeoVim
-if ! which nvim> /dev/null; then
-    brew install neovim/neovim/neovim
 fi
 
 # CMake
 if ! which cmake > /dev/null; then
     brew install cmake
     echo "CMake was not installed earlier. Try rerunning the main setup to make sure everything is working"
+fi
+
+blue "Installing local apps using Homebrew"
+while read line; do 
+    brew install $line
+done < apps.local 
+
+# Node Version Manager
+if ! which n > /dev/null; then
+    npm install -g n
+    n latest
 fi

@@ -1,8 +1,10 @@
 cmake
 cowsay
 fortune
+git-extras
 htop
 macvim
+neovim
 node
 reattach-to-user-namespace --with-wrap-pbcopy-and-pbpaste
 the_silver_searcher
