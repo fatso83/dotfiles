@@ -4,8 +4,10 @@ fortune
 git-extras
 htop
 macvim
+maven
 neovim
 node
+postgres
 reattach-to-user-namespace 
 the_silver_searcher
 tmux

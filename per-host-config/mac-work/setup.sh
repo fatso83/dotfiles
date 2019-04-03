@@ -23,6 +23,9 @@ if ! which cmake > /dev/null; then
 fi
 
 blue "Installing local apps using Homebrew"
+
+brew cask install java
+
 while read line; do 
     brew install $line
 done < apps.local 

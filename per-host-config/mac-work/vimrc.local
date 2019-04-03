@@ -1,2 +1,5 @@
 " OS X custom vim config
 colorscheme koehler
+let g:ale_java_javalsp_executable = "/Users/carlerik/dev/java-language-server/dist/mac/bin/java"
+
+" vi: ft=vim
