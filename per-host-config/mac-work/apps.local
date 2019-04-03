@@ -6,6 +6,6 @@ htop
 macvim
 neovim
 node
-reattach-to-user-namespace --with-wrap-pbcopy-and-pbpaste
+reattach-to-user-namespace 
 the_silver_searcher
 tmux
