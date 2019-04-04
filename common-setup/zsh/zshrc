@@ -1,4 +1,10 @@
 export HISTFILE=~/.zsh_history
+export HISTSIZE=100000 # can't be unset, like in bash
+
+# Appends every command to the history file once it is executed
+setopt inc_append_history
+# Reloads the history whenever you use it
+setopt share_history
 
 # Keybindings, like the readline bindings
 bindkey \^U backward-kill-line
