@@ -36,6 +36,11 @@ ln -sf "$SCRIPT_DIR"/zsh/zshrc "$DEST"/.zshrc
 [[ ! -e "$DEST/.tmux/plugins" ]] && mkdir "$DEST/.tmux/plugins";
 [[ ! -e "$DEST/.tmux/plugins/tpm" ]] && git clone https://github.com/tmux-plugins/tpm "$DEST"/.tmux/plugins/tpm 
 
+# copy tmux project settings
+for file in "$SCRIPT_DIR"/tmux/*.proj; do
+  ln -sf "$file" "${DEST}/.tmux/"
+done
+
 for file in "$SCRIPT_DIR"/bash.d/*; do
   ln -sf "$file" "${BASH_DIR}"/
 done

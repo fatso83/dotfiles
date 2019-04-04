@@ -181,5 +181,10 @@ function gh-compare(){
 # Nice util for listing all declared functions. You use `type` to print them
 alias list-functions='declare | egrep '\''^[[:alpha:]][[:alnum:]_]* ()'\''; echo -e "\nTo print a function definition, issue \`type function-name\` "'
 
+tmux-restore () {
+    [[ -n $1 ]] && tmux $2 source-file $HOME/.tmux/$1.proj \
+    || echo "Usage: tmux-restore my-js-setup <optional command>"
+}
+
 t_debug "global aliases and functions finished"
 

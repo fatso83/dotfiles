@@ -1,0 +1,40 @@
+# vi: filetype=tmux
+
+# Restoring tmux setups
+# Use this together with the `tmux-restore` function, as in 
+# $ tmux-restore nimble
+# 
+# Based on 
+# https://stackoverflow.com/a/40125397/200987
+# https://stackoverflow.com/a/40009032/200987
+
+# window 0 - main window in the left pane and 3 minor windows in the right pane
+new-session -s dev-nimble 
+rename-window 'frontend';
+send-keys 'z frontend; nvim' C-m  # editor
+split-window -h -p 40 # build window (webpack, etc)
+send-keys 'z frontend && npm start' C-m
+split-window -v -p 80             # cli
+send-keys 'mocha --recursive'     # don't execute
+split-window -v -p 50             # test runner?
+select-pane -L; # select the left pane; nvim
+
+# window 1 - backend tasks
+new-window 
+rename-window 'backend';
+send-keys 'z backend && mvn flyway:migrate clean install -DskipTests exec:java' C-m
+split-window
+send-keys 'z backend;vim configuration.properties' C-m
+
+# window 2 - monitor cpu, etc
+new-window 
+send-keys 'htop' C-m
+
+# window 3 - cli
+new-window 
+rename-window 'cli'
+
+# go to first window
+select-window -p
+select-window -p
+select-window -p
