@@ -1,0 +1,37 @@
+# Keybindings, like the readline bindings
+bindkey \^U backward-kill-line
+bindkey \^K kill-line
+
+
+# Zsh plugin manager (handles oh-my-zsh, etc)
+# https://github.com/zplug/zplug
+if [ -e ~/.zplug/init.zsh ]; then
+    source ~/.zplug/init.zsh
+fi
+
+##################################################
+## Based on zplug Example section
+## https://github.com/zplug/zplug#example
+##################################################
+
+# Async for zsh, used by pure
+zplug "mafredri/zsh-async", from:github, defer:0
+# Load completion library for those sweet [tab] squares
+#zplug "lib/completion", from:oh-my-zsh
+zplug "plugin/z", from:oh-my-zsh
+
+# Syntax highlighting for commands, load last
+zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3
+# Theme!
+zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+
+# Then, source plugins and add commands to $PATH
+zplug load --verbose

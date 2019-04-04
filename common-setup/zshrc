@@ -1,6 +1,0 @@
-# Zsh plugin manager (handles oh-my-zsh, etc)
-# https://github.com/zplug/zplug
-if [ -e ~/.zplug/init.zsh ]; then
-    source ~/.zplug/init.zsh
-fi
-

@@ -29,7 +29,7 @@ ln -sf "$SCRIPT_DIR"/pystartup "$DEST"/.pystartup
 ln -sf "$SCRIPT_DIR"/tmux.conf "$DEST"/.tmux.conf
 
 # Zsh
-ln -sf "$SCRIPT_DIR"/zshrc "$DEST"/.zshrc
+ln -sf "$SCRIPT_DIR"/zsh/zshrc "$DEST"/.zshrc
 
 # create needed dirs
 [[ ! -e "$DEST/.tmux" ]] && mkdir "$DEST/.tmux";
