@@ -1,3 +1,5 @@
+export HISTFILE=~/.zsh_history
+
 # Keybindings, like the readline bindings
 bindkey \^U backward-kill-line
 bindkey \^K kill-line

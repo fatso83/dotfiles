@@ -48,7 +48,7 @@ function read_config {
 }
 
 function read_config_if_exists {
-  [ -a "$1" ] && . "$1"
+  [ -e "$1" ] && . "$1" && t_debug Read $1
 }
 
 # Needed for the utility function "restore_path"
@@ -132,6 +132,8 @@ if [ -d ~/scripts ] ; then
 	PATH=~/scripts:"$PATH"
 fi
 
+# Z utility :-)
+read_config_if_exists "$HOME/.zplug/repos/robbyrussell/oh-my-zsh/plugins/z/z.sh"
 
 t_debug "Reading local settings for this machine"
 # This needs to be at the bottom to be able to override earlier settings/variables/functions
