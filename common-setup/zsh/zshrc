@@ -7,8 +7,10 @@ setopt inc_append_history
 setopt share_history
 
 # Keybindings, like the readline bindings
-bindkey \^U backward-kill-line
-bindkey \^K kill-line
+# We have VI key bindings! Screw emacs/readline :D Use insert/command mode
+# http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html
+# To get emacs key bindings, just do `bindkey -e`
+# This is like `set -o vi` in bash, ref https://www.techrepublic.com/blog/linux-and-open-source/using-vi-key-bindings-in-bash-and-zsh/
 
 
 # Zsh plugin manager (handles oh-my-zsh, etc)
@@ -22,14 +24,18 @@ fi
 ## https://github.com/zplug/zplug#example
 ##################################################
 
-# Async for zsh, used by pure
-zplug "mafredri/zsh-async", from:github, defer:0
 # Load completion library for those sweet [tab] squares
-#zplug "lib/completion", from:oh-my-zsh
-zplug "plugin/z", from:oh-my-zsh
+zplug "lib/completion", from:oh-my-zsh
+
+# Never got the oh-my-zsh version to work without manual configuration, 
+zplug "rupa/z", use:z.sh
+#zplug "plugin/z", from:oh-my-zsh, as:plugin
 
 # Syntax highlighting for commands, load last
 zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3
+
+# Async for zsh, used by pure
+zplug "mafredri/zsh-async", from:github, defer:0
 # Theme!
 zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 

@@ -133,7 +133,7 @@ if [ -d ~/scripts ] ; then
 fi
 
 # Z utility :-)
-read_config_if_exists "$HOME/.zplug/repos/robbyrussell/oh-my-zsh/plugins/z/z.sh"
+read_config_if_exists "$HOME/.zplug/repos/rupa/z/z.sh"
 
 t_debug "Reading local settings for this machine"
 # This needs to be at the bottom to be able to override earlier settings/variables/functions
