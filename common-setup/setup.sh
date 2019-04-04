@@ -28,6 +28,9 @@ ln -sf "$SCRIPT_DIR"/gitignore_global "$DEST"/.gitignore_global
 ln -sf "$SCRIPT_DIR"/pystartup "$DEST"/.pystartup
 ln -sf "$SCRIPT_DIR"/tmux.conf "$DEST"/.tmux.conf
 
+# Zsh
+ln -sf "$SCRIPT_DIR"/zshrc "$DEST"/.zshrc
+
 # create needed dirs
 [[ ! -e "$DEST/.tmux" ]] && mkdir "$DEST/.tmux";
 [[ ! -e "$DEST/.tmux/plugins" ]] && mkdir "$DEST/.tmux/plugins";
