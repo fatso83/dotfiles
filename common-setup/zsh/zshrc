@@ -1,5 +1,6 @@
 export HISTFILE=~/.zsh_history
 export HISTSIZE=100000 # can't be unset, like in bash
+export SAVEHIST=100000 # needed in order to save it somewhere
 
 # Appends every command to the history file once it is executed
 setopt inc_append_history
@@ -11,6 +12,9 @@ setopt share_history
 # http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html
 # To get emacs key bindings, just do `bindkey -e`
 # This is like `set -o vi` in bash, ref https://www.techrepublic.com/blog/linux-and-open-source/using-vi-key-bindings-in-bash-and-zsh/
+
+# Re-use BASH aliases
+source ~/.bash.d/bash_aliases_functions
 
 
 # Zsh plugin manager (handles oh-my-zsh, etc)
@@ -29,7 +33,6 @@ zplug "lib/completion", from:oh-my-zsh
 
 # Never got the oh-my-zsh version to work without manual configuration, 
 zplug "rupa/z", use:z.sh
-#zplug "plugin/z", from:oh-my-zsh, as:plugin
 
 # Syntax highlighting for commands, load last
 zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3
