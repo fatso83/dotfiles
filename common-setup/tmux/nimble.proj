@@ -8,8 +8,10 @@
 # https://stackoverflow.com/a/40125397/200987
 # https://stackoverflow.com/a/40009032/200987
 
+new-window
+
 # window 0 - main window in the left pane and 3 minor windows in the right pane
-new-session -s dev-nimble 
+new-session -s nimble
 rename-window 'frontend';
 send-keys 'z frontend; nvim' C-m  # editor
 split-window -h -p 40 # build window (webpack, etc)

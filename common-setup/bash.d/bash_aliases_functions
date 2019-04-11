@@ -121,7 +121,8 @@ alias socks_proxy_all='ssh -v -D :22222 carl-erik@timbuktu.kopseng.no -N'
 alias strip-diff-prefix='sed "s/^\([^-+ ]*\)[-+ ]/\\1/"' 
 
 # For stack overflow pasting
-alias stack-overflow='sed -e "s/diffia/mycomp/g" -e "s/carlerik/myuser/g" | indent4 | pbcopy; pbpaste'
+alias stack-overflow='sed -e "s/diffia/ACME/g" -e "s/$USER/myuser/g" | indent4 | pbcopy; pbpaste; echo -e "\n\nCopied to pastebuffer!"'
+
 
 # "reminder aliases" for how to suspend and continue a process
 alias processes-suspend='killall -sSTOP '
@@ -182,8 +183,19 @@ function gh-compare(){
 alias list-functions='declare | egrep '\''^[[:alpha:]][[:alnum:]_]* ()'\''; echo -e "\nTo print a function definition, issue \`type function-name\` "'
 
 tmux-restore () {
-    [[ -n $1 ]] && tmux $2 source-file $HOME/.tmux/$1.proj \
-    || echo "Usage: tmux-restore my-js-setup <optional command>"
+    if [[ -n $1 ]]; then
+        local setup_file="$HOME/.tmux/$1.proj" 
+        if [[ -e $setup_file ]]; then
+            $(which tmux) new-session "tmux $2 source-file $setup_file"
+        else
+            printf "\nNo such file \"$setup_file\".\nListing existing files:\n\n"
+            ls -1 ~/.tmux/*.proj
+            return 1
+        fi
+    else
+        echo "Usage: tmux-restore my-js-setup <optional command>"
+        return 1
+    fi
 }
 
 t_debug "global aliases and functions finished"
