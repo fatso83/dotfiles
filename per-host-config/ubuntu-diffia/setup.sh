@@ -47,21 +47,21 @@ if [[ -n $APT_SHOULD_UPDATE ]]; then
 fi
 
 
-echo -e $(blue Installing local apps ...)
+blue "Installing local apps ..."
 sudo apt-get install -y --no-install-recommends $(strip-comments apps.local)
 
 
 # https://github.com/pypa/pip/issues/5240
 # upgrade PIP
 # pip install --upgrade pip
-blue "Installing local apps\n"
+blue "Installing pip\n"
 if ! which pip > /dev/null; then
     curl https://bootstrap.pypa.io/get-pip.py | python3
     $SCRIPT_DIR/setup.sh  # restart this script
     exit $?
 fi
 
-echo -e $(blue Installing python packages ...)
+blue "Installing python packages ..."
 pip install -r python.local 
 
 echo -e $(blue Installing ruby packages ...)
@@ -74,34 +74,36 @@ while read line; do
 done < ruby.local 
 
 
-if ! $(which n >> /dev/null); then
+if ! which n >> /dev/null; then
     # upgrade Node
     npm install -g n
     n stable
 fi
 
 # Install Yarn - used for instance by coc.vim
-curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
+if ! which yarn >> /dev/null; then
+    curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
+fi
 
-echo -e $(blue Installing Snaps ...) # universal linux packages
+blue "Installing snaps ..." # universal linux packages
 installed=$(mktemp)
 snap list 2>/dev/null |  awk '{if (NR>1){print $1}}' > $installed
 
 #filters out patterns that are present in the other file, see https://stackoverflow.com/questions/4780203/deleting-lines-from-one-file-which-are-in-another-file
-snaps=$(grep -v -f $installed snaps.local)
+snaps=$(grep -v -f $installed snaps.local || true) 
 for pkg in $snaps; do
     sudo snap install $pkg --classic
 done
 
-echo -e $(blue Installing Node packages ...)
+blue "Installing Node packages ..."
 if which pick_json > /dev/null; then
     installed=$(mktemp)
     npm list -g --depth 1 --json | pick_json -k -e dependencies > $installed
 
     #filters out patterns that are present in the other file, see https://stackoverflow.com/questions/4780203/deleting-lines-from-one-file-which-are-in-another-file
-    node_apps=$(grep -v -f $installed node.local)
+    node_apps=$(grep -v -f $installed node.local || true) 
 else
-    node_apps="$(cat node.local)"
+    node_apps="$(cat node.local|| true)" 
 fi
 # if non-zero, https://unix.stackexchange.com/a/146945/18594
 if [[ -n "${node_apps// }" ]]; then
@@ -113,18 +115,19 @@ fi
 #rm -r ~/.config/i3
 #ln -s $SCRIPT_DIR/i3-config ~/.config/i3
 
-# fix Alsa for Nforce
+blue "fix Alsa for Nforce"
 ln -sf $SCRIPT_DIR/asoundrc ~/.asoundrc
 
 # for i3 - use custom Chrome to have argument added always
 cp google-chrome ~/bin/
 
+blue "Autoremove unused"
 sudo apt-get autoremove --yes
 
-# install Github 'hub'
-if ! $(which hub >> /dev/null); then
+blue "Installing Github's 'hub' - if required"
+if ! which hub > /dev/null; then
     echo -e $(blue "Installing Github's Hub...")
-    VERSION="2.5.1"
+    VERSION="2.11.2"
     BASENAME="hub-linux-amd64-$VERSION"
     wget "https://github.com/github/hub/releases/download/v${VERSION}/${BASENAME}.tgz"
     tar xvzf "$BASENAME.tgz"
@@ -135,7 +138,7 @@ if ! $(which hub >> /dev/null); then
 fi
 
 # install GitHub LFS support
-if ! $(which git-lfs >> /dev/null); then
+if ! which git-lfs > /dev/null; then
     echo -e $(blue "Installing Git LFS client...")
     VERSION="2.4.2"
     NAME="git-lfs"
@@ -155,7 +158,7 @@ export SDKMAN_DIR="/home/carlerik/.sdkman"
 if ! type sdk > /dev/null 2> /dev/null; then # if the `sdk` function doesn't exist
     curl -s "https://get.sdkman.io" | bash # installs SDKMAN
 fi
-sdk install java 11.0.2-open
+sdk install java 12.0.0-open
 
 # install QR copier
 go get github.com/claudiodangelis/qr-filetransfer
@@ -172,11 +175,12 @@ if ! service powertop status > /dev/null 2>&1; then
     sudo systemctl enable powertop.service
 fi
 
+# Installing zplug
+curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+
 # Use rc.local for small tweaks
 sudo systemctl start rc-local.service
 sudo cp rc.local /etc/
-
-curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
 
 # restore current directory
 popd > /dev/null
