@@ -176,5 +176,7 @@ fi
 sudo systemctl start rc-local.service
 sudo cp rc.local /etc/
 
+curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+
 # restore current directory
 popd > /dev/null
