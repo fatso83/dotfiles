@@ -1,0 +1,37 @@
+# vi: filetype=tmux
+
+# Restoring tmux setups
+# Use this together with the `tmux-restore` function, as in 
+# $ tmux-restore nimble
+# 
+# Based on 
+# https://stackoverflow.com/a/40125397/200987
+# https://stackoverflow.com/a/40009032/200987
+
+#new-window
+
+neww
+
+# window 0 - main window in the left pane and 3 minor windows in the right pane
+#new-session -s base-dev
+rename-window 'editor';
+#send-keys 'cd ~/dev; nvim' C-m  # editor
+send-keys 'cd $HOME/dev; nvim' C-m  # editor
+split-window -h -p 40 # build window (webpack, etc)
+split-window -v -p 80             # cli
+split-window -v -p 50             # test runner?
+select-pane -L; # select the left pane; nvim
+
+# window 1 - cli
+new-window 
+rename-window 'cli'
+
+# window 2 - monitor cpu, etc
+new-window 
+send-keys 'htop' C-m
+
+# go to first window
+select-window -p
+select-window -p
+
+
