@@ -21,6 +21,7 @@ let g:ale_fix_on_save = 1
 " Enable completion where available.
 " " This setting must be set BEFORE ALE is loaded.
 " let g:ale_completion_enabled = 1
+nmap <F8> <Plug>(ale_fix)
 
 source ~/.vim/plugins-config
 filetype plugin indent on       " load file type plugins + indentation
@@ -187,6 +188,14 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 
 " Set up fzf instead of Ctrl-P
 " fzf and fzf.vim
+
+let g:ale_fixers = {
+\   'javascript': [
+\       'eslint --fix',
+\       'eslint',
+\       {buffer, lines -> filter(lines, 'v:val !=~ ''^\s*//''')},
+\   ],
+\}
 
 source ~/.vimrc.local
 
