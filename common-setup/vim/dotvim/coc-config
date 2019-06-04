@@ -12,4 +12,11 @@ inoremap <silent><expr> <TAB>
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
+" Rename (as in IntelliJ)
+nmap <S-F6> <Plug>(coc-rename)
+" Rename per the recommendations
+nmap <leader>rn <Plug>(coc-rename)
+
+let g:coc_global_extensions = ['coc-tsserver','coc-json']
+
 " vi: ft=vim

@@ -154,3 +154,5 @@ t_debug Travis setup
 [ -f /home/carlerik/.travis/travis.sh ] && source /home/carlerik/.travis/travis.sh
 
 t_debug Finished bash setup
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
