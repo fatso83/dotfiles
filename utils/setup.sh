@@ -23,7 +23,7 @@ if ! which signal-reset > /dev/null; then
 fi
 
 # scripts
-ln -f scripts/* $HOME/bin/
+ln -sf scripts/* $HOME/bin/
 
 # Dependencies for scripts
 pip3 install smsutil
