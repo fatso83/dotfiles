@@ -13,20 +13,20 @@ new-window
 # window 0 - main window in the left pane and 3 minor windows in the right pane
 new-session -s nimble
 rename-window 'frontend';
-send-keys 'z frontend; nvim' C-m  # editor
+send-keys 'z nimble/frontend; nvim' C-m  # editor
 split-window -h -p 40 # build window (webpack, etc)
-send-keys 'z frontend && npm start' C-m
+send-keys 'z nimble/frontend && npm start' C-m
 split-window -v -p 80             # cli
-send-keys 'mocha --recursive'     # don't execute
+send-keys 'z nimble/frontend; mocha --recursive'     # don't execute - leave it hanging
 split-window -v -p 50             # test runner?
 select-pane -L; # select the left pane; nvim
 
 # window 1 - backend tasks
 new-window 
 rename-window 'backend';
-send-keys 'z backend && mvn flyway:migrate clean install -DskipTests exec:java' C-m
+send-keys 'z nimble/backend && mvn flyway:migrate clean install -DskipTests exec:java' C-m
 split-window
-send-keys 'z backend;vim configuration.properties' C-m
+send-keys 'z nimble/backend;vim configuration.properties' C-m
 
 # window 2 - monitor cpu, etc
 new-window 
