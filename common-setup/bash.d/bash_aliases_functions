@@ -84,6 +84,7 @@ alias prettify_json='python -mjson.tool'
 
 # Indent text before sending it to Stack Overflow
 alias indent4="sed -E 's/(^.*)/    \1/'"
+alias remove-indent4="sed -E 's/^    //'"
 
 t_debug "aliases: setting up node aliases"
 # node commands - important that these are enclosed in single quotes to avoid expansion!
@@ -121,7 +122,8 @@ alias socks_proxy_all='ssh -v -D :22222 carl-erik@timbuktu.kopseng.no -N'
 alias strip-diff-prefix='sed "s/^\([^-+ ]*\)[-+ ]/\\1/"' 
 
 # For stack overflow pasting
-alias stack-overflow='sed -e "s/diffia/ACME/g" -e "s/$USER/myuser/g" | indent4 | pbcopy; pbpaste; echo -e "\n\nCopied to pastebuffer!"'
+alias stack-overflow-no-copy='sed -e "s/diffia/ACME/g" -e "s/$USER/myuser/g" | indent4 '
+alias stack-overflow='stack-overflow-no-copy | pbcopy; pbpaste; echo -e "\n\nCopied to pastebuffer (use stack-overflow-no-copy to avoid this)!"'
 
 
 # "reminder aliases" for how to suspend and continue a process
