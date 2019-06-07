@@ -1,21 +1,16 @@
 region: eu
-
 tunnels:
-  nimble:
-      proto: http
-      addr: 3000
-      #pay-feature
-      #hostname: nimble-dev
-
-  # Example configs follow
-  httpbin:
-    proto: http
-    addr: 8000
-    # pay-feature
-    subdomain: alan-httpbin
   demo:
-    proto: http
     addr: 9090
+    auth: demo:secret
     hostname: demo.inconshreveable.com
     inspect: false
-    auth: "demo:secret"
+    proto: http
+  httpbin:
+    addr: 8000
+    proto: http
+    subdomain: alan-httpbin
+  nimble:
+    addr: 3000
+    proto: http
+    subdomain: nimble-ce
