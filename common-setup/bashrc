@@ -124,7 +124,6 @@ PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 # https://stackoverflow.com/questions/32418438/how-can-i-disable-bash-sessions-in-os-x-el-capitan
 SHELL_SESSION_HISTORY=0
 
-export PATH="/usr/local/bin:$PATH"
 export PYTHONSTARTUP="$HOME/.pystartup"
 export HISTCONTROL=ignoredups
 
