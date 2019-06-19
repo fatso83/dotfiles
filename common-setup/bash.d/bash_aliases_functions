@@ -183,6 +183,9 @@ function gh-compare(){
 
 # Maven - fail as soon as a test fails
 alias mvn='mvn  -Dsurefire.skipAfterFailureCount=1'
+#
+# Open JIRA issues: `nim 434` opens NIM-434 in the browser
+function nim() { xdg-open http://diffia.atlassian.net/browse/NIM-$1;  }
 
 # Nice util for listing all declared functions. You use `type` to print them
 alias list-functions='declare | egrep '\''^[[:alpha:]][[:alnum:]_]* ()'\''; echo -e "\nTo print a function definition, issue \`type function-name\` "'
