@@ -87,4 +87,5 @@ export GOPATH=$HOME/go
 export SDKMAN_DIR="/home/carlerik/.sdkman"
 [[ -s "/home/carlerik/.sdkman/bin/sdkman-init.sh" ]] && source "/home/carlerik/.sdkman/bin/sdkman-init.sh"
 
+PATH="~/apps/idea-IU-191.7479.19/bin:$PATH"
 export PATH="$HOME/bin/Telegram:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
