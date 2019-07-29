@@ -8,35 +8,30 @@
 # https://stackoverflow.com/a/40125397/200987
 # https://stackoverflow.com/a/40009032/200987
 
-new-window
-
-# window 0 - main window in the left pane and 3 minor windows in the right pane
 new-session -s nimble
-rename-window 'frontend';
-send-keys 'z nimble/frontend; nvim' C-m  # editor
-split-window -h -p 40 # build window (webpack, etc)
-send-keys 'z nimble/frontend && npm start' C-m
-split-window -v -p 80             # cli
-send-keys 'z nimble/frontend; mocha --recursive'     # don't execute - leave it hanging
-split-window -v -p 50             # test runner?
-select-pane -L; # select the left pane; nvim
 
-# window 1 - backend tasks
-new-window 
-rename-window 'backend';
-send-keys 'z nimble/backend && mvn flyway:migrate clean install -DskipTests exec:java' C-m
-split-window
-send-keys 'z nimble/backend;vim configuration.properties' C-m
-
-# window 2 - monitor cpu, etc
+# monitor cpu, etc
 new-window 
 send-keys 'htop' C-m
 
-# window 3 - cli
+# 2-pane builds
+new-window
+rename-window 'builds';
+send-keys 'z nimble/backend && echo mvn flyway:migrate clean install -DskipTests exec:java' C-m
+split-window -h -p 40 # build window (webpack, etc)
+send-keys 'z nimble/frontend && npm start' C-m
+split-window -v -p 50             # cli
+send-keys 'z nimble/frontend; mocha --recursive'     # don't execute - leave it hanging
+
+# editor
+new-window 
+rename-window 'editor';
+send-keys 'z nimble/backend;vim configuration.properties' C-m
+
+# cli
 new-window 
 rename-window 'cli'
 
 # go to first window
-select-window -p
 select-window -p
 select-window -p
