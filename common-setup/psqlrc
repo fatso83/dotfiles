@@ -1,5 +1,26 @@
-\timing on\pset linestyle unicode \pset border 2\setenv PAGER 'pspg --no-mouse -bX --no-commandbar --no-topbar'\set HISTSIZE 100000\timing on
+\timing on
 \pset linestyle unicode 
 \pset border 2
 \setenv PAGER 'pspg --no-mouse -bX --no-commandbar --no-topbar'
 \set HISTSIZE 100000
+
+\set PROMPT1 '%[%033[1m%]%M %n@%/%R%[%033[0m%]%# '
+\set PROMPT2 '[more] %R > '
+
+-- string, or is it null? This makes that distinction visible.
+\pset null '[NULL]'
+-- Use table format (with headers across the top) by default, but switch to
+-- expanded table format when there's a lot of data, which makes it much
+-- easier to read.
+\x auto
+-- Verbose error reports.
+\set VERBOSITY verbose
+-- Use a separate history file per-database.
+\set HISTFILE ~/.psql_history- :DBNAME
+-- If a command is run more than once in a row, only store it once in the
+-- history.
+\set HISTCONTROL ignoredups
+-- Autocomplete keywords (like SELECT) in upper-case, even if you started
+-- typing them in lower case.
+\set COMP_KEYWORD_CASE upper
+
