@@ -39,6 +39,7 @@ powertop
 powershell-preview
 
 postgresql
+postgresql-server-dev-10
 pspg
 
 # https://github.com/pypa/pip/issues/5240
