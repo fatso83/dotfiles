@@ -155,4 +155,7 @@ t_debug Travis setup
 
 t_debug Finished bash setup
 
+# Read environment variables, such as sauce labs keys
+read_config_if_exists "$HOME/.secret"
+
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

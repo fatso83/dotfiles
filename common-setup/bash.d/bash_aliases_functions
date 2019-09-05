@@ -181,6 +181,9 @@ function gh-compare(){
     || echo "Usage: gh-compare fatso83/razor-cli-node 779490 master"; 
 }
 
+# Maven - fail as soon as a test fails
+alias mvn='mvn  -Dsurefire.skipAfterFailureCount=1'
+
 # Nice util for listing all declared functions. You use `type` to print them
 alias list-functions='declare | egrep '\''^[[:alpha:]][[:alnum:]_]* ()'\''; echo -e "\nTo print a function definition, issue \`type function-name\` "'
 
