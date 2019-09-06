@@ -3,6 +3,9 @@
 BASH_DIR="${HOME}/.bash.d"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+# read local environment variables, like auth tokens
+source ~/.secret
+
 pushd "$SCRIPT_DIR" > /dev/null
 
 source "$SCRIPT_DIR/bash.d/colors"
@@ -78,9 +81,17 @@ make
 make install PREFIX=$HOME
 cd ..
 
-# Make a config file for ngrok
+# Make a config file for ngrok, passing in the secret auth token
 [[ ! -e "$HOME"/.ngrok2 ]] && mkdir "$HOME/.ngrok2"
-ln -sf $SCRIPT_DIR/ngrok.yml $HOME/.ngrok2/ngrok.yml
+NGROK_YML="$HOME/.ngrok2/ngrok.yml"
+cat > "$NGROK_YML" << EOF
+###############################################################
+## WARNING: this file is auto-generated. See dotfiles repo   ##
+###############################################################
+authtoken: ${NGROK_AUTHTOKEN} 
+
+EOF
+cat $SCRIPT_DIR/ngrok.yml >> "$NGROK_YML"
 
 # Postgres config
 ln -sf "$SCRIPT_DIR"/psqlrc $HOME/.psqlrc

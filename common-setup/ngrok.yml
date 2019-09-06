@@ -1,16 +1,22 @@
+# vim: set sw=2 ts=2:
+
 region: eu
 tunnels:
   demo:
-    addr: 9090
-    auth: demo:secret
-    hostname: demo.inconshreveable.com
+    proto: http
     inspect: false
-    proto: http
-  httpbin:
-    addr: 8000
-    proto: http
-    subdomain: alan-httpbin
+    addr: 9090
+    hostname: demo.inconshreveable.com
+    auth: demo:secret
+
+  # the http version
   nimble:
-    addr: 3000
     proto: http
-    subdomain: nimble-ce
+    addr: 3000
+    subdomain: nimble-ce-s
+
+  # the https->https version
+  nimble-s:
+    proto: tls
+    addr: 3001
+    subdomain: nimble-ce-s
