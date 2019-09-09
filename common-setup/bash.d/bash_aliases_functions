@@ -72,7 +72,7 @@ if ! is_mac; then
   done
 fi
 
-alias ls="/bin/ls $IGNORE "
+alias ls="/bin/ls $IGNORE --color  --group-directories-first "
 
 t_debug small utils and aliases
 # Color output - when CLICOLOR is defined, --color/-G is unneeded
