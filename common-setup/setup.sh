@@ -14,6 +14,10 @@ if [ ! -e "$BASH_DIR" ]; then
   mkdir "${BASH_DIR}"
 fi
 
+if [ ! -e "$MAIN_DIR/bin" ]; then
+  mkdir "${MAIN_DIR}/bin"
+fi
+
 rm -r "$HOME"/.bash_completion.d
 ln -s "$SCRIPT_DIR"/bash_completion.d "$HOME"/.bash_completion.d 
 
