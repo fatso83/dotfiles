@@ -14,8 +14,8 @@ if [ ! -e "$BASH_DIR" ]; then
   mkdir "${BASH_DIR}"
 fi
 
-if [ ! -e "$MAIN_DIR/bin" ]; then
-  mkdir "${MAIN_DIR}/bin"
+if [ ! -e "$HOME/bin" ]; then
+  mkdir "${HOME}/bin"
 fi
 
 rm -r "$HOME"/.bash_completion.d
