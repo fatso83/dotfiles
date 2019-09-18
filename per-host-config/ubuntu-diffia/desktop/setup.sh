@@ -13,6 +13,7 @@ done
 blue "Removing (almost) all Gnome key bindings ...\n" # crashes with IntelliJ products
 ../../../utils/scripts/gnome-key-bindings --unset-all --except 'close|switch-applications|switch-input-source|show-desktop|maximize'
 
+ln -f flameshot.ini ~/.config/Dharkael/flameshot.ini
 
 popd  > /dev/null
 
