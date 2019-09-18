@@ -167,8 +167,8 @@ fi
 blue "Install QR copier\n"
 go get github.com/claudiodangelis/qr-filetransfer
 
-blue "Get icons for Caprine and PomoDone due to the Ubuntu XDG_... bug\n"
- ./desktop/setup.sh
+blue "Customizing desktop applications\n"
+./desktop/setup.sh
 
 blue "Use PowerTOP suggestions for saving power\n"
 sudo cp powertop.service /etc/systemd/system/
