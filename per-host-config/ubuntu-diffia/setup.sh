@@ -61,10 +61,10 @@ if ! which pip > /dev/null; then
     exit $?
 fi
 
-blue "Installing python packages ..."
+blue "Installing python packages ...\n"
 pip install -r python.local 
 
-echo -e $(blue Installing ruby packages ...)
+blue "Installing ruby packages ...\n"
 while read line; do 
     if gem list -i $line > /dev/null; then
         continue
@@ -85,7 +85,7 @@ if ! which yarn >> /dev/null; then
     curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
 fi
 
-blue "Installing snaps ..." # universal linux packages
+blue "Installing snaps ...\n" # universal linux packages
 installed=$(mktemp)
 snap list 2>/dev/null |  awk '{if (NR>1){print $1}}' > $installed
 
@@ -95,7 +95,7 @@ for pkg in $snaps; do
     sudo snap install $pkg --classic
 done
 
-blue "Installing Node packages ..."
+blue "Installing Node packages ...\n"
 if which pick_json > /dev/null; then
     installed=$(mktemp)
     npm list -g --depth 1 --json | pick_json -k -e dependencies > $installed
@@ -158,17 +158,20 @@ export SDKMAN_DIR="/home/carlerik/.sdkman"
 if ! type sdk > /dev/null 2> /dev/null; then # if the `sdk` function doesn't exist
     curl -s "https://get.sdkman.io" | bash # installs SDKMAN
 fi
-sdk install java 12.0.0-open
 
-# install QR copier
+if ! sh -c "java --version  | grep 'openjdk 12' > /dev/null"; then
+    blue "Installing Java\n"
+    sdk install java 12.0.0-open
+fi
+
+blue "Install QR copier\n"
 go get github.com/claudiodangelis/qr-filetransfer
 
-# Get icons for Caprine and PomoDone due to the Ubuntu XDG_... bug
+blue "Get icons for Caprine and PomoDone due to the Ubuntu XDG_... bug\n"
  ./desktop/setup.sh
 
-# Use PowerTOP suggestions for saving power
+blue "Use PowerTOP suggestions for saving power\n"
 sudo cp powertop.service /etc/systemd/system/
-
 # Enable the service, if first time
 if ! service powertop status > /dev/null 2>&1; then
     sudo systemctl daemon-reload
@@ -176,7 +179,7 @@ if ! service powertop status > /dev/null 2>&1; then
 fi
 
 # Installing zplug
-curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+#curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
 
 # Use rc.local for small tweaks
 sudo systemctl start rc-local.service
