@@ -115,16 +115,16 @@ fi
 #rm -r ~/.config/i3
 #ln -s $SCRIPT_DIR/i3-config ~/.config/i3
 
-blue "fix Alsa for Nforce"
+blue "fix Alsa for Nforce\n"
 ln -sf $SCRIPT_DIR/asoundrc ~/.asoundrc
 
 # for i3 - use custom Chrome to have argument added always
 cp google-chrome ~/bin/
 
-blue "Autoremove unused"
+blue "Autoremove unused\n"
 sudo apt-get autoremove --yes
 
-blue "Installing Github's 'hub' - if required"
+blue "Installing Github's 'hub' - if required\n"
 if ! which hub > /dev/null; then
     echo -e $(blue "Installing Github's Hub...")
     VERSION="2.11.2"

@@ -15,7 +15,7 @@ blue "Removing (almost) all Gnome key bindings ...\n" # crashes with IntelliJ pr
 
 blue "Pointing Flameshot config to dotfiles folder"
 # hack to get around the fact that a new file is created on Save, preventing hard links
-rm ~/.config/Dharkael
+rm -rf ~/.config/Dharkael 2>/dev/null
 ln -sf "$SCRIPT_DIR" ~/.config/Dharkael
 
 popd  > /dev/null

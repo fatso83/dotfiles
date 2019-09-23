@@ -4,7 +4,9 @@ BASH_DIR="${HOME}/.bash.d"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # read local environment variables, like auth tokens
-source ~/.secret
+if [ -e "${HOME}/.secret" ]; then
+  source "${HOME}/.secret"
+fi
 
 pushd "$SCRIPT_DIR" > /dev/null
 
@@ -88,11 +90,12 @@ cd ..
 # Make a config file for ngrok, passing in the secret auth token
 [[ ! -e "$HOME"/.ngrok2 ]] && mkdir "$HOME/.ngrok2"
 NGROK_YML="$HOME/.ngrok2/ngrok.yml"
+rm "$NGROK_YML" 2> /dev/null;
 cat > "$NGROK_YML" << EOF
 ###############################################################
 ## WARNING: this file is auto-generated. See dotfiles repo   ##
 ###############################################################
-authtoken: ${NGROK_AUTHTOKEN} 
+authtoken: ${NGROK_AUTHTOKEN:-'fill-NGROK_AUTHTOKEN-in-in-~/secret'} 
 
 EOF
 cat $SCRIPT_DIR/ngrok.yml >> "$NGROK_YML"
