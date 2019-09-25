@@ -13,7 +13,7 @@ done
 blue "Removing (almost) all Gnome key bindings ...\n" # crashes with IntelliJ products
 ../../../utils/scripts/gnome-key-bindings --unset-all --except 'close|switch-applications|switch-input-source|show-desktop|maximize'
 
-blue "Pointing Flameshot config to dotfiles folder"
+blue "Pointing Flameshot config to dotfiles folder\n"
 # hack to get around the fact that a new file is created on Save, preventing hard links
 rm -rf ~/.config/Dharkael 2>/dev/null
 ln -sf "$SCRIPT_DIR" ~/.config/Dharkael

@@ -84,12 +84,20 @@ alias psql=pgcli
 # Open JIRA issues: `nim 434` opens NIM-434 in the browser
 function nim() { xdg-open http://diffia.atlassian.net/browse/NIM-$1;  }
 
-export GOPATH=$HOME/go
-export PATH="$HOME/bin/Telegram:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+function encrypt(){
+    openssl enc -aes-256-cbc -a -salt "$@"
+}
+
+function decrypt(){
+    openssl enc -d -aes-256-cbc -a "$@"
+}
 
 # For Remote Mob programming on Nimble where develop is the base branch, not master
 # https://github.com/remotemobprogramming/mob/blob/master/mob.go
 export MOB_BASE_BRANCH=develop
+
+export GOPATH=$HOME/go
+export PATH="$HOME/bin/Telegram:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/carlerik/.sdkman"
