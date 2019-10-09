@@ -17,6 +17,11 @@ nmap <S-F6> <Plug>(coc-rename)
 " Rename per the recommendations
 nmap <leader>rn <Plug>(coc-rename)
 
-let g:coc_global_extensions = ['coc-tsserver','coc-json']
+" Install 'Prettier' command
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+let g:coc_global_extensions = ['coc-tsserver','coc-json', 'coc-prettier']
+vmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
 
 " vi: ft=vim

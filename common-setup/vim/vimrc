@@ -14,14 +14,19 @@ set modeline
 set modelines=5                " The number of lines to search for a modeline, must be non-0
 filetype off                   " required!
 
-
 " Automatically do :ALEFix
 " http://liuchengxu.org/posts/use-vim-as-a-python-ide/
 let g:ale_fix_on_save = 1
-" Enable completion where available.
+" DISABLED due to CoC: Enable completion where available.
 " " This setting must be set BEFORE ALE is loaded.
 " let g:ale_completion_enabled = 1
+
 nmap <F8> <Plug>(ale_fix)
+
+" Go between ALE errors using Ctrl-J/Ctrl-K
+" TODO: does this even work?
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 source ~/.vim/plugins-config
 filetype plugin indent on       " load file type plugins + indentation
@@ -175,9 +180,10 @@ let g:javascript_plugin_jsdoc = 1
 let g:import_sort_auto = 1
 " temporary fix for JSX: https://github.com/pangloss/vim-javascript/issues/955#issuecomment-356350901
 let g:jsx_ext_required = 0
+
 " auto-format
 " Disable using :RepoVimrcEdit and 'autocmd!'
-" autocmd BufWritePre *.js Neoformat
+" Should perhaps configure ALE to handle this in the ftplug/javascript file?
 autocmd BufWritePre *.jsx Neoformat
 
 " Understand JSONC (json with comments)
@@ -188,14 +194,6 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 
 " Set up fzf instead of Ctrl-P
 " fzf and fzf.vim
-
-let g:ale_fixers = {
-\   'javascript': [
-\       'eslint --fix',
-\       'eslint',
-\       {buffer, lines -> filter(lines, 'v:val !=~ ''^\s*//''')},
-\   ],
-\}
 
 source ~/.vimrc.local
 
