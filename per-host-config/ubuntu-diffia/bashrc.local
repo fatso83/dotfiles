@@ -9,6 +9,7 @@ source ~/.tlf # phone numbers
 
 alias btsync_tunnel="timbuktu_lokal -L 8888:0.0.0.0:8888 -N"
 
+alias ls="/bin/ls $IGNORE --color  --group-directories-first "
 alias vim='nvim'
 
 # connect to frost ark server on localhost:9999
