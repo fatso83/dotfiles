@@ -87,6 +87,10 @@ function nim() { xdg-open http://diffia.atlassian.net/browse/NIM-$1;  }
 export GOPATH=$HOME/go
 export PATH="$HOME/bin/Telegram:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
+# For Remote Mob programming on Nimble where develop is the base branch, not master
+# https://github.com/remotemobprogramming/mob/blob/master/mob.go
+export MOB_BASE_BRANCH=develop
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/carlerik/.sdkman"
 [[ -s "/home/carlerik/.sdkman/bin/sdkman-init.sh" ]] && source "/home/carlerik/.sdkman/bin/sdkman-init.sh"
