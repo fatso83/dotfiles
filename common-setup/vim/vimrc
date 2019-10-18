@@ -14,19 +14,9 @@ set modeline
 set modelines=5                " The number of lines to search for a modeline, must be non-0
 filetype off                   " required!
 
-" Automatically do :ALEFix
-" http://liuchengxu.org/posts/use-vim-as-a-python-ide/
-let g:ale_fix_on_save = 1
 " DISABLED due to CoC: Enable completion where available.
 " " This setting must be set BEFORE ALE is loaded.
 " let g:ale_completion_enabled = 1
-
-nmap <F8> <Plug>(ale_fix)
-
-" Go between ALE errors using Ctrl-J/Ctrl-K
-" TODO: does this even work?
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 source ~/.vim/plugins-config
 filetype plugin indent on       " load file type plugins + indentation
@@ -168,6 +158,7 @@ set mouse=
 " These needs to be before later configuration for objects to be defined
 source ~/.vim/ctrlp-config
 source ~/.vim/coc-config
+source ~/.vim/ale-config
 
 " Elm settings - see https://github.com/elmcast/elm-vim
 let g:elm_format_autosave = 1 "reformat on autosave

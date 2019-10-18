@@ -1,0 +1,9 @@
+" Go between ALE errors using Ctrl-J/Ctrl-K
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+nmap <F8> <Plug>(ale_fix)
+
+" Automatically do :ALEFix
+" http://liuchengxu.org/posts/use-vim-as-a-python-ide/
+let g:ale_fix_on_save = 1
+" Toggle this using ALT-F8 ... how? Make function to call?
