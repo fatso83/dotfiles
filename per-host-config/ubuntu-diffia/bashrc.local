@@ -41,40 +41,6 @@ alias busy='luxafor-cli -c red'
 alias bugme='luxafor-cli -c off'
 
 alias uuid='uuid | pbcopy; pbpaste'
-function pomodoro(){ 
-    LEN=$1
-    WARN=$2
-
-    let length=${LEN:-10*60};  # allows for arithmetic like `pomodoro 25*60` == `pomodoro 1500`
-    let warn_period=${WARN:-120}
-
-    if (($warn_period > $length)); then
-        warn_period=0;
-    fi 
-
-    let length_before_warn=length-warn_period;  # allows for arithmetic like `pomodoro 25*60` == `pomodoro 1500`
-
-    green "Starting pomodoro of $length seconds, warning $warn_period seconds before end\n"
-
-    # main work
-    luxafor-cli --color magenta; 
-    sleep $length_before_warn; 
-
-    # warn about time running out
-    pink "Only $warn_period seconds left \n"
-    luxafor-cli --blink 255,255,0; 
-    sleep 2; # need to not cut off the blinking too early - it doesn't block
-    luxafor-cli --color red; 
-    sleep $warn_period; 
-
-    # time out
-    dark_yellow "Time out!\n"
-    luxafor-cli --blink 0,255,0; 
-    sleep 2; # need to not cut off the blinking too early - it doesn't block
-
-    bugme; 
-    dark_grey "\nPomodoro finished\n"; 
-}
 alias tmux="tmux -S /tmp/persisted-tmux "
 
 alias babel-node='$(npm bin)/babel-node'
