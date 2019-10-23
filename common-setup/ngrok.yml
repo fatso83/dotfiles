@@ -13,7 +13,7 @@ tunnels:
   nimble:
     proto: http
     addr: 3000
-    subdomain: nimble-ce-s
+    subdomain: nimble-ce
 
   # the https->https version
   nimble-s:
