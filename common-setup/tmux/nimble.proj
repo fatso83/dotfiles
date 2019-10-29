@@ -17,7 +17,7 @@ send-keys 'htop' C-m
 # 2-pane builds
 new-window
 rename-window 'builds';
-send-keys 'z nimble/backend && mvn flyway:migrate clean install -DskipTests exec:java' C-m
+send-keys 'z nimble/backend && mvn clean compile flyway:migrate install -DskipTests exec:java' C-m
 split-window -h -p 40 # build window (webpack, etc)
 send-keys 'z nimble/frontend && npm run webpack-watch' C-m
 split-window -v -p 50             # cli
