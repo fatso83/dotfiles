@@ -19,9 +19,9 @@ new-window
 rename-window 'builds';
 send-keys 'z nimble/backend && mvn flyway:migrate clean install -DskipTests exec:java' C-m
 split-window -h -p 40 # build window (webpack, etc)
-send-keys 'z nimble/frontend && npm start' C-m
+send-keys 'z nimble/frontend && npm run webpack-watch' C-m
 split-window -v -p 50             # cli
-send-keys 'z nimble/frontend; mocha --recursive'     # don't execute - leave it hanging
+send-keys 'z nimble/frontend && npm run storybook' C-m
 
 # editor
 new-window 
