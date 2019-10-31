@@ -63,9 +63,9 @@ if /usr/local/bin/hub help > /dev/null 2>&1; then
     alias git='hub'
 fi
 
-t_debug Add custom ignore pattern for GNU ls
 IGNORE=""
 if ! is_mac; then
+  t_debug Add custom ignore pattern for GNU ls
   #ignore patterns
   for i in '*~' '*.pyc'; do 
       IGNORE="$IGNORE --ignore=$i"

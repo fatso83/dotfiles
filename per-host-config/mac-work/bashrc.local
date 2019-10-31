@@ -43,3 +43,8 @@ export LLVM="/usr/local/opt/emscripten/libexec/llvm/bin"
 #[ -s "/Users/carl-erik.kopseng/.dnx/dnvm/dnvm.sh" ] && . "/Users/carl-erik.kopseng/.dnx/dnvm/dnvm.sh" # Load dnvm
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH="/usr/local/opt/postgresql@10/bin:$PATH"
+
+# Add rbenv to bash so that it loads every time you open a terminal
+if which rbenv > /dev/null; then 
+    eval "$(rbenv init -)"; 
+fi

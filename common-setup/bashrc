@@ -150,10 +150,6 @@ if [ -a "$HOME/.bulksms.auth" ]; then
     export BULKSMS_SECRET
 fi
 
-t_debug Travis setup
-# added by travis gem
-[ -f /home/carlerik/.travis/travis.sh ] && source /home/carlerik/.travis/travis.sh
-
 t_debug Finished bash setup
 
 # Read environment variables, such as sauce labs keys
