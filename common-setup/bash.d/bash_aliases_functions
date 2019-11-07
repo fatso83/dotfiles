@@ -20,12 +20,6 @@ function is_mac() {
   fi
 }
 
-# Bash setup
-alias edit-rc="vim ~/.bashrc"
-alias edit-alias="vim ~/.bash.d/bash_aliases"
-alias source-rc="source ~/.bashrc"
-alias source-alias="source ~/.bash.d/bash_aliases"
-
 # Maskinalias
 t_debug ssh aliases
 alias timbuktu='ssh carl-erik@timbuktu.kopseng.no'

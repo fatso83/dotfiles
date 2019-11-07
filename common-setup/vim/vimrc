@@ -102,10 +102,6 @@ au BufEnter /private/tmp/crontab.* setl backupcopy=yes
 " autocmd StdinReadPre * let s:std_in=1
 " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-" Make the local current directory reflect the currently open buffer
-" Disabled on 2019-04-03: Breaks fugitive.vim :(
-" autocmd BufEnter * lcd %:p:h
-
 " Silence NerdTree errors - might have been introduced by the above
 " https://github.com/scrooloose/nerdtree/issues/162#issuecomment-107643011
 " nmap <silent> <Leader>t :call g:WorkaroundNERDTreeToggle()<CR>
@@ -116,6 +112,20 @@ au BufEnter /private/tmp/crontab.* setl backupcopy=yes
 
 " Open/Close NerdTree with Ctrl-N, but only in Normal mode
 nmap <C-n> :NERDTreeToggle<CR>
+
+" Make the local current directory reflect the currently open buffer
+" Disabled on 2019-04-03: Breaks fugitive.vim :(
+" autocmd BufEnter * lcd %:p:h
+
+" Alternative from https://vim.fandom.com/wiki/Set_working_directory_to_the_current_file#Automatically_change_the_current_directory
+" Doesn't work that well with NERDTree, since that will set the CWD relative
+" to that buffer, regardless of the "parent" window
+" set autochdir
+
+" CDC = Change to Directory of Current file (for the local window)
+" This works pretty well with NERDTree's CD (change tree root to CWD)
+command! CDC lcd %:p:h
+
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 " https://stackoverflow.com/a/7078429/200987
@@ -181,7 +191,9 @@ autocmd BufWritePre *.jsx Neoformat
 autocmd FileType json syntax match Comment +\/\/.\+$+
 
 
-" Set up neomake as well: It is intended to replace the built-in :make command and provides functionality similar to plugins like syntastic and dispatch.vim. It is primarily used to run code linters and compilers from within Vim, but can be used to run any program.
+" Set up neomake as well: It is intended to replace the built-in :make command and provides functionality 
+" similar to plugins like syntastic and dispatch.vim. It is primarily used to run code 
+" linters and compilers from within Vim, but can be used to run any program.
 
 " Set up fzf instead of Ctrl-P
 " fzf and fzf.vim
