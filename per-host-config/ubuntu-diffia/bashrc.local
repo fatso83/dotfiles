@@ -58,6 +58,9 @@ function decrypt(){
     openssl enc -d -aes-256-cbc -a "$@"
 }
 
+t_debug "Setup 'fuck' 🥳 "
+eval "$(thefuck --alias)"
+
 # For Remote Mob programming on Nimble where develop is the base branch, not master
 # https://github.com/remotemobprogramming/mob/blob/master/mob.go
 export MOB_BASE_BRANCH=develop
