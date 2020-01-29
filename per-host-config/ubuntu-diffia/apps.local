@@ -38,7 +38,6 @@ peek
 powertop
 powershell-preview
 
-postgresql
 postgresql-server-dev-10
 pspg
 
