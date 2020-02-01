@@ -201,6 +201,8 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 " Set up fzf instead of Ctrl-P
 " fzf and fzf.vim
 
-source ~/.vimrc.local
+if filereadable(expand("~/.vimrc.local")) 
+    source ~/.vimrc.local
+endif
 
 " vi: ft=vim
