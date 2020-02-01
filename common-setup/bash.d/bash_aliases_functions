@@ -6,8 +6,9 @@ fi
 
 t_debug "Reading aliases and functions"
 
+# @returns 0 if running on mac, 1 if not 
 function is_mac() {
-  cmd=`which uname`
+  local cmd=`which uname`
   if [ -z $cmd ];then
     return 1
   else
@@ -18,6 +19,23 @@ function is_mac() {
         is_mac(){ return 1; };
     fi
   fi
+}
+
+# Check if running Windows Subsystem for Linux
+# @returns 0 if running WSL, 1 if not
+function is_wsl() {
+    local cmd=`which uname`
+    # no point in checking further if uname is not present
+    if [ -z $cmd ];then
+        return 1
+    else
+        # dynamically redefines the function definition to avoid recomputing 
+        if uname -v | grep Microsoft 1>/dev/null; then
+            is_wsl(){ return 0; };
+        else 
+            is_wsl(){ return 1; };
+        fi
+    fi
 }
 
 # Maskinalias

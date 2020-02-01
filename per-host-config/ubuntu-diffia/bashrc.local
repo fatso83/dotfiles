@@ -61,6 +61,14 @@ function decrypt(){
 t_debug "Setup 'fuck' 🥳 "
 eval "$(thefuck --alias)"
 
+if is_wsl; then
+    t_debug "Custom setup for WSL Ubuntu"
+    
+    WINHOME=/mnt/c/Users/carl-
+    alias win-powershell='/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe'
+    alias win-home="cd $WINHOME"
+fi
+
 # For Remote Mob programming on Nimble where develop is the base branch, not master
 # https://github.com/remotemobprogramming/mob/blob/master/mob.go
 export MOB_BASE_BRANCH=develop
