@@ -50,16 +50,11 @@ fi
 blue "Installing local apps ..."
 sudo apt-get install -y --no-install-recommends $(strip-comments apps.local)
 
-
 # https://github.com/pypa/pip/issues/5240
-# upgrade PIP
-# pip install --upgrade pip
-blue "Installing pip\n"
-if ! which pip > /dev/null; then
-    curl https://bootstrap.pypa.io/get-pip.py | python3
-    $SCRIPT_DIR/setup.sh  # restart this script
-    exit $?
-fi
+blue "Upgrading pip\n"
+alias pip="python3 -m pip"  # to avoid warning about script wrapper and old python
+shopt -s expand_aliases     # to use the alias
+pip install --upgrade --user pip
 
 blue "Installing python packages ...\n"
 pip install -r python.local 
@@ -75,7 +70,7 @@ done < ruby.local
 
 
 if ! which n >> /dev/null; then
-    # upgrade Node
+    blue "Upgrade Node using n"
     npm install -g n
     n stable
 fi

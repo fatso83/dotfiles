@@ -42,7 +42,9 @@ postgresql-server-dev-10
 pspg
 
 # https://github.com/pypa/pip/issues/5240
-# python-pip
+# We will upgrade this using --user and then invoke using 
+# `python -m pip` through aliases
+python-pip
 
 # not found in 18.04
 # python-gpgme 
