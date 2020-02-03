@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # exit on errors
 set -e
@@ -17,21 +17,29 @@ if ! which brew > /dev/null; then
 fi
 
 # CMake
-if ! which cmake > /dev/null; then
+if ! which -s cmake; then
     brew install cmake
-    echo "CMake was not installed earlier. Try rerunning the main setup to make sure everything is working"
+    echo "CMake was not installed earlier. Re-start the top level setup"
+    exit 1
 fi
 
 blue "Installing local apps using Homebrew"
+function formula_installed() {
+    brew ls --versions $1 > /dev/null
+}
 
-brew cask install java
-
-while read line; do 
-    brew install $line
+while read FORMULA; do 
+    if ! formula_installed $FORMULA; then
+        brew install $FORMULA
+    fi
 done < apps.local 
 
+if ! which -s java; then
+    brew cask install java
+fi
+
 # Node Version Manager
-if ! which n > /dev/null; then
+if ! which -s n; then
     npm install -g n
     n latest
 fi
