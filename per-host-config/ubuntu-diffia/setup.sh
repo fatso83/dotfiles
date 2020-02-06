@@ -5,6 +5,7 @@ pushd "$SCRIPT_DIR" > /dev/null
 
 # exit on errors
 set -e 
+shopt -s expand_aliases     # to use the alias
 
 # Get some color codes
 source ../../common-setup/bash.d/colors
@@ -53,7 +54,6 @@ sudo apt-get install -y --no-install-recommends $(strip-comments apps.local)
 # https://github.com/pypa/pip/issues/5240
 blue "Upgrading pip\n"
 alias pip="python3 -m pip"  # to avoid warning about script wrapper and old python
-shopt -s expand_aliases     # to use the alias
 pip install --upgrade --user pip
 
 blue "Installing python packages ...\n"
@@ -114,7 +114,7 @@ if ! which hub > /dev/null; then
     echo -e $(blue "Installing Github's Hub...")
     VERSION="2.11.2"
     BASENAME="hub-linux-amd64-$VERSION"
-    wget "https://github.com/github/hub/releases/download/v${VERSION}/${BASENAME}.tgz"
+    wget --quiet "https://github.com/github/hub/releases/download/v${VERSION}/${BASENAME}.tgz"
     tar xvzf "$BASENAME.tgz"
     cd "$BASENAME"
     sudo ./install
@@ -129,7 +129,7 @@ if ! which git-lfs > /dev/null; then
     NAME="git-lfs"
     OS="linux-amd64"
     BASENAME="${NAME}-${OS}-$VERSION"
-    wget "https://github.com/git-lfs/git-lfs/releases/download/v${VERSION}/${BASENAME}.tar.gz"
+    wget --quiet "https://github.com/git-lfs/git-lfs/releases/download/v${VERSION}/${BASENAME}.tar.gz"
     tar xvzf "$BASENAME.tar.gz"
     cd "${NAME}-${VERSION}"
     sudo ./install.sh
@@ -149,14 +149,11 @@ fi
 
 if ! sh -c "java --version  | grep 'openjdk 12' > /dev/null"; then
     blue "Installing Java\n"
-    sdk install java 12.0.0-open
+    sdk install java 12.0.2-open
 fi
 
 blue "Install QR copier\n"
 go get github.com/claudiodangelis/qr-filetransfer
-
-blue "Customizing desktop applications\n"
-./desktop/setup.sh
 
 blue "Use PowerTOP suggestions for saving power\n"
 sudo cp powertop.service /etc/systemd/system/
@@ -176,6 +173,18 @@ if ! is_wsl; then
     for pkg in $snaps; do
         sudo snap install $pkg --classic
     done
+
+    blue "Customizing desktop applications\n"
+    ./desktop/setup.sh
+else
+    blue "Setting up win32yank as pbpaste"
+    if ! which win32yank.exe > /dev/null; then
+        echo "Downloading win32yank"
+        wget --quiet https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip
+        unzip win32yank-x64.zip -d tmp
+        mv tmp/win32yank.exe ~/bin/
+        chmod +x ~/bin/win32yank.exe
+    fi
 fi
 
 

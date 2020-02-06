@@ -68,6 +68,8 @@ if is_wsl; then
     WINHOME=/mnt/c/Users/carl-
     alias win-powershell='/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe'
     alias win-home="cd $WINHOME"
+    alias pbcopy="clip.exe"
+    alias pbpaste="win32yank.exe -o"
 fi
 
 # For Remote Mob programming on Nimble where develop is the base branch, not master
