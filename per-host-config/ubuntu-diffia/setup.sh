@@ -80,16 +80,6 @@ if ! which yarn >> /dev/null; then
     curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
 fi
 
-blue "Installing snaps ...\n" # universal linux packages
-installed=$(mktemp)
-snap list 2>/dev/null |  awk '{if (NR>1){print $1}}' > $installed
-
-#filters out patterns that are present in the other file, see https://stackoverflow.com/questions/4780203/deleting-lines-from-one-file-which-are-in-another-file
-snaps=$(grep -v -f $installed snaps.local || true) 
-for pkg in $snaps; do
-    sudo snap install $pkg --classic
-done
-
 blue "Installing Node packages ...\n"
 if which pick_json > /dev/null; then
     installed=$(mktemp)
@@ -147,11 +137,14 @@ if ! which git-lfs > /dev/null; then
     rimraf "${BASENAME}"*
 fi
 
-# Get SDKMAN
 export SDKMAN_DIR="/home/carlerik/.sdkman"
 [[ -s "/home/carlerik/.sdkman/bin/sdkman-init.sh" ]] && source "/home/carlerik/.sdkman/bin/sdkman-init.sh"
 if ! type sdk > /dev/null 2> /dev/null; then # if the `sdk` function doesn't exist
+    blue "Installing SDKMAN\n"
     curl -s "https://get.sdkman.io" | bash # installs SDKMAN
+
+    # make sdk available in the current shell
+    source "$HOME/.sdkman/bin/sdkman-init.sh"
 fi
 
 if ! sh -c "java --version  | grep 'openjdk 12' > /dev/null"; then
@@ -172,6 +165,19 @@ if ! service powertop status > /dev/null 2>&1; then
     sudo systemctl daemon-reload
     sudo systemctl enable powertop.service
 fi
+
+if ! is_wsl; then
+    blue "Installing snaps ...\n" # universal linux packages
+    installed=$(mktemp)
+    snap list 2>/dev/null |  awk '{if (NR>1){print $1}}' > $installed
+
+    #filters out patterns that are present in the other file, see https://stackoverflow.com/questions/4780203/deleting-lines-from-one-file-which-are-in-another-file
+    snaps=$(grep -v -f $installed snaps.local || true) 
+    for pkg in $snaps; do
+        sudo snap install $pkg --classic
+    done
+fi
+
 
 # Installing zplug
 #curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
