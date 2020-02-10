@@ -26,8 +26,8 @@ fi
 ln -sf "$SCRIPT_DIR/scripts/"* $HOME/bin/
 
 # Dependencies for scripts
-pip3 install smsutil
-pip3 install requests 
+python3 -m pip install smsutil
+python3 -m pip install requests 
 
 # Restore current directory of user
 popd > /dev/null
