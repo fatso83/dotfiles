@@ -1,0 +1,1 @@
+git fsck --full --no-reflogs --unreachable --lost-found | grep blob | cut -d\  -f3 | while read in; do printf "blob: $in\n"; git cat-file -p $in; printf "\n--------------------------------\n"; done > recover.txt
