@@ -1,10 +1,10 @@
 # To debug how long init takes, run "DEBUG=1 source-rc"
 function debug() {
-        [[ x == ${DEBUG+x} ]] && echo $@ >&2
+        if [[ x == ${DEBUG+x} ]]; then echo $@ >&2; fi
 }
 
 function t_debug() {
-        [[ x == ${DEBUG+x} ]] && echo [$(timer_now)] $@ >&2
+        if [[ x == ${DEBUG+x} ]]; then echo [$(timer_now)] $@ >&2; fi
 }
 function timer_start(){
     __timer=$(millis)

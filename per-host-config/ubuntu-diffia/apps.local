@@ -39,7 +39,6 @@ powertop
 powershell-preview
 
 postgresql-server-dev-10
-pspg
 
 # https://github.com/pypa/pip/issues/5240
 # We will upgrade this using --user and then invoke using 

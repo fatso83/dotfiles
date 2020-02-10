@@ -5,7 +5,11 @@ pushd "$SCRIPT_DIR" > /dev/null
 
 # exit on errors
 set -e 
+set -x
 shopt -s expand_aliases     # to use the alias
+
+# Get common aliases (if new shell)
+source ../../common-setup/bash.d/bash_aliases_functions
 
 # Get some color codes
 source ../../common-setup/bash.d/colors
@@ -177,23 +181,36 @@ if ! is_wsl; then
     blue "Customizing desktop applications\n"
     ./desktop/setup.sh
 else
-    blue "Setting up win32yank as pbpaste"
+    blue "Setting up win32yank as pbpaste\n"
     if ! which win32yank.exe > /dev/null; then
         echo "Downloading win32yank"
         wget --quiet https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip
         unzip win32yank-x64.zip -d tmp
         mv tmp/win32yank.exe ~/bin/
         chmod +x ~/bin/win32yank.exe
+        rm -r tmp
     fi
 fi
 
+if ! which pspg > /dev/null; then
+    blue "Compiling pspg: Postgres Pager\n"
+    apt install lib32ncursesw5-dev
+    PSPGTMP=$(mktemp -d)
+    pushd $PSPGTMP
+    git clone https://github.com/okbob/pspg
+    cd pspg
+    ./configure --with-ncursesw
+    make -j 12
+    make install
+    popd
+fi
 
 # Installing zplug
 #curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
 
 # Use rc.local for small tweaks
-sudo systemctl start rc-local.service
 sudo cp rc.local /etc/
+sudo systemctl start rc-local.service
 
 # restore current directory
 popd > /dev/null
