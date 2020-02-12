@@ -5,7 +5,6 @@ pushd "$SCRIPT_DIR" > /dev/null
 
 # exit on errors
 set -e 
-set -x
 shopt -s expand_aliases     # to use the alias
 
 # Get common aliases (if new shell)
