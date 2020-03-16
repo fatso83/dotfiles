@@ -1,11 +1,15 @@
 #!/bin/sh
 
 # Get the procs sorted by the number of inotify watchers
-#
+# @author Carl-Erik Kopseng
+# @latest https://github.com/fatso83/dotfiles/blob/master/utils/scripts/inotify-consumers
+# Discussion leading up to answer: https://unix.stackexchange.com/questions/15509/whos-consuming-my-inotify-resources
+
 # From `man find`: 
 #    %h     Leading directories of file's name (all but the last element).  If the file name contains no slashes  (since  it
 #           is in the current directory) the %h specifier expands to `.'.
 #    %f     File's name with any leading directories removed (only the last element).
+#
 lines=$(
     find /proc/*/fd \
     -lname anon_inode:inotify \
