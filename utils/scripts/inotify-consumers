@@ -29,12 +29,12 @@ sudo sysctl -p # re-read config
 EOF
 }
 
-if [ $1 = '--limits' -o $1 = '-l' ]; then
+if [ "$1" = "--limits" -o "$1" = "-l" ]; then
     limits
     exit 0
 fi
 
-if [ $1 = '--help' -o $1 = '-h' ]; then
+if [ "$1" = "--help" -o "$1" = "-h" ]; then
     usage 
     exit 0
 fi
@@ -46,25 +46,27 @@ if [ -n "$1" ]; then
 fi
 
 
-# From `man find`: 
-#    %h     Leading directories of file's name (all but the last element).  If the file name contains no slashes  (since  it
-#           is in the current directory) the %h specifier expands to `.'.
-#    %f     File's name with any leading directories removed (only the last element).
-#
-lines=$(
+generateRawData(){
+    # From `man find`: 
+    #    %h     Leading directories of file's name (all but the last element).  If the file name contains no slashes  (since  it
+    #           is in the current directory) the %h specifier expands to `.'.
+    #    %f     File's name with any leading directories removed (only the last element).
+    #
     find /proc/*/fd \
     -lname anon_inode:inotify \
     -printf '%hinfo/%f\n' 2>/dev/null \
     \
     | xargs grep -c '^inotify'  \
-    | sort -n -t: -k2 -r \
-    )
+    | sort -n -t: -k2 -r 
+}
 
 printf "\n%10s\n" "INOTIFY"
 printf "%10s\n" "WATCHER"
 printf "%10s  %5s     %s\n" " COUNT " "PID" "CMD"
 printf -- "----------------------------------------\n"
-for line in $lines; do
+
+IFS=''; # to avoid `read` from interpreting whitespace and keep whole lines
+generateRawData | while read line; do
     watcher_count=$(echo $line | sed -e 's/.*://')
     pid=$(echo $line | sed -e 's/\/proc\/\([0-9]*\)\/.*/\1/')
     cmdline=$(ps --columns 120 -o command -h -p $pid) 
