@@ -135,6 +135,12 @@ alias socks_proxy_all='ssh -v -D :22222 carl-erik@timbuktu.kopseng.no -N'
 # Used with the git alias functions; gd, gds, gdw, gdws
 alias strip-diff-prefix='sed "s/^\([^-+ ]*\)[-+ ]/\\1/"' 
 
+# Used a lot in utility setup scripts
+function strip-comments(){
+    #grep -v '^#' $@
+    sed -e 's/#.*//' $@
+}
+
 # For stack overflow pasting
 alias stack-overflow-no-copy='sed -e "s/diffia/ACME/gi" -e "s/$USER/myuser/gi" -e "s/nimble/nicecorp/gi" | indent4 '
 alias stack-overflow='stack-overflow-no-copy | pbcopy; pbpaste; echo -e "\n\nCopied to pastebuffer (use stack-overflow-no-copy to avoid this)!"'

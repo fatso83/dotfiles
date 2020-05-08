@@ -1,33 +1,32 @@
 apt-transport-https 
-
 ca-certificates
-
+ca-certificates 
 cmake
 conky
 cowsay
+cronic
 curl
 dunst
 exiv2
+fail2ban
 feh
 fortune
 freerdp2-x11
 g++
 gcc
-#gnome-gmail
-
 git-extras 
-
 gnome-panel
 golang-go
 google-chrome-stable
 htop
 i3
 jotta-cli
+libsasl2-2 
+libsasl2-modules
 lzop
+mailutils 
 make
-
 maven 
-
 mono-devel
 mono-xbuild
 mono-xsp4
@@ -35,19 +34,10 @@ neovim
 npm
 packer
 peek
-powertop
-powershell-preview
-
 postgresql-server-dev-10
-
-# https://github.com/pypa/pip/issues/5240
-# We will upgrade this using --user and then invoke using 
-# `python -m pip` through aliases
-python-pip
-
-# not found in 18.04
-# python-gpgme 
-
+powershell-preview
+powertop
+python-pip # https://github.com/pypa/pip/issues/5240 We will upgrade this using --user and then invoke using # `python -m pip` through aliases
 ruby
 ruby-dev
 rxvt-unicode
@@ -56,10 +46,10 @@ synapse
 thunar
 tmux
 tree
-zip
 unzip
 uuid
 wget
 xclip 
 xdotool 
+zip
 zsh

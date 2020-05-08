@@ -3,19 +3,14 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd "$SCRIPT_DIR" > /dev/null
 
-# exit on errors
-set -e 
-shopt -s expand_aliases     # to use the alias
+set -e                      # exit on errors
+shopt -s expand_aliases     # to use alias definitions
 
 # Get common aliases (if new shell)
 source ../../common-setup/bash.d/bash_aliases_functions
 
 # Get some color codes
 source ../../common-setup/bash.d/colors
-
-function strip-comments(){
-    grep -v '^#' $@
-}
 
 # make /usr/local owned by me
 sudo chown -R $(whoami) /usr/local
