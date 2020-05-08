@@ -20,3 +20,21 @@ tunnels:
     proto: tls
     addr: 3001
     subdomain: nimble-ce-s
+    
+  ptflow-api:
+    proto: http
+    addr: 8000
+    subdomain: ptflow-api
+    host-header: example.com
+    
+  ptflow-admin:
+    proto: http
+    addr: 8000
+    subdomain: ptflow-admin
+    host-header: admin.example.com
+    
+  ptflow-web:
+    proto: http
+    addr: 8000
+    subdomain: ptflow-web
+    host-header: web.example.com
