@@ -95,7 +95,7 @@ cat > "$NGROK_YML" << EOF
 ###############################################################
 ## WARNING: this file is auto-generated. See dotfiles repo   ##
 ###############################################################
-authtoken: ${NGROK_AUTHTOKEN:-'fill-NGROK_AUTHTOKEN-in-in-~/secret'} 
+authtoken: ${NGROK_AUTHTOKEN:-'fill-NGROK_AUTHTOKEN-in-in-~/.secret'} 
 
 EOF
 cat $SCRIPT_DIR/ngrok.yml >> "$NGROK_YML"
