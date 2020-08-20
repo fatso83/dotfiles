@@ -69,6 +69,6 @@ IFS=''; # to avoid `read` from interpreting whitespace and keep whole lines
 generateRawData | while read line; do
     watcher_count=$(echo $line | sed -e 's/.*://')
     pid=$(echo $line | sed -e 's/\/proc\/\([0-9]*\)\/.*/\1/')
-    cmdline=$(ps --columns 120 -o command -h -p $pid) 
+    cmdline=$(ps --columns 120 -o command --no-headers -p $pid) 
     printf "%8d  %7d  %s\n" "$watcher_count" "$pid" "$cmdline"
 done
