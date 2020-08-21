@@ -79,7 +79,7 @@ fi
 export MOB_BASE_BRANCH=develop
 
 export GOPATH=$HOME/go
-export PATH="$HOME/.local/bin;$HOME/bin/Telegram:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="$GOPATH/bin:$HOME/.local/bin:$HOME/bin/Telegram:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/carlerik/.sdkman"
