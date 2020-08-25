@@ -3,6 +3,8 @@
 BASH_DIR="${HOME}/.bash.d"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+set -e #exit on error
+
 # read local environment variables, like auth tokens
 if [ -e "${HOME}/.secret" ]; then
   source "${HOME}/.secret"
@@ -22,6 +24,12 @@ fi
 
 rm -r "$HOME"/.bash_completion.d
 ln -s "$SCRIPT_DIR"/bash_completion.d "$HOME"/.bash_completion.d 
+
+if [ -e "$HOME/.bash_profile" ]; then
+    echo "We don't use .bash_profile to avoid trouble. Renaming to .bash_profile.bak"
+    mv ~/.bash_profile{,.bak}
+fi
+
 
 ln -sf "$SCRIPT_DIR"/profile "$HOME"/.profile
 ln -sf "$SCRIPT_DIR"/bashrc "$HOME"/.bashrc
