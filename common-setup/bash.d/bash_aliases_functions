@@ -31,7 +31,7 @@ function is_wsl() {
         return 1
     else
         # dynamically redefines the function definition to avoid recomputing 
-        if uname -v | grep Microsoft 1>/dev/null; then
+        if uname -a | grep microsoft 1>/dev/null; then
             is_wsl(){ return 0; };
         else 
             is_wsl(){ return 1; };
