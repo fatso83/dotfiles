@@ -147,7 +147,7 @@ fi
 
 if ! sh -c "java --version  | grep 'openjdk 12' > /dev/null"; then
     blue "Installing Java\n"
-    sdk install java 12.0.2-open
+    sdk install java 14.0.2-open
 fi
 
 blue "Install QR copier\n"
