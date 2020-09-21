@@ -71,7 +71,9 @@ generateRawData | { while read line; do
     watcher_count=$(echo $line | sed -e 's/.*://')
     total_watchers=$((total_watchers+watcher_count))
     pid=$(echo $line | sed -e 's/\/proc\/\([0-9]*\)\/.*/\1/')
-    cmdline=$(ps --columns 120 -o command --no-headers -p $pid) 
+    if [ $pid -gt 0 ]; then
+        cmdline=$(ps --columns 120 -o command --no-headers -p $pid) 
+    fi
     printf "%8d  %7d  %s\n" "$watcher_count" "$pid" "$cmdline"
 done
 printf "\n%8d     %s\n" "$total_watchers" "WATCHERS TOTAL COUNT"
