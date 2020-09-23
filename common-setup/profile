@@ -5,9 +5,15 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
+export VISUAL='vim'
+export EDITOR='vim'
+export PYTHONSTARTUP="$HOME/.pystartup"
+export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss,SSS \
+                   -Dorg.slf4j.simpleLogger.showDateTime=true" 
+
 # Ruby/RVM stuff
 #export PATH="$PATH:$HOME/.rvm/bin" 
-#[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+#[ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 if [ "$0" = "/usr/sbin/lightdm-session" -a "$DESKTOP_SESSION" = "i3" ]; then
     export $(gnome-keyring-daemon --start --components=ssh)

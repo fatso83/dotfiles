@@ -124,18 +124,7 @@ PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 # https://stackoverflow.com/questions/32418438/how-can-i-disable-bash-sessions-in-os-x-el-capitan
 SHELL_SESSION_HISTORY=0
 
-export PYTHONSTARTUP="$HOME/.pystartup"
-export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss,SSS \
-                   -Dorg.slf4j.simpleLogger.showDateTime=true" 
 export HISTCONTROL=ignoredups
-
-export VISUAL='vim'
-export EDITOR='vim'
-
-if [ -d ~/scripts ] ; then
-    echo $(dark_yellow "Deprecated! Try to avoid ~/scripts in favor of ~/bin")
-	PATH=~/scripts:"$PATH"
-fi
 
 # Z utility :-)
 read_config_if_exists "$HOME/.zplug/repos/rupa/z/z.sh"
@@ -143,12 +132,6 @@ read_config_if_exists "$HOME/.zplug/repos/rupa/z/z.sh"
 t_debug "Reading local settings for this machine"
 # This needs to be at the bottom to be able to override earlier settings/variables/functions
 read_config_if_exists "$HOME/.bashrc.local"
-
-if [ -a "$HOME/.bulksms.auth" ]; then
-    . "$HOME/.bulksms.auth"
-    export BULKSMS_ID 
-    export BULKSMS_SECRET
-fi
 
 t_debug Finished bash setup
 
