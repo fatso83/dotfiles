@@ -151,6 +151,12 @@ if ! sh -c "java --version  | grep 'openjdk $JAVA_VERSION' > /dev/null"; then
     sdk install java $JAVA_VERSION-open
     sdk default java $JAVA_VERSION-open
 fi
+MAVEN_VERSION=3.6.3
+if ! sh -c "mvn --version  | grep '$MAVEN_VERSION' > /dev/null"; then
+    blue "Installing Maven"
+    sdk install mvn $MAVEN_VERSION
+    sdk default mvn $MAVEN_VERSION
+fi
 
 blue "Install QR copier\n"
 go get github.com/claudiodangelis/qr-filetransfer
