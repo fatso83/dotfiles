@@ -149,7 +149,7 @@ JAVA_VERSION=14.0.2
 if ! sh -c "java --version  | grep 'openjdk $JAVA_VERSION' > /dev/null"; then
     blue "Installing Java\n"
     sdk install java $JAVA_VERSION-open
-    sdk use java $JAVA_VERSION-open
+    sdk default java $JAVA_VERSION-open
 fi
 
 blue "Install QR copier\n"
