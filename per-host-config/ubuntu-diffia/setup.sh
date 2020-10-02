@@ -145,9 +145,11 @@ if ! type sdk > /dev/null 2> /dev/null; then # if the `sdk` function doesn't exi
     source "$HOME/.sdkman/bin/sdkman-init.sh"
 fi
 
-if ! sh -c "java --version  | grep 'openjdk 12' > /dev/null"; then
+JAVA_VERSION=14.0.2
+if ! sh -c "java --version  | grep 'openjdk $JAVA_VERSION' > /dev/null"; then
     blue "Installing Java\n"
-    sdk install java 14.0.2-open
+    sdk install java $JAVA_VERSION-open
+    sdk use java $JAVA_VERSION-open
 fi
 
 blue "Install QR copier\n"
