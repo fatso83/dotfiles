@@ -37,7 +37,7 @@ peek
 postgresql-server-dev-10
 powershell-preview
 powertop
-python-pip # https://github.com/pypa/pip/issues/5240 We will upgrade this using --user and then invoke using # `python -m pip` through aliases
+python3-pip # https://github.com/pypa/pip/issues/5240 We will upgrade this using --user and then invoke using # `python -m pip` through aliases
 ruby
 ruby-dev
 rxvt-unicode

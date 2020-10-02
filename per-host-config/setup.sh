@@ -16,6 +16,10 @@ if [[ ! -e $MACHINE_NAME_FILE ]]; then
     exit 1
 fi
 
+# Handle rename
+rm -r ubuntu-diffia || :
+ln -s $PWD/ubuntu ubuntu-diffia
+
 MACHINE=$(cat "$MACHINE_NAME_FILE")
 
 if [[ -e "$MACHINE" ]]; then 
