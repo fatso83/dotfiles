@@ -154,8 +154,8 @@ fi
 MAVEN_VERSION=3.6.3
 if ! sh -c "mvn --version  | grep '$MAVEN_VERSION' > /dev/null"; then
     blue "Installing Maven"
-    sdk install mvn $MAVEN_VERSION
-    sdk default mvn $MAVEN_VERSION
+    sdk install maven $MAVEN_VERSION
+    sdk default maven $MAVEN_VERSION
 fi
 
 blue "Install QR copier\n"
