@@ -12,6 +12,8 @@ done
 
 blue "Removing (almost) all Gnome key bindings ...\n" # crashes with IntelliJ products
 ../../../utils/scripts/gnome-key-bindings --unset-all --except 'close|switch-applications|switch-input-source|show-desktop|maximize'
+gnome-key-bindings --set=switch-applications '<Alt>Tab'
+gnome-key-bindings --set=switch-applications-backward '<Alt><Shift>Tab'
 
 blue "Pointing Flameshot config to dotfiles folder\n"
 # hack to get around the fact that a new file is created on Save, preventing hard links
