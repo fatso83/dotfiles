@@ -27,3 +27,6 @@ export PATH="$HOME/go/bin:$HOME/.go/bin:$PATH"
 
 # Node stuff
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# Symfony
+export PATH="$HOME/.symfony/bin:$PATH"
