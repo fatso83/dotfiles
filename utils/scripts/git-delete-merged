@@ -72,7 +72,7 @@ filter-branches(){
                       -e 's/([a-zA-Z0-9_-]+)/^\1$/g' 
         )" | # sub-shell end 
         egrep "$match" | # just keep lines matching $match - if unset, it matches all
-        paste -s # actually not totally sure about why this is here anymore ...
+        paste -s - # actually not totally sure about why this is here anymore ...
 }
 
 main(){
@@ -164,7 +164,7 @@ if [[ -n $local && -n $remote ]]; then
 fi
 
 if [[ ! -n $local && ! -n $remote ]]; then
-    /bin/echo -e "\n ERROR: Need to specify either remote or local option!\n"
+    printf "\n ERROR: Need to specify either remote or local option!\n"
     usage
 fi
 
