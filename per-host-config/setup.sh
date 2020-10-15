@@ -26,6 +26,7 @@ if [[ -e "$MACHINE" ]]; then
     echo -e $(blue "Setting up local settings for this machine")
     cd $MACHINE
     ln -sf `pwd`/bashrc.local "$HOME/.bashrc.local"
+    ln -sf `pwd`/profile.local "$HOME/.profile.local"
     ln -sf `pwd`/gitlocal "$HOME/.gitlocal"
     ln -sf `pwd`/vimrc.local "$HOME/.vimrc.local"
     [[ -e ./setup.sh ]] && ./setup.sh

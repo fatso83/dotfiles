@@ -23,10 +23,15 @@ fi
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # Add Go stuff
-export PATH="$HOME/go/bin:$HOME/.go/bin:$PATH"
+export GOPATH=$HOME/go
+export PATH="$GOPATH/bin:$HOME/.go/bin:$PATH"
 
 # Node stuff
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 # Symfony
 export PATH="$HOME/.symfony/bin:$PATH"
+
+if [ -f "$HOME/.profile.local" ]; then
+    . "$HOME/.profile.local"
+fi

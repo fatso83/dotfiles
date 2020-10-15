@@ -1,0 +1,9 @@
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
+# OpenJDK macOS Homebrew
+export PATH="/usr/local/opt/openjdk/bin:$PATH" 
+
+PATH="/usr/local/opt/postgresql@10/bin:$PATH"
+PATH="/usr/local/opt/php@7.2/sbin:$PATH"
+export PATH
+
