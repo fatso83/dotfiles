@@ -1,14 +1,18 @@
 #!/bin/bash
-## Utility to build a set of command line to download 
-## a script of mine
-##
+## Make a recipe on how to use one of my scripts
 ## @script.name [-h ] [--commit <commit>] <SCRIPT>
 ##
 ## Options
 ##      --commit=SHA1       The commit id you are interested in (usually HEAD)
 ##
 ## Example usage:
-## $ build-cmdline-external.sh gnome-key-bindings | pbcopy | indent4
+## $ build-cmdline-external.sh gnome-key-bindings 
+## curl -s https://raw.githubusercontent.com/fatso83/dotfiles/master/utils/scripts/gnome-key-bindings -o gnome-key-bindings
+## curl -s https://raw.githubusercontent.com/fatso83/dotfiles/master/utils/scripts/easyoptions.sh -o easyoptions.sh
+## curl -s https://raw.githubusercontent.com/fatso83/dotfiles/master/utils/scripts/easyoptions.rb -o easyoptions.rb
+## chmod +x ./gnome-key-bindings
+## sudo mv ./gnome-key-bindings easyoptions.* /usr/local/bin/
+
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$SCRIPT_DIR/easyoptions.sh"
@@ -21,7 +25,7 @@ if [[ -n $commit ]]; then
 fi
 
 if [[ ${#arguments[*]} == 0 ]]; then
-    /bin/echo -e "\nSupply a script name - none given\n"
+    printf "\nERROR: Supply a script name \n\n"
     $0 --help
     exit 1
 fi
