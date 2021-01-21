@@ -1,9 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
 # Get the procs sorted by the number of inotify watchers
 # @author Carl-Erik Kopseng
 # @latest https://github.com/fatso83/dotfiles/blob/master/utils/scripts/inotify-consumers
 # Discussion leading up to answer: https://unix.stackexchange.com/questions/15509/whos-consuming-my-inotify-resources
+# Speed enhancements by Simon Matter <simon.matter@invoca.ch>
 
 usage(){
     cat << EOF
@@ -16,9 +17,9 @@ EOF
 
 limits(){
     echo "\nCurrent limits\n-------------"
-    sysctl fs.inotify.max_user_instances  fs.inotify.max_user_watches
+    sysctl fs.inotify.max_user_instances fs.inotify.max_user_watches
 
-    cat <<- EOF 
+    cat <<- EOF
 
 
 Changing settings permanently
@@ -40,41 +41,46 @@ if [ "$1" = "--help" -o "$1" = "-h" ]; then
 fi
 
 if [ -n "$1" ]; then
-    echo "\nUnknown parameter '$1'\n" > /dev/stderr
+    echo "\nUnknown parameter '$1'\n" >&2
     usage
     exit 1
 fi
 
 
-generateRawData(){
-    # From `man find`: 
-    #    %h     Leading directories of file's name (all but the last element).  If the file name contains no slashes  (since  it
-    #           is in the current directory) the %h specifier expands to `.'.
-    #    %f     File's name with any leading directories removed (only the last element).
-    #
-    find /proc/*/fd \
-    -lname anon_inode:inotify \
-    -printf '%hinfo/%f\n' 2>/dev/null \
-    \
-    | xargs grep -c '^inotify'  \
-    | sort -n -t: -k2 -r 
+generateData(){
+    local -i PROC
+    local -i PID
+    local -i CNT
+    local -i TOT
+    # read process list into cache
+    local PSLIST="$(ps ax -o pid,user,command --columns $(( COLS - WLEN )))"
+    IFS=","
+    find /proc/*/fd -lname anon_inode:inotify 2> /dev/null |
+        cut -d "/" -f 3 |                # get list of processes
+        uniq |
+        {
+            while read -rs PROC; do      # count watchers of processes found
+                echo "${PROC},$(grep -c "^inotify" < <(cat /proc/${PROC}/fdinfo/* 2> /dev/null))"
+            done
+        } |
+        grep -v ",0$" |                  # remove entires without watchers
+        sort -n -t "," -k 2 -r |         # sort to begin with highest numbers
+        {                                # group commands so that $TOT is visible in the printf
+            while read -rs PID CNT; do   # show watchers and corresponding process info
+                printf "%$(( WLEN - 2 ))d  %s\n" "$CNT" "$(grep -e "^\ *${PID}\ " <<< "$PSLIST")"
+                TOT=$(( TOT + CNT ))
+            done
+            printf "\n%$(( WLEN - 2 ))d  %s\n" "$TOT" "WATCHERS TOTAL COUNT"
+        }
 }
 
-printf "\n%10s\n" "INOTIFY"
-printf "%10s\n" "WATCHER"
-printf "%10s  %5s     %s\n" " COUNT " "PID" "CMD"
-printf -- "----------------------------------------\n"
 
-IFS=''; # to avoid `read` from interpreting whitespace and keep whole lines
-total_watchers=0
-generateRawData | { while read line; do
-    watcher_count=$(echo $line | sed -e 's/.*://')
-    total_watchers=$((total_watchers+watcher_count))
-    pid=$(echo $line | sed -e 's/\/proc\/\([0-9]*\)\/.*/\1/')
-    if [ $pid -gt 0 ]; then
-        cmdline=$(ps --columns 120 -o command --no-headers -p $pid) 
-    fi
-    printf "%8d  %7d  %s\n" "$watcher_count" "$pid" "$cmdline"
-done
-printf "\n%8d     %s\n" "$total_watchers" "WATCHERS TOTAL COUNT"
-}
+# get terminal width
+declare -i COLS=$(tput cols)
+declare -i WLEN=10
+
+printf "\n%${WLEN}s\n" "INOTIFY"
+printf "%${WLEN}s\n" "WATCHER"
+printf "%${WLEN}s    %s\n" " COUNT " "PID USER     COMMAND"
+printf -- "--------------------------------------\n"
+generateData
