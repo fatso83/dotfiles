@@ -1,5 +1,6 @@
 cmake
 cowsay
+direnv
 fortune
 git-extras
 htop
