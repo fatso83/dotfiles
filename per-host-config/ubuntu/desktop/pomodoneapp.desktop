@@ -1,8 +1,7 @@
 [Desktop Entry]
 Name=PomoDoneApp
 Comment=Pomodoro timer for your favourite productivity tool
-Exec=env XDG_CURRENT_DESKTOP=Unity /opt/PomoDoneApp/pomodoneapp %U
-#Exec=/opt/PomoDoneApp/pomodoneapp %U
+Exec=env LD_LIBRARY_PATH=/opt/PomoDoneApp/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH XDG_CURRENT_DESKTOP=Unity /opt/PomoDoneApp/pomodoneapp %U
 Terminal=false
 Type=Application
 Icon=pomodoneapp
