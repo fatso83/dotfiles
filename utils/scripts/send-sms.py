@@ -63,7 +63,7 @@ if not smsutil.is_valid_gsm(msg) and not parsed.unicode and not parsed.force_tex
     exit(1)
 
 
-numbers = ["+47" + p if len(p) is 8 else p for p in parsed.phone]
+numbers = ["+47" + p if len(p) == 8 else p for p in parsed.phone]
 from_nmbr = parsed.from_nmbr or "+4740065078"
 
 encoding = "TEXT" if not parsed.unicode else "UNICODE"
@@ -78,5 +78,5 @@ payload = {
 }
 
 r = requests.post(url, json=payload, auth=(sms_id, sms_secret), timeout=1)
-if r.status_code is not 201 or parsed.debug:
+if r.status_code != 201 or parsed.debug:
     print(r.text)
