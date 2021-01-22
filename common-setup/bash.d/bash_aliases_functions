@@ -193,16 +193,19 @@ alias glg='git lg'
 
 # View commits in GitHub 
 function gh-commit(){ 
-    [[ -n $2 ]] && open "https://github.com/$1/commit/$2" && return
-    echo "Usage: gh-commit fatso83/razor-cli-node 779490"
+    local repo=$(git remote  -v | head -1 | awk '{print $2}' | sed -e 's/.*github.com[:/]\(.*\)/\1/')
+    [[ -n $1 ]] && open "https://github.com/$repo/commit/$1" && return
+    echo "Usage: gh-commit 779490"
 }
 function gh-compare(){ 
-    [[ -n $3 ]] &&  open "https://github.com/$1/compare/$2...$3" \
-    || echo "Usage: gh-compare fatso83/razor-cli-node 779490 master"; 
+    local repo=$(git remote  -v | head -1 | awk '{print $2}' | sed -e 's/.*github.com[:/]\(.*\)/\1/')
+    [[ -n $2 ]] &&  open "https://github.com/$repo/compare/$1...$2" \
+    || echo "Usage: gh-compare 779490 master"; 
 }
 
 # Maven - fail as soon as a test fails
-alias mvn='mvn  -Dsurefire.skipAfterFailureCount=1'
+function mvn() { $(which mvn) -Dsurefire.skipAfterFailureCount=1 $EXTRA_MAVEN_OPTS $@; }
+
 #
 # Open JIRA issues: `nim 434` opens NIM-434 in the browser
 function nim() { xdg-open http://diffia.atlassian.net/browse/NIM-$1;  }
