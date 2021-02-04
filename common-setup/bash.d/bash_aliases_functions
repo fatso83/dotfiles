@@ -229,5 +229,9 @@ tmux-restore () {
     fi
 }
 
+# just use direnv's .envrc to define a path to a different npm, like pnpm
+function npm(){ if [[ -z "$NPMBIN" ]]; then command npm $@; else $NPMBIN $@; fi; }
+
+
 t_debug "global aliases and functions finished"
 
