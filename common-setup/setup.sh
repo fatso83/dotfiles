@@ -22,7 +22,7 @@ if [ ! -e "$HOME/bin" ]; then
   mkdir "${HOME}/bin"
 fi
 
-rm -r "$HOME"/.bash_completion.d
+rm -rf "$HOME"/.bash_completion.d 2>/dev/null
 ln -s "$SCRIPT_DIR"/bash_completion.d "$HOME"/.bash_completion.d 
 
 if [ -e "$HOME/.bash_profile" ]; then
@@ -90,10 +90,14 @@ ln -sf ~/.vim ~/.config/nvim
 ln -sf ~/.vimrc ~/.config/nvim/init.vim
 
 # Install a better matcher for Ctrl-P
-cd matcher
-make 
-make install PREFIX=$HOME
-cd ..
+if ! hash make 2>/dev/null; then 
+	printf "$(dark_red make is not installed. Rerun the setup after the per-machine setup completes)\n\n" 
+else
+	cd matcher
+	make 
+	make install PREFIX=$HOME
+	cd ..
+fi
 
 # Make a config file for ngrok, passing in the secret auth token
 [[ ! -e "$HOME"/.ngrok2 ]] && mkdir "$HOME/.ngrok2"

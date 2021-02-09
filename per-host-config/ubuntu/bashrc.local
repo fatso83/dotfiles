@@ -5,7 +5,9 @@ t_debug "Load personalized bashrc for Ubuntu dev machine"
 
 #source /usr/local/etc/autojump.bash
 
-source ~/.tlf # phone numbers
+if [ -e ~/.tlf ]; then
+    source ~/.tlf # phone numbers
+fi
 
 alias btsync_tunnel="timbuktu_lokal -L 8888:0.0.0.0:8888 -N"
 

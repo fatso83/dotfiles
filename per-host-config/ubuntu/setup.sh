@@ -161,15 +161,17 @@ fi
 blue "Install QR copier\n"
 go get github.com/claudiodangelis/qr-filetransfer
 
-blue "Use PowerTOP suggestions for saving power\n"
-sudo cp powertop.service /etc/systemd/system/
-# Enable the service, if first time
-if ! service powertop status > /dev/null 2>&1; then
-    sudo systemctl daemon-reload
-    sudo systemctl enable powertop.service
-fi
-
+# These bits do not make sense on WSL2 (Windows Subsyste for Linux)
 if ! is_wsl; then
+
+    blue "Use PowerTOP suggestions for saving power\n"
+    sudo cp powertop.service /etc/systemd/system/
+    # Enable the service, if first time
+    if ! service powertop status > /dev/null 2>&1; then
+        sudo systemctl daemon-reload
+        sudo systemctl enable powertop.service
+    fi
+
     blue "Installing snaps ...\n" # universal linux packages
     installed=$(mktemp)
     snap list 2>/dev/null |  awk '{if (NR>1){print $1}}' > $installed
@@ -182,7 +184,13 @@ if ! is_wsl; then
 
     blue "Customizing desktop applications\n"
     ./desktop/setup.sh
-else
+
+    # Use rc.local for small tweaks
+    sudo cp rc.local /etc/
+    sudo systemctl start rc-local.service
+fi
+
+if is_wsl; then
     blue "Setting up win32yank as pbpaste\n"
     if ! which win32yank.exe > /dev/null; then
         echo "Downloading win32yank"
@@ -209,10 +217,6 @@ fi
 
 # Installing zplug
 #curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
-
-# Use rc.local for small tweaks
-sudo cp rc.local /etc/
-sudo systemctl start rc-local.service
 
 # restore current directory
 popd > /dev/null
