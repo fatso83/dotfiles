@@ -127,7 +127,8 @@ SHELL_SESSION_HISTORY=0
 export HISTCONTROL=ignoredups
 
 # Z utility :-)
-read_config_if_exists "$HOME/.zplug/repos/rupa/z/z.sh"
+#read_config_if_exists "$HOME/.zplug/repos/rupa/z/z.sh"
+read_config_if_exists "$HOME/bin/z.sh"
 
 t_debug "Reading local settings for this machine"
 # This needs to be at the bottom to be able to override earlier settings/variables/functions

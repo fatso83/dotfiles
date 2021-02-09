@@ -1,9 +1,6 @@
 [submodule "common-setup/matcher"]
 	path = common-setup/matcher
 	url = https://github.com/burke/matcher
-[submodule "per-host-config/ubuntu-diffia/i3-config"]
-	path = per-host-config/ubuntu/i3-config
-	url = https://github.com/fatso83/i3-config.git
 [submodule "utils/signal-reset"]
 	path = utils/signal-reset
 	url = https://github.com/thomaslee/signal-reset

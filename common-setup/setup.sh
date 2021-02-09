@@ -90,19 +90,21 @@ ln -sf ~/.vim ~/.config/nvim
 ln -sf ~/.vimrc ~/.config/nvim/init.vim
 
 # Install a better matcher for Ctrl-P
-if ! hash make 2>/dev/null; then 
-	printf "$(dark_red make is not installed. Rerun the setup after the per-machine setup completes)\n\n" 
-else
-	cd matcher
-	make 
-	make install PREFIX=$HOME
-	cd ..
+if ! hash matcher; then 
+    if ! hash make 2>/dev/null; then 
+        printf "$(dark_red make is not installed. Rerun the setup after the per-machine setup completes)\n\n" 
+    else
+        (cd matcher
+        make 
+        make install PREFIX=$HOME
+        cd ..) > /dev/null
+    fi
 fi
 
 # Make a config file for ngrok, passing in the secret auth token
 [[ ! -e "$HOME"/.ngrok2 ]] && mkdir "$HOME/.ngrok2"
 NGROK_YML="$HOME/.ngrok2/ngrok.yml"
-rm "$NGROK_YML" 2> /dev/null;
+rm "$NGROK_YML" 2> /dev/null || :;
 cat > "$NGROK_YML" << EOF
 ###############################################################
 ## WARNING: this file is auto-generated. See dotfiles repo   ##
@@ -115,4 +117,9 @@ cat $SCRIPT_DIR/ngrok.yml >> "$NGROK_YML"
 # Postgres config
 ln -sf "$SCRIPT_DIR"/psqlrc $HOME/.psqlrc
 
+# Download to latest to home dir
+printf "$(blue "Fetching rupa/z (Jump Around)")\n"
+curl -s https://raw.githubusercontent.com/rupa/z/master/z.sh -o ~/bin/z.sh
+
+printf "$(blue "Finished common setup")\n\n"
 popd > /dev/null
