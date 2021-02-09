@@ -91,10 +91,16 @@ au BufRead,BufNewFile nginx.conf set ft=nginx
 
 
 " Auto-reload vimrc on changes
-autocmd! bufwritepost .vimrc source %
-autocmd! bufwritepost vimrc source %
+autocmd! bufwritepost .vimrc source % " in $HOME
+autocmd! bufwritepost vimrc source %  " the linked file in dotfiles
 autocmd! bufwritepost plugins-config source %
 autocmd! bufwritepost coc-config source %
+autocmd! bufwritepost ale-config source %
+autocmd! bufwritepost coc-config source %
+autocmd! bufwritepost coc-settings.json source %
+autocmd! bufwritepost ctrlp-config source %
+autocmd! bufwritepost plugins-config source %
+autocmd! bufwritepost ycm-config source %
 
 " Make vim work as a crontab editor: http://vim.wikia.com/wiki/Editing_crontab
 au BufEnter /private/tmp/crontab.* setl backupcopy=yes
