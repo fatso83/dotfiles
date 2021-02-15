@@ -24,6 +24,7 @@ i3
 jotta-cli
 libsasl2-2 
 libsasl2-modules
+libxml2-utils
 lzop
 mailutils 
 make
