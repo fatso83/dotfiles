@@ -6,6 +6,9 @@
 #
 # Depends on is_mac from the startup functions
 
+# marker that can be used to avoid re-import
+export XPLATFORM_UTILS=1
+
 # to make aliases expand in non-interactive sub-shells
 shopt -s expand_aliases
 
@@ -26,5 +29,4 @@ else
     alias util.esed='sed -E '
     alias util.size='stat -Lf %z -- '
 fi
-
 # vim: set ft=sh

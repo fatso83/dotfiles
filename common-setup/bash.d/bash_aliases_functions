@@ -4,6 +4,7 @@ if ! declare -p t_debug > /dev/null 2> /dev/null; then
     source ~/.bash.d/core_utils
 fi
 
+
 t_debug "Reading aliases and functions"
 
 # @returns 0 if running on mac, 1 if not 
@@ -39,6 +40,10 @@ function is_wsl() {
         is_wsl
     fi
 }
+
+if ! declare -p X_PLATFORM_UTILS > /dev/null 2>&1; then
+    source ~/bin/cross-platform-utils.bashlib 
+fi
 
 # Maskinalias
 t_debug ssh aliases
@@ -191,14 +196,18 @@ function gdws() { git diff --staged --color --word-diff $@         | less -r; }
 alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias glg='git lg' 
 
+# utility function that returns myname/repo
+function local-repo(){
+    git remote  -v | head -1 | awk '{print $2}' |  sed -n -e 's/.*github.com[:/]\([/a-zA-Z0-9-]*\)\(\.git\)\?.*/\1/p'
+}
 # View commits in GitHub 
 function gh-commit(){ 
-    local repo=$(git remote  -v | head -1 | awk '{print $2}' | sed -e 's/.*github.com[:/]\(.*\)/\1/')
+    local repo=$(local-repo)
     [[ -n $1 ]] && open "https://github.com/$repo/commit/$1" && return
     echo "Usage: gh-commit 779490"
 }
 function gh-compare(){ 
-    local repo=$(git remote  -v | head -1 | awk '{print $2}' | sed -e 's/.*github.com[:/]\(.*\)/\1/')
+    local repo=$(local-repo)
     [[ -n $2 ]] &&  open "https://github.com/$repo/compare/$1...$2" \
     || echo "Usage: gh-compare 779490 master"; 
 }
