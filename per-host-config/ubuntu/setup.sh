@@ -108,15 +108,8 @@ if [[ -n "${node_apps// }" ]]; then
 fi
 
 
-# setup i3
-#rm -r ~/.config/i3
-#ln -s $SCRIPT_DIR/i3-config ~/.config/i3
-
 blue "fix Alsa for Nforce\n"
 ln -sf $SCRIPT_DIR/asoundrc ~/.asoundrc
-
-# for i3 - use custom Chrome to have argument added always
-cp google-chrome ~/bin/
 
 blue "Autoremove unused\n"
 sudo apt-get autoremove --yes
