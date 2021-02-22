@@ -24,9 +24,23 @@ curl -s https://davesteele.github.io/key-366150CE.pub.txt | sudo apt-key add -
 curl -s https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
 curl -s https://repo.jotta.us/public.gpg | sudo apt-key add -
 curl -s https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 
 blue "Adding external package repositories ...\n"
-while read line; do 
+RELEASE=$(lsb_release -a 2>&1 | grep Codename | awk '{print $2}')
+while read org_line; do 
+
+    # replace bionic -> focal and vice versa
+    # this handles having both 18.04 and 20.04 repos
+    case $RELEASE in 
+        bionic)
+            line=$(echo $org_line | sed -e 's/focal/bionic/g' -e 's/20.04/18.04/g')
+            ;;
+        focal)
+            line=$(echo $org_line | sed -e 's/bionic/focal/g' -e 's/18.04/20.04/g')
+            ;;
+    esac
+
 
     # strip first four chars: 'ppa:' or 'deb '
     ppa=$(echo $line | sed 's/^....//')
@@ -35,10 +49,10 @@ while read line; do
         continue
     fi
 
-    sudo add-apt-repository --yes "$line"
+    # handle possible error
+    sudo add-apt-repository --yes "$line" || :
     APT_SHOULD_UPDATE=yes
 done < repos.local 
-
 
 echo -e $(blue Updating package lists ...)
 if [[ -n $APT_SHOULD_UPDATE ]]; then
