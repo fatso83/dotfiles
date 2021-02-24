@@ -2,7 +2,7 @@
 # To use this script you need to have set these two env variables: $BULKSMS_ID and $BULKSMS_SECRET
 # I suggest putting them in ~/.bulksms.auth and sourcing that from .bashrc
 #
-# Usage: sms +4712345678
+# Usage: sms +4712345678 "my message"
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
