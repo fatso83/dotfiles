@@ -9,38 +9,41 @@ if has("macunix")
 endif
 
 " Needs backend: npm -g update instant-markdown-d
-Plug 'suan/vim-instant-markdown', { 'for': 'markdown'}
-Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
-Plug 'ctrlpvim/ctrlp.vim' "does fuzzy matching to open files
-Plug 'nvie/vim-togglemouse' " F12 will switch mouse mode between terminal and vim
-Plug 'editorconfig/editorconfig-vim'
-Plug 'mwnx/vimcrypt' " GPG & OpenSSL support (AES, ...)
 Plug 'Raimondi/delimitMate'
 Plug 'alvan/vim-closetag'
+Plug 'ctrlpvim/ctrlp.vim' "does fuzzy matching to open files
+Plug 'editorconfig/editorconfig-vim'
+Plug 'mwnx/vimcrypt' " GPG & OpenSSL support (AES, ...)
+Plug 'nvie/vim-togglemouse' " F12 will switch mouse mode between terminal and vim
 Plug 'ruanyl/vim-sort-imports'
 Plug 'sbdchd/neoformat' " Used with prettier
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'suan/vim-instant-markdown', { 'for': 'markdown'}
 Plug 'w0rp/ale'
 
 " YCM alternative - needs Node
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-
 " Syntax highlighting
+Plug 'OrangeT/vim-csharp' "razor, c#
+Plug 'PProvost/vim-ps1' " powershell
+Plug 'inkarkat/vim-ingo-library' " dependency for SyntaxRange
 Plug 'kchmck/vim-coffee-script'
 Plug 'leafgarland/typescript-vim', {'for': 'typescript' }
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'lumiliet/vim-twig'
 Plug 'mxw/vim-jsx' " fixes JSX: https://github.com/pangloss/vim-javascript/issues/955#issuecomment-356350901
-Plug 'PProvost/vim-ps1' " powershell
-Plug 'OrangeT/vim-csharp' "razor, c#
-Plug 'inkarkat/vim-ingo-library' " dependency for SyntaxRange
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'vim-scripts/SyntaxRange' " :[range]SyntaxInclude {filetype}
 "Plug 'lambdatoast/elm.vim'
 Plug 'elmcast/elm-vim'
+
 " color schemes
 Plug 'romainl/Apprentice'
+
 " git plugin
 Plug 'tpope/vim-fugitive'
+
 " github plugin
 Plug 'tpope/vim-rhubarb'
 
