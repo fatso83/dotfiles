@@ -16,7 +16,7 @@ EOF
 }
 
 limits(){
-    echo "\nCurrent limits\n-------------"
+    printf "\nCurrent limits\n-------------\n"
     sysctl fs.inotify.max_user_instances fs.inotify.max_user_watches
 
     cat <<- EOF
@@ -41,7 +41,7 @@ if [ "$1" = "--help" -o "$1" = "-h" ]; then
 fi
 
 if [ -n "$1" ]; then
-    echo "\nUnknown parameter '$1'\n" >&2
+    printf "\nUnknown parameter '$1'\n" >&2
     usage
     exit 1
 fi
