@@ -24,20 +24,22 @@ send-keys 'htop' C-m
 # 2-pane builds
 new-window
 rename-window 'servers';
-send-keys 'docker-compose -f docker-compose.dev.yml up' C-m
+# Starting the docker containers should not be necessary, since they should startup with Docker after the first setup
+#send-keys 'docker-compose -f docker-compose.dev.yml up' C-m
+send-keys './bin/console assetic:watch' C-m
 split-window -h -p 50 # build window (webpack, etc)
 send-keys './bin/console server:run' C-m
 
 
 # ngrok 
-new-window 
-rename-window 'ngrok http'
-send-keys 'ngrok start ptflow-admin' C-m
-split-window -v -p 66
-send-keys 'ngrok start ptflow-api' C-m
-split-window -v -p 50
-send-keys 'ngrok start ptflow-web' C-m
-rename-window 'ngrok'
+#new-window 
+#rename-window 'ngrok http'
+#send-keys 'ngrok start ptflow-admin' C-m
+#split-window -v -p 66
+#send-keys 'ngrok start ptflow-api' C-m
+#split-window -v -p 50
+#send-keys 'ngrok start ptflow-web' C-m
+#rename-window 'ngrok'
 
 # editor
 new-window 
@@ -47,4 +49,4 @@ send-keys 'vim ' C-m
 # cli
 new-window 
 rename-window 'cli'
-display 'You can now access ptflow at ptflow-{admin,web,api}.eu.ngrok.io'
+#display 'You can now access ptflow at ptflow-{admin,web,api}.eu.ngrok.io'
