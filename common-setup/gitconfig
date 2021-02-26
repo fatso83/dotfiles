@@ -85,3 +85,5 @@
 	required = true
 [rebase]
 	autoStash = true
+[init]
+	defaultBranch = høvding
