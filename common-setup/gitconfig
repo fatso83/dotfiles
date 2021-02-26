@@ -3,7 +3,7 @@
     email = carlerik@gmail.com
 
 [core]
-    editor = vim
+    editor = nvim
     excludesfile = ~/.gitignore_global
 
     # auto-converts crlf=>lf on checkin
