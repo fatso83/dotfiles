@@ -4,42 +4,7 @@ if ! declare -p t_debug > /dev/null 2> /dev/null; then
     source ~/.bash.d/core_utils
 fi
 
-
 t_debug "Reading aliases and functions"
-
-# @returns 0 if running on mac, 1 if not 
-function is_mac() {
-  local cmd=`which uname`
-  if [ -z $cmd ];then
-    return 1
-  else
-    # dynamically redefines the function definition to avoid recomputing 
-    if $cmd |grep Darwin 1>/dev/null; then
-        is_mac(){ return 0; };
-    else 
-        is_mac(){ return 1; };
-    fi
-    is_mac
-  fi
-}
-
-# Check if running Windows Subsystem for Linux
-# @returns 0 if running WSL, 1 if not
-function is_wsl() {
-    local cmd=`which uname`
-    # no point in checking further if uname is not present
-    if [ -z $cmd ];then
-        return 1
-    else
-        # dynamically redefines the function definition to avoid recomputing 
-        if uname -a | grep microsoft 1>/dev/null; then
-            is_wsl(){ return 0; };
-        else 
-            is_wsl(){ return 1; };
-        fi
-        is_wsl
-    fi
-}
 
 if ! declare -p X_PLATFORM_UTILS > /dev/null 2>&1; then
     source ~/bin/cross-platform-utils.bashlib 

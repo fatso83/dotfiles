@@ -1,11 +1,11 @@
 # To debug how long init takes, run "DEBUG=1 source-rc"
+function t_debug() {
+        if [[ x == ${DEBUG+x} ]]; then echo [$(timer_now)] $@ >&2; fi
+}
 function debug() {
         if [[ x == ${DEBUG+x} ]]; then echo $@ >&2; fi
 }
 
-function t_debug() {
-        if [[ x == ${DEBUG+x} ]]; then echo [$(timer_now)] $@ >&2; fi
-}
 function timer_start(){
     __timer=$(millis)
 }
@@ -26,5 +26,6 @@ function timer_now(){
     let diff=$now-$__timer
     echo $diff
 }
+t_debug "core utils setup finished"
 
 # vi: ft=sh
