@@ -45,14 +45,16 @@ while read org_line; do
     # strip first four chars: 'ppa:' or 'deb '
     ppa=$(echo $line | sed 's/^....//')
 
-    if $(grep -r -F "$ppa"  /etc/apt/ >> /dev/null); then
+    if $(find /etc/apt/ -name '*.list' | xargs cat | grep -v '^#' | grep -F "$ppa" >> /dev/null); then
+        printf "Found existing entry for $ppa. Skipping.\n"
         continue
     fi
 
     # handle possible error
-    sudo add-apt-repository --yes "$line" || :
+    sudo add-apt-repository --no-update --yes "$line" || :
     APT_SHOULD_UPDATE=yes
 done < repos.local 
+APT_SHOULD_UPDATE=yes
 
 echo -e $(blue Updating package lists ...)
 if [[ -n $APT_SHOULD_UPDATE ]]; then
