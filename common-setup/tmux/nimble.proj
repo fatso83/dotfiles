@@ -19,9 +19,9 @@ new-window
 rename-window 'builds';
 send-keys 'cd ~/dev/nimble/nimble-clinic-backend && mvn clean compile flyway:migrate install -DskipTests exec:java' C-m
 split-window -h -p 40 # build window (webpack, etc)
-send-keys 'cd ~/dev/nimble/nimble-clinic-frontend && npm run webpack-watch' C-m
+send-keys 'cd ~/dev/nimble/frontend && npm run webpack-watch' C-m
 split-window -v -p 50             # cli
-send-keys 'cd ~/dev/nimble/nimble-clinic-frontend && npm run storybook' C-m
+send-keys 'cd ~/dev/nimble/frontend && npm run storybook' C-m
 
 # editor
 new-window 

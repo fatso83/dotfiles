@@ -8,15 +8,6 @@
 # https://stackoverflow.com/a/40125397/200987
 # https://stackoverflow.com/a/40009032/200987
 
-new-session -s ptflow
-
-# change working directory
-attach-session -c ~/dev/ptflow-api
-
-#new-window 
-#send-keys 'mdless README.md' C-m
-#rename-window 'readme'
-
 # monitor cpu, etc
 new-window 
 send-keys 'htop' C-m
