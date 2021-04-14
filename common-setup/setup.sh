@@ -47,7 +47,7 @@ ln -sf "$SCRIPT_DIR"/zsh/zshrc "$HOME"/.zshrc
 [[ ! -e "$HOME/.tmux/plugins/tpm" ]] && git clone https://github.com/tmux-plugins/tpm "$HOME"/.tmux/plugins/tpm 
 
 # copy tmux project settings
-for file in "$SCRIPT_DIR"/tmux/*.proj; do
+for file in "$SCRIPT_DIR"/tmux/*; do
   ln -sf "$file" "${HOME}/.tmux/"
 done
 

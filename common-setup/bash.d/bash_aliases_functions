@@ -186,7 +186,7 @@ tmux-restore () {
         local setup_file="$HOME/.tmux/$1.proj" 
         local dir_file="$HOME/.tmux/$1.dir" 
         if [[ -e $setup_file ]]; then
-            [[ -e $dir_filej ]] && cd $(cat $dir_file) # working directory
+            [[ -e $dir_file ]] && cd $(bash -c "echo $(cat $dir_file)") # set CWD
             command tmux new-session -s "$1" "tmux source-file $setup_file"
         else
             printf "\nNo such file \"$setup_file\".\nListing existing files:\n\n"

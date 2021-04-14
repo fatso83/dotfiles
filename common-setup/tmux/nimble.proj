@@ -8,8 +8,6 @@
 # https://stackoverflow.com/a/40125397/200987
 # https://stackoverflow.com/a/40009032/200987
 
-new-session -s nimble
-
 # monitor cpu, etc
 new-window 
 send-keys 'htop' C-m
@@ -17,31 +15,30 @@ send-keys 'htop' C-m
 # 2-pane builds
 new-window
 rename-window 'builds';
-send-keys 'cd ~/dev/nimble/nimble-clinic-backend && mvn clean compile flyway:migrate install -DskipTests exec:java' C-m
+send-keys 'cd nimble-clinic-backend && mvn clean compile flyway:migrate install -DskipTests exec:java' C-m
 split-window -h -p 40 # build window (webpack, etc)
-send-keys 'cd ~/dev/nimble/frontend && npm run webpack-watch' C-m
+send-keys 'cd frontend && npm run webpack-watch' C-m
 split-window -v -p 50             # cli
-send-keys 'cd ~/dev/nimble/frontend && npm run storybook' C-m
+send-keys 'cd frontend && npm run storybook' C-m
 
 # editor
 new-window 
 rename-window 'editor';
-send-keys 'cd ~/dev/nimble/nimble-clinic-backend;vim configuration.properties' C-m
+send-keys 'vim nimble-clinic-backend/configuration.properties' C-m
 
 # cli
 new-window 
 rename-window 'cli'
-send-keys 'cd ~/dev/nimble/nimble-clinic-backend;' C-m
 
 # ngrok HTTP
-new-window 
-rename-window 'ngrok http'
-send-keys 'ngrok start nimble' C-m
+#new-window 
+#rename-window 'ngrok http'
+#send-keys 'ngrok start nimble' C-m
 
 # ngrok HTTPS
-new-window 
-rename-window 'ngrok https'
-send-keys 'ngrok start nimble-s' C-m
+#new-window 
+#rename-window 'ngrok https'
+#send-keys 'ngrok start nimble-s' C-m
 
 # go to first window
 select-window -p
