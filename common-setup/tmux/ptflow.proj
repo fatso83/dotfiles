@@ -17,9 +17,11 @@ new-window
 rename-window 'servers';
 # Starting the docker containers should not be necessary, since they should startup with Docker after the first setup
 #send-keys 'docker-compose -f docker-compose.dev.yml up' C-m
-send-keys './bin/console assetic:watch' C-m
+send-keys './scripts/run-in-docker.sh ./bin/console assetic:watch' C-m
 split-window -h -p 50 # build window (webpack, etc)
-send-keys './bin/console server:run' C-m
+send-keys 'PF_DOCKER_OPTS="-p 8000:8000" ./scripts/run-in-docker.sh ./bin/console server:run 0.0.0.0:8000' C-m
+split-window -v -p 50 # 
+send-keys 'docker-compose -f docker-compose.dev.yml up' C-m
 
 
 # ngrok 
