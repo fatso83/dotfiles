@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Get the procs sorted by the number of inotify watchers
+# Get the procs sorted by the number of inotify watches
 # @author Carl-Erik Kopseng
 # @latest https://github.com/fatso83/dotfiles/blob/master/utils/scripts/inotify-consumers
 # Discussion leading up to answer: https://unix.stackexchange.com/questions/15509/whos-consuming-my-inotify-resources
@@ -59,18 +59,18 @@ generateData(){
         cut -d "/" -f 3 |                # get list of processes
         uniq |
         {
-            while read -rs PROC; do      # count watchers of processes found
+            while read -rs PROC; do      # count watches of processes found
                 echo "${PROC},$(grep -c "^inotify" < <(cat /proc/${PROC}/fdinfo/* 2> /dev/null))"
             done
         } |
-        grep -v ",0$" |                  # remove entires without watchers
+        grep -v ",0$" |                  # remove entires without watches
         sort -n -t "," -k 2 -r |         # sort to begin with highest numbers
         {                                # group commands so that $TOT is visible in the printf
-            while read -rs PID CNT; do   # show watchers and corresponding process info
+            while read -rs PID CNT; do   # show watches and corresponding process info
                 printf "%$(( WLEN - 2 ))d  %s\n" "$CNT" "$(grep -e "^\ *${PID}\ " <<< "$PSLIST")"
                 TOT=$(( TOT + CNT ))
             done
-            printf "\n%$(( WLEN - 2 ))d  %s\n" "$TOT" "WATCHERS TOTAL COUNT"
+            printf "\n%$(( WLEN - 2 ))d  %s\n" "$TOT" "WATCHES TOTAL COUNT"
         }
 }
 
@@ -80,7 +80,7 @@ declare -i COLS=$(tput cols)
 declare -i WLEN=10
 
 printf "\n%${WLEN}s\n" "INOTIFY"
-printf "%${WLEN}s\n" "WATCHER"
+printf "%${WLEN}s\n" "WATCHES"
 printf "%${WLEN}s    %s\n" " COUNT " "PID USER     COMMAND"
 printf -- "--------------------------------------\n"
 generateData
