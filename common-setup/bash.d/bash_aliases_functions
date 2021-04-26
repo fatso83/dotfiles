@@ -157,7 +157,7 @@ alias glg='git lg'
 
 # utility function that returns myname/repo
 function local-repo(){
-    git remote  -v | head -1 | awk '{print $2}' |  sed -n -e 's/.*github.com[:/]\([/a-zA-Z0-9-]*\)\(\.git\)\?.*/\1/p'
+    git remote  -v | head -1 | awk '{print $2}' |  sed -n -e 's/.*github.com[:/]\([/a-zA-Z0-9-]*\)\(\.git\)\{0,1\}/\1/p'
 }
 # View commits in GitHub 
 function gh-commit(){ 
