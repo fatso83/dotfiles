@@ -116,22 +116,6 @@ alias processes-start='killall -sSTART '
 
 function psgrep() { ps -ef | grep -i "$@"; };
 
-# Trims whitespace at start and end of line
-alias trim="sed '/^[[:space:]]*$/d'"
-
-# Based on https://stackoverflow.com/a/12579554/200987
-function remove-last-newline(){
-    local file=$(mktemp)
-    cat > $file
-    if [[ $(tail -c1 $file | wc -l) == 1 ]]; then
-        head -c -1 $file > $file.tmp
-        mv $file.tmp $file
-    fi
-    cat $file
-    rm $file&
-}
-
-
 # System shortcuts
 alias apt='sudo apt'
 

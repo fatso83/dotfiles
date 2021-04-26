@@ -59,4 +59,21 @@ else
     alias util.esed='sed -E '
     alias util.size='stat -Lf %z -- '
 fi
+
+alias text.delete_empty_line="sed '/^[[:space:]]*$/d'"
+# Trims whitespace at start and end of line
+alias text.trim="util.esed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'"
+
+# Based on https://stackoverflow.com/a/12579554/200987
+function text.remove-last-newline(){
+    local file=$(mktemp)
+    cat > $file
+    if [[ $(tail -c1 $file | wc -l) == 1 ]]; then
+        head -c -1 $file > $file.tmp
+        mv $file.tmp $file
+    fi
+    cat $file
+    rm $file&
+}
+
 # vim: set ft=sh
