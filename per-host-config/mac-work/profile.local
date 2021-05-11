@@ -8,3 +8,4 @@ PATH="/usr/local/opt/php@7.2/sbin:$PATH"
 PATH="$HOME/Library/Python/3.7/bin:$PATH"
 export PATH
 
+export LANG=no_NO.UTF-8
