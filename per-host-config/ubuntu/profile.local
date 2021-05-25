@@ -1,1 +1,11 @@
-export LANG=nb_NO.utf8
+export LC_ADDRESS=nb_NO.UTF-8
+export LC_NAME=nb_NO.UTF-8
+export LC_MONETARY=nb_NO.UTF-8
+export LC_PAPER=nb_NO.UTF-8
+export LANG=nb_NO.UTF-8
+export LC_IDENTIFICATION=nb_NO.UTF-8
+export LC_TELEPHONE=nb_NO.UTF-8
+export LC_MEASUREMENT=nb_NO.UTF-8
+export LC_TIME=nb_NO.UTF-8
+export LC_NUMERIC=nb_NO.UTF-8
+
