@@ -71,7 +71,7 @@ alias pip="python3 -m pip"  # to avoid warning about script wrapper and old pyth
 pip install --upgrade --user pip
 
 blue "Installing python packages ...\n"
-pip install -r python.local 
+pip install --user --upgrade -r python.local 
 
 blue "Installing ruby packages ...\n"
 while read line; do 

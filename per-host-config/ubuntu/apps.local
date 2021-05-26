@@ -24,6 +24,8 @@ jotta-cli
 libsasl2-2 
 libsasl2-modules
 libxml2-utils
+libpython3-dev
+libpq-dev
 lzop
 mailutils 
 make
