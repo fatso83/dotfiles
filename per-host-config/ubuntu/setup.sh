@@ -154,7 +154,7 @@ if ! type sdk > /dev/null 2> /dev/null; then # if the `sdk` function doesn't exi
     source "$HOME/.sdkman/bin/sdkman-init.sh"
 fi
 
-JAVA_VERSION=14.0.2
+JAVA_VERSION=16
 if ! sh -c "java --version  | grep 'openjdk $JAVA_VERSION' > /dev/null"; then
     blue "Installing Java\n"
     sdk install java $JAVA_VERSION-open
