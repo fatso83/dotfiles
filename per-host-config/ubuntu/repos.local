@@ -3,6 +3,7 @@ ppa:neovim-ppa/stable
 ppa:peek-developers/stable
 deb http://davesteele.github.io/gnome-gmail/repo gnome-gmailppa main
 deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+deb https://packages.cloud.google.com/apt cloud-sdk main
 deb https://repo.jotta.us/debian debian main
 deb [arch=amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main
 deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main

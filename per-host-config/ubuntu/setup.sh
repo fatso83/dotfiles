@@ -25,6 +25,7 @@ curl -s https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add
 curl -s https://repo.jotta.us/public.gpg | sudo apt-key add -
 curl -s https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
 curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 
 blue "Adding external package repositories ...\n"
 RELEASE=$(lsb_release -a 2>&1 | grep Codename | awk '{print $2}')
