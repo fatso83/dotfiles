@@ -2,6 +2,8 @@
 #PS1="skinny \W \u\$  "
 t_debug "Load personalized bashrc for mac"
 
+export PATH="/usr/local/bin:$PATH"
+
 #source /usr/local/etc/autojump.bash
 
 #Add SSH keys using the keychain

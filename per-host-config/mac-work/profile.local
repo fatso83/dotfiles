@@ -9,3 +9,9 @@ PATH="$HOME/Library/Python/3.7/bin:$PATH"
 export PATH
 
 export LANG=no_NO.UTF-8
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/carlerik/google-cloud-sdk/path.bash.inc' ]; then . '/Users/carlerik/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/carlerik/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/carlerik/google-cloud-sdk/completion.bash.inc'; fi
