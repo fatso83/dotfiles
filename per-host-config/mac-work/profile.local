@@ -7,7 +7,6 @@ PATH="/usr/local/opt/postgresql@10/bin:$PATH"
 PATH="/usr/local/opt/php@7.2/sbin:$PATH"
 PATH="$HOME/Library/Python/3.7/bin:$PATH"
 PATH="$HOME/Library/Python/3.9/bin:$PATH" # macOS 11.5
-export PATH
 
 export LANG=no_NO.UTF-8
 
@@ -25,4 +24,7 @@ export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
 export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
 export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
 
-# Python 3, Homebrew
+# Ruby Homebrew
+PATH="$HOMEBREW_PREFIX/opt/ruby/bin:$HOMEBREW_PREFIX/lib/ruby/gems/3.0.0/bin:$PATH"
+
+export PATH
