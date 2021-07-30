@@ -1,13 +1,20 @@
 # vim: ft=sh
 #export DEBUG=1
-#printf "Reading .profile"
 
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-        . "$HOME/.bashrc"
-    fi
+# include selfmade binaries and scripts
+# Needed for some of the utility functions in this rc file, therefore 
+# cannot be in the profile file, which is read later on
+# Otherwise, we will for instance get "millis: command not found" on
+# every new terminal, even though it is found on the CLI when testing
+if [ -d ~/bin ] ; then
+    PATH=~/bin:"${PATH}"
 fi
+
+# @see http://stackoverflow.com/questions/3601515/how-to-check-if-a-variable-is-set-in-bash
+source $HOME/.bash.d/core_utils # clearly not portable across shells, but should be easy to port
+
+timer_start_if_unset
+t_debug "Reading .profile"
 
 export VISUAL='vim'
 export EDITOR='vim'
@@ -39,6 +46,22 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # Symfony
 export PATH="$HOME/.symfony/bin:$PATH"
 
+# SDKMAN
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+
+# Local overrides
 if [ -f "$HOME/.profile.local" ]; then
+    t_debug "Reading local profile overrides"
     . "$HOME/.profile.local"
+fi
+
+t_debug ".profile PATH=$PATH"
+
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+        . "$HOME/.bashrc"
+    fi
 fi

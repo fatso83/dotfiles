@@ -6,6 +6,7 @@ export PATH="/usr/local/opt/openjdk/bin:$PATH"
 PATH="/usr/local/opt/postgresql@10/bin:$PATH"
 PATH="/usr/local/opt/php@7.2/sbin:$PATH"
 PATH="$HOME/Library/Python/3.7/bin:$PATH"
+PATH="$HOME/Library/Python/3.9/bin:$PATH" # macOS 11.5
 export PATH
 
 export LANG=no_NO.UTF-8
@@ -15,3 +16,13 @@ if [ -f '/Users/carlerik/google-cloud-sdk/path.bash.inc' ]; then . '/Users/carle
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/carlerik/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/carlerik/google-cloud-sdk/completion.bash.inc'; fi
+
+# Homebrew 2021
+export HOMEBREW_PREFIX="/opt/homebrew";
+export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
+export HOMEBREW_REPOSITORY="/opt/homebrew";
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
+export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
+
+# Python 3, Homebrew

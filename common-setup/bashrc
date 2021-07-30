@@ -1,4 +1,6 @@
 #export DEBUG=1
+t_debug "bashrc PATH=$PATH"
+#set -x
 # To enable debug printing, just set the DEBUG environment variable
 # You can then use `debug` or `t_debug` statements to echo debug info
 
@@ -13,22 +15,6 @@
 # @see https://gist.github.com/fatso83/86e94e91926d1311f3fa
 ################################################################################
 
-# @see http://stackoverflow.com/questions/3601515/how-to-check-if-a-variable-is-set-in-bash
-source $HOME/.bash.d/core_utils
-
-# include selfmade binaries and scripts
-# Needed for some of the utility functions in this rc file, therefore 
-# cannot be in the profile file, which is read later on
-# Otherwise, we will for instance get "millis: command not found" on
-# every new terminal, even though it is found on the CLI when testing
-if [ -d ~/bin ] ; then
-    PATH=~/bin:"${PATH}"
-fi
-
-
-# For debugging info on timing
-#timer_start_if_unset
-timer_start
 # To debug how long init takes, run "DEBUG=1 source-rc"
 
 t_debug Executing '$HOME'/.bashrc
@@ -141,9 +127,6 @@ else
     echo "This setup is missing 'direnv'. Please install it for per-directory overrides"
 fi
 t_debug Finished bash setup
-
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # Read environment variables, such as sauce labs keys
 read_config_if_exists "$HOME/.secret"
