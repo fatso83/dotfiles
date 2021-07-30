@@ -1,4 +1,6 @@
 #export DEBUG=1
+source $HOME/.bash.d/core_utils # clearly not portable across shells, but should be easy to port
+timer_start_if_unset
 t_debug "bashrc PATH=$PATH"
 #set -x
 # To enable debug printing, just set the DEBUG environment variable

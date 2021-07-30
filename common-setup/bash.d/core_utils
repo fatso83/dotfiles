@@ -26,6 +26,7 @@ function timer_now(){
     let diff=$now-$__timer
     echo $diff
 }
+
 debug "core utils setup finished"
 
 # vi: ft=sh
