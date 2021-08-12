@@ -1,0 +1,47 @@
+#!/bin/bash
+# vi: ft=sh
+
+REMOTE=$1
+PIDS=()
+ERROR_FILE=$(mktemp)
+
+usage(){
+    printf "USAGE: $0 <remote> tag1 tag2 ...\n"
+    printf "Will delete all tags locally and on <remote> matching the given tags\n"
+    
+    exit 1
+}
+
+remove_tag(){
+    git tag -d $1 2>>$ERROR_FILE &
+    PIDS+=("$!") # saves all the short running tasks
+    git push $REMOTE --delete $1 2>>$ERROR_FILE &
+    PIDS+=("$!") # saves all the long running tasks
+}
+
+if [[ $# < 2 ]]; then 
+    usage
+fi
+
+shift
+
+while [[ "$1" != "" ]]; do
+    remove_tag $1
+    shift
+done
+
+printf "Waiting for ${#PIDS[*]} tasks to finish "
+EXIT_STATUS=0
+for PID in ${PIDS[*]}; do
+    wait $PID
+    let EXIT_STATUS+=$?
+    printf "."
+done
+printf "\n"
+
+printf "\nAll background tasks finished. "
+if [[ $EXIT_STATUS > 0 ]]; then
+    printf "Some errors occurred.\nSee %s for details\n" $ERROR_FILE
+fi
+
+
