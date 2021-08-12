@@ -28,3 +28,6 @@ export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
 PATH="$HOMEBREW_PREFIX/opt/ruby/bin:$HOMEBREW_PREFIX/lib/ruby/gems/3.0.0/bin:$PATH"
 
 export PATH
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/carlerik/.sdkman"
