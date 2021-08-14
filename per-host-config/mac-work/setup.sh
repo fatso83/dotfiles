@@ -45,3 +45,5 @@ if ! which -s n; then
     npm install -g n
     n latest
 fi
+
+cp ./imgcat.sh ~/bin/imgcat
