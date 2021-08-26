@@ -106,7 +106,8 @@ function strip-comments(){
 }
 
 # For stack overflow pasting
-alias stack-overflow-no-copy='sed -e "s/diffia/ACME/gi" -e "s/$USER/myuser/gi" -e "s/nimble/nicecorp/gi" | indent4 '
+alias websafe='sed -e "s/diffia/ACME/gi" -e "s/$USER/my-user/gi" -e "s/nimble/my-project/gi" -e "s/clinic/my-app/gi"'
+alias stack-overflow-no-copy='websafe | indent4 '
 alias stack-overflow='stack-overflow-no-copy | pbcopy; pbpaste; echo -e "\n\nCopied to pastebuffer (use stack-overflow-no-copy to avoid this)!"'
 
 
