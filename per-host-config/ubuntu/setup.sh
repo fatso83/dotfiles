@@ -18,6 +18,11 @@ sudo chown -R $(whoami) /usr/local
 echo -e $(blue Installing PPA software)
 sudo apt-get install software-properties-common # Installs 'add-apt-repository'
 
+# Make sure curl exists
+if ! which curl > /dev/null; then
+    apt install -y curl
+fi
+
 # Add keys
 blue "Adding keys for PPAs ...\n"
 curl -s https://davesteele.github.io/key-366150CE.pub.txt | sudo apt-key add -
@@ -40,6 +45,11 @@ while read org_line; do
         focal)
             line=$(echo $org_line | sed -e 's/bionic/focal/g' -e 's/18.04/20.04/g')
             ;;
+        hirsute)
+            line=$(echo $org_line | sed -e 's/bionic/hirsute/g' -e 's/focal/hirsute/g' -e 's/18.04/20.04/g' -e 's/20.04/21.04/g')
+            ;;
+        *)
+            printf "Unhandled Ubuntu release $RELEASE! Exiting "; exit 1
     esac
 
 
@@ -56,6 +66,9 @@ while read org_line; do
     APT_SHOULD_UPDATE=yes
 done < repos.local 
 APT_SHOULD_UPDATE=yes
+
+# Patch: peek does not exist for the 21.04 release of Ubuntu ... so use the old for Focal
+sed 's/hirsute/focal/g' /etc/apt/sources.list.d/peek-developers-ubuntu-stable-hirsute.list
 
 echo -e $(blue Updating package lists ...)
 if [[ -n $APT_SHOULD_UPDATE ]]; then
