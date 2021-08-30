@@ -21,6 +21,7 @@ golang-go
 google-chrome-stable
 google-cloud-sdk
 htop
+jq
 jotta-cli
 libsasl2-2 
 libsasl2-modules
