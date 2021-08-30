@@ -1,4 +1,7 @@
 # vim: ft=sh
+# WARNING: This file is just read ONCE on login (at least on Linux, not sure about BSD/macOS)
+# That means it and any changes will not be read in the current session and will 
+# need to be manually sourced in the first time, or until you logout and in again.
 #export DEBUG=1
 
 # include selfmade binaries and scripts
