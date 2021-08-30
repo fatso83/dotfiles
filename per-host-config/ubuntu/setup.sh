@@ -101,7 +101,7 @@ while read line; do
 done < ruby.local 
 
 
-if ! which n >> /dev/null; then
+if ! command -v n >> /dev/null; then
     blue "Upgrade Node using n"
     npm install -g n
     n stable
@@ -113,15 +113,10 @@ if ! which yarn >> /dev/null; then
 fi
 
 blue "Installing Node packages ...\n"
-if which pick_json > /dev/null; then
-    installed=$(mktemp)
-    npm list -g --depth 1 --json | pick_json -k -e dependencies > $installed
-
-    #filters out patterns that are present in the other file, see https://stackoverflow.com/questions/4780203/deleting-lines-from-one-file-which-are-in-another-file
-    node_apps=$(grep -v -f $installed node.local || true) 
-else
-    node_apps="$(cat node.local|| true)" 
-fi
+installed=$(mktemp)
+npm list -g --depth 1 --json | jq -r -c '.dependencies | keys | .[]' > $installed
+#filters out patterns that are present in the other file, see https://stackoverflow.com/questions/4780203/deleting-lines-from-one-file-which-are-in-another-file
+node_apps=$(grep -v -f $installed node.local || true) 
 # if non-zero, https://unix.stackexchange.com/a/146945/18594
 if [[ -n "${node_apps// }" ]]; then
     npm -g install $node_apps 
