@@ -7,3 +7,4 @@ deb https://packages.cloud.google.com/apt cloud-sdk main
 deb https://repo.jotta.us/debian debian main
 deb [arch=amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main
 deb [arch=amd64] http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main
+deb [arch=amd64] https://download.docker.com/linux/ubuntu $RELEASE stable

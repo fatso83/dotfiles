@@ -35,22 +35,23 @@ __install-key https://repo.jotta.us/public.gpg  jotta.us
 __install-key https://packages.microsoft.com/keys/microsoft.asc  microsoft.com
 __install-key https://www.postgresql.org/media/keys/ACCC4CF8.asc  postgresql.org
 __install-key https://packages.cloud.google.com/apt/doc/apt-key.gpg  cloud.google.com
+__install-key https://download.docker.com/linux/ubuntu/gpg  download.docker.com
 
 blue "Adding external package repositories ...\n"
-RELEASE=$(lsb_release -a 2>&1 | grep Codename | awk '{print $2}')
 while read org_line; do 
+    export RELEASE=$(lsb_release -cs)
 
     # replace bionic -> focal and vice versa
     # this handles having both 18.04 and 20.04 repos
     case $RELEASE in 
         bionic)
-            line=$(echo $org_line | sed -e 's/focal/bionic/g' -e 's/20.04/18.04/g')
+            line=$(echo $org_line | envsubst | sed -e 's/focal/bionic/g' -e 's/20.04/18.04/g')
             ;;
         focal)
-            line=$(echo $org_line | sed -e 's/bionic/focal/g' -e 's/18.04/20.04/g')
+            line=$(echo $org_line | envsubst | sed -e 's/bionic/focal/g' -e 's/18.04/20.04/g')
             ;;
         hirsute)
-            line=$(echo $org_line | sed -e 's/bionic/hirsute/g' -e 's/focal/hirsute/g' -e 's/18.04/20.04/g' -e 's/20.04/21.04/g')
+            line=$(echo $org_line | envsubst | sed -e 's/bionic/hirsute/g' -e 's/focal/hirsute/g' -e 's/18.04/20.04/g' -e 's/20.04/21.04/g')
             ;;
         *)
             printf "Unhandled Ubuntu release $RELEASE! Exiting "; exit 1
@@ -240,5 +241,9 @@ fi
 # Installing zplug
 #curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
 
+if groups | grep docker > /dev/null; then
+    blue "Adding myself to the docker group\n"
+    sudo usermod -aG docker ${USER}
+fi
 # restore current directory
 popd > /dev/null

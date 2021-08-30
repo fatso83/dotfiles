@@ -6,6 +6,9 @@ conky
 cowsay
 cronic
 curl
+docker-ce 
+docker-ce-cli 
+containerd.io
 direnv
 dunst
 exiv2
