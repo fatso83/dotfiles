@@ -25,12 +25,16 @@ fi
 
 # Add keys
 blue "Adding keys for PPAs ...\n"
-curl -s https://davesteele.github.io/key-366150CE.pub.txt | sudo apt-key add -
-curl -s https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
-curl -s https://repo.jotta.us/public.gpg | sudo apt-key add -
-curl -s https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+TRUSTED_DIR=/etc/apt/trusted.gpg.d/
+function __install-key(){
+    curl -s $1 | sudo gpg --batch --yes --dearmor -o $TRUSTED_DIR/$2.gpg
+}
+__install-key https://davesteele.github.io/key-366150CE.pub.txt  davesteele.github.io
+__install-key https://dl-ssl.google.com/linux/linux_signing_key.pub  dl-ssl.google.com
+__install-key https://repo.jotta.us/public.gpg  jotta.us
+__install-key https://packages.microsoft.com/keys/microsoft.asc  microsoft.com
+__install-key https://www.postgresql.org/media/keys/ACCC4CF8.asc  postgresql.org
+__install-key https://packages.cloud.google.com/apt/doc/apt-key.gpg  cloud.google.com
 
 blue "Adding external package repositories ...\n"
 RELEASE=$(lsb_release -a 2>&1 | grep Codename | awk '{print $2}')
