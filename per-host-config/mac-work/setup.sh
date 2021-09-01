@@ -31,24 +31,35 @@ if ! which -s cmake; then
     exit 1
 fi
 
-blue "Installing local apps using Homebrew ...\n"
-NOT_INSTALLED=$(comm -23 <(sort < apps.local) <( brew list --versions | awk '{print $1}' ) | strip-empty)
-while read FORMULA; do 
-    brew install "$FORMULA"
-done <<< "$NOT_INSTALLED"
-blue "finished \n"
+function _f(){ # create throw-away function to not pollute global namespace with local variables
+    blue "Installing local apps using Homebrew ...\n"
+
+    local app_to_formula_map=$( awk -F/ '{  print ( ($3 != "") ? $3 : $1) "\t" $0 } ' < apps.local | sort )
+    local to_install=$(awk -F'\t' '{  print $1 }' <(printf "%s\n" "$app_to_formula_map"))
+    local formulae=$(brew list --formulae -1)
+    local casks=$(brew list --casks -1)
+    local installed=$(printf '%s\n%s\n' "$casks" "$formulae" | sort)
+    local not_installed=$(comm -23 <(printf '%s\n' "$to_install") <(printf '%s\n' "$installed" ) )
+    while read APP; do 
+        if [ "$APP" == "" ]; then continue; fi
+        local formula=$(awk -v APP=$APP -F'\t' '$1==APP{print $2}' <(printf "%s\n" "$app_to_formula_map" ) )
+        brew install "$formula"
+    done <<< "$not_installed"
+    green "finished \n"
+}; _f
 
 if ! which -s java; then
     blue "Installing Java\n"
     # TODO: replace with SDKMAN, sdk install java open-jdk-16
 fi
 
+
 # Node Version Manager
 if ! which -s n; then
     blue "Installing n (Node version manager) ..."
     npm install -g n
     n latest
-    blue " finished.\n"
+    green " finished.\n"
 fi
 
 cp ./imgcat.sh ~/bin/imgcat
@@ -65,7 +76,7 @@ if [[ ! -d /opt/google-cloud-sdk ]]; then
         curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/"$GSDK" 
         tar xzf $GSDK -C /opt
         /opt/google-cloud-sdk/install.sh
-        blue "Cloud SDK setup finished.\n"
+        green "Cloud SDK setup finished.\n"
     else
         dark_red "No Cloud SDK configured for architecture $(uname -m)"
     fi

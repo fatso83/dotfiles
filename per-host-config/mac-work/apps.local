@@ -3,9 +3,9 @@ cowsay
 direnv
 fortune
 git-extras
+homebrew/cask/macvim
 htop
 hub
-macvim
 maven
 neovim
 node
