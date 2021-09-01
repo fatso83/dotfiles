@@ -9,6 +9,10 @@ pushd "$SCRIPT_DIR" > /dev/null
 # Get some color codes
 source ../../common-setup/bash.d/colors
 
+# Get common aliases (if new shell)
+shopt -s expand_aliases     # to use alias definitions
+source ../../common-setup/bash.d/bash_aliases_functions
+
 sudo chown $USER /opt
 
 # Homebrew
@@ -27,16 +31,11 @@ if ! which -s cmake; then
     exit 1
 fi
 
-blue "Installing local apps using Homebrew ..."
-function formula_installed() {
-    brew ls --versions $1 > /dev/null
-}
-
+blue "Installing local apps using Homebrew ...\n"
+NOT_INSTALLED=$(comm -23 <(sort < apps.local) <( brew list --versions | awk '{print $1}' ) | strip-empty)
 while read FORMULA; do 
-    if ! formula_installed $FORMULA; then
-        brew install $FORMULA
-    fi
-done < apps.local 
+    brew install "$FORMULA"
+done <<< "$NOT_INSTALLED"
 blue "finished \n"
 
 if ! which -s java; then

@@ -27,6 +27,7 @@ alias timbuktu_reverse_tunnel='ssh -v -R 10001:localhost:22 timbuktu.kopseng.no 
 
 # Ved masse søppel etter konvertering utf8<->cp1252
 alias strip-non-ascii='python -c "import sys,re;[sys.stdout.write(re.sub('\''[^\x09\x0A\x0D\x20-\x7F]'\'', '\'''\'', line)) for line in sys.stdin]"'
+alias strip-empty="egrep -v '^\s*$'"
 
 # Konverteringer
 t_debug conversions
