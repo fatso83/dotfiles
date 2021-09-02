@@ -77,7 +77,6 @@ generateData(){
 # get terminal width
 declare -i COLS=$(tput cols)
 declare -i WLEN=10
-export LC_NUMERIC=da_DK.utf8
 
 printf "\n%${WLEN}s\n" "INOTIFY"
 printf "%${WLEN}s\n" "WATCHES"
