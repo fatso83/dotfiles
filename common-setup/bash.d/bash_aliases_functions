@@ -143,8 +143,10 @@ alias glg='git lg'
 
 # utility function that returns myname/repo
 function local-repo(){
-    git remote  -v | head -1 | awk '{print $2}' |  util.esed -n -e 's/.*github.com[:/]([/a-zA-Z0-9-]+)(\.git)?/\1/p'
+    local url=$(git config remote.origin.url) # --> git@github.com:team/proj
+    echo $url |  util.esed -n -e 's/.*github.com[:/]([/a-zA-Z0-9-]+)(\.git)?/\1/p'
 }
+
 # View commits in GitHub 
 function gh-commit(){ 
     local repo=$(local-repo)
