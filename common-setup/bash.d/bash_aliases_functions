@@ -10,27 +10,11 @@ if ! declare -p X_PLATFORM_UTILS > /dev/null 2>&1; then
     source ~/bin/cross-platform-utils.bashlib 
 fi
 
-# Maskinalias
-t_debug ssh aliases
-alias timbuktu='ssh carl-erik@timbuktu.kopseng.no'
-alias timbuktu_lokal='ssh carl-erik@192.168.10.2'
-
-# Auto-åpne Bittorrent Sync
-alias timbuktu_btsync="(sleep 2 && open http://localhost:8888)& ssh -L8888:127.0.0.1:8888 carl-erik@timbuktu.kopseng.no -N"
-
-# Reverse SSH
-# Koble seg opp mot timbuktu.kopseng.no for å la alle som kobler seg til timbuktu.kopseng.no:10001 gå direkte mot ens egen maskin
-# client 1: timbuktu_reverse_tunnel
-# client 2: ssh -l my-client1-user -p 10001 timbuktu.kopseng.no
-# Effect: client2 => timbuktu => client1
-alias timbuktu_reverse_tunnel='ssh -v -R 10001:localhost:22 timbuktu.kopseng.no -N -l carl-erik'
-
-# Ved masse søppel etter konvertering utf8<->cp1252
+# Strip junk left from converting utf8<->cp1252
 alias strip-non-ascii='python -c "import sys,re;[sys.stdout.write(re.sub('\''[^\x09\x0A\x0D\x20-\x7F]'\'', '\'''\'', line)) for line in sys.stdin]"'
 alias strip-empty="egrep -v '^\s*$'"
 
-# Konverteringer
-t_debug conversions
+t_debug Setting up aliases for conversions
 alias urldecode='python -c "import sys, urllib as ul; print ul.unquote_plus(sys.argv[1])"'
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1])"'
 alias htmldecode='python -c "import sys, HTMLParser;h = HTMLParser.HTMLParser();print h.unescape(sys.argv[1])"'
@@ -187,8 +171,21 @@ tmux-restore () {
     fi
 }
 
+# allow to use alternative npm clients like PNPM with the same name. Lazy :p
 # just use direnv's .envrc to define a path to a different npm, like pnpm
 function npm(){ if [[ -z "$NPMBIN" ]]; then command npm $@; else $NPMBIN $@; fi; }
+
+# SSH recipes for myself
+
+# Auto-open Bittorrent Sync
+alias timbuktu_btsync="(sleep 2 && open http://localhost:8888)& ssh -L8888:127.0.0.1:8888 carl-erik@timbuktu.kopseng.no -N"
+
+# Reverse SSH
+# Connect to timbuktu.kopseng.no to allow timbuktu.kopseng.no:10001 to go directly against my own machine
+# client 1: timbuktu_reverse_tunnel
+# client 2: ssh -l my-client1-user -p 10001 timbuktu.kopseng.no
+# Effect: client2 => timbuktu => client1
+alias timbuktu_reverse_tunnel='ssh -v -R 10001:localhost:22 timbuktu.kopseng.no -N -l carl-erik'
 
 
 t_debug "global aliases and functions finished"
