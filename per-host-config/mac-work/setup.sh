@@ -66,18 +66,24 @@ cp ./imgcat.sh ~/bin/imgcat
 
 if [[ ! -d /opt/google-cloud-sdk ]]; then
     blue "Installing Google Cloud SDK ...\n"
+    ARCH=$(uname -m)
 
-    if [[ "$(uname -m)" == arm64 ]]; then
-        GSDK=google-cloud-sdk-355.0.0-darwin-arm.tar.gz
-    fi
+    case $ARCH in
+        arm64)
+            GSDK=google-cloud-sdk-358.0.0-darwin-arm.tar.gz
+            ;;
+        x86_64)
+            GSDK=google-cloud-sdk-358.0.0-darwin-x86_64.tar.gz
+            ;;
+    esac
 
-    if [[ -n $GSD ]]; then
+    if [[ -n $GSDK ]]; then
         pushd /tmp
         curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/"$GSDK" 
         tar xzf $GSDK -C /opt
         /opt/google-cloud-sdk/install.sh
         green "Cloud SDK setup finished.\n"
     else
-        dark_red "No Cloud SDK configured for architecture $(uname -m)"
+        dark_red "No Cloud SDK configured for architecture $ARCH"
     fi
 fi
