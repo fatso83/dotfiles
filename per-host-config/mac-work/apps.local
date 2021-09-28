@@ -12,4 +12,5 @@ node
 postgresql
 reattach-to-user-namespace
 the_silver_searcher
+terraform
 tmux
