@@ -1,5 +1,8 @@
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
+# silence warning, make ssh-add load from keychain 
+export APPLE_SSH_ADD_BEHAVIOR=macos
+
 # OpenJDK macOS Homebrew
 export PATH="/usr/local/opt/openjdk/bin:$PATH" 
 
