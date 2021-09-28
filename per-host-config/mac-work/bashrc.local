@@ -47,5 +47,8 @@ if which rbenv > /dev/null; then
     eval "$(rbenv init -)"; 
 fi
 
+# AWS auto-completion
+complete -C '/usr/local/bin/aws_completer' aws
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 [[ -s "/Users/carlerik/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/carlerik/.sdkman/bin/sdkman-init.sh"
