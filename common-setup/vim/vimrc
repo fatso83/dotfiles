@@ -188,8 +188,6 @@ let g:javascript_plugin_jsdoc = 1
 let g:import_sort_auto = 1
 " temporary fix for JSX: https://github.com/pangloss/vim-javascript/issues/955#issuecomment-356350901
 let g:jsx_ext_required = 0
-" Toggle ale_fix_on_save using F9
-nnoremap <F9> :let g:ale_fix_on_save = !g:ale_fix_on_save<CR>
 
 
 " auto-format JSX
