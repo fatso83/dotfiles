@@ -84,45 +84,15 @@ fi
 blue "Installing local apps ..."
 sudo apt-get install -y --no-install-recommends $(strip-comments apps.local)
 
-# https://github.com/pypa/pip/issues/5240
-blue "Upgrading pip\n"
-alias pip="python3 -m pip"  # to avoid warning about script wrapper and old python
-pip install --upgrade --user pip
-
-blue "Installing python packages ...\n"
-pip install --user --upgrade -r python.local 
-
-blue "Installing ruby packages ...\n"
-while read line; do 
-    if gem list -i $line > /dev/null; then
-        continue
-    fi
-
-    sudo gem install $line; 
-done < ruby.local 
-
-
-if ! command -v n >> /dev/null; then
-    blue "Upgrade Node using n"
-    npm install -g n
-    n stable
-fi
+source ../_shared/install-utils
+install_python_packages
+install_ruby_packages
+install_node_packages
 
 # Install Yarn - used for instance by coc.vim
 if ! which yarn >> /dev/null; then
     curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
 fi
-
-blue "Installing Node packages ...\n"
-installed=$(mktemp)
-npm list -g --depth 1 --json | jq -r -c '.dependencies | keys | .[]' > $installed
-#filters out patterns that are present in the other file, see https://stackoverflow.com/questions/4780203/deleting-lines-from-one-file-which-are-in-another-file
-node_apps=$(grep -v -f $installed node.local || true) 
-# if non-zero, https://unix.stackexchange.com/a/146945/18594
-if [[ -n "${node_apps// }" ]]; then
-    npm -g install $node_apps 
-fi
-
 
 blue "fix Alsa for Nforce\n"
 ln -sf $SCRIPT_DIR/asoundrc ~/.asoundrc

@@ -53,14 +53,10 @@ if ! which -s java; then
     # TODO: replace with SDKMAN, sdk install java open-jdk-16
 fi
 
-
-# Node Version Manager
-if ! which -s n; then
-    blue "Installing n (Node version manager) ..."
-    npm install -g n
-    n latest
-    green " finished.\n"
-fi
+source ../_shared/install-utils
+install_python_packages
+install_ruby_packages
+install_node_packages
 
 cp ./imgcat.sh ~/bin/imgcat
 
