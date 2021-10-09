@@ -47,8 +47,16 @@ if which rbenv > /dev/null; then
     eval "$(rbenv init -)"; 
 fi
 
+# This seems like a hack? I installed 2.7.2 using RVM and everything else was under ~/.rvm/
+export PATH=~/.gem/ruby/2.7.0/bin:$PATH
+
 # AWS auto-completion
 complete -C '/usr/local/bin/aws_completer' aws
+
+# docker-sync: https://docker-sync.readthedocs.io/en/latest/getting-started/installation.html
+if which ruby >/dev/null && which gem >/dev/null; then
+  PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+fi
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 [[ -s "/Users/carlerik/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/carlerik/.sdkman/bin/sdkman-init.sh"

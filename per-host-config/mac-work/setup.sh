@@ -53,6 +53,15 @@ if ! which -s java; then
     # TODO: replace with SDKMAN, sdk install java open-jdk-16
 fi
 
+# Setup RVM before installing packages
+if ! command - rvm; then
+    curl -sSL https://get.rvm.io | bash -s stable
+    rvm install "ruby-2.7.2"
+fi
+rvm use ruby-2.7.2
+source "$HOME/.rvm/scripts/rvm"
+PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+
 source ../_shared/install-utils
 install_python_packages
 install_ruby_packages

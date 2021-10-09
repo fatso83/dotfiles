@@ -2,7 +2,9 @@ cmake
 cowsay
 direnv
 fortune
+fswatch
 git-extras
+gpg2
 homebrew/cask/macvim
 htop
 hub
@@ -15,3 +17,4 @@ reattach-to-user-namespace
 the_silver_searcher
 terraform
 tmux
+vagrant
