@@ -54,7 +54,7 @@ if ! which -s java; then
 fi
 
 # Setup RVM before installing packages
-if ! command - rvm; then
+if ! command -v rvm; then
     curl -sSL https://get.rvm.io | bash -s stable
     rvm install "ruby-2.7.2"
 fi
