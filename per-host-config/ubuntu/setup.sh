@@ -158,7 +158,7 @@ go get github.com/claudiodangelis/qrcp
 if ! is_wsl; then
 
     blue "Use PowerTOP suggestions for saving power\n"
-    sudo cp powertop.service /etc/systemd/system/
+    sudo cp services/powertop.service /etc/systemd/system/
     # Enable the service, if first time
     if ! service powertop status > /dev/null 2>&1; then
         sudo systemctl daemon-reload

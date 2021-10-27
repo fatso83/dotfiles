@@ -1,0 +1,53 @@
+# This file is not automatically setup, as it only applies to a single workhorse I need to access
+#
+# The SSH tunnel is configured mostly through options specified in the default ssh config file (such as private key)
+# It needs to be copied to /etc/systemd/system/ to be picked up and then run
+#    sudo systemctl daemon-reload
+#    sudo systemctl enable tunnel
+#    sudo systemctl start tunnel
+# Original implementation: https://askubuntu.com/a/1316825/165026
+
+[Unit]
+Description=Maintain Reverse SSH Tunnel
+After=network.target
+
+[Service]
+User=carlerik
+ExecStart=/usr/bin/autossh  -o ServerAliveInterval=30 -o "ServerAliveCountMax 3" -M 44444 -o ExitOnForwardFailure=yes -gnNT -R 20001:localhost:22 jump
+RestartSec=15
+Restart=always
+KillMode=mixed
+
+[Install]
+WantedBy=multi-user.target
+
+## Debugging when this is not working
+#
+# When everything is working, it should look like this
+#    $ sudo systemctl status reverse-tunnel
+#    ● reverse-tunnel.service - Maintain Reverse SSH Tunnel
+#        Loaded: loaded (/etc/systemd/system/reverse-tunnel.service; enabled; vendor preset: enabled)
+#        Active: active (running) since Wed 2021-10-27 16:42:32 CEST; 6s ago
+#    Main PID: 2371251 (autossh)
+#        Tasks: 2 (limit: 38413)
+#        Memory: 1.0M
+#        CGroup: /system.slice/reverse-tunnel.service
+#                ├─2371251 /usr/lib/autossh/autossh -o ServerAliveInterval=30 -o ServerAliveCountMax 3 -M 44444 -o ExitOnForwardFailure=yes>
+#                └─2371260 /usr/bin/ssh -L 44444:127.0.0.1:44444 -R 44444:127.0.0.1:44445 -o ServerAliveInterval=30 -o ServerAliveCountMax >
+#
+#    okt. 27 16:42:32 diffia-kraftkar systemd[1]: Started Maintain Reverse SSH Tunnel.
+#    okt. 27 16:42:32 diffia-kraftkar autossh[2371251]: starting ssh (count 1)
+#    okt. 27 16:42:32 diffia-kraftkar autossh[2371251]: ssh child pid is 2371260
+#
+# Should it not work, try running journalctl to pick up any errors
+#
+#    $ journalctl --since=2021-10-27 | tail -n10000 |  grep --color -C3 ssh
+#    okt. 27 16:28:37 diffia-kraftkar autossh[2355154]: ssh child pid is 2355157
+#    okt. 27 16:28:37 diffia-kraftkar autossh[2355157]: no such identity: /home/carlerik/.ssh/jumphost.mydomain.com: No such file or directory
+#    okt. 27 16:28:37 diffia-kraftkar autossh[2355157]: ubuntu@jump.kopseng.no: Permission denied (publickey).
+#    okt. 27 16:28:37 diffia-kraftkar autossh[2355154]: ssh exited prematurely with status 255; autossh exiting
+# 
+# You should also try to run the command manually of course to spot any basic ssh errors. When doing this, also add
+# the verbosity flag, "-v", as this helped spot the actual issue in my case. It turned out that everything worked
+# when testing in my login session because `ssh-agent` had loaded some other keys already that it would try instead
+# of the one that I had specified in the config file, whereas when running as the service, no agent was available.
