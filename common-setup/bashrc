@@ -1,3 +1,8 @@
+# short circuit the sourcing for non-interactive shells 
+# http://superuser.com/questions/183870/difference-between-bashrc-and-bash-profile
+# rsync also reads .bashrc and will bork if it results in any output
+[[ $- != *i* ]] && return
+
 #export DEBUG=1
 source $HOME/.bash.d/core_utils # clearly not portable across shells, but should be easy to port
 timer_start_if_unset
@@ -5,10 +10,6 @@ t_debug "bashrc PATH=$PATH"
 #set -x
 # To enable debug printing, just set the DEBUG environment variable
 # You can then use `debug` or `t_debug` statements to echo debug info
-
-# short circuit the sourcing for non-interactive shells
-# http://superuser.com/questions/183870/difference-between-bashrc-and-bash-profile
-[[ $- != *i* ]] && return
 
 ################################################################################
 # Prolog start
