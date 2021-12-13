@@ -2,7 +2,7 @@
 #PS1="skinny \W \u\$  "
 t_debug "Load personalized bashrc for mac"
 
-export PATH="/usr/local/bin:$PATH"
+PATH="/usr/local/bin:$PATH"
 
 #source /usr/local/etc/autojump.bash
 
@@ -48,7 +48,7 @@ if which rbenv > /dev/null; then
 fi
 
 # This seems like a hack? I installed 2.7.2 using RVM and everything else was under ~/.rvm/
-export PATH=~/.gem/ruby/2.7.0/bin:$PATH
+PATH=~/.gem/ruby/2.7.0/bin:$PATH
 
 # AWS auto-completion
 complete -C '/usr/local/bin/aws_completer' aws
@@ -57,6 +57,11 @@ complete -C '/usr/local/bin/aws_completer' aws
 if which ruby >/dev/null && which gem >/dev/null; then
   PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
+
+# add psql
+PATH="/opt/homebrew/Cellar/postgresql@12/12.9_1/bin:$PATH"
+
+export PATH
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 [[ -s "/Users/carlerik/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/carlerik/.sdkman/bin/sdkman-init.sh"
