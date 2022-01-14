@@ -24,6 +24,12 @@ export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
 # Ruby Homebrew
 PATH="$HOMEBREW_PREFIX/opt/ruby/bin:$HOMEBREW_PREFIX/lib/ruby/gems/3.0.0/bin:$PATH"
 
+export PATH="/opt/homebrew/opt/php@7.4/bin:$PATH"
+#export PATH="/opt/homebrew/opt/php@7.4/sbin:$PATH" #contains php-fpm
+# For compilers to find php@7.4 you may need to set:
+#export LDFLAGS="-L/opt/homebrew/opt/php@7.4/lib"
+#export CPPFLAGS="-I/opt/homebrew/opt/php@7.4/include"
+
 export PATH
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!

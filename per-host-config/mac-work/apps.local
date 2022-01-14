@@ -11,6 +11,7 @@ hub
 maven
 neovim
 node
+php@7.4
 postgresql
 pspg
 reattach-to-user-namespace
