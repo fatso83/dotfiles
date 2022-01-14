@@ -27,6 +27,10 @@ alias frostark_mosh='LC_ALL=en_US.UTF-8 mosh --ssh="ssh -i ~/.ssh/frostark-sync-
 alias frostark_btsync_tunnel='(sleep 2 && open http://localhost:9999)& ssh -i ~/.ssh/frostark-sync-server.pem ubuntu@ec2-52-211-72-132.eu-west-1.compute.amazonaws.com -N -L 9999:127.0.0.1:8888'
 alias timbuktu_mosh='LC_ALL=en_US.UTF-8 mosh --ssh="ssh -p 60022" carl-erik@timbuktu.kopseng.no tmux attach'
 
+# sync dev
+alias sync-dev='git stash && git pull && git stash pop'
+
+
 
 # Make Ctrl-S work again (incremental search forwards)
 # http://stackoverflow.com/questions/791765/unable-to-forward-search-bash-history-similarly-as-with-ctrl-r
