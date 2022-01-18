@@ -187,6 +187,16 @@ alias timbuktu_btsync="(sleep 2 && open http://localhost:8888)& ssh -L8888:127.0
 # Effect: client2 => timbuktu => client1
 alias timbuktu_reverse_tunnel='ssh -v -R 10001:localhost:22 timbuktu.kopseng.no -N -l carl-erik'
 
+# https://stackoverflow.com/a/40949364/200987
+function delete-untagged-aws-images(){
+    aws ecr  describe-repositories \
+    | jq --raw-output .repositories[].repositoryName \
+    | while read repo; do  
+        imageIds=$(aws ecr list-images --repository-name $repo --filter tagStatus=UNTAGGED --query 'imageIds[*]' --output json  | jq -r '[.[].imageDigest] | map("imageDigest="+.) | join (" ")');
+        if [[ "$imageIds" == "" ]]; then continue; fi
+        aws ecr batch-delete-image --repository-name $repo --image-ids $imageIds; 
+    done
+}
 
 t_debug "global aliases and functions finished"
 
