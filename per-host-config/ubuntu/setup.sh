@@ -42,7 +42,7 @@ while read org_line; do
     export RELEASE=$(lsb_release -cs)
 
     # replace bionic -> focal and vice versa
-    # this handles having both 18.04 and 20.04 repos
+    # this handles having both 18.04, 20.04, 21.04 and 21.10 repos
     case $RELEASE in 
         bionic)
             line=$(echo $org_line | envsubst | sed -e 's/focal/bionic/g' -e 's/20.04/18.04/g')
@@ -51,10 +51,14 @@ while read org_line; do
             line=$(echo $org_line | envsubst | sed -e 's/bionic/focal/g' -e 's/18.04/20.04/g')
             ;;
         hirsute)
-            line=$(echo $org_line | envsubst | sed -e 's/bionic/hirsute/g' -e 's/focal/hirsute/g' -e 's/18.04/20.04/g' -e 's/20.04/21.04/g')
+            line=$(echo $org_line | envsubst | \
+                sed -e 's/bionic/hirsute/g' -e 's/focal/hirsute/g' \
+                    -e 's/18.04/20.04/g' -e 's/20.04/21.04/g')
             ;;
         impish)
-            line=$(echo $org_line | envsubst | sed -e 's/bionic/impish/g' -e 's/focal/impish/g' -e 's/18.04/21.10/g' -e 's/21.04/21.10/g')
+            line=$(echo $org_line | envsubst | \
+                sed -e 's/bionic/impish/g' -e 's/focal/impish/g' -e 's/hirsute/impish/g' \
+                -e 's/18.04/21.10/g' -e 's/20.04/21.10/g' -e 's/21.04/21.10/g')
             ;;
         *)
             printf "Unhandled Ubuntu release $RELEASE! Exiting "; exit 1
@@ -76,7 +80,8 @@ done < repos.local
 APT_SHOULD_UPDATE=yes
 
 # Patch: peek does not exist for the 21.04 release of Ubuntu ... so use the old for Focal
-sed 's/hirsute/focal/g' /etc/apt/sources.list.d/peek-developers-ubuntu-stable-hirsute.list
+_PEEK=/etc/apt/sources.list.d/peek-developers-ubuntu-stable-hirsute.list
+[ -e $_PEEK ] && sed 's/hirsute/focal/g' $_PEEK
 
 echo -e $(blue Updating package lists ...)
 if [[ -n $APT_SHOULD_UPDATE ]]; then
