@@ -76,4 +76,4 @@ function text.remove-last-newline(){
     rm $file&
 }
 
-# vim: set ft=sh
+# vim: ft=sh
