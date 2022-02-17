@@ -25,7 +25,7 @@ fi
 pkg="$1"
 file="package/$2"
 
-quotedurl=$(npm show --json $pkg | pick_json -e 'dist.tarball')
+quotedurl=$(npm show --json $pkg | jq '.dist.tarball')
 url=$(eval echo $quotedurl)
 
 curl -s $url | tar $TAR_OPTS $file
