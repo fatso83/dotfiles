@@ -30,5 +30,7 @@ python3 -m pip install --user --upgrade pip
 python3 -m pip install --user smsutil
 python3 -m pip install --user requests 
 
+npm install
+
 # Restore current directory of user
 popd > /dev/null

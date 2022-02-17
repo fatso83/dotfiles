@@ -1,0 +1,7 @@
+{
+  "name": "scripts",
+  "license": "ISC",
+  "dependencies": {
+    "node-notifier": "^1.0.0"
+  }
+}
