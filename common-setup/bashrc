@@ -124,8 +124,11 @@ t_debug "Reading local settings for this machine"
 # This needs to be at the bottom to be able to override earlier settings/variables/functions
 read_config_if_exists "$HOME/.bashrc.local"
 
-# Shell options
-shopt -s globstar # makes ls **/*.ts match on all subdirs - at any level
+# could alternatively check version > 3 using echo "${BASH_VERSION}" | util.esed 's/(^.).*/\1/')
+if ! is_mac ; then
+    # Shell options
+    shopt -s globstar # makes ls **/*.ts match on all subdirs - at any level
+fi
 
 if command -v direnv &> /dev/null; then
     eval "$(direnv hook bash)"
