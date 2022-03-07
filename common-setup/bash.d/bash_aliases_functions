@@ -91,7 +91,7 @@ function strip-comments(){
 }
 
 # For stack overflow pasting
-alias websafe='util.esed -e "s/(diffia|ptflow)/ACME/gi" -e "s/$USER/my-user/gi" -e "s/(nimble|ptflow|pete)/my-project/gi" -e "s/clinic/my-app/gi"'
+alias websafe='util.esed -e "s/(diffia|ptflow)/ACME/gi" -e "s/$USER/my-user/gi" -e "s/(nimble|ptflow|pete)/MyProject/gi" -e "s/clinic/my-app/gi"'
 alias stack-overflow-no-copy='websafe | indent4 '
 alias stack-overflow='stack-overflow-no-copy | pbcopy; pbpaste; echo -e "\n\nCopied to pastebuffer (use stack-overflow-no-copy to avoid this)!"'
 
