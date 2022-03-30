@@ -101,6 +101,11 @@ main(){
     delete_branches_msg="Deleting the following branches"
     MAIN_BRANCH=$(merge_branch)
 
+    if ! git log $MAIN_BRANCH > /dev/null 2>/dev/null; then 
+        echo "Branch \"$MAIN_BRANCH\" does not exist. Specify another branch using --merge-branch"
+        exit 1
+    fi
+
     if [[ -n $local ]];then
         branches=$(
                         git branch --merged $MAIN_BRANCH |  # show local, merged branches 
