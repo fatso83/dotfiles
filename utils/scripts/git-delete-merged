@@ -60,7 +60,7 @@ skipped(){
 
 merge_branch(){
     local default='origin/master'
-    local setting="$(git config --default $default --get x-delete-tool.merge-branch)"
+    local setting="$(git config --default $default --get x-delete-tool.merge-master)"
 
     # command line args trumps git config
     if [[ -n "$merge_master" ]]; then
