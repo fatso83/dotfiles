@@ -18,6 +18,8 @@ gnome-key-bindings --set=switch-applications-backward '<Alt><Shift>Tab'
 # https://askubuntu.com/questions/1396900/why-does-not-the-gnome-keyboard-settings-override-clear-the-xkb-settings
 blue "Removing XKB input source setting messing all Alt-Shift shortcuts up"
 gsettings reset org.gnome.desktop.input-sources xkb-options
+TMP=$(mktemp)
+grep -v XKBOPTIONS= /etc/default/keyboard > $TMP; sudo mv $TMP /etc/default/keyboard
 
 blue "Pointing Flameshot config to dotfiles folder\n"
 # hack to get around the fact that a new file is created on Save, preventing hard links
