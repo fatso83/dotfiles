@@ -53,11 +53,16 @@ export PATH="$HOME/.symfony/bin:$PATH"
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-
 # Local overrides
 if [ -f "$HOME/.profile.local" ]; then
     t_debug "Reading local profile overrides"
     . "$HOME/.profile.local"
+fi
+
+if [[ "$PUPPETEER_EXECUTABLE_PATH" != "" ]]; then
+    export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+else
+    echo "PUPPETEER_EXECUTABLE_PATH is unset" # I _think_ this makes sense on headless as well?
 fi
 
 t_debug ".profile PATH=$PATH"

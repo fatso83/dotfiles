@@ -32,6 +32,8 @@ export PATH="/opt/homebrew/opt/php@7.4/bin:$PATH"
 
 export PATH
 
+export PUPPETEER_EXECUTABLE_PATH=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/carlerik/.sdkman"
 
