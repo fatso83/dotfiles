@@ -6,6 +6,18 @@
 # Discussion leading up to answer: https://unix.stackexchange.com/questions/15509/whos-consuming-my-inotify-resources
 # Speed enhancements by Simon Matter <simon.matter@invoca.ch>
 
+main(){
+    # get terminal width
+    declare -i COLS=$(tput cols 2>/dev/null || echo 80)
+    declare -i WLEN=10
+
+    printf "\n%${WLEN}s  %${WLEN}s\n" "INOTIFY" "INSTANCES"
+    printf "%${WLEN}s  %${WLEN}s\n" "WATCHES" "PER   "
+    printf "%${WLEN}s  %${WLEN}s  %s\n" " COUNT " "PROCESS "    "PID USER         COMMAND"
+    printf -- "------------------------------------------------------------\n"
+    generateData
+}
+
 usage(){
     cat << EOF
 Usage: $0 [--help|--limits]
@@ -95,24 +107,4 @@ generateData(){
 
 }
 
-
-# get terminal width
-declare -i COLS=$(tput cols 2>/dev/null || echo 80)
-declare -i WLEN=10
-
-printf "\n%${WLEN}s  %${WLEN}s\n" "INOTIFY" "INSTANCES"
-printf "%${WLEN}s  %${WLEN}s\n" "WATCHES" "PER   "
-printf "%${WLEN}s  %${WLEN}s  %s\n" " COUNT " "PROCESS "    "PID USER         COMMAND"
-printf -- "------------------------------------------------------------\n"
-generateData
-
-# not fully implemented with command line switch, so just a executable note:
-# print the # of instances (not watches)
-if [ -n "$PRINT_INSTANCES" ]; then
-    FIL=$(mktemp)
-    readlink -f /proc/*/fd/* |grep '^/proc/.*inotify' |cut -d/ -f3 | xargs -I '{}' -- ps --no-headers -o '%p %U %a' -p '{}' |uniq -c |sort -n > $FIL
-    cat $FIL 
-    echo "TOTAL = $(total=0 cat $FIL | awk '{print $1}' | { while read num; do let total+=$num; done; echo $total; })"
-    rm $FIL
-fi
-
+main
