@@ -4,7 +4,12 @@
 # @author Carl-Erik Kopseng
 # @latest https://github.com/fatso83/dotfiles/blob/master/utils/scripts/inotify-consumers
 # Discussion leading up to answer: https://unix.stackexchange.com/questions/15509/whos-consuming-my-inotify-resources
-# Speed enhancements by Simon Matter <simon.matter@invoca.ch>
+#
+# If you need ultimate speed, use https://github.com/fatso83/dotfiles/commit/inotify-consumers-v1-fastest
+# # Speed enhancements by Simon Matter <simon.matter@invoca.ch>
+#
+# A later PR introduced a significant slowdown to gain better output, but it is insignificant on most machines
+# See this for details: https://github.com/fatso83/dotfiles/pull/10#issuecomment-1122374716
 
 main(){
     # get terminal width
