@@ -165,13 +165,20 @@ go get github.com/claudiodangelis/qrcp
 # These bits do not make sense on WSL2 (Windows Subsyste for Linux)
 if ! is_wsl; then
 
+    sudo cp services/*.service /etc/systemd/system/
+
     blue "Use PowerTOP suggestions for saving power\n"
-    sudo cp services/powertop.service /etc/systemd/system/
-    # Enable the service, if first time
     if ! service powertop status > /dev/null 2>&1; then
         sudo systemctl daemon-reload
         sudo systemctl enable powertop.service
     fi
+
+    blue "Use Reverse SSH service to allow connecting to the box\n"
+    if ! service reverse-tunnel status > /dev/null 2>&1; then
+        sudo systemctl daemon-reload
+        sudo systemctl enable reverse-tunnel.service
+    fi
+
 
     blue "Installing snaps ...\n" # universal linux packages
     installed=$(mktemp)
