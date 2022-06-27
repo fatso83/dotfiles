@@ -42,6 +42,9 @@ neovim
 npm
 packer
 peek
+php
+php-xdebug
+php-redis
 #powershell-preview
 powertop
 python3-pip # https://github.com/pypa/pip/issues/5240 We will upgrade this using --user and then invoke using # `python -m pip` through aliases
