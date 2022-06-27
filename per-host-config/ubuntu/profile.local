@@ -8,4 +8,5 @@ export LC_TELEPHONE=nb_NO.UTF-8
 export LC_MEASUREMENT=nb_NO.UTF-8
 export LC_TIME=nb_NO.UTF-8
 export LC_NUMERIC=nb_NO.UTF-8
+export PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome
 
