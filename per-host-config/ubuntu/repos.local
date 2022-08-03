@@ -5,6 +5,6 @@ deb http://davesteele.github.io/gnome-gmail/repo gnome-gmailppa main
 deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
 deb https://packages.cloud.google.com/apt cloud-sdk main
 deb https://repo.jotta.us/debian debian main
-deb [arch=amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main
-deb [arch=amd64] http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main
-deb [arch=amd64] https://download.docker.com/linux/ubuntu $RELEASE stable
+deb [arch=amd64] https://packages.microsoft.com/ubuntu/22.04/prod jammy main
+deb [arch=amd64] http://apt.postgresql.org/pub/repos/apt/ jammy-pgdg main
+deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable

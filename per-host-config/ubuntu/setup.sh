@@ -60,6 +60,11 @@ while read org_line; do
                 sed -e 's/bionic/impish/g' -e 's/focal/impish/g' -e 's/hirsute/impish/g' \
                 -e 's/18.04/21.10/g' -e 's/20.04/21.10/g' -e 's/21.04/21.10/g')
             ;;
+        jammy)
+            line=$(echo $org_line | envsubst | \
+                sed -e 's/bionic/impish/g' -e 's/focal/impish/g' -e 's/hirsute/impish/g' \
+                -e 's/18.04/22.04/g' -e 's/20.04/22.04/g' -e 's/21.04/22.04/g' -e 's/21.10/22.04/g')
+            ;;
         *)
             printf "Unhandled Ubuntu release $RELEASE! Exiting "; exit 1
     esac
