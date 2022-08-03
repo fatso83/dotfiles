@@ -87,3 +87,5 @@
 	autoStash = true
 [init]
 	defaultBranch = høvding
+[safe]
+# Try to stuff this into .gitlocal as this is machine/env specific
