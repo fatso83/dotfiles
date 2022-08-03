@@ -10,6 +10,10 @@ if ! declare -p X_PLATFORM_UTILS > /dev/null 2>&1; then
     source ~/bin/cross-platform-utils.bashlib 
 fi
 
+function abspath(){
+    python -c "import os,sys; print(os.path.abspath(sys.argv[1]))" "$1"
+}
+
 # Strip junk left from converting utf8<->cp1252
 alias strip-non-ascii='python -c "import sys,re;[sys.stdout.write(re.sub('\''[^\x09\x0A\x0D\x20-\x7F]'\'', '\'''\'', line)) for line in sys.stdin]"'
 alias strip-empty="egrep -v '^\s*$'"
