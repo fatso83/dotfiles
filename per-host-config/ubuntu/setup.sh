@@ -84,6 +84,7 @@ while read org_line; do
 done < repos.local 
 APT_SHOULD_UPDATE=yes
 
+# TODO: 22.04 upgrade, check this file and remove old comment
 # Patch: peek does not exist for the 21.04 release of Ubuntu ... so use the old for Focal
 _PEEK=/etc/apt/sources.list.d/peek-developers-ubuntu-stable-hirsute.list
 [ -e $_PEEK ] && sed 's/hirsute/focal/g' $_PEEK
