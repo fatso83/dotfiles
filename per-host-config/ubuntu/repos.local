@@ -1,6 +1,7 @@
 ppa:git-core/ppa
 ppa:neovim-ppa/stable
 ppa:peek-developers/stable
+ppa:ondrej/php
 deb http://davesteele.github.io/gnome-gmail/repo gnome-gmailppa main
 deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
 deb https://packages.cloud.google.com/apt cloud-sdk main
