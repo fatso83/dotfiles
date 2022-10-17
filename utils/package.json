@@ -2,6 +2,7 @@
   "name": "scripts",
   "license": "ISC",
   "dependencies": {
-    "node-notifier": "^8.0.1"
+    "node-notifier": "^8.0.1",
+    "voca": "^1.4.0"
   }
 }

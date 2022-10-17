@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+var v = require("voca");
+const args = process.argv.slice(3).join(" ");
+
+const actions = {
+  "--snake": v.snakeCase,
+  "--camel": v.camelCase,
+  "--pascal": (s) => v.capitalize(v.camelCase(s)),
+  "--kebab": v.kebabCase,
+};
+
+console.log(actions[process.argv[2]](args));

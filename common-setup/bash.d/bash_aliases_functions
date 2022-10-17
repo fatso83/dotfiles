@@ -25,6 +25,12 @@ alias htmldecode='python3 -c "import sys, html; print(html.unescape(sys.argv[1])
 alias htmlencode='python3 -c "import sys, html; print(html.escape(sys.argv[1]))"'
 alias html2text='npx html-to-text'
 
+t_debug "Pascal, Kebab, Camel, ... case conversions"
+alias pascal-case='~/bin/change-case --pascal'
+alias camel-case='~/bin/change-case --camel'
+alias snake-case='~/bin/change-case --snake'
+alias kebab-case='~/bin/change-case --kebab'
+
 t_debug Use htop if available
 if which htop > /dev/null; then
     alias top='htop'
