@@ -1,6 +1,6 @@
 # Development setup for a Windows box
+> Not updated since 2016. Do most development in a VMWare image these days TBH
 
-```
 # Install Scoop
 See [scoop.sh](http://scoop.sh).
 
