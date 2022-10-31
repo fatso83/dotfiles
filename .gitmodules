@@ -4,3 +4,6 @@
 [submodule "utils/signal-reset"]
 	path = utils/signal-reset
 	url = https://github.com/thomaslee/signal-reset
+[submodule "utils/inotify-info"]
+	path = utils/inotify-info
+	url = https://github.com/mikesart/inotify-info

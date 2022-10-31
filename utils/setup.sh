@@ -22,6 +22,16 @@ if ! which signal-reset > /dev/null; then
     popd > /dev/null
 fi
 
+# inotify-info
+# The better native version of my own script :D 
+if ! command -v inotify-info > /dev/null; then
+    pushd inotify-info/
+    make
+    cp _release/inotify-info ~/bin/
+    popd
+fi
+
+
 # scripts
 ln -sf "$SCRIPT_DIR/scripts/"* $HOME/bin/
 
