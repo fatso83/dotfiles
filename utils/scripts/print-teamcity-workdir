@@ -1,7 +1,9 @@
 #!/bin/sh
 # @author Carl-Erik Kopseng carlerik@gmail.com
+
 MAP=/opt/TeamCity/buildAgent/work/directory.map 
 DIR=$(dirname $MAP)
+
 sed -n -e '1,3d;1,/#/{/#/!p}' $MAP | \
     awk -v pwd=$PWD '
 { 

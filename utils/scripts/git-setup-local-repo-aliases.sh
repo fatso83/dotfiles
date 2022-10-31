@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Useful git aliases that can be included as part of some setup
 # Just customize the variables below and run the script to 
 # add these aliases to your local repo
@@ -14,7 +14,7 @@ _f()
     local RE_IGNORE_CSS_FILES='_graphics-generated.scss|framework'
 
     if [[ x$1 = x ]]; then 
-        printf "No class name recieved"
+        printf "No class name received"
         exit 1 
     fi
 
