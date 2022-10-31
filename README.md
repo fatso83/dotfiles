@@ -32,4 +32,5 @@ git clone https://github.com/fatso83/dotfiles
 ./dotfiles/setup.sh # and wait until completion ...
 ```
 ![install vid](./dotfiles-install.gif "Install video")
+
 The first time you run the install it will take some time, mostly due [YouCompleteMe](https://github.com/Valloric/YouCompleteMe), which needs to be downloaded and compiled. It might seem as if the install hangs on this step, but this only takes a lot of time the first time you run setup. On subsequent `./setup.sh` runs, it should not take more than a second or two.
