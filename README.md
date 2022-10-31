@@ -7,10 +7,14 @@ and quite a lot of [aliases/functions](https://github.com/fatso83/dotfiles/blob/
 
 This repo is under a [do as you please license](./LICENSE) :)
 
+
 ## Intentionally simple
 I really hate code or configuration that I don't understand. It might do magical things, but when things ago awry, and they do, I need to be able to fix it. In this setup, I have handwritten (or at least hand copied :smiley:) every line, and I have tried to document (commit msg or inline comment) why the line exists if it is scary or weird in some way. I encourage you to read the various setup files to understand how it works and prod around yourself :)
 
 ## Installation
+
+### WARNING
+This repo and its configs includes _my settings_, which means that if you run the `./setup.sh` script, it will _overwrite_ your existing configuration files. This would for instance [include your Git settings](https://github.com/fatso83/dotfiles/blob/master/common-setup/gitconfig), which will screw up commit messages. This is probably not what you want, so be sure to fork it, backup your own home directory and check out the files before going full gung ho.
 
 ```
 git clone https://github.com/fatso83/dotfiles
