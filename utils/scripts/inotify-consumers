@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# INFO: check out https://github.com/mikesart/inotify-info
-#       This is a native executable that is a much faster, modern and nicer alternative to this script
-#
 # Get the procs sorted by the number of inotify watches
 # @author Carl-Erik Kopseng
 # @latest https://github.com/fatso83/dotfiles/blob/master/utils/scripts/inotify-consumers
@@ -32,6 +29,12 @@ Usage: $0 [--help|--limits]
 
     -l, --limits    Will print the current related limits and how to change them
     -h, --help      Show this help
+
+FYI:  Check out Michael Sartain's C++ take on this script. The native executable 
+      is much faster, modern and feature rich. It can be found at 
+
+      https://github.com/mikesart/inotify-info
+
 EOF
 }
 
