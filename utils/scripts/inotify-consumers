@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# INFO: check out https://github.com/mikesart/inotify-info
+#       This is a native executable that is a much faster, modern and nicer alternative to this script
+#
 # Get the procs sorted by the number of inotify watches
 # @author Carl-Erik Kopseng
 # @latest https://github.com/fatso83/dotfiles/blob/master/utils/scripts/inotify-consumers
