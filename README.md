@@ -5,7 +5,7 @@ My dot files
 These are my config files for Bash, VIM, Python, tmux and more. Also includes a handful of [utility scripts](./utils/scripts) 
 and quite a lot of [aliases/functions](https://github.com/fatso83/dotfiles/blob/master/common-setup/bash.d/bash_aliases_functions) I find useful and re-use quite often.
 
-You may use them as they are, fork the repo, copy-paste what you like or suggest changes. It's under a do as you please license :)
+This repo is under a [do as you please license](./LICENSE) :)
 
 ## Intentionally simple
 I really hate code or configuration that I don't understand. It might do magical things, but when things ago awry, and they do, I need to be able to fix it. In this setup, I have handwritten (or at least hand copied :smiley:) every line, and I have tried to document (commit msg or inline comment) why the line exists if it is scary or weird in some way. I encourage you to read the various setup files to understand how it works and prod around yourself :)
