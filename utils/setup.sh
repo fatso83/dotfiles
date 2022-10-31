@@ -10,25 +10,32 @@ if [[ ! -e ~/bin ]]; then
     mkdir ~/bin
 fi
 
-# millis
-make install 
+function has-command(){
+    command -v $1 > /dev/null;
+}
 
-# signal-reset
-if ! which signal-reset > /dev/null; then
-    echo signal-reset not found ... building.
-    pushd signal-reset > /dev/null
-    make
-    cp signal-reset $HOME/bin/
-    popd > /dev/null
+has-command millis || (printf "Installing millis utility \n"; cd millis; make install > /dev/null)
+
+if ! has-command signal-reset; then
+    printf "Installing signal-reset\n"
+    _f(){
+        cd signal-reset 
+        make
+        cp signal-reset $HOME/bin/
+    }
+    _f > /dev/null
 fi
 
 # inotify-info
 # The better native version of my own script :D 
-if ! command -v inotify-info > /dev/null; then
-    pushd inotify-info/
-    make
-    cp _release/inotify-info ~/bin/
-    popd
+if ! has-command inotify-info; then
+    printf "Installing inotify-info\n"
+    _f(){
+        cd inotify-info/
+        make
+        cp _release/inotify-info $HOME/bin/
+    }
+    _f > /dev/null
 fi
 
 
