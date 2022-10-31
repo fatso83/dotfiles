@@ -8,8 +8,8 @@
 #include <stdio.h>
 #include <sys/time.h>
 int main(void)
-{
-  struct timeval time_now;
+{ 
+    struct timeval time_now;
     gettimeofday(&time_now,NULL);
     printf ("%ld%03d\n",time_now.tv_sec, (int) time_now.tv_usec/1000);
 
