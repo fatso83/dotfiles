@@ -12,6 +12,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument(
         "--phone", type=str, action="append", 
         help="Can be repeated. If the number is only 8 digits, assumes 47 (Norway country code) should be prepended.")
+parser.add_argument("--phone-file", type=open, help="One number per line")
 parser.add_argument("--file", type=open)
 parser.add_argument("--msg", type=str)
 parser.add_argument("--id", type=str)
@@ -22,7 +23,7 @@ parser.add_argument("--force-text", action="store_const", const=True, help="Forc
 parser.add_argument("--history", action="store_const", const=True, help="Show last sent messages")
 parser.add_argument("--profile", action="store_const", const=True, help="Show profile - including credits")
 parser.add_argument("--debug", action="store_const", const=True, help="Prints the raw return")
-parser.add_argument("--max-parts", type=int, default=3, help="In case the message is too long to fit, increase this. Each part is 153 characters - 67 if unicode")
+parser.add_argument("--max-parts", type=int, default=6, help="In case the message is too long to fit, increase this. Each part is 153 characters - 67 if unicode")
 parsed = parser.parse_args()
 
 try:
@@ -44,10 +45,20 @@ if parsed.history:
     print(r.text)
     exit(0)
 
-if not parsed.phone:
-    print("You need to specify --phone")
+if not parsed.phone and not parsed.phone_file:
+    print("You need to specify --phone or --phone-file")
     parser.print_help()
     exit(1)
+
+if parsed.phone_file and parsed.phone:
+    print("Can only handle phone numbers from file OR from the command line, not both")
+    exit(1)
+
+if parsed.phone:
+    numbers = ["+47" + p if len(p) == 8 else p for p in parsed.phone]
+
+if parsed.phone_file:
+    numbers = ["+47" + p if len(p) == 8 else p for p in parsed.phone_file.read().splitlines()]
 
 if parsed.msg and parsed.file:
     print("Cannot specify both a msg and a file to read from!")
@@ -63,7 +74,6 @@ if not smsutil.is_valid_gsm(msg) and not parsed.unicode and not parsed.force_tex
     exit(1)
 
 
-numbers = ["+47" + p if len(p) == 8 else p for p in parsed.phone]
 from_nmbr = parsed.from_nmbr or "+4740065078"
 
 encoding = "TEXT" if not parsed.unicode else "UNICODE"
@@ -78,5 +88,5 @@ payload = {
 }
 
 r = requests.post(url, json=payload, auth=(sms_id, sms_secret), timeout=1)
-if r.status_code != 201 or parsed.debug:
+if r.status_code != 201 or parsed.debug: 
     print(r.text)
