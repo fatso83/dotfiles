@@ -24,6 +24,7 @@ usage(){
 Usage: $0 [--help|--limits]
     -l, --limits    Will print the current related limits and how to change them
     -h, --help      Show this help
+
 FYI:  Check out Michael Sartain's C++ take on this script. The native executable 
       is much faster, modern and feature rich. It can be found at 
       https://github.com/mikesart/inotify-info
