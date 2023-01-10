@@ -33,6 +33,7 @@ fi
 
 function _f(){ # create throw-away function to not pollute global namespace with local variables
     blue "Installing local apps using Homebrew ...\n"
+    brew tap shivammathur/php
 
     local app_to_formula_map=$( awk -F/ '{  print ( ($3 != "") ? $3 : $1) "\t" $0 } ' < apps.local | sort )
     local to_install=$(awk -F'\t' '{  print $1 }' <(printf "%s\n" "$app_to_formula_map"))
@@ -43,7 +44,7 @@ function _f(){ # create throw-away function to not pollute global namespace with
     while read APP; do 
         if [ "$APP" == "" ]; then continue; fi
         local formula=$(awk -v APP=$APP -F'\t' '$1==APP{print $2}' <(printf "%s\n" "$app_to_formula_map" ) )
-        brew install "$formula"
+        brew install "$formula" < /dev/null
     done <<< "$not_installed"
     green "finished \n"
 }; _f
@@ -58,8 +59,8 @@ if ! command -v rvm; then
     curl -sSL https://get.rvm.io | bash -s stable
     rvm install "ruby-2.7.2"
 fi
-rvm use ruby-2.7.2
 source "$HOME/.rvm/scripts/rvm"
+rvm use ruby-2.7.2
 PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 
 source ../_shared/install-utils

@@ -5,6 +5,9 @@ pushd "$SCRIPT_DIR" > /dev/null
 
 # Get some color codes for printing
 source ../common-setup/bash.d/colors
+source ../common-setup/bash.d/bash_aliases_functions 
+
+shopt -s expand_aliases
 
 if [[ ! -e ~/bin ]]; then
     mkdir ~/bin
@@ -12,6 +15,7 @@ fi
 
 # millis
 if ! command -v millis > /dev/null; then
+    cd millis
     make install 
 fi
 
@@ -26,7 +30,7 @@ fi
 
 # inotify-info
 # The better native version of my own script :D 
-if ! command -v inotify-info > /dev/null; then
+if (! is_mac)  && (! command -v inotify-info > /dev/null); then
     pushd inotify-info/
     make
     cp _release/inotify-info ~/bin/

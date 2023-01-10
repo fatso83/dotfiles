@@ -22,7 +22,7 @@ install_node_packages(){
 install_python_packages(){
     # https://github.com/pypa/pip/issues/5240
     blue "Upgrading pip\n"
-    alias pip="python3 -m pip"  # to avoid warning about script wrapper and old python
+    pip(){ python3 -m pip $@; } # to avoid warning about script wrapper and old python
     pip install --upgrade --user pip
 
     blue "Installing python packages ...\n"

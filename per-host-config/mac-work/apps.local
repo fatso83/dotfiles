@@ -4,14 +4,15 @@ direnv
 fortune
 fswatch
 git-extras
-gpg2
+gnupg
 homebrew/cask/macvim
 htop
 hub
+jq
 maven
 neovim
 node
-php@7.4
+shivammathur/php/php@7.4
 postgresql
 pspg
 reattach-to-user-namespace
