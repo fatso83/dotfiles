@@ -166,7 +166,7 @@ if ! sh -c "mvn --version  | grep '$MAVEN_VERSION' > /dev/null"; then
 fi
 
 blue "Install QR copier\n"
-go get github.com/claudiodangelis/qrcp
+go install github.com/claudiodangelis/qrcp@latest
 
 # These bits do not make sense on WSL2 (Windows Subsyste for Linux)
 if ! is_wsl; then
