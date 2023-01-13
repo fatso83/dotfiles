@@ -1,5 +1,8 @@
 # vim: syntax=sh
 
+# https://www.gnu.org/software/bash/manual/html_node/Pattern-Matching.html#Pattern-Matching
+#shopt -s extglob;
+
 if ! declare -p t_debug > /dev/null 2> /dev/null; then
     source ~/.bash.d/core_utils
 fi
@@ -12,6 +15,25 @@ fi
 
 function abspath(){
     python -c "import os,sys; print(os.path.abspath(sys.argv[1]))" "$1"
+}
+
+function command_exists(){
+    command -v $@ > /dev/null
+}
+
+function cat(){
+    if [[ $# > 0 ]]; then 
+        local file="$(readlink -f $*)"
+        case "$file" in
+        *.md)
+            glow "$file"
+            ;; 
+        *) ccat "$file"
+            ;;
+        esac 
+    else
+        ccat 
+    fi
 }
 
 # Strip junk left from converting utf8<->cp1252
@@ -97,7 +119,7 @@ alias strip-diff-prefix='sed "s/^\([^-+ ]*\)[-+ ]/\\1/"'
 # Used a lot in utility setup scripts
 function strip-comments(){
     #grep -v '^#' $@
-    sed -e 's/#.*//' $@
+    sed -e 's/#.*//' $@ | strip-empty
 }
 
 # For stack overflow pasting

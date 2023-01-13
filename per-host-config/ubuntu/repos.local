@@ -2,10 +2,14 @@ ppa:git-core/ppa
 ppa:neovim-ppa/stable
 ppa:peek-developers/stable
 ppa:ondrej/php
-deb http://davesteele.github.io/gnome-gmail/repo gnome-gmailppa main
-deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+deb https://davesteele.github.io/gnome-gmail/repo gnome-gmailppa main
+deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main
 deb https://packages.cloud.google.com/apt cloud-sdk main
 deb https://repo.jotta.us/debian debian main
 deb [arch=amd64] https://packages.microsoft.com/ubuntu/22.04/prod jammy main
-deb [arch=amd64] http://apt.postgresql.org/pub/repos/apt/ jammy-pgdg main
+deb [arch=amd64] https://apt.postgresql.org/pub/repos/apt/ jammy-pgdg main
 deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable
+
+# This does not work for some reason. See https://askubuntu.com/questions/1450095/does-add-apt-repository-not-support-globs-in-source-list
+# Needs manual workaround
+# deb [signed-by=/etc/apt/trusted.gpg.d/repo.charm.sh.gpg] https://repo.charm.sh/apt/ * *

@@ -19,6 +19,7 @@ freerdp2-x11
 g++
 gcc
 git-extras 
+glow # markdown highlighter
 gnome-panel
 golang-go
 google-chrome-stable

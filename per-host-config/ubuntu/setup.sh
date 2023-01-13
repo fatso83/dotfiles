@@ -36,9 +36,15 @@ __install-key https://packages.microsoft.com/keys/microsoft.asc  microsoft.com
 __install-key https://www.postgresql.org/media/keys/ACCC4CF8.asc  postgresql.org
 __install-key https://packages.cloud.google.com/apt/doc/apt-key.gpg  cloud.google.com
 __install-key https://download.docker.com/linux/ubuntu/gpg  download.docker.com
+__install-key https://repo.charm.sh/apt/gpg.key  repo.charm.sh
 
 blue "Adding external package repositories ...\n"
-while read org_line; do 
+
+# 2023-01-13 manual workaround, see https://askubuntu.com/questions/1450095/does-add-apt-repository-not-support-globs-in-source-list
+echo 'deb [signed-by=/etc/apt/trusted.gpg.d/repo.charm.sh.gpg] https://repo.charm.sh/apt/ * *' \
+    | sudo tee /etc/apt/sources.list.d/charm.list > /dev/null
+
+strip-comments repos.local | while read org_line; do 
     export RELEASE=$(lsb_release -cs)
 
     # replace bionic -> focal and vice versa
@@ -61,7 +67,7 @@ while read org_line; do
                 -e 's/18.04/21.10/g' -e 's/20.04/21.10/g' -e 's/21.04/21.10/g')
             ;;
         jammy)
-            line=$(echo $org_line | envsubst | \
+            line=$(echo "$org_line" | envsubst | \
                 sed -e 's/bionic/impish/g' -e 's/focal/impish/g' -e 's/hirsute/impish/g' \
                 -e 's/18.04/22.04/g' -e 's/20.04/22.04/g' -e 's/21.04/22.04/g' -e 's/21.10/22.04/g')
             ;;
@@ -71,7 +77,7 @@ while read org_line; do
 
 
     # strip first four chars: 'ppa:' or 'deb '
-    ppa=$(echo $line | sed 's/^....//')
+    ppa=$(echo "$line" | sed 's/^....//')
 
     if $(find /etc/apt/ -name '*.list' | xargs cat | grep -v '^#' | grep -F "$ppa" >> /dev/null); then
         printf "Found existing entry for $ppa. Skipping.\n"
@@ -81,13 +87,8 @@ while read org_line; do
     # handle possible error
     sudo add-apt-repository --no-update --yes "$line" || :
     APT_SHOULD_UPDATE=yes
-done < repos.local 
+done 
 APT_SHOULD_UPDATE=yes
-
-# TODO: 22.04 upgrade, check this file and remove old comment
-# Patch: peek does not exist for the 21.04 release of Ubuntu ... so use the old for Focal
-_PEEK=/etc/apt/sources.list.d/peek-developers-ubuntu-stable-hirsute.list
-[ -e $_PEEK ] && sed 's/hirsute/focal/g' $_PEEK
 
 echo -e $(blue Updating package lists ...)
 if [[ -n $APT_SHOULD_UPDATE ]]; then
@@ -215,8 +216,8 @@ else
         echo "Downloading win32yank"
         wget --quiet https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip
         unzip win32yank-x64.zip -d tmp
-        mv tmp/win32yank.exe ~/bin/
-        chmod +x ~/bin/win32yank.exe
+        chmod +x tmp/win32yank.exe
+        mv tmp/win32yank.exe /usr/local/bin/
         rm -r tmp
     fi
 
@@ -233,7 +234,7 @@ else
     green "Finished WSL2 adjustments\n"
 fi
 
-if ! which pspg > /dev/null; then
+if ! command_exists pspg; then
     blue "Compiling pspg: Postgres Pager\n"
     apt install lib32ncursesw5-dev
     PSPGTMP=$(mktemp -d)
@@ -248,6 +249,11 @@ fi
 
 # Installing zplug
 #curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+
+if ! command_exists ccat; then
+     curl -o - -L https://github.com/jingweno/ccat/releases/download/v1.1.0/linux-amd64-1.1.0.tar.gz | tar xvz linux-amd64-1.1.0/ccat
+     mv  linux-amd64-1.1.0/ccat /usr/local/bin/ccat
+fi
 
 if groups | grep docker > /dev/null; then
     blue "Adding myself to the docker group\n"
