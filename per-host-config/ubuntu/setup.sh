@@ -197,10 +197,12 @@ if ! is_wsl; then
         sudo snap install $pkg --classic
     done
 
-    # Git Credential Manager for Linux
-    curl -L -o gcm-linux.deb https://github.com/GitCredentialManager/git-credential-manager/releases/download/v2.0.886/gcm-linux_amd64.2.0.886.deb
-    sudo dpkg -i gcm-linux.deb
-    rm gcm-linux.deb
+    if ! command_exists git-credential-manager; then
+    blue "Git Credential Manager for Linux\n"
+        curl -L -o gcm-linux.deb https://github.com/GitCredentialManager/git-credential-manager/releases/download/v2.0.886/gcm-linux_amd64.2.0.886.deb
+        sudo dpkg -i gcm-linux.deb
+        rm gcm-linux.deb
+    fi
 
     blue "Customizing desktop applications\n"
     ./desktop/setup.sh
