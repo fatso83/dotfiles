@@ -36,6 +36,12 @@ function cat(){
     fi
 }
 
+if ! command_exists ccat || ! command_exists glow; then
+    printf "Missing core utils for fancy 'cat' command with syntax highlighting and preview. Ensure ccat and glow is installed for OS\n"
+    unset cat
+fi
+
+
 # Strip junk left from converting utf8<->cp1252
 alias strip-non-ascii='python -c "import sys,re;[sys.stdout.write(re.sub('\''[^\x09\x0A\x0D\x20-\x7F]'\'', '\'''\'', line)) for line in sys.stdin]"'
 alias strip-empty="egrep -v '^\s*$'"
@@ -118,7 +124,6 @@ alias strip-diff-prefix='sed "s/^\([^-+ ]*\)[-+ ]/\\1/"'
 
 # Used a lot in utility setup scripts
 function strip-comments(){
-    #grep -v '^#' $@
     sed -e 's/#.*//' $@ | strip-empty
 }
 
