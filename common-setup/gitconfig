@@ -65,18 +65,6 @@
     # One week in-mem caching of HTTPS credentials
 	helper = cache --timeout=604800
 
-
-
-
-################################################################################
-# This should probably stay at the end to overwrite global defaults
-################################################################################
-#
-# https://www.semipol.de/2013/08/26/sharing-the-git-config-across-different-computers-with-individual-modifications.html
-[include]
-    path = .gitlocal
-
-# Do not add stuff here. 
 [mergetool]
 	keepBackup = false
 [filter "lfs"]
@@ -90,3 +78,14 @@
 	defaultBranch = høvding
 [safe]
 # Try to stuff this into .gitlocal as this is machine/env specific
+
+
+################################################################################
+# This should probably stay at the end to overwrite global defaults
+################################################################################
+#
+# https://www.semipol.de/2013/08/26/sharing-the-git-config-across-different-computers-with-individual-modifications.html
+[include]
+    path = .gitlocal
+
+# Do not add stuff after this point in the global config

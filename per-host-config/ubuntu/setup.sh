@@ -196,15 +196,20 @@ if ! is_wsl; then
         sudo snap install $pkg --classic
     done
 
+    # Git Credential Manager for Linux
+    curl -L -o gcm-linux.deb https://github.com/GitCredentialManager/git-credential-manager/releases/download/v2.0.886/gcm-linux_amd64.2.0.886.deb
+    sudo dpkg -i gcm-linux.deb
+    rm gcm-linux.deb
+
     blue "Customizing desktop applications\n"
     ./desktop/setup.sh
 
     # Use rc.local for small tweaks
     sudo cp rc.local /etc/
     sudo systemctl start rc-local.service
-fi
+else 
+    green "Installing WSL2 adjustments\n"
 
-if is_wsl; then
     blue "Setting up win32yank as pbpaste\n"
     if ! which win32yank.exe > /dev/null; then
         echo "Downloading win32yank"
@@ -214,6 +219,18 @@ if is_wsl; then
         chmod +x ~/bin/win32yank.exe
         rm -r tmp
     fi
+
+    blue "Setup Git Credential Manager to use the Windows Keystore\n"
+    ln -sf $PWD/wsl/wsl-gitlocal ~/.wsl-gitlocal
+
+    if  ! locale -a | grep nb_NO > /dev/null; then
+        blue "Generate locale for Norwegian\n"
+        sudo locale-gen nb_NO
+        sudo locale-gen nb_NO.UTF-8
+        sudo update-locale
+    fi
+
+    green "Finished WSL2 adjustments\n"
 fi
 
 if ! which pspg > /dev/null; then
