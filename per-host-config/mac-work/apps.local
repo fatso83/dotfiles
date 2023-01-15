@@ -1,3 +1,4 @@
+ccat
 cmake
 cowsay
 direnv
@@ -12,11 +13,11 @@ jq
 maven
 neovim
 node
-shivammathur/php/php@7.4
 postgresql
 pspg
 reattach-to-user-namespace
-the_silver_searcher
+shivammathur/php/php@7.4
 terraform
+the_silver_searcher
 tmux
 vagrant
