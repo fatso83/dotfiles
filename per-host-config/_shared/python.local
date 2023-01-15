@@ -1,3 +1,4 @@
+poetry
 bitwarden-keyring
 keyring
 setuptools
