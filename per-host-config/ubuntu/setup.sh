@@ -206,7 +206,14 @@ if ! is_wsl; then
     sudo cp rc.local /etc/
     sudo systemctl start rc-local.service
 else 
-    green "Installing WSL2 adjustments\n"
+    h1 "Installing WSL2 adjustments\n"
+
+
+    h2 "Setup 1Password to use as SSH Agent"
+    if [[ ! -e $HOME/.1password ]]; then
+        mkdir $HOME/.1password
+    fi
+    ln -sf $SCRIPT_DIR/wsl/ssh-agent-bridge.sh ~/.agent-bridge.sh
 
     h2 "Setting up win32yank as pbpaste"
     if ! which win32yank.exe > /dev/null; then
@@ -228,7 +235,7 @@ else
         sudo update-locale
     fi
 
-    green "Finished WSL2 adjustments\n"
+    info "Finished WSL2 adjustments\n"
 fi
 
 if ! command_exists pspg; then

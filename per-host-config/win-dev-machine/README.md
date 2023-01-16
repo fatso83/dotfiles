@@ -7,5 +7,8 @@ most of my development in a Linux VM or WSL2.
 
 Therefore, Windows stuff is mostly about linking the Windows
 world to the Linux world:
-- re-using Git Credential Manager for Windows in WSL2
-- re-using the 1Password SSH Agent in WSL2
+- [re-using Git Credential Manager for Windows in WSL2](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-git)
+- [re-using the 1Password SSH Agent in WSL2](https://dev.to/d4vsanchez/use-1password-ssh-agent-in-wsl-2j6m)
+
+The actual changes are in the `ubuntu` folder and they 
+are added using a `is_wsl` check during running `./setup.sh`.

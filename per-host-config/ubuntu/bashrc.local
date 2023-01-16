@@ -1,4 +1,4 @@
-# vi: ft=sh
+# vi: ft=bash
 
 #See man bash: "Prompting"
 t_debug "Load personalized bashrc for Ubuntu dev machine"
@@ -71,6 +71,11 @@ if is_wsl; then
         echo -e "$(grep nameserver /etc/resolv.conf | awk '{print $2, " host"}')\n$(cat /etc/hosts)" | \
         sudo tee /etc/hosts
     }
+
+    # remove redundant agents
+    killall ssh-agent 
+
+    source $HOME/.agent-bridge.sh
 fi
 
 # For Remote Mob programming on Nimble where develop is the base branch, not master

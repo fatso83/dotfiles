@@ -2,3 +2,8 @@ vs-editorconfig
 vs-resharper
 
 sysinternals: https://download.sysinternals.com/files/SysinternalsSuite.zip
+
+# See setup.ps1
+npiperelay: https://dev.to/d4vsanchez/use-1password-ssh-agent-in-wsl-2j6m
+
+Git Credential Manager (installed with Git for Windows)
