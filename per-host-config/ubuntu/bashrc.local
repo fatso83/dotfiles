@@ -72,9 +72,7 @@ if is_wsl; then
         sudo tee /etc/hosts
     }
 
-    # remove redundant agents
-    killall ssh-agent 
-
+    t_debug "Setting up custom SSH agent bridge to 1Password on Windows"
     source $HOME/.agent-bridge.sh
 fi
 

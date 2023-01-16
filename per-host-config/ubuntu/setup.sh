@@ -215,6 +215,8 @@ else
     fi
     ln -sf $SCRIPT_DIR/wsl/ssh-agent-bridge.sh ~/.agent-bridge.sh
 
+    ln -sf $SCRIPT_DIR/wsl/wsl-profile.local ~/.wsl-profile.local
+
     h2 "Setting up win32yank as pbpaste"
     if ! which win32yank.exe > /dev/null; then
         echo "Downloading win32yank"
