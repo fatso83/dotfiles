@@ -1,0 +1,44 @@
+# vi: ft=bash
+
+# since this is sourced from ANYWHERE, we need to know the root to be able to 
+# source other files
+if [[ "$ROOT" == "" ]]; then
+    printf "Missing ROOT environment variable\n. Should point to git repo root"
+    exit 1
+fi
+
+source $ROOT/common-setup/bash.d/colors
+source $ROOT/common-setup/bash.d/bash_aliases_functions 
+shopt -s expand_aliases
+
+# header1
+h1() {
+    printf "%s\n" "$(green "$@")"
+}
+
+h2(){
+    printf "%s\n" "$(blue "$@")"
+}
+
+h3(){
+    printf "%s %s\n" "-->" "$(blue "$@")"
+}
+
+info(){
+    printf "%s\n" "$(pink "$@")"
+}
+
+warn(){
+    printf "%s\n" "$(dark_yellow "$@")" >> /dev/stderr
+}
+
+error(){
+    printf "%s\n" "$(dark_red "$@")" >> /dev/stderr
+    exit 1
+}
+
+banner(){
+    printf "\n################################################################################\n"
+    printf "##    %s\n" "$(dark_red "$@")\n"
+    printf "################################################################################\n"
+}

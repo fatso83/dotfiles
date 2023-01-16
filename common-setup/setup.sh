@@ -12,7 +12,8 @@ fi
 
 pushd "$SCRIPT_DIR" > /dev/null
 
-source "$SCRIPT_DIR/bash.d/colors"
+ROOT="$SCRIPT_DIR/.."
+source "$ROOT/shared.lib"
 
 if [ ! -e "$BASH_DIR" ]; then
   mkdir "${BASH_DIR}"
@@ -26,7 +27,7 @@ rm -rf "$HOME"/.bash_completion.d 2>/dev/null
 ln -s "$SCRIPT_DIR"/bash_completion.d "$HOME"/.bash_completion.d 
 
 if [ -e "$HOME/.bash_profile" ]; then
-    echo "We don't use .bash_profile to avoid trouble. Renaming to .bash_profile.bak"
+    info "We don't use .bash_profile to avoid trouble. Renaming to .bash_profile.bak"
     mv ~/.bash_profile{,.bak}
 fi
 
@@ -66,19 +67,19 @@ ln -sf "$SCRIPT_DIR"/vim/vimrc "$HOME"/.vimrc
 # Checks out the Vundle submodule
 git submodule update --init --recursive
 
-echo  -n -e $(blue "Installing all VIM plugins")
-echo -e $(dark_grey "(might take some time the first time ... )")
+h2 "Installing all VIM plugins"
+info "(might take some time the first time ... )"
 vim +PlugInstall +qall
 
-# Vim Fugitive setup
-vim -u NONE -c "helptags vim-fugitive/doc" -c q
+h2 "Vim Fugitive setup"
+vim -X -u NONE -c "helptags ~/.vim/plugged/vim-fugitive/doc" -c q
 
 # Needed for Typescript support in CoC and YCM using tsserver
 ts_cmd='npm install -g typescript'
 if which npm > /dev/null 2>&1 ; then
     which tsc > /dev/null 2>&1 || bash -c "$ts_cmd"
 else
-    echo "Install NodeJS and run '$ts_cmd' to get TypeScript support in Vim"
+    banner "Install NodeJS and run '$ts_cmd' to get TypeScript support in Vim"
 fi
 
 touch "$HOME"/.vimrc.local
@@ -92,7 +93,7 @@ ln -sf ~/.vimrc ~/.config/nvim/init.vim
 # Install a better matcher for Ctrl-P
 if ! hash matcher; then 
     if ! hash make 2>/dev/null; then 
-        printf "$(dark_red make is not installed. Rerun the setup after the per-machine setup completes)\n\n" 
+        banner "'make' is not installed. Rerun the setup after the per-machine setup completes)"
     else
         (cd matcher
         make 
@@ -114,12 +115,12 @@ authtoken: ${NGROK_AUTHTOKEN:-'fill-NGROK_AUTHTOKEN-in-in-~/.secret'}
 EOF
 cat $SCRIPT_DIR/ngrok.yml >> "$NGROK_YML"
 
-# Postgres config
+h2 "Copying psql config"
 ln -sf "$SCRIPT_DIR"/psqlrc $HOME/.psqlrc
 
 # Download to latest to home dir
-printf "$(blue "Fetching rupa/z (Jump Around)")\n"
+h2 "Fetching rupa/z (Jump Around)"
 curl -s https://raw.githubusercontent.com/rupa/z/master/z.sh -o ~/bin/z.sh
 
-printf "$(blue "Finished common setup")\n\n"
+h2 "Finished common setup"
 popd > /dev/null

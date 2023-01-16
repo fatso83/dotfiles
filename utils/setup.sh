@@ -3,25 +3,21 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd "$SCRIPT_DIR" > /dev/null
 
-# Get some color codes for printing
-source ../common-setup/bash.d/colors
-source ../common-setup/bash.d/bash_aliases_functions 
-
-shopt -s expand_aliases
+ROOT="$SCRIPT_DIR/.."
+source "$ROOT/shared.lib"
 
 if [[ ! -e ~/bin ]]; then
     mkdir ~/bin
 fi
 
-# millis
-if ! command -v millis > /dev/null; then
+if ! command_exists millis ; then
+    h2 "Installing 'millis'"
     cd millis
     make install 
 fi
 
-# signal-reset
-if ! which signal-reset > /dev/null; then
-    echo signal-reset not found ... building.
+if ! command_exists signal-reset; then
+    h2 "Installing 'signal-reset'"
     pushd signal-reset > /dev/null
     make
     cp signal-reset $HOME/bin/
@@ -30,7 +26,8 @@ fi
 
 # inotify-info
 # The better native version of my own script :D 
-if (! is_mac)  && (! command -v inotify-info > /dev/null); then
+if (! is_mac)  && (! command_exists inotify-info); then
+    h2 "Installing inotify-info"
     pushd inotify-info/
     make
     cp _release/inotify-info ~/bin/
@@ -41,11 +38,13 @@ fi
 # scripts
 ln -sf "$SCRIPT_DIR/scripts/"* $HOME/bin/
 
-# Dependencies for scripts
+h3 'Installing dependencies for scripts'
+h3 'Python dependencies'
 python3 -m pip install --user --upgrade pip
 python3 -m pip install --user smsutil
 python3 -m pip install --user requests 
 
+h3 'Node dependencies'
 npm install
 
 # Restore current directory of user

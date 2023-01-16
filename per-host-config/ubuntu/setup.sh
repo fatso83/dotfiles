@@ -4,18 +4,14 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd "$SCRIPT_DIR" > /dev/null
 
 set -e                      # exit on errors
-shopt -s expand_aliases     # to use alias definitions
 
-# Get common aliases (if new shell)
-source ../../common-setup/bash.d/bash_aliases_functions
-
-# Get some color codes
-source ../../common-setup/bash.d/colors
+ROOT="$SCRIPT_DIR/../../"
+source "$ROOT/shared.lib"
 
 # make /usr/local owned by me
 sudo chown -R $(whoami) /usr/local
 
-echo -e $(blue Installing PPA software)
+h2 "Installing PPA software"
 sudo apt-get install software-properties-common # Installs 'add-apt-repository'
 
 # Make sure curl exists
@@ -24,7 +20,7 @@ if ! which curl > /dev/null; then
 fi
 
 # Add keys
-blue "Adding keys for PPAs ...\n"
+h2 "Adding keys for PPAs ..."
 TRUSTED_DIR=/etc/apt/trusted.gpg.d/
 function __install-key(){
     curl -s $1 | sudo gpg --batch --yes --dearmor -o $TRUSTED_DIR/$2.gpg
@@ -38,7 +34,7 @@ __install-key https://packages.cloud.google.com/apt/doc/apt-key.gpg  cloud.googl
 __install-key https://download.docker.com/linux/ubuntu/gpg  download.docker.com
 __install-key https://repo.charm.sh/apt/gpg.key  repo.charm.sh
 
-blue "Adding external package repositories ...\n"
+h2 "Adding external package repositories ..."
 
 # 2023-01-13 manual workaround, see https://askubuntu.com/questions/1450095/does-add-apt-repository-not-support-globs-in-source-list
 echo 'deb [signed-by=/etc/apt/trusted.gpg.d/repo.charm.sh.gpg] https://repo.charm.sh/apt/ * *' \
@@ -90,13 +86,12 @@ strip-comments repos.local | while read org_line; do
 done 
 APT_SHOULD_UPDATE=yes
 
-echo -e $(blue Updating package lists ...)
+h2 "Updating package lists ..."
 if [[ -n $APT_SHOULD_UPDATE ]]; then
     sudo apt-get update
 fi
 
-
-blue "Installing local apps ..."
+h2 "Installing local apps ..."
 sudo apt-get install -y --no-install-recommends $(strip-comments apps.local)
 
 source ../_shared/install-utils
@@ -109,15 +104,15 @@ if ! which yarn >> /dev/null; then
     curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
 fi
 
-blue "fix Alsa for Nforce\n"
+h2 "fix Alsa for Nforce"
 ln -sf $SCRIPT_DIR/asoundrc ~/.asoundrc
 
-blue "Autoremove unused\n"
+h2 "Autoremove unused"
 sudo apt-get autoremove --yes
 
-blue "Installing Github's 'hub' - if required\n"
+h2 "Installing Github's 'hub' - if required"
 if ! which hub > /dev/null; then
-    echo -e $(blue "Installing Github's Hub...")
+    h2 "Installing Github's Hub..."
     VERSION="2.11.2"
     BASENAME="hub-linux-amd64-$VERSION"
     wget --quiet "https://github.com/github/hub/releases/download/v${VERSION}/${BASENAME}.tgz"
@@ -130,7 +125,7 @@ fi
 
 # install GitHub LFS support
 if ! which git-lfs > /dev/null; then
-    echo -e $(blue "Installing Git LFS client...")
+    h2 "Installing Git LFS client..."
     VERSION="2.4.2"
     NAME="git-lfs"
     OS="linux-amd64"
@@ -146,7 +141,7 @@ fi
 export SDKMAN_DIR="/home/carlerik/.sdkman"
 [[ -s "/home/carlerik/.sdkman/bin/sdkman-init.sh" ]] && source "/home/carlerik/.sdkman/bin/sdkman-init.sh"
 if ! type sdk > /dev/null 2> /dev/null; then # if the `sdk` function doesn't exist
-    blue "Installing SDKMAN\n"
+    h2 "Installing SDKMAN"
     curl -s "https://get.sdkman.io" | bash # installs SDKMAN
 
     # make sdk available in the current shell
@@ -155,18 +150,18 @@ fi
 
 JAVA_VERSION=16
 if ! sh -c "java --version  | grep 'openjdk $JAVA_VERSION' > /dev/null"; then
-    blue "Installing Java\n"
+    h2 "Installing Java"
     sdk install java $JAVA_VERSION-open
     sdk default java $JAVA_VERSION-open
 fi
 MAVEN_VERSION=3.6.3
 if ! sh -c "mvn --version  | grep '$MAVEN_VERSION' > /dev/null"; then
-    blue "Installing Maven"
+    h2 "Installing Maven"
     sdk install maven $MAVEN_VERSION
     sdk default maven $MAVEN_VERSION
 fi
 
-blue "Install QR copier\n"
+h2 "Install QR copier"
 go install github.com/claudiodangelis/qrcp@latest
 
 # These bits do not make sense on WSL2 (Windows Subsyste for Linux)
@@ -174,20 +169,20 @@ if ! is_wsl; then
 
     sudo cp services/*.service /etc/systemd/system/
 
-    blue "Use PowerTOP suggestions for saving power\n"
+    h2 "Use PowerTOP suggestions for saving power"
     if ! service powertop status > /dev/null 2>&1; then
         sudo systemctl daemon-reload
         sudo systemctl enable powertop.service
     fi
 
-    blue "Use Reverse SSH service to allow connecting to the box\n"
+    h2 "Use Reverse SSH service to allow connecting to the box"
     if ! service reverse-tunnel status > /dev/null 2>&1; then
         sudo systemctl daemon-reload
         sudo systemctl enable reverse-tunnel.service
     fi
 
 
-    blue "Installing snaps ...\n" # universal linux packages
+    h2 "Installing snaps ..." # universal linux packages
     installed=$(mktemp)
     snap list 2>/dev/null |  awk '{if (NR>1){print $1}}' > $installed
 
@@ -198,13 +193,13 @@ if ! is_wsl; then
     done
 
     if ! command_exists git-credential-manager; then
-    blue "Git Credential Manager for Linux\n"
+    h2 "Git Credential Manager for Linux\n"
         curl -L -o gcm-linux.deb https://github.com/GitCredentialManager/git-credential-manager/releases/download/v2.0.886/gcm-linux_amd64.2.0.886.deb
         sudo dpkg -i gcm-linux.deb
         rm gcm-linux.deb
     fi
 
-    blue "Customizing desktop applications\n"
+    h2 "Customizing desktop applications"
     ./desktop/setup.sh
 
     # Use rc.local for small tweaks
@@ -213,7 +208,7 @@ if ! is_wsl; then
 else 
     green "Installing WSL2 adjustments\n"
 
-    blue "Setting up win32yank as pbpaste\n"
+    h2 "Setting up win32yank as pbpaste"
     if ! which win32yank.exe > /dev/null; then
         echo "Downloading win32yank"
         wget --quiet https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip
@@ -223,11 +218,11 @@ else
         rm -r tmp
     fi
 
-    blue "Setup Git Credential Manager to use the Windows Keystore\n"
+    h2 "Setup Git Credential Manager to use the Windows Keystore"
     ln -sf $PWD/wsl/wsl-gitlocal ~/.wsl-gitlocal
 
     if  ! locale -a | grep nb_NO > /dev/null; then
-        blue "Generate locale for Norwegian\n"
+        h2 "Generate locale for Norwegian"
         sudo locale-gen nb_NO
         sudo locale-gen nb_NO.UTF-8
         sudo update-locale
@@ -237,7 +232,7 @@ else
 fi
 
 if ! command_exists pspg; then
-    blue "Compiling pspg: Postgres Pager\n"
+    h2 "Compiling pspg: Postgres Pager"
     apt install lib32ncursesw5-dev
     PSPGTMP=$(mktemp -d)
     pushd $PSPGTMP
@@ -258,7 +253,7 @@ if ! command_exists ccat; then
 fi
 
 if groups | grep docker > /dev/null; then
-    blue "Adding myself to the docker group\n"
+    h2 "Adding myself to the docker group"
     sudo usermod -aG docker ${USER}
 fi
 # restore current directory

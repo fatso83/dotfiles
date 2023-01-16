@@ -27,12 +27,11 @@ fi
 # CMake
 if ! which -s cmake; then
     brew install cmake
-    dark_red "CMake was not installed earlier. Re-start the top level setup"
-    exit 1
+    error "CMake was not installed earlier. Re-start the top level setup"
 fi
 
 function _f(){ # create throw-away function to not pollute global namespace with local variables
-    blue "Installing local apps using Homebrew ...\n"
+    h2 "Installing local apps using Homebrew ..."
     brew tap shivammathur/php
 
     local app_to_formula_map=$( awk -F/ '{  print ( ($3 != "") ? $3 : $1) "\t" $0 } ' < apps.local | sort )
@@ -46,16 +45,15 @@ function _f(){ # create throw-away function to not pollute global namespace with
         local formula=$(awk -v APP=$APP -F'\t' '$1==APP{print $2}' <(printf "%s\n" "$app_to_formula_map" ) )
         brew install "$formula" < /dev/null
     done <<< "$not_installed"
-    green "finished \n"
+    h3 "finished installing Homebrew apps"
 }; _f
 
 if ! which -s java; then
-    blue "Installing Java\n"
-    # TODO: replace with SDKMAN, sdk install java open-jdk-16
+    warn "TODO: Install Java using SDKMAN on macOS: sdk install java open-jdk-16"
 fi
 
 # Setup RVM before installing packages
-if ! command -v rvm; then
+if ! command_exists rvm; then
     curl -sSL https://get.rvm.io | bash -s stable
     rvm install "ruby-2.7.2"
 fi
@@ -71,7 +69,7 @@ install_node_packages
 cp ./imgcat.sh ~/bin/imgcat
 
 if [[ ! -d /opt/google-cloud-sdk ]]; then
-    blue "Installing Google Cloud SDK ...\n"
+    h2 "Installing Google Cloud SDK ..."
     ARCH=$(uname -m)
 
     case $ARCH in
@@ -88,8 +86,8 @@ if [[ ! -d /opt/google-cloud-sdk ]]; then
         curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/"$GSDK" 
         tar xzf $GSDK -C /opt
         /opt/google-cloud-sdk/install.sh
-        green "Cloud SDK setup finished.\n"
+        h3 "Cloud SDK setup finished"
     else
-        dark_red "No Cloud SDK configured for architecture $ARCH"
+        warn "No Cloud SDK configured for architecture $ARCH"
     fi
 fi

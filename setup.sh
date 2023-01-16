@@ -8,22 +8,21 @@ pushd "$SCRIPT_DIR" > /dev/null
 git submodule init
 git submodule update
 
-# Get some color codes for printing
-source common-setup/bash.d/colors
+ROOT="$SCRIPT_DIR"
+source "$ROOT/shared.lib"
 
-echo -e $(blue "Installing common setup")
+h1 "Installing common setup"
 common-setup/setup.sh
 
-echo "Install config specific to this machine"
+h1 "Install config specific to this machine"
 per-host-config/setup.sh
 
 # Add the little `millis` util for cross-platform millisecond support
-echo -e $(blue "Adding scripts and binary utilities")
+h1 "Adding scripts and binary utilities"
 utils/setup.sh
-
 
 # Restore current directory of user
 popd > /dev/null
 
 # Re-read BASH settings
-green "\n\nRemember to 'source ~/.bashrc'!"
+banner "Remember to 'source ~/.bashrc'!"
