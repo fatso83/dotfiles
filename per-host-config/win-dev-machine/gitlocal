@@ -1,17 +1,11 @@
-[user]
-    email = carl-erik.kopseng@makingwaves.com
+# This is the Git config for non-WSL git, meaning Git for Windows in Powershell and CMD
+# 1Password setup: https://developer.1password.com/docs/ssh/
 
 [core]
-    # auto-converts lf=>crlf on checkout and crlf=>lf on checkin
-    # This makes sense if you are on normal Windows, but NOT in Cygwin
-    # autocrlf = true
-
-    # is supposed to make git faster on windows. I have seen no such effect ...
-    preloadindex = true
-    fscache = true
-
-    # Ignore changes in executable modes, etc
-    # Very useful when sharing directories between Cygwin and Windows Git
-    fileMode = false
-[gc]
-    auto = 256
+  sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
+[gpg]
+    format = ssh
+[gpg "ssh"]
+    program = C:\\Users\\dvlpr\\AppData\\Local\\1Password\\app\\8\\op-ssh-sign.exe
+[commit]
+    gpgsign = true
