@@ -64,13 +64,13 @@ read_config_if_exists "$HOME/.bash.d/colors"
 
 #Se man bash i delen som heter "Prompting"
 set_prompt(){
-    local user=$(green "\u")
-    local host=$(dark_yellow "\h")
-    local workdir=$(pink "\w")
-    local gitbranch=$(dark_red \$\(__git_ps1  "\(%s\)" \))
-    local at=$(dark_grey at)
-    local in=$(dark_grey in)
-    export PS1="\n${user} ${at} ${host} ${in} ${workdir} ${gitbranch}"$'\n\$ '
+    local user="\[${c_green}\]\u"
+    local host="\[${c_dark_yellow}\] \h"
+    local workdir="\[${c_pink}\] \w"
+    local gitbranch="\[${c_dark_red}\] $(__git_ps1  \(%s\) )"
+    local at="\[${c_dark_grey}\] at"
+    local in="\[${c_dark_grey}\] in"
+    export PS1="\n${user} ${at} ${host} ${in} ${workdir} ${gitbranch}\[$c_X_reset_all\]"$'\n\$ '
 }
 
 # Now set it. If any of these colors are later overridden, then just rerun `set_prompt`
