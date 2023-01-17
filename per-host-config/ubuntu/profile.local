@@ -1,3 +1,5 @@
+# vi: ft=bash
+
 export LC_ADDRESS=nb_NO.UTF-8
 export LC_NAME=nb_NO.UTF-8
 export LC_MONETARY=nb_NO.UTF-8
@@ -10,4 +12,6 @@ export LC_TIME=nb_NO.UTF-8
 export LC_NUMERIC=nb_NO.UTF-8
 export PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome
 
-. ~/.wsl-profile.local
+if [[ -e .wsl-profile.local ]]; then
+    . ~/.wsl-profile.local
+fi
