@@ -33,12 +33,15 @@ __install-key https://www.postgresql.org/media/keys/ACCC4CF8.asc  postgresql.org
 __install-key https://packages.cloud.google.com/apt/doc/apt-key.gpg  cloud.google.com
 __install-key https://download.docker.com/linux/ubuntu/gpg  download.docker.com
 __install-key https://repo.charm.sh/apt/gpg.key  repo.charm.sh
+__install-key https://downloads.1password.com/linux/keys/1password.asc 1password 
 
 h2 "Adding external package repositories ..."
 
 # 2023-01-13 manual workaround, see https://askubuntu.com/questions/1450095/does-add-apt-repository-not-support-globs-in-source-list
 echo 'deb [signed-by=/etc/apt/trusted.gpg.d/repo.charm.sh.gpg] https://repo.charm.sh/apt/ * *' \
     | sudo tee /etc/apt/sources.list.d/charm.list > /dev/null
+echo 'deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/1password.gpg] https://downloads.1password.com/linux/debian/amd64 stable main' \
+    | sudo tee /etc/apt/sources.list.d/1password.list > /dev/null
 
 strip-comments repos.local | while read org_line; do 
     export RELEASE=$(lsb_release -cs)
@@ -198,6 +201,17 @@ if ! is_wsl; then
         sudo dpkg -i gcm-linux.deb
         rm gcm-linux.deb
     fi
+
+    if ! grep IdentityAgent.*1password/agent.sock ~/.ssh/config > /dev/null; then 
+        h2 "Setting up 1Password for Linux as SSH Agent"
+cat >> ~/.ssh/config << EOF
+
+Host *
+  IdentityAgent ~/.1password/agent.sock
+
+EOF
+    fi
+
 
     h2 "Customizing desktop applications"
     ./desktop/setup.sh

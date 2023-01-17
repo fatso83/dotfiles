@@ -10,6 +10,8 @@ deb [arch=amd64] https://packages.microsoft.com/ubuntu/22.04/prod jammy main
 deb [arch=amd64] https://apt.postgresql.org/pub/repos/apt/ jammy-pgdg main
 deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable
 
-# This does not work for some reason. See https://askubuntu.com/questions/1450095/does-add-apt-repository-not-support-globs-in-source-list
+# This does not work as add-apt-repository only support the `arch` and `trusted` options. 
+# See https://askubuntu.com/questions/1450095/does-add-apt-repository-not-support-globs-in-source-list
 # Needs manual workaround
 # deb [signed-by=/etc/apt/trusted.gpg.d/repo.charm.sh.gpg] https://repo.charm.sh/apt/ * *
+# deb [arch=amd64 signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/amd64 stable main

@@ -4,7 +4,11 @@
 # Code extracted from https://stuartleeks.com/posts/wsl-ssh-key-forward-to-windows/ with minor modifications
 
 # Configure ssh forwarding
+# An alternative is to simply configure this in the config:
+# Host *
+#    IdentityAgent ~/.1password/agent.sock
 export SSH_AUTH_SOCK=$HOME/.1password/agent.sock
+
 # need `ps -ww` to get non-truncated command for matching
 # use square brackets to generate a regex match for the process we want but that doesn't match the grep command running it!
 ALREADY_RUNNING=$(ps -auxww | grep -q "[n]piperelay.exe -ei -s //./pipe/openssh-ssh-agent"; echo $?)
