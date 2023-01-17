@@ -42,3 +42,16 @@ banner(){
     printf "##    %s\n" "$(dark_red "$@")\n"
     printf "################################################################################\n"
 }
+
+
+add_1password_identity_agent_ssh_config(){
+    if ! grep IdentityAgent.*1password/agent.sock ~/.ssh/config > /dev/null; then 
+        h2 "Configuring 1Password as SSH Agent"
+        cat >> ~/.ssh/config << EOF
+
+Host *
+  IdentityAgent ~/.1password/agent.sock
+
+EOF
+    fi
+}

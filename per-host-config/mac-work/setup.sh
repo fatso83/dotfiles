@@ -91,3 +91,13 @@ if [[ ! -d /opt/google-cloud-sdk ]]; then
         warn "No Cloud SDK configured for architecture $ARCH"
     fi
 fi
+
+if [[ ! -e "~/.1password" ]]; then
+    h2 "Use 1Password for SSH"
+
+    add_1password_identity_agent_ssh_config
+
+    h3 "Creating symlink to align setups for Linux and macOS"
+    #see Tip in https://developer.1password.com/docs/ssh/get-started#step-4-configure-your-ssh-or-git-client
+    mkdir -p ~/.1password && ln -s ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock ~/.1password/agent.sock
+fi

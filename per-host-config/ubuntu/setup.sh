@@ -202,16 +202,7 @@ if ! is_wsl; then
         rm gcm-linux.deb
     fi
 
-    if ! grep IdentityAgent.*1password/agent.sock ~/.ssh/config > /dev/null; then 
-        h2 "Setting up 1Password for Linux as SSH Agent"
-cat >> ~/.ssh/config << EOF
-
-Host *
-  IdentityAgent ~/.1password/agent.sock
-
-EOF
-    fi
-
+    add_1password_identity_agent_ssh_config
 
     h2 "Customizing desktop applications"
     ./desktop/setup.sh
