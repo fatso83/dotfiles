@@ -30,7 +30,7 @@ install_python_packages(){
     pip install --upgrade --user pip
 
     h3 "Installing Python packages ...\n"
-    pip install --user --upgrade -r ../_shared/python.local 
+    pip install --user --upgrade -r ../_shared/python.local  | grep -v 'Requirement already satisfied:'
 }
 
 install_ruby_packages(){

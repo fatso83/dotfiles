@@ -46,9 +46,7 @@ ln -sf "$SCRIPT_DIR/scripts/"* $HOME/bin/
 
 h3 'Installing dependencies for scripts'
 h3 'Python dependencies'
-python3 -m pip install --user --upgrade pip
-python3 -m pip install --user smsutil
-python3 -m pip install --user requests 
+(python3 -m pip install --user smsutil && python3 -m pip install --user requests ) | grep -v 'Requirement already satisfied'
 
 h3 'Node dependencies'
 npm install

@@ -7,11 +7,16 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": "< 19",
+    "npm": "< 9"
+  },
   "dependencies": {
     "@google-cloud/local-auth": "^2.1.1",
-    "googleapis": "^110.0.0"
+    "googleapis": "^110.0.0",
+    "mkdirp": "^2.1.3"
   },
   "scripts": {
-    "preinstall": "npx mkdirp ~/.config/@fatso83/fetch-todays-calendar ~/.local/share/@fatso83/fetch-todays-calendar"
+    "preinstall": "mkdirp ~/.config/@fatso83/fetch-todays-calendar ~/.local/share/@fatso83/fetch-todays-calendar"
   }
 }
