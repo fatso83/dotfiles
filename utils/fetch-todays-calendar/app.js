@@ -6,9 +6,11 @@
  * https://developers.google.com/calendar/api/v3/reference
  * https://googleapis.dev/nodejs/googleapis/latest/calendar/classes/Calendar.html
  **/
-const os = require("os");
+const os = require("node:os");
 const fs = require("node:fs/promises");
-const fsSync = require("fs");
+const fsSync = require("node:fs");
+const { parseArgs } = require("node:util");
+
 const path = require("path");
 const process = require("process");
 const { authenticate } = require("@google-cloud/local-auth");
@@ -23,8 +25,22 @@ const APP_CONFIG_DIR = path.join(
   os.homedir(),
   ".config/@fatso83/fetch-todays-calendar"
 );
+const APP_DATA_DIR = path.join(
+  os.homedir(),
+  ".local/share/@fatso83/fetch-todays-calendar"
+);
+const APP_DATA_FILE = path.join(APP_DATA_DIR, "events.json");
 const TOKEN_PATH = path.join(APP_CONFIG_DIR, "token.json");
 const CREDENTIALS_PATH = path.join(APP_CONFIG_DIR, "credentials.json");
+
+const options = {
+  json: { type: "boolean" },
+  "json-save": { type: "boolean" },
+  help: { type: "boolean" },
+  h: { type: "boolean" },
+};
+
+const { values: parsedArguments } = parseArgs({ options });
 
 if (!fsSync.statSync(APP_CONFIG_DIR, { throwIfNoEntry: false })) {
   fsSync.mkdirSync(APP_CONFIG_DIR, { recursive: true });
@@ -122,11 +138,20 @@ async function listEvents(auth) {
   return res.data.items;
 }
 
+if (parsedArguments.help || parsedArguments.h) {
+  console.log(`Available toggles
+    --json          Output json
+    --json-save     Store event data to ${APP_DATA_FILE}`);
+  process.exit(0);
+}
+
 authorize()
   .then(listEvents)
   .then((events) => {
-    if (process.argv[2] === "--json") {
+    if (parsedArguments["json"]) {
       console.log(events);
+    } else if (parsedArguments["json-save"]) {
+      return fs.writeFile(APP_DATA_FILE, JSON.stringify(events));
     } else {
       if (!events || events.length === 0) {
         console.log("No upcoming events found.");

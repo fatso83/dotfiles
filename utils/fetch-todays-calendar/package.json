@@ -12,6 +12,6 @@
     "googleapis": "^110.0.0"
   },
   "scripts": {
-    "preinstall": "npx mkdirp ~/.config/@fatso83/fetch-todays-calendar"
+    "preinstall": "npx mkdirp ~/.config/@fatso83/fetch-todays-calendar ~/.local/share/@fatso83/fetch-todays-calendar"
   }
 }
