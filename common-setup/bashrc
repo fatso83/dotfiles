@@ -67,7 +67,7 @@ set_prompt(){
     local user="\[${c_green}\]\u"
     local host="\[${c_dark_yellow}\]\h"
     local workdir="\[${c_pink}\]\w"
-    local gitbranch="\[${c_dark_red}\]$(__git_ps1  \(%s\) )"
+    local gitbranch="\[${c_dark_red}\]\$(__git_ps1  \(%s\) )"
     local at="\[${c_dark_grey}\]at"
     local in="\[${c_dark_grey}\]in"
     export PS1="\n${user} ${at} ${host} ${in} ${workdir} ${gitbranch}\[$c_X_reset_all\]"$'\n\$ '
