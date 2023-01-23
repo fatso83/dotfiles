@@ -102,6 +102,9 @@ install_python_packages
 install_ruby_packages
 install_node_packages
 
+# This cannot be a shared app, as the install fails on macOS due to some node-gyp thingie
+npm i -g @fatso83/luxafor-cli
+
 # Install Yarn - used for instance by coc.vim
 if ! which yarn >> /dev/null; then
     curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
