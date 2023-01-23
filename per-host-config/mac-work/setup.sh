@@ -4,10 +4,11 @@
 set -e
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ROOT="$SCRIPT_DIR/../.."
 pushd "$SCRIPT_DIR" > /dev/null
 
 # Get some color codes
-source ../../common-setup/bash.d/colors
+source $ROOT/shared.lib
 
 # Get common aliases (if new shell)
 shopt -s expand_aliases     # to use alias definitions
