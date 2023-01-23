@@ -1,5 +1,5 @@
 {
-  "name": "fetch-todays-calendar",
+  "name": "@fatso83/fetch-todays-calendar",
   "version": "1.0.0",
   "description": "> Does exactly what is says",
   "main": "app.js",

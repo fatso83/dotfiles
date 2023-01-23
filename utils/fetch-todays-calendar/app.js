@@ -124,14 +124,18 @@ async function authorize() {
  */
 async function listEvents(auth) {
   const now = new Date();
-  const inHalfADay = new Date(now + 3 * 3600 * 1000);
+  const midnight = (() => {
+    const d = new Date(now);
+    d.setHours(24, 0, 0, 0);
+    return d;
+  })();
 
   const calendar = google.calendar({ version: "v3", auth });
   const res = await calendar.events.list({
     calendarId: "primary",
     timeMin: now.toISOString(),
-    timeMax: inHalfADay.toISOString(),
-    maxResults: 10,
+    timeMax: midnight.toISOString(),
+    maxResults: 100, // worst case :D 
     singleEvents: true,
     orderBy: "startTime",
   });
