@@ -2,7 +2,9 @@
   "name": "scripts",
   "license": "ISC",
   "dependencies": {
+    "mkdirp": "^2.1.3",
     "node-notifier": "^8.0.1",
+    "undici": "5",
     "voca": "^1.4.0"
   }
 }

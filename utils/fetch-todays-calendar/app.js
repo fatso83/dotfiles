@@ -36,6 +36,7 @@ const CREDENTIALS_PATH = path.join(APP_CONFIG_DIR, "credentials.json");
 const options = {
   json: { type: "boolean" },
   "json-save": { type: "boolean" },
+  "data-location": { type: "boolean" },
   help: { type: "boolean" },
   h: { type: "boolean" },
 };
@@ -124,6 +125,11 @@ async function authorize() {
  */
 async function listEvents(auth) {
   const now = new Date();
+  const startOfDay = (() => {
+    const d = new Date(now);
+    d.setHours(0, 0, 0, 0);
+    return d;
+  })();
   const midnight = (() => {
     const d = new Date(now);
     d.setHours(24, 0, 0, 0);
@@ -133,9 +139,9 @@ async function listEvents(auth) {
   const calendar = google.calendar({ version: "v3", auth });
   const res = await calendar.events.list({
     calendarId: "primary",
-    timeMin: now.toISOString(),
+    timeMin: startOfDay.toISOString(),
     timeMax: midnight.toISOString(),
-    maxResults: 100, // worst case :D 
+    maxResults: 100, // worst case :D
     singleEvents: true,
     orderBy: "startTime",
   });
@@ -145,7 +151,8 @@ async function listEvents(auth) {
 if (parsedArguments.help || parsedArguments.h) {
   console.log(`Available toggles
     --json          Output json
-    --json-save     Store event data to ${APP_DATA_FILE}`);
+    --json-save     Store event data to ${APP_DATA_FILE}
+    --data-location Print the full path to the data file`);
   process.exit(0);
 }
 
@@ -154,6 +161,8 @@ authorize()
   .then((events) => {
     if (parsedArguments["json"]) {
       console.log(events);
+    } else if (parsedArguments["data-location"]) {
+      console.log(APP_DATA_FILE);
     } else if (parsedArguments["json-save"]) {
       return fs.writeFile(APP_DATA_FILE, JSON.stringify(events));
     } else {
