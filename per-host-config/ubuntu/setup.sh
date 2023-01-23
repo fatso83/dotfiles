@@ -273,5 +273,11 @@ if groups | grep docker > /dev/null; then
     h2 "Adding myself to the docker group"
     sudo usermod -aG docker ${USER}
 fi
+
+info "Consider installing the cron jobs"
+echo ">  crontab $SCRIPT_DIR/example-crontab"
+echo ""
+command cat "$SCRIPT_DIR/example-crontab"
+
 # restore current directory
 popd > /dev/null

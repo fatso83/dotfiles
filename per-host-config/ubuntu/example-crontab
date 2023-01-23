@@ -1,0 +1,8 @@
+# This crontab works on both macOS and Linux
+#
+# Alternatively set up systemd timers:
+#   https://opensource.com/article/20/7/systemd-timers
+PATH="/usr/local/bin:~carlerik/bin:$PATH"
+
+*/15 * * * * fetch-todays-calendar --json-save
+*    * * * * (source ~/.secret; luxafor-calendar --silent)
