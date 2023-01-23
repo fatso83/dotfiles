@@ -1,0 +1,17 @@
+{
+  "name": "fetch-todays-calendar",
+  "version": "1.0.0",
+  "description": "> Does exactly what is says",
+  "main": "app.js",
+  "bin": "app.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/local-auth": "^2.1.1",
+    "googleapis": "^110.0.0"
+  },
+  "scripts": {
+    "preinstall": "npx mkdirp ~/.config/@fatso83/fetch-todays-calendar"
+  }
+}
