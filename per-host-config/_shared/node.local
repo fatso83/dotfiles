@@ -1,9 +1,10 @@
+@fatso83/luxafor-cli
 gifify
-ngrok
-neovim
 import-sort-cli 
 import-sort-parser-babylon 
 import-sort-parser-typescript 
 import-sort-style-module
+neovim
+ngrok
 prettier
 tldr

@@ -1,16 +1,17 @@
 1password
 apt-transport-https 
+build-essential 
 ca-certificates
 ca-certificates 
 cmake
 conky
+containerd.io
 cowsay
 cronic
 curl
+direnv
 docker-ce 
 docker-ce-cli 
-containerd.io
-direnv
 dunst
 exiv2
 fail2ban
@@ -26,13 +27,14 @@ golang-go
 google-chrome-stable
 google-cloud-sdk
 htop
-jq
 jotta-cli
+jq
+libpq-dev
+libpython3-dev
 libsasl2-2 
 libsasl2-modules
+libudev-dev
 libxml2-utils
-libpython3-dev
-libpq-dev
 lzop
 mailutils 
 make
@@ -45,8 +47,8 @@ npm
 packer
 peek
 php
-php-xdebug
 php-redis
+php-xdebug
 #powershell-preview
 powertop
 python3-pip # https://github.com/pypa/pip/issues/5240 We will upgrade this using --user and then invoke using # `python -m pip` through aliases
