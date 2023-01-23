@@ -1,6 +1,15 @@
 #!/usr/bin/env node
 // vi: ft=javascript
-/* Read Google Calendar event data from a file and notify the Luxafor webhook */
+/*
+ * Read Google Calendar event data from a file and notify the Luxafor webhook
+ * Intended use is as a dual cron job:
+ * - Run a cron job every half hour or so to fetch calendar events: fetch-todays-calendar --json-save
+ * - Run a cron job every minute with this util: luxafor-calendar --silent
+ *
+ * Alternatively, set them up as launchd (macOS) or systemd (Linux) services
+ * @see https://opensource.com/article/20/7/systemd-timers
+ * @see man 1 launchctl
+ */
 
 const { mkdirp } = require("mkdirp");
 const { fetch } = require("undici");
