@@ -27,6 +27,7 @@ golang-go
 google-chrome-stable
 google-cloud-sdk
 htop
+hub
 jotta-cli
 jq
 libpq-dev

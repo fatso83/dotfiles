@@ -89,3 +89,5 @@
     path = .gitlocal
 
 # Do not add stuff after this point in the global config
+[hub]
+	protocol = ssh

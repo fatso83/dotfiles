@@ -116,19 +116,6 @@ ln -sf $SCRIPT_DIR/asoundrc ~/.asoundrc
 h2 "Autoremove unused"
 sudo apt-get autoremove --yes
 
-h2 "Installing Github's 'hub' - if required"
-if ! which hub > /dev/null; then
-    h2 "Installing Github's Hub..."
-    VERSION="2.11.2"
-    BASENAME="hub-linux-amd64-$VERSION"
-    wget --quiet "https://github.com/github/hub/releases/download/v${VERSION}/${BASENAME}.tgz"
-    tar xvzf "$BASENAME.tgz"
-    cd "$BASENAME"
-    sudo ./install
-    cd ..
-    rimraf "${BASENAME}"*
-fi
-
 # install GitHub LFS support
 if ! which git-lfs > /dev/null; then
     h2 "Installing Git LFS client..."
