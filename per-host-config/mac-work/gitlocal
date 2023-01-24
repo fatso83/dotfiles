@@ -21,3 +21,6 @@
 	cmd = wstorm diff  \"$LOCAL\" \"$REMOTE\"
 [difftool "sourcetree"]
     cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+
+[credential]
+  helper = /usr/local/share/gcm-core/git-credential-manager

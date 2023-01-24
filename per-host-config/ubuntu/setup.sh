@@ -186,7 +186,7 @@ if ! is_wsl; then
     done
 
     if ! command_exists git-credential-manager; then
-    h2 "Git Credential Manager for Linux\n"
+        h2 "Git Credential Manager for Linux\n"
         curl -L -o gcm-linux.deb https://github.com/GitCredentialManager/git-credential-manager/releases/download/v2.0.886/gcm-linux_amd64.2.0.886.deb
         sudo dpkg -i gcm-linux.deb
         rm gcm-linux.deb

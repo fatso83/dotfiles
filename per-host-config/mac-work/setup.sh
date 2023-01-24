@@ -34,6 +34,7 @@ fi
 function _f(){ # create throw-away function to not pollute global namespace with local variables
     h2 "Installing local apps using Homebrew ..."
     brew tap shivammathur/php
+    brew tap microsoft/git
 
     local app_to_formula_map=$( awk -F/ '{  print ( ($3 != "") ? $3 : $1) "\t" $0 } ' < apps.local | sort )
     local to_install=$(awk -F'\t' '{  print $1 }' <(printf "%s\n" "$app_to_formula_map"))
@@ -48,6 +49,10 @@ function _f(){ # create throw-away function to not pollute global namespace with
     done <<< "$not_installed"
     h3 "finished installing Homebrew apps"
 }; _f
+
+if ! command_exists git-credential-manager; then
+    brew install --cask git-credential-manager-core
+fi
 
 if ! which -s java; then
     warn "TODO: Install Java using SDKMAN on macOS: sdk install java open-jdk-16"
