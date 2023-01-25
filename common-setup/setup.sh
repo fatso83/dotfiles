@@ -4,6 +4,7 @@ BASH_DIR="${HOME}/.bash.d"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 set -e #exit on error
+[[ ! -z $DEBUG ]] && set -x
 
 # read local environment variables, like auth tokens
 if [ -e "${HOME}/.secret" ]; then
@@ -32,12 +33,47 @@ if [ -e "$HOME/.bash_profile" ]; then
 fi
 
 
+carefully_replace_gitconfig(){
+    h2 "Configuring Git ..."
+
+    local personal_details_file="$HOME/.gitconfig-personal"
+    local git_name=$(git config --global user.name || :)
+    local git_email=$(git config --global user.email || :)
+
+    debug "Git user.name: $git_name"
+    debug "Git user.email: $git_email"
+
+    if [[ -e "$personal_details_file" ]]; then
+        debug "Found personal details file for Git. Re-using."
+    else
+        h3 "Creating personal details file for Git ($personal_details_file)"
+
+        if [[ "" == "$git_name" ]]; then
+            debug "No committer name set in the global gitconfig."
+            read -r -p "Input the name to be used by Git in your commits (e.g. \"John Doe\"): " git_name
+        fi
+        if [[ "" == "$git_email" ]]; then
+            debug "No committer email set in the global gitconfig."
+            read -r -p "Input the email to be used by Git in your commits (e.g. \"john.doe@google.com\"): " git_email
+        fi
+
+        if [[ -z "$git_email" || -z "$git_name" ]]; then
+            error "Both email and name must be specified"
+            exit 1
+        fi
+
+        GIT_NAME=$git_name GIT_EMAIL=$git_email envsubst < ./git-personal.template > "$personal_details_file"
+    fi
+
+    ln -sf "$SCRIPT_DIR"/gitconfig "$HOME"/.gitconfig
+}
+
 ln -sf "$SCRIPT_DIR"/profile "$HOME"/.profile
 ln -sf "$SCRIPT_DIR"/bashrc "$HOME"/.bashrc
-ln -sf "$SCRIPT_DIR"/gitconfig "$HOME"/.gitconfig
 ln -sf "$SCRIPT_DIR"/gitignore_global "$HOME"/.gitignore_global
 ln -sf "$SCRIPT_DIR"/pystartup "$HOME"/.pystartup
 ln -sf "$SCRIPT_DIR"/tmux.conf "$HOME"/.tmux.conf
+carefully_replace_gitconfig
 
 # Zsh
 ln -sf "$SCRIPT_DIR"/zsh/zshrc "$HOME"/.zshrc

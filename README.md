@@ -24,7 +24,8 @@ Some of the common utilities uses environment switches to handle BSD vs GNU issu
 ## Installation
 
 ### WARNING
-This repo and its configs includes _my settings_, which means that if you run the `./setup.sh` script, it will _overwrite_ your existing configuration files. This would for instance [include your Git settings](https://github.com/fatso83/dotfiles/blob/master/common-setup/gitconfig), which will screw up commit messages. This is probably not what you want, so be sure to fork it, backup your own home directory and check out the files before going full gung ho.
+This repo and its configs includes _my settings_, which means that if you run the `./setup.sh` script, it will _overwrite_ your existing configuration files. 
+I have taken steps to ensure that any _personal_ settings involving names are not re-used (was causing issues), so your Git committer info will be safe :)
 
 ## Steps
 ```

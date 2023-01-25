@@ -1,6 +1,3 @@
-[user]
-    name = Carl-Erik Kopseng
-    email = carlerik@gmail.com
 
 [core]
     editor = nvim
@@ -79,6 +76,9 @@
 [safe]
 # Try to stuff this into .gitlocal as this is machine/env specific
 
+# Do not add stuff after this point in the global config
+[hub]
+	protocol = ssh
 
 ################################################################################
 # This should probably stay at the end to overwrite global defaults
@@ -87,7 +87,5 @@
 # https://www.semipol.de/2013/08/26/sharing-the-git-config-across-different-computers-with-individual-modifications.html
 [include]
     path = .gitlocal
-
-# Do not add stuff after this point in the global config
-[hub]
-	protocol = ssh
+    # This will for some reason not be used when doing `git config --global user.name`, but will if leaving `--global` out
+    path = .gitconfig-personal 
