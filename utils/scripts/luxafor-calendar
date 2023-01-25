@@ -143,8 +143,10 @@ function fileExists(path) {
 }
 
 async function deleteIdFile() {
-  userLog("Deleting current event id file");
-  if (await fileExists(idFile)) await fs.rm(idFile);
+  if (await fileExists(idFile)) {
+    userLog("Deleting current event id file");
+    await fs.rm(idFile);
+  }
 }
 
 main();
