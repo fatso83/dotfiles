@@ -145,3 +145,4 @@ t_debug Finished bash setup
 
 # Read environment variables, such as sauce labs keys
 read_config_if_exists "$HOME/.secret"
+chmod 400 "$HOME/.secret"

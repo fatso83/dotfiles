@@ -44,69 +44,68 @@ async function main() {
       new Date(event.end.dateTime) > new Date(now.getTime() - 3 * 60 * 1000)
   );
   const eventHasStarted = !!onGoingEvent;
+  const idFileExists = await fileExists(idFile);
+  const idOfLastStartedEvent =
+    idFileExists && (await getIdOfLastStartedEvent());
 
   const url = "https://api.luxafor.com/webhook/v1/actions/solid_color";
   if (eventHasStarted) {
-    await Promise.all([
-      fs.writeFile(idFile, onGoingEvent.id),
-      fetch(url, {
-        body: JSON.stringify({
-          userId: luxaforId,
-          actionFields: {
-            color: "green",
+    const alreadyHandled = idOfLastStartedEvent === onGoingEvent.id;
+    if (alreadyHandled) {
+      userLog("Not doing anything. Already handled current ongoing event");
+    } else {
+      userLog("An event has started. Calling API ...");
+      await Promise.all([
+        fs.writeFile(idFile, onGoingEvent.id),
+        fetch(url, {
+          body: JSON.stringify({
+            userId: luxaforId,
+            actionFields: {
+              color: "red",
+            },
+          }),
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
         }),
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }),
-    ]);
+      ]);
+    }
   } else if (passedEventsInLast3Minutes) {
-    /* This fails if the read call fails for some reason */
-    await fs.stat(idFile).then(
-      (_) => {
-        return fs
-          .readFile(idFile)
-          .then((buf) => buf.toString().trim())
-          .then((lastStartedEventId) => {
-            userLog(
-              `Last event id touched by this util: '${lastStartedEventId}'.`
-            );
-            if (lastStartedEventId === passedEventsInLast3Minutes.id) {
-              userLog("Will proceed to turn off the Luxafor");
-              return fetch(url, {
-                body: JSON.stringify({
-                  userId: luxaforId,
-                  actionFields: {
-                    color: "custom",
-                    custom_color: "000000",
-                  },
-                }),
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
+    if (idFileExists) {
+      getIdOfLastStartedEvent()
+        .then((lastStartedEventId) => {
+          userLog(
+            `Last event id touched by this util: '${lastStartedEventId}'.`
+          );
+          if (lastStartedEventId === passedEventsInLast3Minutes.id) {
+            userLog("Will proceed to turn off the Luxafor");
+            return fetch(url, {
+              body: JSON.stringify({
+                userId: luxaforId,
+                actionFields: {
+                  color: "custom",
+                  custom_color: "000000",
                 },
-              });
-            }
-          });
-      },
-      (err) => {
-        /* ignore non-existing */
-        userLog(err);
-        userLog(
-          "This util has not flipped the Luxafor light for any current events, so not doing anything."
-        );
-      }
-    );
+              }),
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+          }
+        })
+        .then(deleteIdFile);
+    } else {
+      userLog(
+        "This util has not flipped the Luxafor light for any current events, so not doing anything."
+      );
+    }
   } else {
     userLog(
       `No event in progress and no known event stopped in the last few minutes`
     );
-    await fs.stat(idFile).then(
-      (_) => fs.rm(idFile),
-      (_err) => {}
-    );
+    await deleteIdFile();
   }
 }
 
@@ -130,6 +129,22 @@ function userLog(...args) {
   const silent = process.argv[2] === "--silent";
   if (silent) return;
   console.log(...args);
+}
+
+async function getIdOfLastStartedEvent() {
+  return fs.readFile(idFile).then((buf) => buf.toString().trim());
+}
+
+function fileExists(path) {
+  return fs.stat(path).then(
+    () => true,
+    () => false
+  );
+}
+
+async function deleteIdFile() {
+  userLog("Deleting current event id file");
+  if (await fileExists(idFile)) await fs.rm(idFile);
 }
 
 main();
