@@ -148,33 +148,41 @@ async function listEvents(auth) {
   return res.data.items;
 }
 
-if (parsedArguments.help || parsedArguments.h) {
-  console.log(`Available toggles
+function main() {
+  if (parsedArguments.help || parsedArguments.h) {
+    console.log(`Available toggles
     --json          Output json
     --json-save     Store event data to ${APP_DATA_FILE}
     --data-location Print the full path to the data file`);
-  process.exit(0);
+    process.exit(0);
+  }
+
+  authorize()
+    .then(listEvents)
+    .then((events) => {
+      if (parsedArguments["json"]) {
+        console.log(events);
+      } else if (parsedArguments["data-location"]) {
+        console.log(APP_DATA_FILE);
+      } else if (parsedArguments["json-save"]) {
+        return fs.writeFile(APP_DATA_FILE, JSON.stringify(events));
+      } else {
+        if (!events || events.length === 0) {
+          console.log("No upcoming events found.");
+          return;
+        }
+        console.log("Todays events:");
+        events.map((event, i) => {
+          const start = event.start.dateTime || event.start.date;
+          console.log(`${start} - ${event.summary}`);
+        });
+      }
+    })
+    .catch(console.error);
 }
 
-authorize()
-  .then(listEvents)
-  .then((events) => {
-    if (parsedArguments["json"]) {
-      console.log(events);
-    } else if (parsedArguments["data-location"]) {
-      console.log(APP_DATA_FILE);
-    } else if (parsedArguments["json-save"]) {
-      return fs.writeFile(APP_DATA_FILE, JSON.stringify(events));
-    } else {
-      if (!events || events.length === 0) {
-        console.log("No upcoming events found.");
-        return;
-      }
-      console.log("Todays events:");
-      events.map((event, i) => {
-        const start = event.start.dateTime || event.start.date;
-        console.log(`${start} - ${event.summary}`);
-      });
-    }
-  })
-  .catch(console.error);
+if (require.main === module) {
+  main();
+}
+
+module.exports = { dataFile: APP_DATA_FILE };

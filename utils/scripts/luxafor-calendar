@@ -34,14 +34,10 @@ async function main() {
 
   const now = new Date();
 
-  const onGoingEvent = events.find(
-    (event) =>
-      new Date(event.start.dateTime) < now && new Date(event.end.dateTime) > now
-  );
-  const passedEventsInLast3Minutes = events.find(
-    (event) =>
-      new Date(event.end.dateTime) < now &&
-      new Date(event.end.dateTime) > new Date(now.getTime() - 3 * 60 * 1000)
+  const onGoingEvent = findEventIAmMostLikelyAttending(events, now);
+  const eventFinishedInLast3Minutes = findEventFinishedInLast3Minutes(
+    events,
+    now
   );
   const eventHasStarted = !!onGoingEvent;
   const idFileExists = await fileExists(idFile);
@@ -61,7 +57,9 @@ async function main() {
           body: JSON.stringify({
             userId: luxaforId,
             actionFields: {
-              color: "red",
+              color: isTentativeAttenderOfEvent(onGoingEvent)
+                ? "yellow"
+                : "red",
             },
           }),
           method: "POST",
@@ -71,14 +69,14 @@ async function main() {
         }),
       ]);
     }
-  } else if (passedEventsInLast3Minutes) {
+  } else if (eventFinishedInLast3Minutes) {
     if (idFileExists) {
       getIdOfLastStartedEvent()
         .then((lastStartedEventId) => {
           userLog(
             `Last event id touched by this util: '${lastStartedEventId}'.`
           );
-          if (lastStartedEventId === passedEventsInLast3Minutes.id) {
+          if (lastStartedEventId === eventFinishedInLast3Minutes.id) {
             userLog("Will proceed to turn off the Luxafor");
             return fetch(url, {
               body: JSON.stringify({
@@ -148,5 +146,75 @@ async function deleteIdFile() {
     await fs.rm(idFile);
   }
 }
+function findEventFinishedInLast3Minutes(events, now) {
+  return events.find(
+    (event) =>
+      new Date(event.end.dateTime) < now &&
+      new Date(event.end.dateTime) > new Date(now.getTime() - 3 * 60 * 1000)
+  );
+}
 
-main();
+function findEventIAmMostLikelyAttending(events, now) {
+  const currentEvents = events
+    .filter((e) => !isOrganizerOfEventButNotAttending(e))
+    .filter(isOnGoingEvent(now))
+    .filter(isPartOfMeeting);
+  if (currentEvents.length === 0) return undefined;
+  if (currentEvents.length === 1) return currentEvents[0];
+
+  const attending = currentEvents.find(
+    (e) => isOrganizerOfEvent(e) || isAcceptedAttenderOfEvent(e)
+  );
+  if (attending) return attending;
+
+  // must be tentative
+  return currentEvents[0];
+}
+
+const isOnGoingEvent = (now) => (event) =>
+  new Date(event.start.dateTime) < now && new Date(event.end.dateTime) > now;
+
+function isPartOfAttenders(event, predicate) {
+  return !!event.attendees?.find(
+    (attender) => attender.self && predicate(attender)
+  );
+}
+
+function isAcceptedAttenderOfEvent(event) {
+  return isPartOfAttenders(event, (a) => a.responseStatus === "accepted");
+}
+
+function isTentativeAttenderOfEvent(event) {
+  return isPartOfAttenders(event, (a) => a.responseStatus === "tentative");
+}
+
+function isOrganizerOfEvent(event) {
+  return !!event.organizer.self;
+}
+
+function isOrganizerOfEventButNotAttending(event) {
+  return (
+    isOrganizerOfEvent(event) &&
+    isPartOfAttenders(event, (a) => a.responseStatus === "declined")
+  );
+}
+
+function isPartOfMeeting(event) {
+  return (
+    isTentativeAttenderOfEvent(event) ||
+    isAcceptedAttenderOfEvent(event) ||
+    isOrganizerOfEvent(event)
+  );
+}
+
+// Only run main if run as a script
+if (require.main === module) {
+  main();
+}
+
+module.exports = {
+  fileExists,
+  isPartOfMeeting,
+  isAttenderOfEvent: isAcceptedAttenderOfEvent,
+  isTentativeAttenderOfEvent,
+};
