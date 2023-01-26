@@ -170,7 +170,7 @@ authorize()
         console.log("No upcoming events found.");
         return;
       }
-      console.log("Upcoming 10 events:");
+      console.log("Todays events:");
       events.map((event, i) => {
         const start = event.start.dateTime || event.start.date;
         console.log(`${start} - ${event.summary}`);

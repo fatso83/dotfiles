@@ -36,12 +36,21 @@ fi
 
 if (! command_exists fetch-todays-calendar); then
     h2 "Install utility to fetch todays calendar"
+    WRAPPER="$HOME/bin/fetch-todays-calendar"
     cd ./fetch-todays-calendar
-    npm i -g
+    npm i
     cd ..
+    command cat > $WRAPPER <<__DELIM
+#!/usr/bin/env bash
+# vi: ft=bash
+
+cd "${SCRIPT_DIR}/fetch-todays-calendar"
+node app.js \$@
+__DELIM
+    chmod +x "$WRAPPER"
 fi
 
-# scripts
+# symlink all scripts
 ln -sf "$SCRIPT_DIR/scripts/"* $HOME/bin/
 
 h3 'Installing dependencies for scripts'
