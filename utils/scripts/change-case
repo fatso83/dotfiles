@@ -1,12 +1,27 @@
 #!/usr/bin/env node
-var v = require("voca");
+const v = require("voca");
 const args = process.argv.slice(3).join(" ");
+const cmd = process.argv[1].split("/").slice(-1);
+
+function usage() {
+  console.log(`
+USAGE: ${cmd} [${Object.keys(actions).join("|")}] ...words 
+
+Example: $ ${cmd} --snake someWordsThat you-might-want toChange-to snake_case or other
+         some_words_that_you_might_want_to_change_to_snake_case_or_other`);
+}
 
 const actions = {
+  "--help": usage,
   "--snake": v.snakeCase,
   "--camel": v.camelCase,
   "--pascal": (s) => v.capitalize(v.camelCase(s)),
   "--kebab": v.kebabCase,
 };
+
+if (process.argv.length < 3) {
+  usage();
+  process.exit(1);
+}
 
 console.log(actions[process.argv[2]](args));
