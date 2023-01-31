@@ -9,12 +9,19 @@
 const os = require("node:os");
 const fs = require("node:fs/promises");
 const fsSync = require("node:fs");
-const { parseArgs } = require("node:util");
+const yargs = require("yargs/yargs");
+const { hideBin } = require("yargs/helpers");
 
-const path = require("path");
-const process = require("process");
+const path = require("node:path");
+const process = require("node:process");
 const { authenticate } = require("@google-cloud/local-auth");
 const { google } = require("googleapis");
+
+const parsedArguments = yargs(hideBin(process.argv))
+  .option("json", { type: "boolean" })
+  .option("json-save", { type: "boolean" })
+  .option("data-location", { type: "boolean" })
+  .parse();
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
@@ -32,16 +39,6 @@ const APP_DATA_DIR = path.join(
 const APP_DATA_FILE = path.join(APP_DATA_DIR, "events.json");
 const TOKEN_PATH = path.join(APP_CONFIG_DIR, "token.json");
 const CREDENTIALS_PATH = path.join(APP_CONFIG_DIR, "credentials.json");
-
-const options = {
-  json: { type: "boolean" },
-  "json-save": { type: "boolean" },
-  "data-location": { type: "boolean" },
-  help: { type: "boolean" },
-  h: { type: "boolean" },
-};
-
-const { values: parsedArguments } = parseArgs({ options });
 
 if (!fsSync.statSync(APP_CONFIG_DIR, { throwIfNoEntry: false })) {
   fsSync.mkdirSync(APP_CONFIG_DIR, { recursive: true });
