@@ -43,6 +43,11 @@ banner(){
     printf "################################################################################\n"
 }
 
+fail(){
+    banner "$@"
+    exit 1
+}
+
 
 add_1password_identity_agent_ssh_config(){
     if ! grep IdentityAgent.*1password/agent.sock ~/.ssh/config > /dev/null; then 
