@@ -18,6 +18,7 @@ const os = require("node:os");
 const util = require("node:util");
 const exec = util.promisify(require("node:child_process").exec);
 const fs = require("node:fs/promises");
+const untildify = require("untildify");
 const APP_DATA_DIR = path.join(
   os.homedir(),
   ".local/share/@fatso83/luxafor-calendar"
@@ -29,7 +30,12 @@ async function main() {
   await requirements();
 
   const cmd = "fetch-todays-calendar --data-location";
-  const result = await exec(cmd);
+  const result = await exec(cmd, {
+    env: {
+      ...process.env,
+      PATH: untildify(process.env.PATH),
+    },
+  });
   const events = JSON.parse(await fs.readFile(result.stdout.trim()));
 
   const now = new Date();

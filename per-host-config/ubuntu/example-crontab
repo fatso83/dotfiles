@@ -2,7 +2,14 @@
 #
 # Alternatively set up systemd timers:
 #   https://opensource.com/article/20/7/systemd-timers
-PATH="/usr/local/bin:~carlerik/bin:$PATH"
+#
+# Vixie Cron does not support expanding env vars, so stuffing in `$HOME/bin` does not work
+#   It does support the bash-ism of tilde expansion, so having ~/bin in the PATH will work
+#   Unfortunately, tilde expansion is a shell thing and using stuff like Node's child_process.exec 
+#   will NOT expand that, so you have to use stuff like `untildify` to expand the full path
+#   A fork of cronwrap3 that handles this is available at github.com/fatso83/cronwrap3
+PATH="~/bin:/usr/local/bin:/usr/bin/"
+SHELL=/bin/bash
 
-*/15 * * * * fetch-todays-calendar --json-save
-*    * * * * (source ~/.secret; luxafor-calendar --silent)
+*/1  * * * * cronwrap3 -c 'echo "$(date) Fetching calendar data PATH=$PATH: " && fetch-todays-calendar --json-save'
+*/1  * * * * cronwrap3 -c 'echo "$(date) Checking calendar data PATH=$PATH: " && . ~/.secret &&   luxafor-calendar'
