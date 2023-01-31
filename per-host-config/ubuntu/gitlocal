@@ -5,6 +5,6 @@
 [safe]
 	directory = /home/carlerik/code/ptflow-api/scripts/..
 	directory = /home/carlerik/code/ptflow-api
-[credential]
 [include]
-    path = .wsl-gitlocal
+    path = .gitlocal-wsl
+    path = .gitlocal-non-wsl

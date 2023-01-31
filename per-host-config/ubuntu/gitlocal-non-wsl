@@ -1,0 +1,4 @@
+# This is not actually working: https://github.com/GitCredentialManager/git-credential-manager/issues/694
+#[credential]
+    #  credentialStore = secretservice
+

@@ -192,6 +192,9 @@ if ! is_wsl; then
         rm gcm-linux.deb
     fi
 
+    h2 "Setup Git Credential Manager to use the Windows Keystore"
+    ln -sf $PWD/gitlocal-non-wsl ~/.gitlocal-non-wsl
+
     add_1password_identity_agent_ssh_config
 
     h2 "Customizing desktop applications"
@@ -223,7 +226,7 @@ else
     fi
 
     h2 "Setup Git Credential Manager to use the Windows Keystore"
-    ln -sf $PWD/wsl/wsl-gitlocal ~/.wsl-gitlocal
+    ln -sf $PWD/wsl/gitlocal-wsl ~/.gitlocal-wsl
 
     if  ! locale -a | grep nb_NO > /dev/null; then
         h2 "Generate locale for Norwegian"
@@ -265,6 +268,8 @@ info "Consider installing the cron jobs"
 echo ">  crontab $SCRIPT_DIR/example-crontab"
 echo ""
 command cat "$SCRIPT_DIR/example-crontab"
+echo
+echo
 
 # restore current directory
 popd > /dev/null
