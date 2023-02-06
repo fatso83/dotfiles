@@ -2,8 +2,8 @@
 
 > Does exactly what is says
 
-Fetches the Google Calendar of today and outputs it in JSON to stdout. Supposed to be used in a cron
-job that is used togetether with a Luxafor script that starts and stops the Luxafor light for calendar events.
+Fetches the Google Calendar of today and outputs it in JSON to stdout. Supposed to be used in a [cron job][cron-job]
+that is used togetether with a [Luxafor script][luxafor-calendar] that starts and stops the Luxafor light for calendar events.
 
 # To install
 
@@ -26,3 +26,5 @@ $ fetch-todays-calendar --json
 []
 ```
 
+[cron-job]: https://github.com/fatso83/dotfiles/blob/master/per-host-config/ubuntu/example-crontab
+[luxafor-calendar]: https://github.com/fatso83/dotfiles/blob/master/utils/scripts/luxafor-calendar
