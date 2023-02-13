@@ -2,7 +2,7 @@
 apt-transport-https 
 build-essential 
 ca-certificates
-ca-certificates 
+charles-proxy
 cmake
 conky
 containerd.io

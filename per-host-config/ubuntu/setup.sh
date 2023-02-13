@@ -34,6 +34,7 @@ __install-key https://packages.cloud.google.com/apt/doc/apt-key.gpg  cloud.googl
 __install-key https://download.docker.com/linux/ubuntu/gpg  download.docker.com
 __install-key https://repo.charm.sh/apt/gpg.key  repo.charm.sh
 __install-key https://downloads.1password.com/linux/keys/1password.asc 1password 
+__install-key https://www.charlesproxy.com/packages/apt/PublicKey charlesproxy
 
 h2 "Adding external package repositories ..."
 
