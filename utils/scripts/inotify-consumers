@@ -5,10 +5,15 @@
 # @latest https://github.com/fatso83/dotfiles/blob/master/utils/scripts/inotify-consumers
 # Discussion leading up to answer: https://unix.stackexchange.com/questions/15509/whos-consuming-my-inotify-resources
 #
-# If you need ultimate speed, use https://github.com/fatso83/dotfiles/commit/inotify-consumers-v1-fastest
-# # Speed enhancements by Simon Matter <simon.matter@invoca.ch>
 #
-# A later PR introduced a significant slowdown to gain better output, but it is insignificant on most machines
+########################################## Notice ##########################################
+###        Since Fall 2022 you should prefer using the following C++ version             ###
+###                    https://github.com/mikesart/inotify-info                          ###
+############################################################################################
+#
+#
+# The fastest version of this script is here: https://github.com/fatso83/dotfiles/commit/inotify-consumers-v1-fastest
+# Later PRs introduced significant slowdowns at the cost of better output, but it is insignificant on most machines
 # See this for details: https://github.com/fatso83/dotfiles/pull/10#issuecomment-1122374716
 
 main(){
@@ -25,9 +30,11 @@ Usage: $0 [--help|--limits]
     -l, --limits    Will print the current related limits and how to change them
     -h, --help      Show this help
 
-FYI:  Check out Michael Sartain's C++ take on this script. The native executable 
+FYI:  Check out Michael Sartain's C++ take on this script. The resulting native executable 
       is much faster, modern and feature rich. It can be found at 
       https://github.com/mikesart/inotify-info
+      
+      Requires building, but is well worth the few seconds :)
 EOF
 }
 
