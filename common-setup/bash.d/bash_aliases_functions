@@ -213,6 +213,8 @@ tmux-restore () {
 function npm(){ if [[ -z "$NPMBIN" ]]; then command npm $@; else $NPMBIN $@; fi; }
 function npx(){ if [[ -z "$NPXBIN" ]]; then command npx $@; else $NPMBIN $@; fi; }
 
+alias hub='printf "DEPRECATED: use the Github CLI \`gh\` instead!\n"'
+
 # SSH recipes for myself
 
 # Auto-open Bittorrent Sync

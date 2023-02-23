@@ -98,7 +98,7 @@ if [[ ! -d /opt/google-cloud-sdk ]]; then
     fi
 fi
 
-if [[ ! -e "~/.1password" ]]; then
+if [[ ! -e "$HOME/.1password" ]]; then
     h2 "Use 1Password for SSH"
 
     add_1password_identity_agent_ssh_config

@@ -4,11 +4,11 @@ cowsay
 direnv
 fortune
 fswatch
+gh
 git-extras
 gnupg
 homebrew/cask/macvim
 htop
-hub
 jq
 maven
 neovim
