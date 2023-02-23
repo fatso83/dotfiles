@@ -95,6 +95,9 @@ complete -C '/usr/local/bin/aws_completer' aws
 export PNPM_HOME="/home/carlerik/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 
+# Android development
+ANDROID_HOME=/home/carlerik/Android/Sdk/
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/carlerik/.sdkman"
 [[ -s "/home/carlerik/.sdkman/bin/sdkman-init.sh" ]] && source "/home/carlerik/.sdkman/bin/sdkman-init.sh"

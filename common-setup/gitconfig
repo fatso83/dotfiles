@@ -90,3 +90,5 @@
     path = .gitlocal-non-wsl
     # This will for some reason not be used when doing `git config --global user.name`, but will if leaving `--global` out
     path = .gitconfig-personal 
+[branch]
+	sort = committerdate
