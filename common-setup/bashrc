@@ -47,7 +47,7 @@ if [ -z "${ORIGINAL_PATH}" ]; then
 fi
 
 t_debug "Reading utility functions and aliases"
-read_config "$HOME/.bash.d/bash_aliases_functions"
+read_config "$HOME/.bash.d/aliases_functions"
 
 t_debug "Reading utils for git prompt"
 read_config "$HOME/.bash.d/git-prompt.sh"

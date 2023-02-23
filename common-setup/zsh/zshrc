@@ -13,8 +13,8 @@ setopt share_history
 # To get emacs key bindings, just do `bindkey -e`
 # This is like `set -o vi` in bash, ref https://www.techrepublic.com/blog/linux-and-open-source/using-vi-key-bindings-in-bash-and-zsh/
 
-# Re-use BASH aliases
-source ~/.bash.d/bash_aliases_functions
+# Re-use BASH aliases. Mostly compatible
+source ~/.bash.d/aliases_functions
 
 
 # Zsh plugin manager (handles oh-my-zsh, etc)

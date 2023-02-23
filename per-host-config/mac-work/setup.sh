@@ -12,7 +12,7 @@ source $ROOT/shared.lib
 
 # Get common aliases (if new shell)
 shopt -s expand_aliases     # to use alias definitions
-source ../../common-setup/bash.d/bash_aliases_functions
+source ../../common-setup/bash.d/aliases_functions
 
 sudo chown $USER /opt
 

@@ -8,7 +8,7 @@ if [[ "$ROOT" == "" ]]; then
 fi
 
 source $ROOT/common-setup/bash.d/colors
-source $ROOT/common-setup/bash.d/bash_aliases_functions 
+source $ROOT/common-setup/bash.d/aliases_functions 
 shopt -s expand_aliases
 
 # header1
