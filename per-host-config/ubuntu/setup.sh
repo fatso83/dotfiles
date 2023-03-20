@@ -99,6 +99,9 @@ fi
 h2 "Installing local apps ..."
 sudo apt-get install -y --no-install-recommends $(strip-comments apps.local)
 
+h2 "Removing some apps ..."
+sudo apt-get remove xserver-xephyr # Kolide wants me to not have remote servers running. I do not need this, me thinks
+
 source ../_shared/install-utils
 install_python_packages
 install_ruby_packages
