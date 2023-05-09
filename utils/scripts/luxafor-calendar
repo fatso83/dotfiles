@@ -26,6 +26,22 @@ const APP_DATA_DIR = path.join(
 const idFile = `${APP_DATA_DIR}/current-event-id.dat`;
 const luxaforId = process.env["LUXAFOR_ID"];
 
+async function readJsonFile(eventsFileName) {
+  const eventsFile = await fs.readFile(eventsFileName);
+  try {
+    const events = JSON.parse(eventsFile);
+    return events;
+  } catch (err) {
+    // SyntaxError: Unexpected end of JSON input
+    if (err instanceof SyntaxError) {
+      console.error(err);
+      console.error(eventsFile);
+      process.exit(1);
+    }
+    throw err;
+  }
+}
+
 async function main() {
   await requirements();
 
@@ -36,7 +52,14 @@ async function main() {
       PATH: untildify(process.env.PATH),
     },
   });
-  const events = JSON.parse(await fs.readFile(result.stdout.trim()));
+  const eventsFileName = result.stdout.trim();
+  try {
+    await fs.stat(eventsFileName);
+  } catch (err) {
+    userLog(`No events file found (${eventsFileName}). Not proceeding.`);
+    process.exit(0);
+  }
+  const events = await readJsonFile(eventsFileName);
 
   const now = new Date();
 
