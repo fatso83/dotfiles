@@ -19,7 +19,7 @@ Plug 'ruanyl/vim-sort-imports'
 Plug 'sbdchd/neoformat' " Used with prettier
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
-Plug 'suan/vim-instant-markdown', { 'for': 'markdown'}
+"Plug 'suan/vim-instant-markdown', { 'for': 'markdown'}
 Plug 'w0rp/ale'
 
 " YCM alternative - needs Node

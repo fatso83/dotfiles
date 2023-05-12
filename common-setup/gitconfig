@@ -61,6 +61,7 @@
 [credential]
     # One week in-mem caching of HTTPS credentials
 	helper = cache --timeout=604800
+	helper = /usr/local/share/gcm-core/git-credential-manager
 
 [mergetool]
 	keepBackup = false
@@ -92,3 +93,5 @@
     path = .gitconfig-personal 
 [branch]
 	sort = committerdate
+[credential "https://dev.azure.com"]
+	useHttpPath = true

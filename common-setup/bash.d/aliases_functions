@@ -23,12 +23,17 @@ function command_exists(){
 
 function cat(){
     if [[ $# > 0 ]]; then 
-        local file="$(readlink -f $*)"
+        local file="$(readlink -f $1)"
         case "$file" in
         *.md)
             glow "$file"
+            # recurse on the next files
+            shift 1
+            if [[ $# > 0 ]]; then 
+                cat $@
+            fi
             ;; 
-        *) ccat "$file"
+        *) ccat $*
             ;;
         esac 
     else
@@ -124,7 +129,11 @@ alias strip-diff-prefix='sed "s/^\([^-+ ]*\)[-+ ]/\\1/"'
 
 # Used a lot in utility setup scripts
 function strip-comments(){
-    sed -e 's/#.*//' $@ | strip-empty
+    util.esed -e 's/#.*//' $@ | strip-empty
+}
+
+function strip-color-codes(){
+    util.esed -e 's/\[.{0,3}3.m//g'
 }
 
 # For stack overflow pasting
