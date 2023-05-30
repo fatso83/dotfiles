@@ -25,6 +25,7 @@ if [ ! -e "$HOME/bin" ]; then
 fi
 
 rm -rf "$HOME"/.bash_completion.d 2>/dev/null
+"$SCRIPT_DIR/update-completion-scripts.sh"
 ln -s "$SCRIPT_DIR"/bash_completion.d "$HOME"/.bash_completion.d 
 
 if [ -e "$HOME/.bash_profile" ]; then
