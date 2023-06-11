@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Just delegate down
+BASH_DIR="${HOME}/.bash.d"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd "$SCRIPT_DIR" > /dev/null
 
@@ -8,7 +9,20 @@ pushd "$SCRIPT_DIR" > /dev/null
 git submodule init
 git submodule update
 
+if [ ! -e "$HOME/bin" ]; then
+  mkdir "${HOME}/bin"
+fi
+ln -sf "$SCRIPT_DIR/utils/scripts/"* $HOME/bin/
+
 ROOT="$SCRIPT_DIR"
+
+if [ ! -e "$BASH_DIR" ]; then
+  mkdir "${BASH_DIR}"
+fi
+
+for file in "$ROOT"/common-setup/bash.d/*; do
+  ln -sf "$file" "${BASH_DIR}"/
+done
 source "$ROOT/shared.lib"
 
 h1 "Installing common setup"
