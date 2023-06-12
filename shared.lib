@@ -14,7 +14,7 @@ error(){
 }
 
 if [[ "$ROOT" == "" ]]; then
-    error "Missing ROOT environment variable (in ${BASH_SOURCE[0]})\n. Should point to git repo root"
+    error "Missing ROOT environment variable (in ${BASH_SOURCE[0]}). Should point to git repo root"
     return 1
 fi
 

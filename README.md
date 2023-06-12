@@ -27,7 +27,7 @@ Some of the common utilities uses environment switches to handle BSD vs GNU issu
 This repo and its configs includes _my settings_, which means that if you run the `./setup.sh` script, it will _overwrite_ your existing configuration files. 
 I have taken steps to ensure that any _personal_ settings involving names are not re-used (was causing issues), so your Git committer info will be safe :)
 
-## Steps
+### Steps
 ```
 git clone https://github.com/fatso83/dotfiles
 ./dotfiles/setup.sh # and wait until completion ...
@@ -35,3 +35,14 @@ git clone https://github.com/fatso83/dotfiles
 ![install vid](./dotfiles-install.gif "Install video")
 
 The first time you run the install it will take some time, mostly due [YouCompleteMe](https://github.com/Valloric/YouCompleteMe), which needs to be downloaded and compiled. It might seem as if the install hangs on this step, but this only takes a lot of time the first time you run setup. On subsequent `./setup.sh` runs, it should not take more than a second or two.
+
+## Debugging
+
+### bash.rc related shell issues
+For debugging an issue after installing, the first thing is to uncomment the line in `~/.bashrc` that says "# DEBUG=1". This will print out lots of debugging info. The second thing to do, once you now approximately where things go wrong is to add `set -x` (print lots of debugging info on commands executing) and `set -e` (exit on first error - should mostly already be set)l
+
+### sourced files
+If you encounter an issue in a sourced file, it might be a bit difficult to debug if they contain `exit 1` or calls to the `error` util. Just do this instead:
+```
+bash -c "ROOT=$PWD source ./shared.lib"
+```
