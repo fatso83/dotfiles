@@ -1,16 +1,23 @@
 # vim: syntax=sh
 
+# since this is sourced from shared.lib in the dotfiles repo, we need 
+# source other files
+if [[ "$BASH_D" == "" || "$BIN_DIR" == "" ]]; then
+    error "('${BASH_SOURCE[0]}'): Missing \$BASH_D and \$BIN_DIR environment variable.\n\n"
+    return 1
+fi
+
 # https://www.gnu.org/software/bash/manual/html_node/Pattern-Matching.html#Pattern-Matching
 #shopt -s extglob;
 
 if ! declare -p t_debug > /dev/null 2> /dev/null; then
-    source ~/.bash.d/core_utils
+    source "$BASH_D/core_utils"
 fi
 
 t_debug "Reading aliases and functions"
 
 if ! declare -p X_PLATFORM_UTILS > /dev/null 2>&1; then
-    source ~/bin/cross-platform-utils.bashlib 
+    source "$BIN_DIR/cross-platform-utils.bashlib"
 fi
 
 function abspath(){

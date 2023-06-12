@@ -3,7 +3,7 @@
 # rsync also reads .bashrc and will bork if it results in any output
 [[ $- != *i* ]] && return
 
-#export DEBUG=1
+# export DEBUG=1
 source $HOME/.bash.d/core_utils # clearly not portable across shells, but should be easy to port
 timer_start_if_unset
 t_debug "bashrc PATH=$PATH"
@@ -25,6 +25,10 @@ t_debug Executing '$HOME'/.bashrc
 ################################################################################
 # Prolog finished
 ################################################################################
+
+# These two are needed for scripts used in both the setup and the shell scripts
+BASH_D="$HOME/.bash.d"
+BIN_DIR="$HOME/bin"
 
 declare -x CLICOLOR
 ulimit -c unlimited

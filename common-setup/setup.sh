@@ -128,8 +128,8 @@ ln -sf ~/.vim ~/.config/nvim
 ln -sf ~/.vimrc ~/.config/nvim/init.vim
 
 # Install a better matcher for Ctrl-P
-if ! hash matcher; then 
-    if ! hash make 2>/dev/null; then 
+if ! command_exists matcher; then 
+    if ! command_exists make; then 
         banner "'make' is not installed. Rerun the setup after the per-machine setup completes)"
     else
         (cd matcher

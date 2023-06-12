@@ -12,8 +12,9 @@ fi
 
 if ! command_exists millis ; then
     h2 "Installing 'millis'"
-    cd millis
+    pushd millis > /dev/null
     make install 
+    popd > /dev/null
 fi
 
 if ! command_exists signal-reset; then

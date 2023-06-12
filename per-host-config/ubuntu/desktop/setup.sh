@@ -1,8 +1,13 @@
 #!/bin/bash
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-pushd "$SCRIPT_DIR" > /dev/null
 ROOT="$SCRIPT_DIR/../../../"
+BIN="$ROOT/utils/scripts"
+PATH="$BIN:$PATH"
+
+pushd "$SCRIPT_DIR" > /dev/null
 source "$ROOT/shared.lib"
+
+set -e 
 
 # hacking around a bug
 h2 "Customizing systray icons for Electron apps due to the Ubuntu XDG_... bug"
@@ -12,7 +17,7 @@ done
 
 
 h2 "Removing (almost) all Gnome key bindings ..." # crashes with IntelliJ products
-../../../utils/scripts/gnome-key-bindings --unset-all --except 'close|switch-applications|switch-input-source|show-desktop|maximize'
+gnome-key-bindings --unset-all --except 'close|switch-applications|switch-input-source|show-desktop|maximize'
 gnome-key-bindings --set=switch-applications '<Alt>Tab'
 gnome-key-bindings --set=switch-applications-backward '<Alt><Shift>Tab'
 

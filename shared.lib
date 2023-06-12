@@ -2,13 +2,26 @@
 
 # since this is sourced from ANYWHERE, we need to know the root to be able to 
 # source other files
-if [[ "$ROOT" == "" ]]; then
-    printf "Missing ROOT environment variable\n. Should point to git repo root"
+
+
+error(){
+    if ! command -v dark_red; then
+        printf "ERROR: %s\n" "$@" >> /dev/stderr
+    else
+        printf "ERROR: %s\n" "$(dark_red "$@")" >> /dev/stderr
+    fi
     exit 1
+}
+
+if [[ "$ROOT" == "" ]]; then
+    error "Missing ROOT environment variable (in ${BASH_SOURCE[0]})\n. Should point to git repo root"
+    return 1
 fi
 
-source $ROOT/common-setup/bash.d/colors
-source $ROOT/common-setup/bash.d/aliases_functions 
+BASH_D="$ROOT/common-setup/bash.d"
+BIN_DIR="$ROOT/utils/scripts"
+source "$BASH_D/colors"
+source "$BASH_D/aliases_functions"
 shopt -s expand_aliases
 
 # header1
@@ -30,11 +43,6 @@ info(){
 
 warn(){
     printf "%s\n" "$(dark_yellow "$@")" >> /dev/stderr
-}
-
-error(){
-    printf "%s\n" "$(dark_red "$@")" >> /dev/stderr
-    exit 1
 }
 
 banner(){
