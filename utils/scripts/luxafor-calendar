@@ -34,8 +34,8 @@ async function readJsonFile(eventsFileName) {
   } catch (err) {
     // SyntaxError: Unexpected end of JSON input
     if (err instanceof SyntaxError) {
-      console.error(err);
-      console.error(eventsFile);
+      console.error("Failed parsing JSON: ", err.message);
+      console.error(eventsFile.toString());
       process.exit(1);
     }
     throw err;
