@@ -15,12 +15,12 @@
     "@google-cloud/local-auth": "^2.1.1",
     "googleapis": "^110.0.0",
     "mkdirp": "^2.1.3",
-    "yargs": "github:yargs/yargs"
+    "yargs": "^17"
   },
   "scripts": {
     "preinstall": "mkdirp ~/.config/@fatso83/fetch-todays-calendar ~/.local/share/@fatso83/fetch-todays-calendar"
   },
   "devDependencies": {
-    "@types/yargs": "^17.0.21"
+    "@types/yargs": "^17"
   }
 }
