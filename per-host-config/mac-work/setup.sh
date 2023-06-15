@@ -96,6 +96,9 @@ if [[ ! -d /opt/google-cloud-sdk ]]; then
         curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/"$GSDK" 
         tar xzf $GSDK -C /opt
         /opt/google-cloud-sdk/install.sh
+
+        gcloud components install gke-gcloud-auth-plugin
+
         h3 "Cloud SDK setup finished"
     else
         warn "No Cloud SDK configured for architecture $ARCH"
