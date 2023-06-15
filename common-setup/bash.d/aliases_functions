@@ -131,6 +131,21 @@ alias my-ip-json='curl -s http://ifconfig.co/json'
 alias socks_proxy='ssh -v -D 22222 carl-erik@timbuktu.kopseng.no -N'
 alias socks_proxy_all='ssh -v -D :22222 carl-erik@timbuktu.kopseng.no -N'
 
+function ltrim ()
+{
+    util.esed 's/^[[:space:]]+//'
+}
+
+function rtrim ()
+{
+    util.esed 's/[[:space:]]+$//'
+}
+
+function trim ()
+{
+    ltrim | rtrim
+}
+
 # Used with the git alias functions; gd, gds, gdw, gdws
 alias strip-diff-prefix='sed "s/^\([^-+ ]*\)[-+ ]/\\1/"' 
 
