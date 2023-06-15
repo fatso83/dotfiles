@@ -87,6 +87,7 @@ payload = {
     "longMessageMaxParts": parsed.max_parts
 }
 
-r = requests.post(url, json=payload, auth=(sms_id, sms_secret), timeout=1)
+# timeout in seconds
+r = requests.post(url, json=payload, auth=(sms_id, sms_secret), timeout=5)
 if r.status_code != 201 or parsed.debug: 
     print(r.text)
