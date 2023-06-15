@@ -117,3 +117,4 @@ fi
 
 # IntelliJ IDEA launcher
 cp ./idea.sh ~/bin/
+cp ./enable-fingerprint-for-sudo.sh ~/bin/

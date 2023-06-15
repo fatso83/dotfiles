@@ -67,6 +67,10 @@ PATH="/opt/homebrew/Cellar/postgresql@12/12.9_1/bin:$PATH"
 
 export PATH
 
+# For google cloud sdk to work on mac13.5 (only works with Python 3.5-3.9 per June 2023)
+export CLOUDSDK_PYTHON=/opt/homebrew/bin/python3.9
+
+enable-fingerprint-for-sudo.sh
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 [[ -s "/Users/carlerik/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/carlerik/.sdkman/bin/sdkman-init.sh"
-export CLOUDSDK_PYTHON=/opt/homebrew/bin/python3.9
