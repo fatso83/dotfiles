@@ -3,6 +3,10 @@
 # exit on errors
 set -e
 
+if [[ "$DEBUG" != "" ]]; then
+    set -x
+fi
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ROOT="$SCRIPT_DIR/../.."
 pushd "$SCRIPT_DIR" > /dev/null
@@ -36,7 +40,7 @@ function _f(){ # create throw-away function to not pollute global namespace with
     brew tap shivammathur/php
     brew tap microsoft/git
 
-    local app_to_formula_map=$( awk -F/ '{  print ( ($3 != "") ? $3 : $1) "\t" $0 } ' < apps.local | sort )
+    local app_to_formula_map=$(cat apps.local | strip-comments | trim | awk -F/ '{  print ( ($3 != "") ? $3 : $1) "\t" $0 } '  | sort )
     local to_install=$(awk -F'\t' '{  print $1 }' <(printf "%s\n" "$app_to_formula_map"))
     local formulae=$(brew list --formulae -1)
     local casks=$(brew list --casks -1)
@@ -80,10 +84,10 @@ if [[ ! -d /opt/google-cloud-sdk ]]; then
 
     case $ARCH in
         arm64)
-            GSDK=google-cloud-sdk-358.0.0-darwin-arm.tar.gz
+            GSDK=google-cloud-cli-435.0.1-darwin-arm.tar.gz
             ;;
         x86_64)
-            GSDK=google-cloud-sdk-358.0.0-darwin-x86_64.tar.gz
+            GSDK=google-cloud-cli-435.0.1-darwin-x86_64.tar.gz
             ;;
     esac
 

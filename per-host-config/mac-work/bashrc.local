@@ -69,3 +69,4 @@ export PATH
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 [[ -s "/Users/carlerik/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/carlerik/.sdkman/bin/sdkman-init.sh"
+export CLOUDSDK_PYTHON=/opt/homebrew/bin/python3.9

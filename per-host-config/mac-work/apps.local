@@ -14,6 +14,8 @@ maven
 neovim
 node
 postgresql
+# python 3.5-3.9 needed for Google Cloud SDK. 3.11 is too new
+python@3.9
 pspg
 reattach-to-user-namespace
 shivammathur/php/php@7.4
