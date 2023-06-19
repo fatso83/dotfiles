@@ -63,7 +63,7 @@ if which ruby >/dev/null && which gem >/dev/null; then
 fi
 
 # add psql
-PATH="/opt/homebrew/Cellar/postgresql@12/12.9_1/bin:$PATH"
+PATH="/usr/local/opt/postgresql@15/bin:$PATH:$PATH"
 
 export PATH
 

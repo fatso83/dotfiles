@@ -6,6 +6,7 @@ fortune
 fswatch
 gh
 git-extras
+glow
 gnupg
 homebrew/cask/macvim
 htop
@@ -13,7 +14,7 @@ jq
 maven
 neovim
 node
-postgresql
+postgresql@15
 # python 3.5-3.9 needed for Google Cloud SDK. 3.11 is too new
 python@3.9
 pspg
