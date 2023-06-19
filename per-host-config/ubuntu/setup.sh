@@ -12,7 +12,7 @@ source "$ROOT/shared.lib"
 sudo chown -R $(whoami) /usr/local
 
 h2 "Installing PPA software"
-sudo apt-get install software-properties-common # Installs 'add-apt-repository'
+sudo apt-get install -y software-properties-common # Installs 'add-apt-repository'
 
 # Make sure curl exists
 if ! which curl > /dev/null; then
@@ -89,7 +89,6 @@ strip-comments repos.local | while read org_line; do
     sudo add-apt-repository --no-update --yes "$line" || :
     APT_SHOULD_UPDATE=yes
 done 
-APT_SHOULD_UPDATE=yes
 
 h2 "Updating package lists ..."
 if [[ -n $APT_SHOULD_UPDATE ]]; then
@@ -251,7 +250,7 @@ fi
 
 if ! command_exists pspg; then
     h2 "Compiling pspg: Postgres Pager"
-    apt install lib32ncursesw5-dev
+    apt install -y lib32ncursesw5-dev
     PSPGTMP=$(mktemp -d)
     pushd $PSPGTMP
     git clone https://github.com/okbob/pspg
