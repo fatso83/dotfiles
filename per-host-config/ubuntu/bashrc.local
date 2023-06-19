@@ -89,6 +89,9 @@ export PATH="$SWIFT:$PATH"
 export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 export PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 
+# Will prompt the user to enter Github credentials in browser
+export GCM_CREDENTIAL_STORE=secretservice
+
 # Command completion
 complete -C '/usr/local/bin/aws_completer' aws
 
@@ -97,6 +100,10 @@ export PATH="$PNPM_HOME:$PATH"
 
 # Android development
 ANDROID_HOME=/home/carlerik/Android/Sdk/
+mkdir -p $ANDROID_HOME
+
+# RVM
+source "/etc/profile.d/rvm.sh"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/carlerik/.sdkman"
