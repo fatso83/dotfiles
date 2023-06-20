@@ -60,8 +60,7 @@
 
 [credential]
     # One week in-mem caching of HTTPS credentials
-	helper = cache --timeout=604800
-	helper = /usr/local/share/gcm-core/git-credential-manager
+	# helper = cache --timeout=604800
 
 [mergetool]
 	keepBackup = false
