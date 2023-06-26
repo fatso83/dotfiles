@@ -216,6 +216,8 @@ if ! is_wsl; then
 else 
     h1 "Installing WSL2 adjustments\n"
 
+    h2 "Fix snap not working"
+    $PWD/wsl/fix-snap.sh
 
     h2 "Setup 1Password to use as SSH Agent"
     if [[ ! -e $HOME/.1password ]]; then
