@@ -58,10 +58,6 @@ if ! command_exists git-credential-manager; then
     brew install --cask git-credential-manager-core
 fi
 
-if ! which -s java; then
-    warn "TODO: Install Java using SDKMAN on macOS: sdk install java open-jdk-16"
-fi
-
 # Setup RVM before installing packages
 if ! command_exists rvm; then
     curl -sSL https://get.rvm.io | bash -s stable
@@ -75,6 +71,7 @@ source ../_shared/install-utils
 install_python_packages
 install_ruby_packages
 install_node_packages
+install_sdkman_packages
 
 cp ./imgcat.sh ~/bin/imgcat
 

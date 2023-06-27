@@ -151,18 +151,7 @@ if ! type sdk > /dev/null 2> /dev/null; then # if the `sdk` function doesn't exi
     source "$HOME/.sdkman/bin/sdkman-init.sh"
 fi
 
-JAVA_VERSION=17
-if ! sh -c "java --version  | grep 'openjdk $JAVA_VERSION' > /dev/null"; then
-    h2 "Installing Java"
-    sdk install java $JAVA_VERSION-open
-    sdk default java $JAVA_VERSION-open
-fi
-MAVEN_VERSION=3.6.3
-if ! sh -c "mvn --version  | grep '$MAVEN_VERSION' > /dev/null"; then
-    h2 "Installing Maven"
-    sdk install maven $MAVEN_VERSION
-    sdk default maven $MAVEN_VERSION
-fi
+install_sdkman_packages
 
 h2 "Install QR copier"
 go install github.com/claudiodangelis/qrcp@latest

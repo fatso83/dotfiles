@@ -1,6 +1,10 @@
 # source this package
 # set ft=bash
 
+_shared_package_info_message(){
+    h2 "Installing shared setup for:  $1"
+}
+
 install_node_packages(){
     _shared_package_info_message "Node"
 
@@ -45,6 +49,34 @@ install_ruby_packages(){
     done < ../_shared/ruby.local 
 }
 
-_shared_package_info_message(){
-    h2 "Installing shared setup for:  $1"
+install_sdkman_packages(){
+    _shared_package_info_message "SDKMAN"
+    init="$HOME/.sdkman/bin/sdkman-init.sh"
+
+    [[ -e "$init" ]] && source "$init"
+
+    if ! command_exists sdk; then
+        h2 "Installing SDKMAN"
+        curl -s "https://get.sdkman.io" | bash
+        source "$init"
+    fi
+
+    h3 "Installing SDKMAN packages ...\n"
+    sdk update
+
+    JAVA_VERSION=17
+    if ! sh -c "java --version  | grep 'openjdk $JAVA_VERSION' > /dev/null"; then
+        h3 "Installing Java"
+        sdk install java $JAVA_VERSION-open
+        sdk default java $JAVA_VERSION-open
+    fi
+
+    MAVEN_VERSION=3.6.3
+    if ! sh -c "mvn --version  | grep '$MAVEN_VERSION' > /dev/null"; then
+        h3 "Installing Maven"
+        sdk install maven $MAVEN_VERSION
+        sdk default maven $MAVEN_VERSION
+    fi
+
+    sdk install kotlin
 }
