@@ -9,9 +9,19 @@
 # cannot be in the profile file, which is read later on
 # Otherwise, we will for instance get "millis: command not found" on
 # every new terminal, even though it is found on the CLI when testing
-if [ -d ~/bin ] ; then
-    PATH=~/bin:"${PATH}"
-fi
+_paths=(
+     "${HOME}/bin"              # Include selfmade binaries and scripts
+     "${HOME}/.rvm/bin"         # Add Ruby/RVM stuff
+     "${HOME}/.pystartup"       # Add Python stuff
+     "${HOME}/.local/bin"       # Add Python binaries
+     "${HOME}/.cargo/bin"       # Add Rust stuff
+     "${HOME}/.go"               # Add Go stuff
+     "${HOME}/.go/bin"
+     "${HOME}/.yarn/bin"        # Node stuff
+     "${HOME}/.config/yarn/global/node_modules/.bin"
+     "${HOME}/.symfony/bin"     # Symfony
+     "${HOME}/.sdkman"          # SDK  
+ ); update-path "${_paths[@]}"
 
 # @see http://stackoverflow.com/questions/3601515/how-to-check-if-a-variable-is-set-in-bash
 source $HOME/.bash.d/core_utils # clearly not portable across shells, but should be easy to port
@@ -26,31 +36,24 @@ export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss,SSS \
                    -Dorg.slf4j.simpleLogger.showDateTime=true" 
 
 # Ruby/RVM stuff
-export PATH="$PATH:$HOME/.rvm/bin" 
+
 [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 # Python binaries
-PATH=$HOME/.local/bin:$PATH
+
 
 if [ "$0" = "/usr/sbin/lightdm-session" -a "$DESKTOP_SESSION" = "i3" ]; then
     export $(gnome-keyring-daemon --start --components=ssh)
 fi
 
-# Add Rust stuff
-export PATH="$HOME/.cargo/bin:$PATH"
+
 
 # Add Go stuff
-export GOPATH=$HOME/go
+export GOPATH=$HOME/.go
 export PATH="$GOPATH/bin:$HOME/.go/bin:$PATH"
 
-# Node stuff
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-
-# Symfony
-export PATH="$HOME/.symfony/bin:$PATH"
-
 # SDKMAN
-export SDKMAN_DIR="$HOME/.sdkman"
+
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # Local overrides
