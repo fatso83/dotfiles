@@ -4,10 +4,12 @@ cowsay
 direnv
 fortune
 fswatch
+fzf
 gh
 git-extras
 glow
 gnupg
+gum
 homebrew/cask/macvim
 htop
 jq
@@ -24,3 +26,5 @@ terraform
 the_silver_searcher
 tmux
 vagrant
+
+
