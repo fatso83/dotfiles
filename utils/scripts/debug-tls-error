@@ -1,0 +1,23 @@
+#!/bin/bash
+
+usage(){
+cat << EOF
+Utility to debug Netty HTTP issues like "not an SSL/TLS record: 504f53542..."
+See https://stackoverflow.com/c/diffia/questions/117
+
+USAGE: debug-netty-tls-error [--hex] "504f5354202f64796e616d69632f617574686c696e6b2f757365"
+
+Options: 
+    --hex Dump output as hexidecimal
+EOF
+
+exit 1
+}
+
+if [[ "$#" == 2 && "$1" == "--hex" ]]; then
+    printf "$2" | xxd -r -p | xxd
+elif [[ "$#" == 1 ]]; then
+    printf "$1" | xxd -r -p
+else
+    usage
+fi
