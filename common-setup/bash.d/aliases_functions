@@ -271,26 +271,5 @@ function delete-untagged-aws-images(){
     done
 }
 
-function update-path(){
-    if [[ -n $1 ]]; then
-        local _paths=("$@")
-        for _path in "${_paths[@]}"; do
-            if [[ -d ${_path} ]]; then
-                if ! printf "%s" "${_path}" | grep -q "${PATH}"; then
-                    #echo "Agregating $_path to the PATH"
-                    PATH="${_path}:${PATH}"
-                fi
-            fi
-        done
-        export PATH
-    unset _paths _path
-    else
-            echo "This function to add directories to the PATH in your shell environment, if directory exist"
-            echo "Usage:"
-            echo "_dirs=("${HOME}/test");"
-            echo 'update-path ${_dirs[@]}'           
-            return 1
-    fi
-}
-
 t_debug "global aliases and functions finished"
+
