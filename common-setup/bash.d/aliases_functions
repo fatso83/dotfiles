@@ -28,6 +28,10 @@ function command_exists(){
     command -v $@ > /dev/null
 }
 
+function function_exists(){
+    [[ "$(type -t $1)" == "function" ]]
+}
+
 function cat(){
     if [[ $# > 0 ]]; then 
         local file="$(readlink -f $1)"
