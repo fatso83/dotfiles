@@ -251,6 +251,7 @@ function npm(){ if [[ -z "$NPMBIN" ]]; then command npm $@; else $NPMBIN $@; fi;
 function npx(){ if [[ -z "$NPXBIN" ]]; then command npx $@; else $NPMBIN $@; fi; }
 
 alias hub='printf "DEPRECATED: use the Github CLI \`gh\` instead!\n"'
+alias n='printf "DEPRECATED: use ASDF for controlling global versions instead!: \`asdf global nodejs 20.0.0\`\n"'
 
 # SSH recipes for myself
 
