@@ -58,16 +58,11 @@ if ! command_exists git-credential-manager; then
     brew install --cask git-credential-manager-core
 fi
 
-# Setup RVM before installing packages
-if ! command_exists rvm; then
-    curl -sSL https://get.rvm.io | bash -s stable
-    rvm install "ruby-2.7.2"
-fi
-source "$HOME/.rvm/scripts/rvm"
-rvm use ruby-2.7.2
-PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
-
 source ../_shared/install-utils
+
+# ASDF should come first, as it install global tool versions
+install_asdf_tooling
+
 install_python_packages
 install_ruby_packages
 install_node_packages

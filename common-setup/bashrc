@@ -134,9 +134,9 @@ t_debug "Reading local settings for this machine"
 # This needs to be at the bottom to be able to override earlier settings/variables/functions
 read_config_if_exists "$HOME/.bashrc.local"
 
-# For RVM scripting
-# This supposedly NEEDS to be the LAST entry on PATH, so ensuring this by loading it after the local adjustments
-export PATH="$PATH:$HOME/.rvm/bin" 
+# ASDF tool setup
+. "$HOME/.asdf/asdf.sh"
+. "$HOME/.asdf/completions/asdf.bash"
 
 # could alternatively check version > 3 using echo "${BASH_VERSION}" | util.esed 's/(^.).*/\1/')
 if ! is_mac ; then

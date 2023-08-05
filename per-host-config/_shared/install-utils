@@ -80,3 +80,28 @@ install_sdkman_packages(){
 
     sdk install kotlin
 }
+
+install_asdf_tooling(){
+    _shared_package_info_message "ASDF"
+    init="$HOME/.asdf/asdf.sh"
+
+    # recommended download for all os's
+    if ! [[ -e "$HOME/.asdf" ]]; then
+        git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.12.0
+    fi
+
+    [[ -e "$init" ]] && source "$init"
+
+    # To show all plugins available: `asdf plugin list all`
+
+    # Ruby
+    asdf plugin add ruby
+    asdf install ruby 2.7.8
+    asdf install ruby 3.2.2
+    asdf global  ruby 3.2.2
+
+    # Node
+    asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+    asdf install nodejs 20.5.0
+    asdf global  nodejs 20.5.0
+}

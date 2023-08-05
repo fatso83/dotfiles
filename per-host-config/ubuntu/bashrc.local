@@ -102,9 +102,6 @@ export PATH="$PNPM_HOME:$PATH"
 ANDROID_HOME=/home/carlerik/Android/Sdk/
 mkdir -p $ANDROID_HOME
 
-# RVM
-source "/etc/profile.d/rvm.sh"
-
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/carlerik/.sdkman"
 [[ -s "/home/carlerik/.sdkman/bin/sdkman-init.sh" ]] && source "/home/carlerik/.sdkman/bin/sdkman-init.sh"

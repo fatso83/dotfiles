@@ -46,14 +46,6 @@ export LLVM="/usr/local/opt/emscripten/libexec/llvm/bin"
 #t_debug "Load DNVM (.NET VM manager)"
 #[ -s "/Users/carl-erik.kopseng/.dnx/dnvm/dnvm.sh" ] && . "/Users/carl-erik.kopseng/.dnx/dnvm/dnvm.sh" # Load dnvm
 
-# Add rbenv to bash so that it loads every time you open a terminal
-if which rbenv > /dev/null; then 
-    eval "$(rbenv init -)"; 
-fi
-
-# This seems like a hack? I installed 2.7.2 using RVM and everything else was under ~/.rvm/
-PATH=~/.gem/ruby/2.7.0/bin:$PATH
-
 # AWS auto-completion
 complete -C '/usr/local/bin/aws_completer' aws
 
