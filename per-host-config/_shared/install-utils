@@ -67,7 +67,7 @@ install_ruby_packages(){
             continue
         fi
 
-        sudo gem install $line; 
+        gem install $line; 
     done < ../_shared/ruby.local 
 }
 
