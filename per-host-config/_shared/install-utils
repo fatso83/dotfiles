@@ -71,6 +71,7 @@ install_ruby_packages(){
     done < ../_shared/ruby.local 
 }
 
+# todo: replace with `asdf` and rename to install_jvm_stuff
 install_sdkman_packages(){
     _shared_package_info_message "SDKMAN"
     init="$HOME/.sdkman/bin/sdkman-init.sh"
