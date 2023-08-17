@@ -1,6 +1,8 @@
 ccat
 cmake
 cowsay
+# distribute ssh commands. used at posten/bring
+csshx
 direnv
 fortune
 fswatch
