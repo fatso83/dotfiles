@@ -1,3 +1,5 @@
+# tj/git-extras needs Bash 4+
+bash
 ccat
 cmake
 cowsay
