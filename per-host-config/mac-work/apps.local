@@ -26,6 +26,7 @@ python@3.9
 pspg
 reattach-to-user-namespace
 shivammathur/php/php@7.4
+starship
 terraform
 the_silver_searcher
 tmux
