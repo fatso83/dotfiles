@@ -60,12 +60,7 @@ fi
 
 source ../_shared/install-utils
 
-# ASDF should come first, as it install global tool versions
 install_asdf_tooling
-
-install_python_packages
-install_ruby_packages
-install_node_packages
 install_sdkman_packages
 
 cp ./imgcat.sh ~/bin/imgcat

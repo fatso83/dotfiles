@@ -12,14 +12,6 @@ asdf_has_plugin(){
 install_node_packages(){
     _shared_package_info_message "Node"
 
-    local VERSION=20.5.0
-    if ! asdf_has_plugin nodejs; then
-        info "Installing Node"
-        asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-        asdf install nodejs $VERSION
-    fi
-    asdf global nodejs $VERSION
-
     h3 "Installing Node packages ...\n"
     installed=$(mktemp)
     npm list -g --depth 1 --json | jq -r -c '.dependencies | keys | .[]' > $installed
@@ -35,12 +27,6 @@ install_python_packages(){
     # https://github.com/pypa/pip/issues/5240
     _shared_package_info_message "Python"
 
-    if ! asdf_has_plugin python; then
-        asdf plugin add python
-        asdf install python 3.11.0
-    fi
-    asdf global python 3.11.0
-
     h3 "Upgrading pip\n"
     #pip(){ python3 -m pip $@; } # to avoid warning about script wrapper and old python
     #pip install --upgrade --user pip
@@ -53,13 +39,8 @@ install_python_packages(){
 install_ruby_packages(){
     _shared_package_info_message Ruby
 
-    if ! asdf_has_plugin nodejs; then
-        asdf plugin add ruby
-    fi
-
+    # required for older Bundler / Jekyll setups
     asdf install ruby 2.7.8
-    asdf install ruby 3.2.2
-    asdf global  ruby 3.2.2
 
     h3 "Installing Ruby packages ...\n"
     while read line; do 
@@ -104,6 +85,12 @@ install_sdkman_packages(){
     sdk install kotlin
 }
 
+add_plugin(){
+    if ! asdf_has_plugin $1; then
+        asdf plugin add $1
+    fi
+}
+
 install_asdf_tooling(){
     _shared_package_info_message "ASDF"
     init="$HOME/.asdf/asdf.sh"
@@ -116,4 +103,14 @@ install_asdf_tooling(){
     [[ -e "$init" ]] && source "$init"
 
     # To show all plugins available: `asdf plugin list all`
+
+    # for faster, cached lookups
+    add_plugin direnv
+    add_plugin python
+    add_plugin ruby
+    add_plugin nodejs
+
+    install_node_packages
+    install_ruby_packages
+    install_python_packages
 }

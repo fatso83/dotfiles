@@ -57,3 +57,10 @@ atlassian-ide-plugin.xml
 
 ## Node
 node_modules
+
+# ASDF tool manager for handling Node, Python, Ruby, Java, ... versions
+.tool-versions
+
+# Ignore environment variable override files
+.envrc
+.env

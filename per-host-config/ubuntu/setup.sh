@@ -103,9 +103,6 @@ sudo apt-get remove xserver-xephyr # Kolide wants me to not have remote servers 
 sudo apt-get purge avahi-daemon    # ZeroConf for local networks, printers, etc. Tends to get stuck in 100% cpu
 
 source ../_shared/install-utils
-install_python_packages
-install_ruby_packages
-install_node_packages
 
 # This cannot be a shared app, as the install fails on macOS due to some node-gyp thingie
 npm i -g @fatso83/luxafor-cli
@@ -146,9 +143,8 @@ if ! type sdk > /dev/null 2> /dev/null; then # if the `sdk` function doesn't exi
     source "$HOME/.sdkman/bin/sdkman-init.sh"
 fi
 
-install_sdkman_packages
-
 install_asdf_tooling
+install_sdkman_packages
 
 h2 "Install QR copier"
 go install github.com/claudiodangelis/qrcp@latest

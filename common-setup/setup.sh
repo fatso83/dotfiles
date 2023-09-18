@@ -163,5 +163,7 @@ if ! [[ -e $HOME/.sdkman ]]; then
     curl -s "https://get.sdkman.io" | bash
 fi
 
+ln -sf "$SCRIPT_DIR/tool-versions" $HOME/.tool-versions
+
 h2 "Finished common setup"
 popd > /dev/null

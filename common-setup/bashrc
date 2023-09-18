@@ -137,6 +137,7 @@ read_config_if_exists "$HOME/.bashrc.local"
 # ASDF tool setup
 . "$HOME/.asdf/asdf.sh"
 . "$HOME/.asdf/completions/asdf.bash"
+source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/bashrc"
 
 # could alternatively check version > 3 using echo "${BASH_VERSION}" | util.esed 's/(^.).*/\1/')
 if ! is_mac ; then
