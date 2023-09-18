@@ -54,6 +54,18 @@ function _f(){ # create throw-away function to not pollute global namespace with
     h3 "finished installing Homebrew apps"
 }; _f
 
+_f(){
+    local homebrew_bash_path=$(echo $(brew --prefix)/bin/bash)
+    
+    if grep "$homebrew_bash_path" /etc/shells > /dev/null; then 
+        return
+    fi
+
+    h2 "Use the Homebrew version of Bash"
+    sudo bash -c "echo $homebrew_bash_path >> /etc/shells"
+    chsh -s "$homebrew_bash_path/bin/bash"
+}; _f
+
 if ! command_exists git-credential-manager; then
     brew install --cask git-credential-manager-core
 fi
