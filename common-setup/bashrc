@@ -139,8 +139,8 @@ read_config_if_exists "$HOME/.bashrc.local"
 . "$HOME/.asdf/completions/asdf.bash"
 source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/bashrc"
 
-# could alternatively check version > 3 using echo "${BASH_VERSION}" | util.esed 's/(^.).*/\1/')
-if ! is_mac ; then
+BASH_MAJOR_VERSION=$(BASH_MAJOR_VERSION=$(echo $BASH_VERSION |  util.esed -n 's/([0-9])\..*/\1/p'))
+if [[ "$BASH_MAJOR_VERSION" > 3 ]] ; then
     # Shell options
     shopt -s globstar # makes ls **/*.ts match on all subdirs - at any level
 fi
