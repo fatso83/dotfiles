@@ -83,6 +83,9 @@ if [[ -d "$BRING_DIR" && -x $BRING_DIR/b-scripts/bin/b ]]; then
     eval "$($BRING_DIR/b-scripts/bin/b init -)"
 fi
 export POSTEN_SLACK_USERNAME=carl-erik
+
+# to get b-scripts `cdp` command to work, I need a completion function _get_cword
+. /opt/homebrew/etc/bash_completion
 ##### POSTEN / BRING END
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
