@@ -1,9 +1,9 @@
 # vim: syntax=sh
 
 # since this is sourced from shared.lib in the dotfiles repo, we need 
-# source other files
+# to source other files
 if [[ "$BASH_D" == "" || "$BIN_DIR" == "" ]]; then
-    error "('${BASH_SOURCE[0]}'): Missing \$BASH_D and \$BIN_DIR environment variable.\n\n"
+    printf "('${BASH_SOURCE[0]}'): Missing \$BASH_D and \$BIN_DIR environment variable.\n\n"
     return 1
 fi
 
