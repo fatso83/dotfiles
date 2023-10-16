@@ -133,16 +133,7 @@ if ! which git-lfs > /dev/null; then
     rimraf "${BASENAME}"*
 fi
 
-export SDKMAN_DIR="/home/carlerik/.sdkman"
-[[ -s "/home/carlerik/.sdkman/bin/sdkman-init.sh" ]] && source "/home/carlerik/.sdkman/bin/sdkman-init.sh"
-if ! type sdk > /dev/null 2> /dev/null; then # if the `sdk` function doesn't exist
-    h2 "Installing SDKMAN"
-    curl -s "https://get.sdkman.io" | bash # installs SDKMAN
-
-    # make sdk available in the current shell
-    source "$HOME/.sdkman/bin/sdkman-init.sh"
-fi
-
+source "$SDKMAN_DIR/bin/sdkman-init.sh"
 install_asdf_tooling
 install_sdkman_packages
 

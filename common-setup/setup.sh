@@ -159,8 +159,9 @@ ln -sf "$SCRIPT_DIR"/psqlrc $HOME/.psqlrc
 h2 "Fetching rupa/z (Jump Around)"
 curl -s https://raw.githubusercontent.com/rupa/z/master/z.sh -o ~/bin/z.sh
 
-if ! [[ -e $HOME/.sdkman ]]; then
+if ! [[ -e "$SDKMAN_DIR" ]]; then
     curl -s "https://get.sdkman.io" | bash
+    source "$SDKMAN_DIR/bin/sdkman-init.sh"
 fi
 
 ln -sf "$SCRIPT_DIR/tool-versions" $HOME/.tool-versions
