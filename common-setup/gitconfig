@@ -73,12 +73,14 @@
 	autoStash = true
 [init]
 	defaultBranch = høvding
+[branch]
+	sort = committerdate
+[credential "https://dev.azure.com"]
+	useHttpPath = true
 [safe]
 # Try to stuff this into .gitlocal as this is machine/env specific
 
 # Do not add stuff after this point in the global config
-[hub]
-	protocol = ssh
 
 ################################################################################
 # This should probably stay at the end to overwrite global defaults
@@ -90,7 +92,3 @@
     path = .gitlocal-non-wsl
     # This will for some reason not be used when doing `git config --global user.name`, but will if leaving `--global` out
     path = .gitconfig-personal 
-[branch]
-	sort = committerdate
-[credential "https://dev.azure.com"]
-	useHttpPath = true
