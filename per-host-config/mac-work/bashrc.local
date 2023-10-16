@@ -89,4 +89,4 @@ export POSTEN_SLACK_USERNAME=carl-erik
 ##### POSTEN / BRING END
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-[[ -s "/Users/carlerik/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/carlerik/.sdkman/bin/sdkman-init.sh"
+[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
