@@ -30,10 +30,9 @@ Plug 'OrangeT/vim-csharp' "razor, c#
 Plug 'PProvost/vim-ps1' " powershell
 Plug 'inkarkat/vim-ingo-library' " dependency for SyntaxRange
 Plug 'kchmck/vim-coffee-script'
-Plug 'leafgarland/typescript-vim', {'for': 'typescript' }
+"Plug 'leafgarland/typescript-vim', {'for': 'typescript' }
 Plug 'lumiliet/vim-twig'
-Plug 'mxw/vim-jsx' " fixes JSX: https://github.com/pangloss/vim-javascript/issues/955#issuecomment-356350901
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+"Plug 'maxmellon/vim-jsx-pretty'
 Plug 'vim-scripts/SyntaxRange' " :[range]SyntaxInclude {filetype}
 "Plug 'lambdatoast/elm.vim'
 Plug 'elmcast/elm-vim'

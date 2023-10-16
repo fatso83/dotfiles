@@ -42,7 +42,7 @@ nmap <leader>rn <Plug>(coc-rename)
 " Install 'Prettier' command
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
-let g:coc_global_extensions = ['coc-tsserver','coc-json', 'coc-prettier', 'coc-python']
+let g:coc_global_extensions = ['coc-tsserver','coc-json', 'coc-python']
 vmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
