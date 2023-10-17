@@ -119,3 +119,18 @@ inotify-consumers  |head
       17     2392  /lib/systemd/systemd --user
 ```
 
+### azure-secrets-in-repo
+Runs through all the entries in the YAML file called `deploy/values.yaml` and tries to 
+look up all the secrets using the default Azure Keyvault. Both values can be overridden.
+
+#### Example
+```
+✦ ❯ azure-secrets-in-repo
+Processing deploy/values.yaml using keyvault "tandn-qa-92a"
+
+"elasticsearch.password" => "ef0e1844-6cdf11ee913b762385b5200a"
+"elasticsearch.username" => "my-elastic-user"
+"notificationPreferences.auth.clientId" => "0034c46a6ce011eea55f762385b5200a"
+"notificationPreferences.auth.clientSecret" => 18e1bbda6ce011eebc9b762385b5200a
+...
+```
