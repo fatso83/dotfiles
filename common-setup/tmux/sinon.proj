@@ -1,0 +1,47 @@
+# vi: filetype=tmux
+
+# Restoring tmux setups
+# Use this together with the `tmux-restore` function, as in 
+# $ tmux-restore ptflow
+# 
+# Based on 
+# https://stackoverflow.com/a/40125397/200987
+# https://stackoverflow.com/a/40009032/200987
+
+# monitor cpu, etc
+new-window 
+send-keys 'npm run dev-docs' C-m
+rename-window 'docs build';
+
+# 2-pane builds
+new-window
+rename-window 'dev';
+send-keys 'npm run test-dev' C-m
+split-window -h -p 75 # build window (webpack, etc)
+send-keys 'vim' C-m
+#split-window -v -p 50 # 
+#send-keys 'docker-compose -f docker-compose.dev.yml up' C-m
+
+
+# ngrok 
+#new-window 
+#rename-window 'ngrok http'
+#send-keys 'ngrok start ptflow-admin' C-m
+#split-window -v -p 66
+#send-keys 'ngrok start ptflow-api' C-m
+#split-window -v -p 50
+#send-keys 'ngrok start ptflow-web' C-m
+#rename-window 'ngrok'
+
+# editor
+#new-window 
+#rename-window 'vim';
+#send-keys 'vim ' C-m
+
+# cli
+new-window 
+rename-window 'cli'
+#display 'You can now access ptflow at ptflow-{admin,web,api}.eu.ngrok.io'
+
+# select previous window (with editor
+select-window -p
