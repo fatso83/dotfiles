@@ -199,13 +199,15 @@ alias glg='git lg'
 alias gco='git co' 
 alias gbr='git branch'
 
+function gclone(){ pushd ~/dev/; gh repo clone $@; cd $(basename $@); }
+
 # utility function that returns myname/repo
 function local-repo(){
     local url=$(git config remote.origin.url) # --> git@github.com:team/proj
     echo $url |  util.esed -n -e 's/.*github.com[:/]([/a-zA-Z0-9-]+)(\.git)?/\1/p'
 }
 
-# View commits in GitHub 
+# View commits in GitHub web
 function gh-commit(){ 
     local repo=$(local-repo)
     [[ -n $1 ]] && open "https://github.com/$repo/commit/$1" && return
