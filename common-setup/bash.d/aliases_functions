@@ -199,7 +199,18 @@ alias glg='git lg'
 alias gco='git co' 
 alias gbr='git branch'
 
-function gclone(){ pushd ~/dev/; gh repo clone $@; cd $(basename $@); }
+function gclone(){ 
+    [[ $# == 0 ]] && echo "USAGE: gclone [subdir] org/repo" && return 1
+
+    pushd ~/dev/; 
+    if [[ $# == 2 ]]; then
+        [[ -e $1 ]] || mkdir $1
+        cd $1
+        shift
+    fi
+    gh repo clone $@; 
+    cd $(basename $@); 
+}
 
 # utility function that returns myname/repo
 function local-repo(){

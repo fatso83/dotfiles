@@ -17,6 +17,7 @@ gum
 homebrew/cask/macvim
 htop
 jq
+kcat
 maven
 neovim
 node
