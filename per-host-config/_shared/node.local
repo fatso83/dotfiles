@@ -5,5 +5,6 @@ import-sort-parser-typescript
 import-sort-style-module
 neovim
 ngrok
+pnpm
 prettier
 tldr

@@ -74,7 +74,10 @@ export CLOUDSDK_PYTHON=/opt/homebrew/bin/python3.9
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
 
-enable-fingerprint-for-sudo.sh
+# pnpm
+export PNPM_HOME="/Users/carlerik/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end
 
 ##### POSTEN / BRING development
 # initialize b-scrips when starting a shell session
@@ -87,6 +90,8 @@ export POSTEN_SLACK_USERNAME=carl-erik
 # to get b-scripts `cdp` command to work, I need a completion function _get_cword
 . /opt/homebrew/etc/bash_completion
 ##### POSTEN / BRING END
+
+enable-fingerprint-for-sudo.sh
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
