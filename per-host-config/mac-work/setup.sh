@@ -114,9 +114,7 @@ if [[ ! -e "$HOME/.1password" ]]; then
     mkdir -p ~/.1password && ln -s ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock ~/.1password/agent.sock
 fi
 
-# IntelliJ IDEA launcher
-cp ./idea.sh ~/bin/
-cp ./enable-fingerprint-for-sudo.sh ~/bin/
+enable-fingerprint-for-sudo.sh
 
 # Fonts
 ./fonts.sh

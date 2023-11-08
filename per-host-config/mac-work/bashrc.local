@@ -91,7 +91,5 @@ export POSTEN_SLACK_USERNAME=carl-erik
 . /opt/homebrew/etc/bash_completion
 ##### POSTEN / BRING END
 
-enable-fingerprint-for-sudo.sh
-
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
