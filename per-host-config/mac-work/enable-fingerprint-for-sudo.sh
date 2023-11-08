@@ -19,25 +19,30 @@ Install it using Homebrew to have Touch ID work in tmux." "$PAM_REATTACH_MODULE"
   grep -q "$PAM_REATTACH_MODULE" /etc/pam.d/sudo || sudo sed -i '' '2i\
 auth       optional       /opt/homebrew/lib/pam/pam_reattach.so ignore_ssh
 ' /etc/pam.d/sudo
-
 }
 
-if grep -q 'auth sufficient pam_tid.so' /etc/pam.d/sudo; then
-  echo "Touch ID is enabled for sudo"
-else
-  read -p "Touch ID is not enabled for sudo. Would you like to enable it now? [y/n]: " RESPONSE
-  shopt -s extglob # enables extended globbing
-
-  if [[ $RESPONSE == [yY] ]]; then
-    sudo grep -q -F 'pam_tid.so' /etc/pam.d/sudo || sudo sed -i '' '2i\
-auth       sufficient     pam_tid.so
-    ' /etc/pam.d/sudo
-    if grep -q 'auth sufficient pam_tid.so' /etc/pam.d/sudo; then
-      echo "'auth sufficient pam_tid.so' added to /etc/pam.d/sudo"
-    fi
+enable_touch_id(){
+  if grep -q 'auth sufficient pam_tid.so' /etc/pam.d/sudo; then
+    echo "Touch ID is enabled for sudo"
   else
-    echo "No modifications were made to /etc/pam.d/sudo"
+    read -p "Touch ID is not enabled for sudo. Would you like to enable it now? [y/n]: " RESPONSE
+    shopt -s extglob # enables extended globbing
+  
+    if [[ $RESPONSE == [yY] ]]; then
+      sudo grep -q -F 'pam_tid.so' /etc/pam.d/sudo || sudo sed -i '' '2i\
+auth       sufficient     pam_tid.so
+' /etc/pam.d/sudo
+      if grep -q 'auth sufficient pam_tid.so' /etc/pam.d/sudo; then
+        echo "'auth sufficient pam_tid.so' added to /etc/pam.d/sudo"
+      fi
+    else
+      echo "No modifications were made to /etc/pam.d/sudo"
+    fi
   fi
-fi
+}
 
+enable_touch_id
+
+# the reattach module MUST be loaded before touch id module
+# it will inject itself at the top of the list when installed last
 tmux_fix
