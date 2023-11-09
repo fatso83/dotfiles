@@ -1,0 +1,14 @@
+#!/bin/sh
+#set -x
+CMD=$(basename $0)
+
+usage() {
+    echo "USAGE: $CMD liquibase:update"
+    exit 1
+}
+
+[[ $# == 0 ]] && usage
+
+if ! [[ -e pom.xml ]]; then printf "\nThis is not a Maven project! PWD=$PWD\n\n"; exit 1; fi
+
+mvn help:describe -Dcmd="$1"  -Ddetail=true
