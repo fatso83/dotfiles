@@ -61,8 +61,11 @@ else
 fi
 
 alias text.delete_empty_line="sed '/^[[:space:]]*$/d'"
-# Trims whitespace at start and end of line
 alias text.trim="util.esed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'"
+
+function text.count(){
+    grep -o "$1" | wc -l
+}
 
 # Based on https://stackoverflow.com/a/12579554/200987
 function text.remove-last-newline(){
