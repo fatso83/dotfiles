@@ -1,0 +1,27 @@
+#!/bin/sh
+CMD=$(basename $0)
+
+process_args(){
+    if [[ $# == 0 ]]; then usage; fi
+    if [[ "$1" == "--built-in" ]]; then 
+        shift
+        PLUGIN="org.apache.maven.plugins:$1"; 
+    else
+        PLUGIN="$1"
+    fi
+}
+
+usage() {
+    echo "USAGE: $CMD [--built-in] <org>:<full-plugin-name>[:<optional-version>] [optional-goal]"
+    echo ""
+    echo "Example: $CMD com.hubspot.maven.plugins:prettier-maven-plugin"
+    echo ""
+    echo "Options:"
+    echo "--built-in    Will assume group id of org.apache.maven.plugins and prepend that to the given plugin"
+
+    exit 1
+}
+
+process_args $@
+
+mvn help:describe -Dplugin="$PLUGIN"  -Ddetail=true
