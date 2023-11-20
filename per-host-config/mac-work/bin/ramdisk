@@ -1,0 +1,65 @@
+#!/bin/bash
+#
+# APFS does not work for small volumes (say 10 MB), whereas 
+# HFS+ will reserve a lot of space. A 10MB ramdisk will only have 2 MB usable space.
+FSTYPE=HFS+ 
+CMD=$(basename $0)
+VOLUMENAME=RamDisk
+
+set +e
+
+usage(){
+    echo "USAGE:"
+    echo $CMD create size-in-mb
+    echo $CMD unmount
+    exit 1
+}
+
+error(){
+    printf "Error: $@" > /dev/stderr
+    exit 99
+}
+
+
+create(){
+    [[ $# == 1 ]] || error "Requires size in megabytes"
+    (( $1 >= 10 )) || error "Requires size must be at least 10 megabytes"
+    if [[ $(get-mounted-disk) != "" ]]; then
+        error "$VOLUMENAME is already mounted. Try '$CMD unmount' first."
+    fi
+
+    # 2048 memory blocks correspond to 1MB. Thus, XXXXX = YYYY * 2048 where YYYY is the size in MB.
+    # block-size is 512 bytes
+    let size=($1*1000000/512)
+    echo "Creating disk of size $size blocks"
+    
+    function text.trim(){
+        sed -E -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'
+    }
+
+    set -x
+    local disk=$(hdiutil attach -nobrowse -nomount ram://$size | text.trim)
+    diskutil erasevolume "$FSTYPE" "$VOLUMENAME" "$disk"
+}
+
+get-mounted-disk(){
+    df | grep $VOLUMENAME | awk '{print $1}'
+}
+
+unmount(){
+    local disk=$(get-mounted-disk)
+    [[ $disk == "" ]] && error "No mounted disk"
+    hdiutil detach $disk
+}
+
+case "$1" in
+    unmount)
+        unmount
+        ;;
+    create)
+        create $2
+        ;;
+    *)
+        usage
+        ;;
+esac

@@ -75,7 +75,8 @@ source ../_shared/install-utils
 install_asdf_tooling
 install_sdkman_packages
 
-cp ./imgcat.sh ~/bin/imgcat
+# copy mac specific utils
+cp ./bin/* ~/bin/
 
 if [[ ! -d /opt/google-cloud-sdk ]]; then
     h2 "Installing Google Cloud SDK ..."
