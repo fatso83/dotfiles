@@ -289,5 +289,9 @@ function delete-untagged-aws-images(){
     done
 }
 
+function progress-file-size(){
+    tail -f -c 1 "$1" | pv > /dev/null
+}
+
 t_debug "global aliases and functions finished"
 
