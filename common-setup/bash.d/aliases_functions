@@ -103,21 +103,6 @@ alias remove-indent4="sed -E 's/^    //'"
 alias de-indent4=remove-indent4
 alias unindent4=remove-indent4
 
-t_debug "aliases: setting up node aliases"
-# node commands - important that these are enclosed in single quotes to avoid expansion!
-alias npm-exec='PATH=$(npm bin):$PATH'
-alias coffee='$(npm bin)/coffee'
-alias grunt='$(npm bin)/grunt'
-alias gulp='$(npm bin)/gulp'
-alias mocha='$(npm bin)/mocha'
-alias mochify='$(npm bin)/mochify'
-alias karma='$(npm bin)/karma'
-alias eslint='$(npm bin)/eslint'
-alias prettier='$(npm bin)/prettier'
-alias faucet='$(npm bin)/faucet'
-
-t_debug "aliases: finished setting up node aliases"
-
 t_debug server aliases
 alias webserver='python -m SimpleHTTPServer'
 alias servers='sudo lsof -iTCP -sTCP:LISTEN -P -n'
@@ -198,12 +183,12 @@ alias gco='git co'
 alias gbr='git branch'
 
 function gclone(){ 
-    [[ $# == 0 ]] && echo "USAGE: gclone [subdir] org/repo" && return 1
+    [[ $# == 0 ]] && echo "USAGE: gclone org/repo [subdir]" && return 1
 
     pushd ~/dev/; 
     if [[ $# == 2 ]]; then
-        [[ -e $1 ]] || mkdir $1
-        cd $1
+        [[ -e $2 ]] || mkdir $2
+        cd $2
         shift
     fi
     gh repo clone $@; 
