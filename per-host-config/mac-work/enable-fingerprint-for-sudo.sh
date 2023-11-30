@@ -22,7 +22,7 @@ auth       optional       /opt/homebrew/lib/pam/pam_reattach.so ignore_ssh
 }
 
 enable_touch_id(){
-  if grep -q 'auth sufficient pam_tid.so' /etc/pam.d/sudo; then
+  if egrep -q 'auth[[:space:]]+sufficient[[:space:]]+pam_tid.so' /etc/pam.d/sudo; then
     echo "Touch ID is enabled for sudo"
   else
     read -p "Touch ID is not enabled for sudo. Would you like to enable it now? [y/n]: " RESPONSE
