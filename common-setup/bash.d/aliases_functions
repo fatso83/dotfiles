@@ -118,19 +118,20 @@ alias my-ip-json='curl -s http://ifconfig.co/json'
 alias socks_proxy='ssh -v -D 22222 carl-erik@timbuktu.kopseng.no -N'
 alias socks_proxy_all='ssh -v -D :22222 carl-erik@timbuktu.kopseng.no -N'
 
-function ltrim ()
+# text manipulation "library". Just type "text<TAB>" to see all
+function text.ltrim ()
 {
     util.esed 's/^[[:space:]]+//'
 }
 
-function rtrim ()
+function text.rtrim ()
 {
     util.esed 's/[[:space:]]+$//'
 }
 
-function trim ()
+function text.trim ()
 {
-    ltrim | rtrim
+    text.ltrim | text.rtrim
 }
 
 # Used with the git alias functions; gd, gds, gdw, gdws
