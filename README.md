@@ -3,7 +3,7 @@ My dot files
 [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/fatso83)
 
 These are my config files for Bash, VIM, Python, tmux and more. Also includes a handful of [utility scripts](./utils/scripts) 
-and quite a lot of [aliases/functions](https://github.com/fatso83/dotfiles/blob/master/common-setup/bash.d/bash_aliases_functions) I find useful and re-use quite often.
+and quite a lot of [aliases/functions]([https://github.com/fatso83/dotfiles/blob/master/common-setup/bash.d/bash_aliases_functions](https://github.com/fatso83/dotfiles/blob/7958268/common-setup/bash.d/aliases_functions)) I find useful and re-use quite often.
 
 This repo is under a [do as you please license](./LICENSE) :)
 
