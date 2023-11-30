@@ -41,7 +41,7 @@ function _f(){ # create throw-away function to not pollute global namespace with
     brew tap microsoft/git
     brew tap hashicorp/tap
 
-    local app_to_formula_map=$(cat apps.local | strip-comments | trim | awk -F/ '{  print ( ($3 != "") ? $3 : $1) "\t" $0 } '  | sort )
+    local app_to_formula_map=$(cat apps.local | strip-comments | text.trim | awk -F/ '{  print ( ($3 != "") ? $3 : $1) "\t" $0 } '  | sort )
     local to_install=$(awk -F'\t' '{  print $1 }' <(printf "%s\n" "$app_to_formula_map"))
     local formulae=$(brew list --formulae -1)
     local casks=$(brew list --casks -1)
