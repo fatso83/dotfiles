@@ -28,6 +28,7 @@ python@3.9
 pspg
 reattach-to-user-namespace
 shivammathur/php/php@7.4
+sox
 starship
 terraform
 the_silver_searcher

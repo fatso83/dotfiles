@@ -1,0 +1,6 @@
+#!/bin/sh
+# https://superuser.com/a/1541968/69121
+# Here, -d means "default audio device", and this command specifies it for both the input and the output, 
+# i.e. microphone and speakers/headphones.
+
+sox -V0 --multi-threaded --input-buffer 32 --buffer 128 -d -d
