@@ -190,10 +190,9 @@ function gclone(){
     if [[ $# == 2 ]]; then
         [[ -e $2 ]] || mkdir $2
         cd $2
-        shift
     fi
-    gh repo clone $@; 
-    cd $(basename $@); 
+    gh repo clone $1; 
+    cd $(basename $1); 
 }
 
 # utility function that returns myname/repo
