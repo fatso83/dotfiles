@@ -106,6 +106,9 @@ install_asdf_tooling(){
 
     # for faster, cached lookups
     add_plugin direnv
+    asdf direnv setup --shell bash --version latest
+    asdf install direnv 2.32.3
+
     add_plugin python
     add_plugin ruby
     add_plugin nodejs
