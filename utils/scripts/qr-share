@@ -1,0 +1,14 @@
+#!/bin/sh
+usage(){
+    echo "Usage: $0 <url>"
+    exit 1
+}
+
+if [[ $# == 0 ]]; then 
+    usage
+fi
+
+TMP="$TMPDIR/qr-share.png"
+qrencode "$1" -o "$TMP"
+open --wait-apps "$TMP"
+rm $TMP
