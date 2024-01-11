@@ -77,7 +77,7 @@ install_asdf_tooling
 install_sdkman_packages
 
 # copy mac specific utils
-cp ./bin/* ~/bin/
+ln -f ./bin/* ~/bin/
 
 if [[ ! -d /opt/google-cloud-sdk ]]; then
     h2 "Installing Google Cloud SDK ..."
