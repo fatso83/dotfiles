@@ -166,5 +166,8 @@ fi
 
 ln -sf "$SCRIPT_DIR/tool-versions" $HOME/.tool-versions
 
+[[ ! -e ~/.ssh ]] && mkdir ~/.ssh
+ln ./allowed_signers ~/.ssh/
+
 h2 "Finished common setup"
 popd > /dev/null
