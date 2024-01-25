@@ -116,6 +116,13 @@ if [[ ! -e "$HOME/.1password" ]]; then
     mkdir -p ~/.1password && ln -s ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock ~/.1password/agent.sock
 fi
 
+h2 "Use _exact_ Terraform version for Posten repos"
+curl -o terraform.zip https://releases.hashicorp.com/terraform/1.6.2/terraform_1.6.2_darwin_amd64.zip
+unzip terraform.zip
+rm terraform.zip
+mv ./terraform ~/bin/terraform-1.6.2
+ln -s ~/bin/terraform-1.6.2 ~/bin/terraform
+
 ./enable-fingerprint-for-sudo.sh
 
 # Fonts
