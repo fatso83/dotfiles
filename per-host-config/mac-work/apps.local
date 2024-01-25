@@ -15,6 +15,7 @@ git-extras
 glow
 gnupg
 gum
+hashicorp/tap/terraform
 homebrew/cask/macvim
 htop
 jq
@@ -32,7 +33,6 @@ reattach-to-user-namespace
 shivammathur/php/php@7.4
 sox
 starship
-terraform
 the_silver_searcher
 tmux
 vagrant
