@@ -34,7 +34,7 @@ set guifont=Monaco:h14
 
 "" Clipboard - all yanking, deleting, etc will use the system clipboard
 " Is much smoother default setting than having to do stuff like "+yy
-set clipboard=unnamedplus
+" set clipboard=unnamedplus
 
 "" check out http://superuser.com/questions/693528/vim-is-there-a-downside-to-using-space-as-your-leader-key
 :let mapleader="," 
