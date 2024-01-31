@@ -78,6 +78,7 @@
 [credential "https://dev.azure.com"]
 	useHttpPath = true
 [safe]
+	directory = /Users/carlerik/dev/ptflow-api
 # Try to stuff this into .gitlocal as this is machine/env specific
 
 # Do not add stuff after this point in the global config
