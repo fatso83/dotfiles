@@ -1,0 +1,19 @@
+#!/bin/sh
+
+usage(){
+    echo $0 pattern
+    exit 1
+}
+
+if [[ $# == 0 || $? == "-h" ]]; then
+    usage
+fi
+
+DBS=$(psql postgres -XAtqc "SELECT 'DROP DATABASE ' || quote_ident(datname) || ';' FROM pg_database WHERE datname like '%$1%';")
+echo "Databases matching \"%$1%\"":
+echo $DBS
+if [[ "$DOIT" !=  "true" ]]; then
+    echo Not deleting. Set DOIT=true to force the deletion
+else 
+    echo $DBS | psql -X postgres
+fi
