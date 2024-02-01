@@ -121,7 +121,7 @@ curl -o terraform.zip https://releases.hashicorp.com/terraform/1.6.2/terraform_1
 unzip terraform.zip
 rm terraform.zip
 mv ./terraform ~/bin/terraform-1.6.2
-ln -s ~/bin/terraform-1.6.2 ~/bin/terraform
+ln -sf ~/bin/terraform-1.6.2 ~/bin/terraform
 
 ./enable-fingerprint-for-sudo.sh
 
