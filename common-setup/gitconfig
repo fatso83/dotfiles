@@ -13,6 +13,25 @@
     #    > The advantage of a .gitattributes file is that your line configurations are associated with your repository. 
     #    > You don't need to worry about whether or not collaborators have the same line ending settings that you do.
 
+[commit]
+    ## Commit signing for 1Password
+    ## @see https://developer.1password.com/docs/ssh/git-commit-signing/
+    gpgsign = true
+
+    # Required settings to have this work are custom to each machine:
+    # - gpg.allowedSignersFile
+    # - gpg.program
+    # This is set in the `gitlocal` settings, which is specific to each machine. See the individual 
+    # 'gitlocal' files in mac-work, etc
+
+# related to the commit signing
+[gpg]
+  format = ssh
+
+[user]
+    # The public key of "Privat nøkkel" (held in 1Password)
+  signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCtB10ag2fipH7Cnls3gZvl5eBJx0OvQaLu7hndL5sif3m4CTGmrN/MuP0lei0Rt23cBy5Ey2DqAjmizCAhdc3jSQm0pXisKG92Juo2HxiJw+eMUucoPhjbEy35sKKrru2//5uPpK5IEeVEve3bIXCAQUQgyOESmHBgXmKSCz0jQXEvcV8GxxkdXK7/UQVSe5wtxzPHOoP+yeRdNGfMdl1SeXwUCEXwexAn7YM8ZlISufuxXMInpBMrxVXLAih0ZG2WGD2BAJZcwXmMjLPPVP+bjHXnQkiqk5oDeP3ewPorrvxbOeOcqk0b1qrAQYSXHqXv6lENfWIceIz1EsZlRsIV
+
 [color]
     ui = true
 

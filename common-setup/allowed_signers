@@ -1,6 +1,5 @@
 # This file has the list of "known" committers. It could also be added to a local repo
 # You typically need to add something like this
-
 ## Commit signing for 1Password
 ## @see https://developer.1password.com/docs/ssh/git-commit-signing/
 # [user]
@@ -12,8 +11,5 @@
 # [gpg "ssh"]
 #   program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
 #   allowedSignersFile = /Users/carlerik/.ssh/allowed_signers
-
-
 carl-erik.kopseng@posten.no namespaces="git" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCtB10ag2fipH7Cnls3gZvl5eBJx0OvQaLu7hndL5sif3m4CTGmrN/MuP0lei0Rt23cBy5Ey2DqAjmizCAhdc3jSQm0pXisKG92Juo2HxiJw+eMUucoPhjbEy35sKKrru2//5uPpK5IEeVEve3bIXCAQUQgyOESmHBgXmKSCz0jQXEvcV8GxxkdXK7/UQVSe5wtxzPHOoP+yeRdNGfMdl1SeXwUCEXwexAn7YM8ZlISufuxXMInpBMrxVXLAih0ZG2WGD2BAJZcwXmMjLPPVP+bjHXnQkiqk5oDeP3ewPorrvxbOeOcqk0b1qrAQYSXHqXv6lENfWIceIz1EsZlRsIV
-
 carlerik@gmail.com namespaces="git" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCtB10ag2fipH7Cnls3gZvl5eBJx0OvQaLu7hndL5sif3m4CTGmrN/MuP0lei0Rt23cBy5Ey2DqAjmizCAhdc3jSQm0pXisKG92Juo2HxiJw+eMUucoPhjbEy35sKKrru2//5uPpK5IEeVEve3bIXCAQUQgyOESmHBgXmKSCz0jQXEvcV8GxxkdXK7/UQVSe5wtxzPHOoP+yeRdNGfMdl1SeXwUCEXwexAn7YM8ZlISufuxXMInpBMrxVXLAih0ZG2WGD2BAJZcwXmMjLPPVP+bjHXnQkiqk5oDeP3ewPorrvxbOeOcqk0b1qrAQYSXHqXv6lENfWIceIz1EsZlRsIV

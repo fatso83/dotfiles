@@ -3,9 +3,5 @@
 
 [core]
   sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
-[gpg]
-    format = ssh
 [gpg "ssh"]
     program = C:\\Users\\dvlpr\\AppData\\Local\\1Password\\app\\8\\op-ssh-sign.exe
-[commit]
-    gpgsign = true
