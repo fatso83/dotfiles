@@ -70,6 +70,7 @@
     root = rev-parse --show-toplevel
     head-sha = rev-parse --short HEAD
 	staash = stash --all
+    blame-lines = blame -w -C -C -C -L # https://youtu.be/aolI_Rz0ZqY?si=QDBq4OF4Les6Hpvi&t=745
 	bb = !better-branch.sh
 
 [pull]
