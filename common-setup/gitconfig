@@ -98,7 +98,7 @@
 	updateRefs = true
 
 [init]
-	defaultBranch = høvding
+	defaultBranch = sjef
 
 [branch]
 	sort = committerdate
