@@ -9,11 +9,9 @@ allrevs=$(git rev-list --all)
 
 for rev in $allrevs
 do
-  git ls-tree --full-tree -r $rev >$tmpdir/$rev 
+  FILE=$tmpdir/$rev 
+  git ls-tree --full-tree -r $rev > $FILE
+  grep $1 $FILE > /dev/null && echo $rev $FILE
 done
-
-cd $tmpdir
-grep $1 * 
-
 
 rm -r $tmpdir
