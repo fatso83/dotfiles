@@ -276,5 +276,9 @@ function progress-file-size(){
     tail -f -c 1 "$1" | pv > /dev/null
 }
 
+function random_sha(){
+    head -c 12 /dev/urandom | shasum | cut -d ' ' -f1
+}
+
 t_debug "global aliases and functions finished"
 
