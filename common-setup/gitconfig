@@ -120,3 +120,8 @@
     path = .gitlocal-non-wsl
     # This will for some reason not be used when doing `git config --global user.name`, but will if leaving `--global` out
     path = .gitconfig-personal 
+
+# Conditional include based on which subdir you are in
+# See https://www.youtube.com/watch?v=aolI_Rz0ZqY&t=537s
+[includeIf "gitdir:~/dev/bring/"]
+    path = ~/dev/bring/gitconfig-posten
