@@ -104,7 +104,7 @@ alias de-indent4=remove-indent4
 alias unindent4=remove-indent4
 
 t_debug server aliases
-alias webserver='python -m SimpleHTTPServer'
+alias webserver='python -m http.server'
 alias servers='sudo lsof -iTCP -sTCP:LISTEN -P -n'
 
 # time
