@@ -105,6 +105,9 @@
 [branch]
 	sort = committerdate
 
+[column]
+    ui = auto # puts them into columns if the terminal allows for it
+
 [credential "https://dev.azure.com"]
 	useHttpPath = true
 # Try to stuff this into .gitlocal as this is machine/env specific
