@@ -10,3 +10,6 @@
   program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
   allowedSignersFile = /Users/carlerik/.ssh/allowed_signers
 ###
+
+[safe]
+	directory = /Users/carlerik/dev/ptflow-api

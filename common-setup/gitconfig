@@ -1,3 +1,4 @@
+# vi: filetype=gitconfig       
 
 [core]
     editor = nvim
@@ -83,21 +84,25 @@
 
 [mergetool]
 	keepBackup = false
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
 [rebase]
 	autoStash = true
+	updateRefs = true
+
 [init]
 	defaultBranch = høvding
+
 [branch]
 	sort = committerdate
+
 [credential "https://dev.azure.com"]
 	useHttpPath = true
-[safe]
-	directory = /Users/carlerik/dev/ptflow-api
 # Try to stuff this into .gitlocal as this is machine/env specific
 
 # Do not add stuff after this point in the global config
