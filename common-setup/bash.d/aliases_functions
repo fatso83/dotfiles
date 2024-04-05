@@ -182,6 +182,7 @@ alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias glg='git lg' 
 alias gco='git co' 
 alias gbr='git branch'
+alias gstash='git staash'
 
 function gclone(){ 
     [[ $# == 0 ]] && echo "USAGE: gclone org/repo [subdir]" && return 1

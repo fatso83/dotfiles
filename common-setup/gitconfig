@@ -68,6 +68,7 @@
     # other
     root = rev-parse --show-toplevel
     head-sha = rev-parse --short HEAD
+	staash = stash --all
 
 [pull]
     rebase = true
