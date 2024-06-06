@@ -244,8 +244,8 @@ tmux-restore () {
 
 # allow to use alternative npm clients like PNPM with the same name. Lazy :p
 # just use direnv's .envrc to define a path to a different npm, like pnpm
-function npm(){ if [[ -z "$NPMBIN" ]]; then command npm $@; else $NPMBIN $@; fi; }
-function npx(){ if [[ -z "$NPXBIN" ]]; then command npx $@; else $NPMBIN $@; fi; }
+function npm(){ if [[ -z "$NPMBIN" ]]; then command npm "$@"; else $NPMBIN "$@"; fi; }
+function npx(){ if [[ -z "$NPXBIN" ]]; then command npx "$@"; else $NPMBIN "$@"; fi; }
 
 alias hub='printf "DEPRECATED: use the Github CLI \`gh\` instead!\n"'
 alias n='printf "DEPRECATED: use ASDF for controlling global versions instead!: \`asdf global nodejs 20.0.0\`\n"'
