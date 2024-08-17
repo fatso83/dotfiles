@@ -1,0 +1,25 @@
+#!/bin/bash
+# vi: ft=bash
+
+assert(){
+    local exp="_VAL=\$$1"
+    eval $exp
+    if [[ "$_VAL" == "" ]]; then
+        echo "Missing \$$1"
+        return 1
+    fi
+}
+
+bring.tracking(){
+    local trackingNumber=$1
+    assert MYBRING_SESSION || return
+    assert trackingNumber || return
+
+    curl -s \
+        -H "Cookie:  mybring_session=$MYBRING_SESSION;" \
+        https://www.mybring.com/track/$trackingNumber.json | jq 
+}
+
+bring.tracking.eventSet(){
+    bring.tracking $1 | jq '.consignmentSet[0].packageSet[0].eventSet | map( { eventCode: .lmEventCode, ts: .dateIso, desc: .description } ) | sort_by(.ts)'
+}
