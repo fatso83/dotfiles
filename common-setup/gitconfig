@@ -97,7 +97,10 @@
 
 [rebase]
 	autoStash = true
-	updateRefs = true
+
+    # This will also affect creating backup branches, so should be off by default!
+    # Use --update-refs manually when rebasing to update stacked branches
+    # updateRefs = true
 
 [init]
 	defaultBranch = sjef
