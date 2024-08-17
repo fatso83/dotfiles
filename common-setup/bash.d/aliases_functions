@@ -281,5 +281,17 @@ function random_sha(){
     head -c 12 /dev/urandom | shasum | cut -d ' ' -f1
 }
 
-t_debug "global aliases and functions finished"
+# Docker
+dps() { docker ps --format '{{.ID}}\t{{.Names}}\t{{.Ports}}'; }
 
+# Kafka
+kafkabin() {
+    if [[ "$#" == 0 ]]; then 
+        printf "No scripts to run. Available commands in /opt/kafka/bin/:\n"
+        kafkabin ls /opt/kafka/bin
+        return 1
+    fi
+    docker run -ti  -v ".:/pwd" apache/kafka "$@"
+}
+
+t_debug "global aliases and functions finished"
