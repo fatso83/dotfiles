@@ -147,7 +147,7 @@ function strip-color-codes(){
 }
 
 # For stack overflow pasting
-alias websafe='util.esed -e "s/(diffia|ptflow)/acme-org/gi" -e "s/$USER/my-user/gi" -e "s/(nimble|ptflow|pete)/foo-project/gi" -e "s/(clinic|people)/app-\1/gi" '
+alias websafe='util.esed -e "s/(posten|bring|ptflow)/acme-org/gi" -e "s/$USER/my-user/gi" -e "s/(posten|bring|ptflow|pete)/foo-project/gi" -e "s/Notification/ze-domain/gi" -e "s/PH/otherdep/gi" '
 alias stack-overflow-no-copy='websafe | indent4 '
 alias stack-overflow='stack-overflow-no-copy | pbcopy; pbpaste; echo -e "\n\nCopied to pastebuffer (use stack-overflow-no-copy to avoid this)!"'
 
