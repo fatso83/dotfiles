@@ -1,13 +1,16 @@
 # vim: set sw=2 ts=2:
 
+version: "2"
 region: eu
+
 tunnels:
   demo:
     proto: http
     inspect: false
     addr: 9090
     hostname: demo.inconshreveable.com
-    auth: demo:secret
+    basic_auth: 
+      - "demo:secret"
 
   # the http version
   nimble:
@@ -25,16 +28,16 @@ tunnels:
     proto: http
     addr: 8000
     subdomain: ptflow-api
-    host-header: example.com
+    host_header: example.com
     
   ptflow-admin:
     proto: http
     addr: 8000
     subdomain: ptflow-admin
-    host-header: admin.example.com
+    host_header: admin.example.com
     
   ptflow-web:
     proto: http
     addr: 8000
     subdomain: ptflow-web
-    host-header: web.example.com
+    host_header: web.example.com
