@@ -134,6 +134,14 @@ function text.trim ()
     text.ltrim | text.rtrim
 }
 
+function text.lowercase(){
+    tr "[:upper:]" "[:lower:]" 
+}
+
+function text.uppercase(){
+    tr "[:lower:]" "[:upper:]"
+}
+
 # Used with the git alias functions; gd, gds, gdw, gdws
 alias strip-diff-prefix='sed "s/^\([^-+ ]*\)[-+ ]/\\1/"' 
 
