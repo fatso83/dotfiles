@@ -68,7 +68,7 @@ install_sdkman_packages(){
     h3 "Installing SDKMAN packages ...\n"
     sdk update
 
-    JAVA_VERSION=21
+    JAVA_VERSION=21.0.2
     if ! sh -c "java --version  | grep 'openjdk $JAVA_VERSION' > /dev/null"; then
         h3 "Installing Java"
         sdk install java $JAVA_VERSION-open
