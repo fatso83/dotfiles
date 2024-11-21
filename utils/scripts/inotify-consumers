@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Get the procs sorted by the number of inotify watches
 # @author Carl-Erik Kopseng
