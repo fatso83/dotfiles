@@ -302,4 +302,18 @@ kafkabin() {
     docker run -ti  -v ".:/pwd" apache/kafka "$@"
 }
 
+alias zh=zplug-plugin-help
+to_skip=("oh-my-zsh" "spaceship") 
+zplug-plugin-help () {
+# Looks for all zplug plugins with README.md files and shows the content of the selected one
+# Requires: fzf and/or gum to provide fuzzy search 
+local findargs=() 
+  for i in "${to_skip[@]}"; do
+    findargs+=('-not' '-path' "*${i}*")
+  done
+local help_dir=$(find "${ZPLUG_HOME}/repos" -mindepth 3 -name 'README.md' -and "${findargs[@]}" | xargs -I {} dirname {} | sort | uniq | fzf)
+  cat "${help_dir}/README.md" | gum format
+}
+
+
 t_debug "global aliases and functions finished"
