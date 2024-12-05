@@ -67,7 +67,7 @@ alias urldecode='python3 -c "import sys, urllib.parse as p; print(p.unquote_plus
 alias urlencode='python3 -c "import sys, urllib.parse as p; print(p.quote_plus(sys.argv[1]))"'
 alias htmldecode='python3 -c "import sys, html; print(html.unescape(sys.argv[1]))"'
 alias htmlencode='python3 -c "import sys, html; print(html.escape(sys.argv[1]))"'
-alias html2text='npx html-to-text'
+alias html2text='npx -y @html-to/text-cli'
 
 t_debug "Pascal, Kebab, Camel, ... case conversions"
 alias pascal-case='~/bin/change-case --pascal'
@@ -300,6 +300,11 @@ kafkabin() {
         return 1
     fi
     docker run -ti  -v ".:/pwd" apache/kafka "$@"
+}
+
+# works perfectly with `send_sms.py --phone-file --file message.txt`
+kidplan_html_phonenumbers(){
+    util.esed -n  's/.*([0-9]{3}) ([0-9]{2}) ([0-9]{3}).*/\1\2\3/gp' 
 }
 
 t_debug "global aliases and functions finished"
