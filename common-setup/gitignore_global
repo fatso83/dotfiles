@@ -69,5 +69,5 @@ node_modules
 .vim
 
 # Spring private application files
-application-priv*.yml
-application-priv*.yaml
+#application-priv*.yml
+#application-priv*.yaml
