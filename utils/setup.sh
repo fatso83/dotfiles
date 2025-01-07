@@ -63,6 +63,11 @@ if command_exists npm; then
     npm install
 fi
 
+h3 'Java formatter'
+curl -s -o java-formatter.jar https://github.com/google/google-java-format/releases/download/v1.25.2/google-java-format-1.25.2-all-deps.jar
+cat ./jar-executable.preamble java-formatter.jar > ~/bin/google-java-format
+rm ./java-formatter.jar
+chmod +x ~/bin/google-java-format
 
 # Restore current directory of user
 popd > /dev/null
