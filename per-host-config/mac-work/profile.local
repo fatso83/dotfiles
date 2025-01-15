@@ -27,9 +27,9 @@ export PATH="/opt/homebrew/opt/php@7.4/bin:$PATH"
 #export LDFLAGS="-L/opt/homebrew/opt/php@7.4/lib"
 #export CPPFLAGS="-I/opt/homebrew/opt/php@7.4/include"
 
-export PATH
-
 export PUPPETEER_EXECUTABLE_PATH=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
+
+export PATH="/opt/gcc-14.2.0-3-aarch64/bin:$PATH"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/opt/google-cloud-sdk/path.bash.inc' ]; then . '/opt/google-cloud-sdk/path.bash.inc'; fi
