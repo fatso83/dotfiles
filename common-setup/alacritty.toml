@@ -1,0 +1,13 @@
+#https://alacritty.org/config-alacritty.html
+[font]
+normal = { family = "SauceCodePro Nerd Font", style = "Regular" }
+bold = { family = "SauceCodePro Nerd Font", style = "Regular" }
+size = 20
+
+[colors]
+# this does not seem to take effect :/
+draw_bold_text_with_bright_colors = true
+
+[window]
+# "OnlyLeft" | "OnlyRight" | "Both" | "None" # (macos only)
+option_as_alt = "Both" 

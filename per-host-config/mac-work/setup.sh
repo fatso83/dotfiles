@@ -129,3 +129,5 @@ fi
 
 # Fonts
 ./fonts.sh
+
+defaults write org.alacritty AppleFontSmoothing -int 0

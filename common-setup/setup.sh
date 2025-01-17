@@ -170,5 +170,9 @@ ln -sf "$SCRIPT_DIR/tool-versions" $HOME/.tool-versions
 rm -f ~/.ssh/allowed_signers 2>/dev/null
 ln ./allowed_signers ~/.ssh/
 
+[[ ! -e ~/.config ]] && mkdir ~/.config
+[[ ! -e ~/.config/alacritty ]] && mkdir ~/.config/alacritty
+ln -sf ~/dev/dotfiles/common-setup/alacritty.toml /Users/carlerik/.config/alacritty/alacritty.toml 
+
 h2 "Finished common setup"
 popd > /dev/null
