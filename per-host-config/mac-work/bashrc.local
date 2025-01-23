@@ -79,14 +79,6 @@ export PNPM_HOME="/Users/carlerik/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
 
-##### POSTEN / BRING development
-# initialize b-scrips when starting a shell session
-export BRING_DIR="$HOME/dev/bring"
-if [[ -d "$BRING_DIR" && -x $BRING_DIR/b-scripts/bin/b ]]; then
-    eval "$($BRING_DIR/b-scripts/bin/b init -)"
-fi
-export POSTEN_SLACK_USERNAME=carl-erik
-
 # to get b-scripts `cdp` command to work, I need a completion function _get_cword
 . /opt/homebrew/etc/bash_completion
 
