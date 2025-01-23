@@ -128,7 +128,7 @@ fi
 if ! command_exists alr; then
     set -e
     h2 "Installing Alire for ADA"
-    curl -s -L -o alire.zip https://github.com/alire-project/alire/releases/download/v2.0.2/alr-2.0.2-bin-x86_64-macos.zip
+    curl -s -L -o alire.zip https://github.com/alire-project/alire/releases/download/v2.0.2/alr-2.0.2-bin-aarch64-macos.zip
     [[ ! -e alire.zip ]] && echo Alire download failed && exit 1
     unzip alire.zip bin/alr   -d "$HOME" # will put alr directly into ~/bin
 fi
