@@ -17,6 +17,7 @@ git-extras
 glow
 gnupg
 gum
+gtk4
 hashicorp/tap/terraform
 homebrew/cask/macvim
 htop
@@ -27,6 +28,7 @@ neovim
 node
 pam-reattach
 postgresql@15
+pygobject3 
 # python 3.5-3.9 needed for Google Cloud SDK. 3.11 is too new
 python@3.9
 pspg

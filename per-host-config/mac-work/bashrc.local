@@ -89,7 +89,9 @@ export POSTEN_SLACK_USERNAME=carl-erik
 
 # to get b-scripts `cdp` command to work, I need a completion function _get_cword
 . /opt/homebrew/etc/bash_completion
-##### POSTEN / BRING END
+
+# ADA support. Needed to build GNAT Studio
+export GPR_PROJECT_PATH=/opt/gcc-14.2.0-3-aarch64/lib/gnat
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
