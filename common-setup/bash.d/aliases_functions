@@ -181,11 +181,13 @@ function restore_path() {
 #   Being functions allow them to take arguments, such as additional options or filenames
 #
 #   The -r flag to `less` is uses to make it work with the color escape codes
+#     -F  ........  --quit-if-one-screen
+#                 Quit if entire file fits on first screen.
 #   @depends on strip-diff-prefix alias
-function gd() {   git diff          --color $@ | strip-diff-prefix | less -r; }
-function gds() {  git diff --staged --color $@ | strip-diff-prefix | less -r; }
-function gdw() {  git diff          --color --word-diff $@         | less -r; }
-function gdws() { git diff --staged --color --word-diff $@         | less -r; }
+function gd() {   git diff          --color $@ | strip-diff-prefix | less -rF; }
+function gds() {  git diff --staged --color $@ | strip-diff-prefix | less -rF; }
+function gdw() {  git diff          --color --word-diff $@         | less -rF; }
+function gdws() { git diff --staged --color --word-diff $@         | less -rF; }
 alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias glg='git lg' 
 alias gco='git co' 
