@@ -22,22 +22,24 @@ sudo chown "$USER" /opt
 
 # Homebrew
 if ! which -s brew; then
-    printf "Installing Homebrew\n"
+    h2 "Installing Homebrew\n"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
-LATEST_UPDATE="$SCRIPT_DIR/.latest_brew_update"
+BREW_LATEST_UPDATE="$SCRIPT_DIR/.latest_brew_update"
 _is_old_brew(){
-    if [[ ! -e "$LATEST_UPDATE" ]]; then 
+    if [[ ! -e "$BREW_LATEST_UPDATE" ]]; then 
         return 0;
     fi
     # just return a zero code if it is more than a day old (no print)
-    ! find "$LATEST_UPDATE" -mtime +1d -quit -exec false {} +; 
+    find "$BREW_LATEST_UPDATE" -mtime +1d  | grep "$BREW_LATEST_UPDATE" > /dev/null
 }
 if _is_old_brew; then 
+    h2 "Updating old Homebrew"
     brew update
-    touch "$LATEST_UPDATE"
+    touch "$BREW_LATEST_UPDATE"
 fi
+exit
 
 # Cargo/Rust
 # tms / https://github.com/jrmoulton/tmux-sessionizer

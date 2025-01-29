@@ -3,3 +3,4 @@ common-setup/vim/dotvim/init.vim
 common-setup/vim/dotvim/repo_vimrcs/
 ubuntu-diffia
 common-setup/vim/dotvim/autoload/plug.vim.old
+per-host-config/mac-work/.latest_brew_update
