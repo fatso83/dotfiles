@@ -167,6 +167,9 @@ nmap <silent> <leader>/ :nohlsearch<CR>
 " Use sudo after you opened a file, in case you forgot
 cmap w!! w !sudo tee % >/dev/null
 
+" Ensure `gf` creates a file if it does not exist (https://chatgpt.com/share/679a04fe-919c-8004-842c-c1cd57c0610c)
+nnoremap <silent> gf :if !filereadable(expand('<cfile>'))<Bar>exe 'e '.expand('<cfile>')<Bar>endif<CR>
+
 " Show 'hidden' characters, like tab and newline: https://vi.stackexchange.com/a/430/1087
 set listchars=eol:⏎,tab:␉·,trail:␠,nbsp:⎵
 
