@@ -51,6 +51,7 @@ Plug 'tpope/vim-rhubarb'
 "" Plug 'captbaritone/repo-vimrc'
 
 Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 
 Plug 'prabirshrestha/vim-lsp'
 

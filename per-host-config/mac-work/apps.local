@@ -3,6 +3,7 @@ ansifilter # to strip out color codes and junk
 # tj/git-extras needs Bash 4+
 bash
 bash-completion
+bat # syntax highlighting for fzf.vim
 ccat
 cmake
 cowsay
@@ -28,13 +29,13 @@ maven
 neovim
 node
 pam-reattach
+perl # fzf.vim
 postgresql@15
 pygobject3 
-# python 3.5-3.9 needed for Google Cloud SDK. 3.11 is too new
-python@3.9
 pspg
 qrencode
 reattach-to-user-namespace
+ripgrep # fzf.vim
 rust
 shellcheck
 shfmt
@@ -43,5 +44,6 @@ sox
 starship
 the_silver_searcher
 tmux
+universal-ctags # fzf.vim
 vagrant
 xmlstarlet
