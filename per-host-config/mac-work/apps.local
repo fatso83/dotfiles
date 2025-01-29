@@ -1,4 +1,5 @@
 alacritty
+ansifilter # to strip out color codes and junk
 # tj/git-extras needs Bash 4+
 bash
 bash-completion
