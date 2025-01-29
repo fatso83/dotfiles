@@ -50,6 +50,8 @@ Plug 'tpope/vim-rhubarb'
 "" Per-repo settings - for instance, disable AutoCmd *.js
 "" Plug 'captbaritone/repo-vimrc'
 
+Plug 'junegunn/fzf'
+
 " All of your plugins must be added before the following line
 call plug#end()
 
