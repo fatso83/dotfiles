@@ -150,6 +150,10 @@ if command -v direnv &> /dev/null; then
 else
     echo "This setup is missing 'direnv'. Please install it for per-directory overrides"
 fi
+
+# FZF https://github.com/junegunn/fzf?tab=readme-ov-file#setting-up-shell-integration
+eval "$(fzf --bash)"
+
 t_debug Finished bash setup
 
 # Read environment variables, such as sauce labs keys
