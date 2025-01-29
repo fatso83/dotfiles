@@ -52,6 +52,8 @@ Plug 'tpope/vim-rhubarb'
 
 Plug 'junegunn/fzf'
 
+Plug 'prabirshrestha/vim-lsp'
+
 " All of your plugins must be added before the following line
 call plug#end()
 

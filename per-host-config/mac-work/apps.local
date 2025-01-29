@@ -36,6 +36,8 @@ pspg
 qrencode
 reattach-to-user-namespace
 rust
+shellcheck
+shfmt
 shivammathur/php/php@7.4
 sox
 starship

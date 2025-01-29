@@ -12,13 +12,13 @@ ROOT="$SCRIPT_DIR/../.."
 pushd "$SCRIPT_DIR" > /dev/null
 
 # Get some color codes
-source $ROOT/shared.lib
+source "$ROOT/shared.lib"
 
 # Get common aliases (if new shell)
 shopt -s expand_aliases     # to use alias definitions
 source ../../common-setup/bash.d/aliases_functions
 
-sudo chown $USER /opt
+sudo chown "$USER" /opt
 
 # Homebrew
 if ! which -s brew; then
@@ -26,16 +26,17 @@ if ! which -s brew; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
+LATEST_UPDATE="$SCRIPT_DIR/.latest_brew_update"
 _is_old_brew(){
-    local latest_update="$SCRIPT_DIR/.latest_brew_update"
-    if [[ ! -e "$latest_update" ]]; then 
+    if [[ ! -e "$LATEST_UPDATE" ]]; then 
         return 0;
     fi
     # just return a zero code if it is more than a day old (no print)
-    find "$latest_update" -mtime +1d -exec true -quit
+    ! find "$LATEST_UPDATE" -mtime +1d -quit -exec false {} +; 
 }
 if _is_old_brew; then 
     brew update
+    touch "$LATEST_UPDATE"
 fi
 
 # Cargo/Rust
@@ -48,7 +49,7 @@ if ! which -s cmake; then
     error "CMake was not installed earlier. Re-start the top level setup"
 fi
 
-function _f(){ # create throw-away function to not pollute global namespace with local variables
+function _f1(){ # create throw-away function to not pollute global namespace with local variables
     h2 "Installing local apps using Homebrew ..."
     brew tap shivammathur/php
     brew tap microsoft/git
@@ -60,15 +61,16 @@ function _f(){ # create throw-away function to not pollute global namespace with
     local casks=$(brew list --casks -1)
     local installed=$(printf '%s\n%s\n' "$casks" "$formulae" | sort)
     local not_installed=$(comm -23 <(printf '%s\n' "$to_install") <(printf '%s\n' "$installed" ) )
+    local formula
     while read APP; do 
         if [ "$APP" == "" ]; then continue; fi
-        local formula=$(awk -v APP=$APP -F'\t' '$1==APP{print $2}' <(printf "%s\n" "$app_to_formula_map" ) )
+        formula=$(awk -v APP="$APP" -F'\t' '$1==APP{print $2}' <(printf "%s\n" "$app_to_formula_map" ) )
         brew install "$formula" < /dev/null
     done <<< "$not_installed"
     h3 "finished installing Homebrew apps"
-}; _f
+}; _f1
 
-_f(){
+_f2(){
     local homebrew_bash_path=$(echo $(brew --prefix)/bin/bash)
     
     if grep "$homebrew_bash_path" /etc/shells > /dev/null; then 
@@ -78,7 +80,7 @@ _f(){
     h2 "Use the Homebrew version of Bash"
     sudo bash -c "echo $homebrew_bash_path >> /etc/shells"
     chsh -s "$homebrew_bash_path/bin/bash"
-}; _f
+}; _f2
 
 if ! command_exists git-credential-manager; then
     brew install --cask git-credential-manager-core
