@@ -111,7 +111,7 @@ vim +PlugInstall +qall
 h2 "Vim Fugitive setup"
 vim -X -u NONE -c "helptags ~/.vim/plugged/vim-fugitive/doc" -c q
 
-# Needed for Typescript support in CoC and YCM using tsserver
+# Needed for Typescript support in CoC using tsserver
 ts_cmd='npm install -g typescript'
 if which npm > /dev/null 2>&1 ; then
     which tsc > /dev/null 2>&1 || bash -c "$ts_cmd"

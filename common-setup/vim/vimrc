@@ -185,7 +185,6 @@ source ~/.vim/ale-config
 
 " Elm settings - see https://github.com/elmcast/elm-vim
 let g:elm_format_autosave = 1 "reformat on autosave
-"let g:ycm_semantic_triggers.elm = ['.']
 
 " js settings
 let g:javascript_plugin_jsdoc = 1
