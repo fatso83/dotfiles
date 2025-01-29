@@ -25,7 +25,16 @@ if ! which -s brew; then
     printf "Installing Homebrew\n"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     eval "$(/opt/homebrew/bin/brew shellenv)"
-
+fi
+_is_old_brew(){
+    local latest_update="$SCRIPT_DIR/.latest_brew_update"
+    if [[ ! -e "$latest_update" ]]; then 
+        return 0;
+    fi
+    # just return a zero code if it is more than a day old (no print)
+    find "$latest_update" -mtime +1d -exec true -quit
+}
+if _is_old_brew; then 
     brew update
 fi
 
