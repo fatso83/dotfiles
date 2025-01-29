@@ -29,6 +29,10 @@ if ! which -s brew; then
     brew update
 fi
 
+# Cargo/Rust
+# tms / https://github.com/jrmoulton/tmux-sessionizer
+cargo install tmux-sessionizer
+
 # CMake
 if ! which -s cmake; then
     brew install cmake

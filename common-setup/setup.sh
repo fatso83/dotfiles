@@ -16,13 +16,9 @@ pushd "$SCRIPT_DIR" > /dev/null
 ROOT="$SCRIPT_DIR/.."
 source "$ROOT/shared.lib"
 
-if [ ! -e "$BASH_DIR" ]; then
-  mkdir "${BASH_DIR}"
-fi
-
-if [ ! -e "$HOME/bin" ]; then
-  mkdir "${HOME}/bin"
-fi
+mkdir_if_not_exist "${BASH_DIR}"
+mkdir_if_not_exist "${HOME}/bin"
+mkdir_if_not_exist "$HOME/.config"
 
 rm -rf "$HOME"/.bash_completion.d 2>/dev/null
 "$SCRIPT_DIR/update-completion-scripts.sh"
@@ -74,14 +70,18 @@ ln -sf "$SCRIPT_DIR"/bashrc "$HOME"/.bashrc
 ln -sf "$SCRIPT_DIR"/gitignore_global "$HOME"/.gitignore_global
 ln -sf "$SCRIPT_DIR"/pystartup "$HOME"/.pystartup
 ln -sf "$SCRIPT_DIR"/tmux.conf "$HOME"/.tmux.conf
+TMS_CONF_DIR="$HOME/.config/tms"
+mkdir_if_not_exist "$TMS_CONF_DIR"
+ln -sf "$SCRIPT_DIR"/tms-config.toml "${TMS_CONF_DIR}/config.toml"
 carefully_replace_gitconfig
 
 # Zsh
 ln -sf "$SCRIPT_DIR"/zsh/zshrc "$HOME"/.zshrc
 
 # create needed dirs
-[[ ! -e "$HOME/.tmux" ]] && mkdir "$HOME/.tmux";
-[[ ! -e "$HOME/.tmux/plugins" ]] && mkdir "$HOME/.tmux/plugins";
+mkdir_if_not_exist "$HOME/.tmux";
+mkdir_if_not_exist "$HOME/.tmux/plugins";
+
 [[ ! -e "$HOME/.tmux/plugins/tpm" ]] && git clone https://github.com/tmux-plugins/tpm "$HOME"/.tmux/plugins/tpm 
 
 # copy tmux project settings
@@ -122,7 +122,6 @@ fi
 touch "$HOME"/.vimrc.local
 
 # Install NeoVim config (we don't have to worry about XDG_CONFIG_HOME stuff
-[[ ! -e "$HOME"/.config ]] && mkdir "$HOME/.config"
 rm -rf ~/.config/nvim 
 ln -sf ~/.vim ~/.config/nvim
 ln -sf ~/.vimrc ~/.config/nvim/init.vim

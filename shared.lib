@@ -24,6 +24,10 @@ source "$BASH_D/colors"
 source "$BASH_D/aliases_functions"
 shopt -s expand_aliases
 
+mkdir_if_not_exist(){
+    [[ ! -e "$1" ]] && mkdir "$1"
+}
+
 # header1
 h1() {
     printf "%s\n" "$(green "$@")"
