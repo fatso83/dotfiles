@@ -2,7 +2,7 @@
 
 # Just delegate down
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-pushd "$SCRIPT_DIR" > /dev/null
+pushd "$SCRIPT_DIR" > /dev/null || fail
 
 # Init submodules
 git submodule init
@@ -22,7 +22,7 @@ h1 "Adding scripts and binary utilities"
 utils/setup.sh || fail "Failed utils setup"
 
 # Restore current directory of user
-popd > /dev/null
+popd > /dev/null || fail
 
 # Re-read BASH settings
 banner "Remember to 'source ~/.bashrc'!"
