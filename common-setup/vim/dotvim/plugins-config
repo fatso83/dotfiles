@@ -22,7 +22,7 @@ Plug 'scrooloose/nerdtree'
 "Plug 'suan/vim-instant-markdown', { 'for': 'markdown'}
 Plug 'w0rp/ale'
 
-" YCM alternative - needs Node
+" LSP functionality - requires Node
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Syntax highlighting

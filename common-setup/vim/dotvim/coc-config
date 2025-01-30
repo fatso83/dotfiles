@@ -42,7 +42,6 @@ nmap <leader>rn <Plug>(coc-rename)
 " Install 'Prettier' command
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
-let g:coc_global_extensions = ['coc-tsserver','coc-json', 'coc-python']
 vmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
@@ -90,5 +89,7 @@ endif
 " Setting this will remove File and ruler info :(
 "set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
+
+CocInstall coc-html coc-css coc-tsserver coc-json coc-pyright coc-sh coc-als
 
 " vi: ft=vim
