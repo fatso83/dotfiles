@@ -90,6 +90,8 @@ endif
 "set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 
-CocInstall coc-html coc-css coc-tsserver coc-json coc-pyright coc-sh coc-als
+" Unable to get this working without errors
+" https://github.com/neoclide/coc.nvim/discussions/5249
+"CocInstall coc-html coc-css coc-tsserver coc-json coc-pyright coc-sh coc-als
 
 " vi: ft=vim

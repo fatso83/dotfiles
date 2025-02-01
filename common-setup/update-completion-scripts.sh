@@ -8,7 +8,6 @@ source "$ROOT"/shared.lib
 
 echo "Updating BASH completion scripts for Git ..."
 curl -s -o "$COMPLETIONS/git" "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash"
-curl -s -o "$COMPLETIONS/fzf" "https://raw.githubusercontent.com/junegunn/fzf/refs/heads/master/shell/key-bindings.bash"
 
 if which npm > /dev/null; then
     echo "Updating BASH completion scripts for NPM ..."
