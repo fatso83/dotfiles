@@ -4,7 +4,7 @@ BASH_DIR="${HOME}/.bash.d"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 set -e #exit on error
-[[ ! -z $DEBUG ]] && set -x
+[[ -n $DEBUG ]] && set -x
 
 # read local environment variables, like auth tokens
 if [ -e "${HOME}/.secret" ]; then
@@ -34,8 +34,10 @@ carefully_replace_gitconfig(){
     h2 "Configuring Git ..."
 
     local personal_details_file="$HOME/.gitconfig-personal"
-    local git_name=$(git config --global user.name || :)
-    local git_email=$(git config --global user.email || :)
+    local git_name
+    local git_email
+    git_name=$(git config --global user.name || :)
+    git_email=$(git config --global user.email || :)
 
     debug "Git user.name: $git_name"
     debug "Git user.email: $git_email"
@@ -133,7 +135,7 @@ if ! command_exists matcher; then
     else
         (cd matcher
         make 
-        make install PREFIX=$HOME
+        make install PREFIX="$HOME"
         cd ..) > /dev/null
     fi
 fi
@@ -149,10 +151,10 @@ cat > "$NGROK_YML" << EOF
 authtoken: ${NGROK_AUTHTOKEN:-'fill-NGROK_AUTHTOKEN-in-in-~/.secret'} 
 
 EOF
-cat $SCRIPT_DIR/ngrok.yml >> "$NGROK_YML"
+cat "$SCRIPT_DIR/ngrok.yml" >> "$NGROK_YML"
 
 h2 "Copying psql config"
-ln -sf "$SCRIPT_DIR"/psqlrc $HOME/.psqlrc
+ln -sf "$SCRIPT_DIR"/psqlrc "$HOME/.psqlrc"
 
 # Download to latest to home dir
 h2 "Fetching rupa/z (Jump Around)"

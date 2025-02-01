@@ -25,7 +25,7 @@ source "$BASH_D/aliases_functions"
 shopt -s expand_aliases
 
 mkdir_if_not_exist(){
-    [[ ! -e "$1" ]] && mkdir "$1"
+    if [[ ! -e "$1" ]]; then mkdir "$1"; fi
 }
 
 # header1
