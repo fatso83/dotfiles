@@ -25,6 +25,7 @@ homebrew/cask/macvim
 htop
 jq
 kcat
+llvm
 maven
 neovim
 node

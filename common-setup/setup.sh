@@ -109,7 +109,7 @@ git submodule update --init --recursive
 h2 "Installing all VIM plugins"
 info "(might take some time the first time ... )"
 vim +PlugInstall +qall
-vim +"CocInstall coc-html coc-css coc-tsserver coc-json coc-pyright coc-sh coc-als"
+vim +"CocInstall coc-html coc-css coc-tsserver coc-json coc-pyright coc-sh coc-als coc-clangd"
 
 h2 "Vim Fugitive setup"
 vim -X -u NONE -c "helptags ~/.vim/plugged/vim-fugitive/doc" -c q
