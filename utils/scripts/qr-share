@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 usage(){
     echo "Usage: $0 <url>"
     exit 1
