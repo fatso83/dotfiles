@@ -6,6 +6,9 @@
 
     # auto-converts crlf=>lf on checkin
     autocrlf = input
+
+    # ensures case sensitivity in filenames is not ignored on macOS
+    ignorecase = false
     
     # gitattributes in each repo is a better solution: https://git-scm.com/docs/gitattributes
     # Just `echo '* text=auto' >> .gitattributes` # will normalize all text files
