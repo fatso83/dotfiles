@@ -13,9 +13,10 @@ nmap <F8> <Plug>(ale_fix)
 nnoremap <F9> :let g:ale_fix_on_save = !g:ale_fix_on_save<CR>
 
 let g:ale_fixers = {
-  \   'javascript': ['eslint'],
-  \   'typescript': ['eslint']
-  \}
+            \   'javascript': ['eslint', 'prettier'],
+            \   'typescript': ['eslint', 'prettier'],
+            \   'html': ['prettier']
+            \}
 
 
 " vi: ft=vim
