@@ -138,18 +138,6 @@ rm -rf ~/.config/nvim
 ln -sf ~/.vim ~/.config/nvim
 ln -sf ~/.vimrc ~/.config/nvim/init.vim
 
-# Install a better matcher for Ctrl-P
-if ! command_exists matcher; then 
-    if ! command_exists make; then 
-        banner "'make' is not installed. Rerun the setup after the per-machine setup completes)"
-    else
-        (cd matcher
-        make 
-        make install PREFIX="$HOME"
-        cd ..) > /dev/null
-    fi
-fi
-
 # Make a config file for ngrok, passing in the secret auth token
 [[ ! -e "$HOME"/.ngrok2 ]] && mkdir "$HOME/.ngrok2"
 NGROK_YML="$HOME/.ngrok2/ngrok.yml"
