@@ -52,13 +52,10 @@ function decrypt(){
     openssl enc -d -aes-256-cbc -a "$@"
 }
 
-t_debug "Setup 'fuck' 🥳 "
-eval "$(thefuck --alias)"
-
 if is_wsl; then
     t_debug "Custom setup for WSL Ubuntu"
     
-    WINHOME=/mnt/c/Users/carl-
+    WINHOME=$HOME/win-home
     alias win-powershell='/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe'
     alias win-home="cd $WINHOME"
     alias pbcopy="clip.exe"

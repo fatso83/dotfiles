@@ -5,6 +5,10 @@ pushd "$SCRIPT_DIR" > /dev/null
 
 set -e                      # exit on errors
 
+if [[ -n $DEBUG ]]; then
+    set -x
+fi
+
 ROOT="$SCRIPT_DIR/../../"
 source "$ROOT/shared.lib"
 
@@ -51,26 +55,15 @@ strip-comments repos.local | while read org_line; do
     # replace bionic -> focal and vice versa
     # this handles having both 18.04, 20.04, 21.04 and 21.10 repos
     case $RELEASE in 
-        bionic)
-            line=$(echo $org_line | envsubst | sed -e 's/focal/bionic/g' -e 's/20.04/18.04/g')
-            ;;
-        focal)
-            line=$(echo $org_line | envsubst | sed -e 's/bionic/focal/g' -e 's/18.04/20.04/g')
-            ;;
-        hirsute)
-            line=$(echo $org_line | envsubst | \
-                sed -e 's/bionic/hirsute/g' -e 's/focal/hirsute/g' \
-                    -e 's/18.04/20.04/g' -e 's/20.04/21.04/g')
-            ;;
-        impish)
-            line=$(echo $org_line | envsubst | \
-                sed -e 's/bionic/impish/g' -e 's/focal/impish/g' -e 's/hirsute/impish/g' \
-                -e 's/18.04/21.10/g' -e 's/20.04/21.10/g' -e 's/21.04/21.10/g')
-            ;;
         jammy)
             line=$(echo "$org_line" | envsubst | \
-                sed -e 's/bionic/impish/g' -e 's/focal/impish/g' -e 's/hirsute/impish/g' \
+                sed -e 's/bionic/jammy/g' -e 's/focal/jammy/g' -e 's/hirsute/jammy/g' \
                 -e 's/18.04/22.04/g' -e 's/20.04/22.04/g' -e 's/21.04/22.04/g' -e 's/21.10/22.04/g')
+            ;;
+        noble)
+            line=$(echo "$org_line" | envsubst | \
+                sed -e 's/jammy/noble/g' \
+                -e 's/22.04/24.04/g')
             ;;
         *)
             printf "Unhandled Ubuntu release $RELEASE! Exiting "; exit 1
@@ -86,7 +79,8 @@ strip-comments repos.local | while read org_line; do
     fi
 
     # handle possible error
-    sudo add-apt-repository --no-update --yes "$line" || :
+    # -E required to include proxy settings, could also be done manually by doing myvar=$myvar or something, which would be a bit safer
+    sudo -E add-apt-repository --no-update --yes "$line" || :
     APT_SHOULD_UPDATE=yes
 done 
 
@@ -133,15 +127,25 @@ if ! which git-lfs > /dev/null; then
     rimraf "${BASENAME}"*
 fi
 
-source "$SDKMAN_DIR/bin/sdkman-init.sh"
+if ! command_exists fzf; then
+    h2 "Installing FZF"
+    curl -L -o tmp-fzf.tar.gz https://github.com/junegunn/fzf/releases/download/v0.60.2/fzf-0.60.2-linux_amd64.tar.gz
+    tar xvzf tmp-fzf.tar.gz
+    rm tmp-fzf.tar.gz
+    mv fzf ~/bin/
+fi
+
+# Python, Ruby, Node all handled via ASDF
 install_asdf_tooling
 install_sdkman_packages
+source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
 h2 "Install QR copier"
 go install github.com/claudiodangelis/qrcp@latest
 
-# These bits do not make sense on WSL2 (Windows Subsyste for Linux)
+# These bits do not make sense on WSL2 (Windows Subsystem for Linux)
 if ! is_wsl; then
+    h1 "Installing non-WSL2 adjustments\n"
 
     sudo cp services/*.service /etc/systemd/system/
 
@@ -175,6 +179,7 @@ if ! is_wsl; then
         rm gcm-linux.deb
     fi
 
+    # Note 2025-02-25: I do not understand why it says "Windows Keystore" in the non-wsl section?!
     h2 "Setup Git Credential Manager to use the Windows Keystore"
     ln -sf $PWD/gitlocal-non-wsl ~/.gitlocal-non-wsl
 
@@ -225,7 +230,7 @@ fi
 
 if ! command_exists pspg; then
     h2 "Compiling pspg: Postgres Pager"
-    apt install -y lib32ncursesw5-dev
+    apt install -y libncurses-dev
     PSPGTMP=$(mktemp -d)
     pushd $PSPGTMP
     git clone https://github.com/okbob/pspg
@@ -244,9 +249,25 @@ if ! command_exists ccat; then
      mv  linux-amd64-1.1.0/ccat /usr/local/bin/ccat
 fi
 
+if ! command_exists cargo; then
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o tmp-rust-install
+    sh tmp-rust-install  --no-modify-path
+    rm tmp-rust-install  
+fi
+
+# Cargo/Rust
+# tms / https://github.com/jrmoulton/tmux-sessionizer
+cargo install tmux-sessionizer
+
 if groups | grep docker > /dev/null; then
     h2 "Adding myself to the docker group"
     sudo usermod -aG docker ${USER}
+fi
+
+if ! command_exists bat; then
+     curl -o bat.deb https://github.com/sharkdp/bat/releases/download/v0.25.0/bat_0.25.0_amd64.deb -L -s
+     sudo dpkg -i bat.deb
+     rm bat.deb
 fi
 
 info "Consider installing the cron jobs"

@@ -31,7 +31,6 @@ BASH_D="$HOME/.bash.d"
 BIN_DIR="$HOME/bin"
 
 declare -x CLICOLOR
-ulimit -c unlimited
 umask 022
 
 function read_config {

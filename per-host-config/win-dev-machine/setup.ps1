@@ -5,5 +5,5 @@
 if (! (Test-Path -Path "./npiperelay") ) {
     Invoke-WebRequest https://github.com/jstarks/npiperelay/releases/download/v0.1.0/npiperelay_windows_amd64.zip -OutFile npiperelay.zip
     Expand-Archive npiperelay.zip 
-    copy ./npipelay/npiperelay.exe C:/Windows/
+    copy ./npiperelay/npiperelay.exe C:/Windows/
 }

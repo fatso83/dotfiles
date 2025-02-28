@@ -1,18 +1,19 @@
 1password
 1password-cli
 apt-transport-https 
+bat
 build-essential 
 ca-certificates
 charles-proxy
 cmake
-conky
+# conky
 containerd.io
 cowsay
 cronic
 curl
 direnv
-docker-ce 
-docker-ce-cli 
+# docker-ce 
+# docker-ce-cli 
 dunst
 exiv2
 fail2ban
@@ -46,8 +47,7 @@ mono-xbuild
 mono-xsp4
 neovim
 npm
-packer
-peek
+# packer
 php
 php-redis
 php-xdebug

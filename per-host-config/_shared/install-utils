@@ -12,6 +12,8 @@ asdf_has_plugin(){
 install_node_packages(){
     _shared_package_info_message "Node"
 
+    asdf install nodejs 22.14.0
+
     h3 "Installing Node packages ...\n"
     installed=$(mktemp)
     npm list -g --depth 1 --json | jq -r -c '.dependencies | keys | .[]' > $installed
@@ -27,10 +29,14 @@ install_python_packages(){
     # https://github.com/pypa/pip/issues/5240
     _shared_package_info_message "Python"
 
-    h3 "Upgrading pip\n"
+    # should get this from ~/.tool-versions
+    asdf install python 3.11.0
+
+    # No longer needed/wanted/possible when using ASDF to manage
+    #h3 "Upgrading pip\n"
     #pip(){ python3 -m pip $@; } # to avoid warning about script wrapper and old python
     #pip install --upgrade --user pip
-    pip3 install --upgrade pip
+    #pip3 install --upgrade pip
 
     h3 "Installing Python packages ...\n"
     pip install --user --upgrade -r ../_shared/python.local  | (grep -v 'Requirement already satisfied:' || :)
@@ -39,8 +45,14 @@ install_python_packages(){
 install_ruby_packages(){
     _shared_package_info_message Ruby
 
+    # requires
+    # apt install libyaml-dev
+    # apt install libedit-dev
+    # apt install libreadline-dev
+    # apt install libffi-dev
     # required for older Bundler / Jekyll setups
     asdf install ruby 2.7.8
+    asdf install ruby 3.2.2
 
     h3 "Installing Ruby packages ...\n"
     while read line; do 
@@ -56,6 +68,14 @@ install_ruby_packages(){
 install_sdkman_packages(){
     _shared_package_info_message "SDKMAN"
     init="$HOME/.sdkman/bin/sdkman-init.sh"
+
+    # The SDKMAN_DIR env var gets added by the init script, but it can also already exist in some config file,
+    # while the directory does not
+    if ! [[ -e "$SDKMAN_DIR" ]]; then
+        curl -s "https://get.sdkman.io" | bash
+        source "$SDKMAN_DIR/bin/sdkman-init.sh"
+    fi
+
 
     [[ -e "$init" ]] && source "$init"
 

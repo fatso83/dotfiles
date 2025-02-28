@@ -158,11 +158,6 @@ ln -sf "$SCRIPT_DIR"/psqlrc "$HOME/.psqlrc"
 h2 "Fetching rupa/z (Jump Around)"
 curl -s https://raw.githubusercontent.com/rupa/z/master/z.sh -o ~/bin/z.sh
 
-if ! [[ -e "$SDKMAN_DIR" ]]; then
-    curl -s "https://get.sdkman.io" | bash
-    source "$SDKMAN_DIR/bin/sdkman-init.sh"
-fi
-
 ln -sf "$SCRIPT_DIR/tool-versions" $HOME/.tool-versions
 
 [[ ! -e ~/.ssh ]] && mkdir ~/.ssh
@@ -171,7 +166,7 @@ ln ./allowed_signers ~/.ssh/
 
 [[ ! -e ~/.config ]] && mkdir ~/.config
 [[ ! -e ~/.config/alacritty ]] && mkdir ~/.config/alacritty
-ln -sf ~/dev/dotfiles/common-setup/alacritty.toml /Users/carlerik/.config/alacritty/alacritty.toml 
+ln -sf ~/dev/dotfiles/common-setup/alacritty.toml ~/.config/alacritty/alacritty.toml 
 
 h2 "Finished common setup"
 popd > /dev/null

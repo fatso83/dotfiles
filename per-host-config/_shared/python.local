@@ -4,6 +4,5 @@ keyring
 setuptools
 neovim
 pgcli
-thefuck
 pynvim
 pygobject

@@ -32,7 +32,8 @@ function function_exists(){
     [[ "$(type -t $1)" == "function" ]]
 }
 
-function cat(){
+# I just cannot remember to use ccat, glow or bat
+function fancy-cat(){
     if [[ $# > 0 ]]; then 
         local file="$(readlink -f $1)"
         case "$file" in
@@ -44,18 +45,13 @@ function cat(){
                 cat $@
             fi
             ;; 
-        *) ccat $*
+        *) bat $*
             ;;
         esac 
     else
-        ccat 
+        bat   
     fi
 }
-
-if ! command_exists ccat || ! command_exists glow; then
-    printf "Missing core utils for fancy 'cat' command with syntax highlighting and preview. Ensure ccat and glow is installed for OS\n"
-    unset cat
-fi
 
 
 # Strip junk left from converting utf8<->cp1252
