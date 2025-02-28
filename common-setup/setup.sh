@@ -29,6 +29,8 @@ if [ -e "$HOME/.bash_profile" ]; then
     mv ~/.bash_profile{,.bak}
 fi
 
+h2 "Setup base tool versions using ASDF"
+ln -sf "$SCRIPT_DIR/tool-versions" $HOME/.tool-versions
 
 carefully_replace_gitconfig(){
     h2 "Configuring Git ..."
@@ -72,9 +74,14 @@ ln -sf "$SCRIPT_DIR"/bashrc "$HOME"/.bashrc
 ln -sf "$SCRIPT_DIR"/gitignore_global "$HOME"/.gitignore_global
 ln -sf "$SCRIPT_DIR"/pystartup "$HOME"/.pystartup
 ln -sf "$SCRIPT_DIR"/tmux.conf "$HOME"/.tmux.conf
+
 TMS_CONF_DIR="$HOME/.config/tms"
+TMS_CONF="$TMS_CONF_DIR/config.toml"
 mkdir_if_not_exist "$TMS_CONF_DIR"
-ln -sf "$SCRIPT_DIR"/tms-config.toml "${TMS_CONF_DIR}/config.toml"
+if [[ ! -e "$TMS_CONF" ]]; then
+    cp "$SCRIPT_DIR"/tms-config.toml "${TMS_CONF_DIR}/config.toml"
+fi
+
 carefully_replace_gitconfig
 
 # Zsh
@@ -131,7 +138,8 @@ else
     banner "Install NodeJS and run '$ts_cmd' to get TypeScript support in Vim"
 fi
 
-touch "$HOME"/.vimrc.local
+# This fails if it exists as a symlink to a 404 file: touch: cannot touch '/home/oscko/.vimrc.local': No such file or directory
+#touch "$HOME"/.vimrc.local
 
 # Install NeoVim config (we don't have to worry about XDG_CONFIG_HOME stuff
 rm -rf ~/.config/nvim 
@@ -157,8 +165,6 @@ ln -sf "$SCRIPT_DIR"/psqlrc "$HOME/.psqlrc"
 # Download to latest to home dir
 h2 "Fetching rupa/z (Jump Around)"
 curl -s https://raw.githubusercontent.com/rupa/z/master/z.sh -o ~/bin/z.sh
-
-ln -sf "$SCRIPT_DIR/tool-versions" $HOME/.tool-versions
 
 [[ ! -e ~/.ssh ]] && mkdir ~/.ssh
 rm -f ~/.ssh/allowed_signers 2>/dev/null
