@@ -72,7 +72,8 @@ install_sdkman_packages(){
     # The SDKMAN_DIR env var gets added by the init script, but it can also already exist in some config file,
     # while the directory does not
     if ! [[ -e "$SDKMAN_DIR" ]]; then
-        curl -s "https://get.sdkman.io" | bash
+        # rcupdate=false means do not touch config files
+        curl -s "https://get.sdkman.io?rcupdate=false" | bash
         source "$SDKMAN_DIR/bin/sdkman-init.sh"
     fi
 
