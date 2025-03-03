@@ -37,7 +37,6 @@ alias busy='luxafor-cli -c red'
 alias bugme='luxafor-cli -c off'
 
 alias uuid='uuid | pbcopy; pbpaste'
-alias tmux="tmux -S /tmp/persisted-tmux "
 
 alias psql=pgcli
 
