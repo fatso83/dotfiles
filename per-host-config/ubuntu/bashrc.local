@@ -99,5 +99,8 @@ export PATH="$PNPM_HOME:$PATH"
 ANDROID_HOME="$HOME/Android/Sdk/"
 mkdir -p $ANDROID_HOME
 
+# Avinor adjustment to handle WSL2 quirks
+source ~/bin/set-proxies.inc
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
