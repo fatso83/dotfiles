@@ -1,9 +1,13 @@
-# ~/.config/tms/config.toml
+[[search_dirs]]
+path = "~/code"
+depth = 3
 
-# Keyboard shortcuts can be customized by adding a [shortcuts] section in the config file and adding bindings as pairs of shortcut = action, for example:
+[[search_dirs]]
+path = "~/dev"
+depth = 3
+
 [shortcuts]
-"ctrl-k" = "delete_to_line_end"
-
+ctrl-k = "delete_to_line_end"
 # Available actions are:
 # "" (to remove a default binding)
 # "cancel"
