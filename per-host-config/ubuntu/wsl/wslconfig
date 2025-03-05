@@ -1,4 +1,14 @@
+# This goes in %USERPROFILE%/.wslconfig
+#
+# If changing, restart WSL
+# `wsl --list --running` should report no running
+# Otherwise (in PowerShell running as administrator):
+# `wsl --shutdown`
+# followed by `restart-service LxssManager`
+# https://learn.microsoft.com/en-us/windows/wsl/wsl-config#wslconfig
 [wsl2]
 #kernel=C:\\temp\\myCustomKernel
-memory=2GB# Limits VM memory in WSL 2 to 4 GB
-processors=2 # Makes the WSL 2 VM use two virtual processors
+
+# For the 12 VT cores and 16 GB EliteBook
+memory=14GB          # Limits VM memory in WSL2. Default 50% of total
+processors=10        # How many logical processors 
