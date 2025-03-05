@@ -29,7 +29,7 @@ set encoding=utf-8
 "" GUI
 " This is a default scheme that works well
 " Override in ~/vimrc.local
-colorscheme darkblue
+"colorscheme darkblue
 set guifont=Monaco:h14
 
 "" Clipboard - all yanking, deleting, etc will use the system clipboard
@@ -47,6 +47,7 @@ set ruler
 "" Whitespace
 set nowrap                      " don't wrap lines
 set tabstop=4 shiftwidth=4      " a tab is four spaces 
+set shiftround                  " use multiple of shiftwidth when indenting with '<' and '>'
 set expandtab                   " use spaces, not tabs (optional)
 set backspace=indent,eol,start  " backspace through everything in insert mode
 
@@ -146,8 +147,6 @@ cmap w!! w !sudo tee > /dev/null %
 set showmatch     " When in insert mode, this will momentarily flash the cursor back to the opening bracket
 set matchtime=1   " just jump for 100 ms
 
-set shiftwidth=4  " number of spaces to use for autoindenting
-set shiftround    " use multiple of shiftwidth when indenting with '<' and '>'
 set ignorecase    " ignore case when searching
 set smartcase     " ignore case if search pattern is all lowercase, case-sensitive otherwise
 set smarttab      " insert tabs on the start of a line according to shiftwidth, not tabstop
@@ -161,8 +160,6 @@ set visualbell           " don't beep
 set noerrorbells         " don't beep
 " Clear highlighted search text by just typing ",/"
 nmap <silent> <leader>/ :nohlsearch<CR>  
-" Use sudo after you opened a file, in case you forgot
-cmap w!! w !sudo tee % >/dev/null
 
 " Ensure `gf` creates a file if it does not exist (https://chatgpt.com/share/679a04fe-919c-8004-842c-c1cd57c0610c)
 nnoremap <silent> gf :if !filereadable(expand('<cfile>'))<Bar>exe 'e '.expand('<cfile>')<Bar>endif<CR>
@@ -182,9 +179,6 @@ set mouse=
 " These needs to be before later configuration for objects to be defined
 source ~/.vim/coc-config
 source ~/.vim/ale-config
-
-" Elm settings - see https://github.com/elmcast/elm-vim
-let g:elm_format_autosave = 1 "reformat on autosave
 
 " js settings
 let g:javascript_plugin_jsdoc = 1
@@ -207,9 +201,6 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 " Set up neomake as well: It is intended to replace the built-in :make command and provides functionality 
 " similar to plugins like syntastic and dispatch.vim. It is primarily used to run code 
 " linters and compilers from within Vim, but can be used to run any program.
-
-" Set up fzf instead of Ctrl-P
-" fzf and fzf.vim
 
 if filereadable(expand("~/.vimrc.local")) 
     source ~/.vimrc.local
