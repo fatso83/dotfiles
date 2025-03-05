@@ -88,7 +88,7 @@ if ! command_exists git-credential-manager; then
     brew install --cask git-credential-manager-core
 fi
 
-source ../_shared/install-utils
+source ../_shared/install-utils.inc
 
 install_asdf_tooling
 install_sdkman_packages

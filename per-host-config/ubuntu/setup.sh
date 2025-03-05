@@ -96,7 +96,7 @@ h2 "Removing some apps ..."
 sudo apt-get remove xserver-xephyr # Kolide wants me to not have remote servers running. I do not need this, me thinks
 sudo apt-get purge avahi-daemon    # ZeroConf for local networks, printers, etc. Tends to get stuck in 100% cpu
 
-source ../_shared/install-utils
+source ../_shared/install-utils.inc
 
 # This cannot be a shared app, as the install fails on macOS due to some node-gyp thingie
 npm i -g @fatso83/luxafor-cli
