@@ -138,3 +138,37 @@ install_asdf_tooling(){
     __install_ruby_packages
     __install_python_packages
 }
+
+install_ada_packages(){
+    local arch
+    set -x
+    set -e
+
+    if ! command_exists alr; then
+        h2 "Installing Alire for ADA"
+
+        if is_mac; then
+            arch=aarch64-macos
+        else 
+            if [[ $(arch) != x86_64 ]]; then
+                printf "ASSERTION ERROR: Architecture is not matching ($(arch))"
+                return 255
+            fi
+
+            arch=x86_64-linux
+        fi
+
+        curl --fail -L -o alire.zip https://github.com/alire-project/alire/releases/download/v2.0.2/alr-2.0.2-bin-${arch}.zip
+
+        [[ ! -e alire.zip ]] && echo Alire download failed && exit 1
+        unzip alire.zip bin/alr   -d "$HOME" # will put alr directly into ~/bin
+    fi
+
+    alr settings --global --set dependencies.shared false
+    cd ~/dev
+    gh repo clone AdaCore/ada_language_server
+    cd ada_language_server
+    git checkout edge
+    alr toolchain --select
+    ./scripts/build_als.sh
+}

@@ -33,6 +33,7 @@ gobject-introspection
 htop
 jotta-cli
 jq
+libgmp-dev # used by ada language server install
 libgirepository1.0-dev
 libcairo2-dev
 libpq-dev
