@@ -1,8 +1,4 @@
 [[search_dirs]]
-path = "~/code"
-depth = 3
-
-[[search_dirs]]
 path = "~/dev"
 depth = 3
 
