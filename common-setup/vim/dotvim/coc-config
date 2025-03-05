@@ -89,9 +89,10 @@ endif
 " Setting this will remove File and ruler info :(
 "set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-
-" Unable to get this working without errors
-" https://github.com/neoclide/coc.nvim/discussions/5249
-"CocInstall coc-html coc-css coc-tsserver coc-json coc-pyright coc-sh coc-als
+" Auto-installed extensions 
+" # Pyright is static type checker, Jedi is 'an awesome autocompletion, static analysis and refactoring library for Python'
+let g:coc_global_extensions=[ "coc-html", "coc-css", "coc-tsserver", "coc-json", "coc-pyright", "coc-pydocstring","@yaegassy/coc-black-formatter","coc-jedi","coc-pyright","coc-sh", "coc-als", "coc-clangd", "coc-snippets" ]
+" The equivalent, but less performant way is doing something a la: 
+"  vim +"CocInstall -sync $COC_WEB_EXTENSIONS $COC_ADA_EXTENSIONS $COC_PYTHON_EXTENSIONS" +qall
 
 " vi: ft=vim

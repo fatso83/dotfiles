@@ -117,16 +117,6 @@ h2 "Installing all VIM plugins"
 info "(might take some time the first time ... )"
 vim +PlugInstall +qall
 
-h2 "Installing all CoC extensions"
-# Pyright is static type checker, Jedi is "an awesome autocompletion, static analysis and refactoring library for Python"
-COC_PYTHON_EXTENSIONS="coc-pydocstring coc-black-formatter coc-jedi coc-pyright"
-COC_ADA_EXTENSIONS="coc-als"
-COC_WEB_EXTENSIONS="coc-html coc-css coc-tsserver coc-json"
-vim +"CocInstall -sync $COC_WEB_EXTENSIONS \ 
-    coc-sh $COC_ADA_EXTENSIONS coc-clangd \
-    coc-snippets \
-    $COC_PYTHON_EXTENSIONS" +qall
-
 h2 "Vim Fugitive setup"
 vim -X -u NONE -c "helptags ~/.vim/plugged/vim-fugitive/doc" -c q
 
