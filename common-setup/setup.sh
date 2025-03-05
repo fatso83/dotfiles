@@ -21,8 +21,7 @@ mkdir_if_not_exist "${HOME}/bin"
 mkdir_if_not_exist "$HOME/.config"
 
 rm -rf "$HOME"/.bash_completion.d 2>/dev/null
-"$SCRIPT_DIR/update-completion-scripts.sh"
-ln -s "$SCRIPT_DIR"/bash_completion.d "$HOME"/.bash_completion.d 
+ln -sf "$SCRIPT_DIR"/bash_completion.d "$HOME"/.bash_completion.d 
 
 if [ -e "$HOME/.bash_profile" ]; then
     info "We don't use .bash_profile to avoid trouble. Renaming to .bash_profile.bak"
@@ -170,6 +169,7 @@ ln ./allowed_signers ~/.ssh/
 ln -sf ~/dev/dotfiles/common-setup/alacritty.toml ~/.config/alacritty/alacritty.toml 
 
 ./fonts.sh
+"$SCRIPT_DIR/update-completion-scripts.sh"
 
 h2 "Finished common setup"
 popd > /dev/null

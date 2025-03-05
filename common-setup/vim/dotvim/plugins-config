@@ -11,7 +11,6 @@ endif
 " Needs backend: npm -g update instant-markdown-d
 Plug 'Raimondi/delimitMate'
 Plug 'alvan/vim-closetag'
-Plug 'ctrlpvim/ctrlp.vim' "does fuzzy matching to open files
 Plug 'editorconfig/editorconfig-vim'
 Plug 'mwnx/vimcrypt' " GPG & OpenSSL support (AES, ...)
 Plug 'nvie/vim-togglemouse' " F12 will switch mouse mode between terminal and vim
