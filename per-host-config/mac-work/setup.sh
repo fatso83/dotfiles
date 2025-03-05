@@ -153,6 +153,4 @@ fi
 ./enable-fingerprint-for-sudo.sh
 
 # Fonts
-./fonts.sh
-
 defaults write org.alacritty AppleFontSmoothing -int 0

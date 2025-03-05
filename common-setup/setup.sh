@@ -179,5 +179,7 @@ ln ./allowed_signers ~/.ssh/
 [[ ! -e ~/.config/alacritty ]] && mkdir ~/.config/alacritty
 ln -sf ~/dev/dotfiles/common-setup/alacritty.toml ~/.config/alacritty/alacritty.toml 
 
+./fonts.sh
+
 h2 "Finished common setup"
 popd > /dev/null
