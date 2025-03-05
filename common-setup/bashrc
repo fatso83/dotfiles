@@ -3,13 +3,14 @@
 # rsync also reads .bashrc and will bork if it results in any output
 [[ $- != *i* ]] && return
 
-# export DEBUG=1
+# To enable debug printing, just set the DEBUG environment variable
+# You can then use `debug` or `t_debug` statements to echo debug info
+#export DEBUG=1
+#set -x
+#
 source $HOME/.bash.d/core_utils # clearly not portable across shells, but should be easy to port
 timer_start_if_unset
 t_debug "bashrc PATH=$PATH"
-#set -x
-# To enable debug printing, just set the DEBUG environment variable
-# You can then use `debug` or `t_debug` statements to echo debug info
 
 ################################################################################
 # Prolog start
