@@ -29,9 +29,12 @@ gnome-panel
 golang-go
 google-chrome-stable
 google-cloud-sdk
+gobject-introspection
 htop
 jotta-cli
 jq
+libgirepository1.0-dev
+libcairo2-dev
 libpq-dev
 libpython3-dev
 libsasl2-2 
@@ -53,7 +56,7 @@ php-redis
 php-xdebug
 ripgrep
 powertop
-python3-pip # https://github.com/pypa/pip/issues/5240 We will upgrade this using --user and then invoke using # `python -m pip` through aliases
+python3-cairo-dev
 rxvt-unicode
 silversearcher-ag
 socat
