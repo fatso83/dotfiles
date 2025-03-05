@@ -2,8 +2,6 @@
 #PS1="skinny \W \u\$  "
 t_debug "Load personalized bashrc for mac"
 
-eval "$(starship init bash)"
-
 PATH="/opt/kafka/bin:/Applications/IntelliJ IDEA.app/Contents/MacOS:/usr/local/bin:$PATH"
 
 #source /usr/local/etc/autojump.bash

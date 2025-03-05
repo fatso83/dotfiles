@@ -65,20 +65,23 @@ done
 t_debug Reading color codes
 read_config_if_exists "$HOME/.bash.d/colors"
 
+if command_exists starship; then
+    eval "$(starship init bash)"
+else
+    #Se man bash i delen som heter "Prompting"
+    __set_prompt(){
+        local user="\[${c_green}\]\u"
+        local host="\[${c_dark_yellow}\]\h"
+        local workdir="\[${c_pink}\]\w"
+        local gitbranch="\[${c_dark_red}\]\$(__git_ps1  \(%s\) )"
+        local at="\[${c_dark_grey}\]at"
+        local in="\[${c_dark_grey}\]in"
+        export PS1="\n${user} ${at} ${host} ${in} ${workdir} ${gitbranch}\[$c_X_reset_all\]"$'\n\$ '
+    }
 
-#Se man bash i delen som heter "Prompting"
-set_prompt(){
-    local user="\[${c_green}\]\u"
-    local host="\[${c_dark_yellow}\]\h"
-    local workdir="\[${c_pink}\]\w"
-    local gitbranch="\[${c_dark_red}\]\$(__git_ps1  \(%s\) )"
-    local at="\[${c_dark_grey}\]at"
-    local in="\[${c_dark_grey}\]in"
-    export PS1="\n${user} ${at} ${host} ${in} ${workdir} ${gitbranch}\[$c_X_reset_all\]"$'\n\$ '
-}
-
-# Now set it. If any of these colors are later overridden, then just rerun `set_prompt`
-set_prompt
+    # Now set it. If any of these colors are later overridden, then just rerun `__set_prompt`
+    __set_prompt
+fi
 
 function _setup-ssh-agent(){
     # Start ssh-agent

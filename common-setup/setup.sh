@@ -166,6 +166,11 @@ ln -sf "$SCRIPT_DIR"/psqlrc "$HOME/.psqlrc"
 h2 "Fetching rupa/z (Jump Around)"
 curl -s https://raw.githubusercontent.com/rupa/z/master/z.sh -o ~/bin/z.sh
 
+if ! command_exists starship; then
+    h2 "Installing Starship from source"
+    curl -sS https://starship.rs/install.sh | sh
+fi
+
 [[ ! -e ~/.ssh ]] && mkdir ~/.ssh
 rm -f ~/.ssh/allowed_signers 2>/dev/null
 ln ./allowed_signers ~/.ssh/
