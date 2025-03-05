@@ -1,16 +1,16 @@
 # source this package
 # set ft=bash
 
-_shared_package_info_message(){
+__shared_package_info_message(){
     h2 "Installing shared setup for:  $1"
 }
 
-asdf_has_plugin(){
+__asdf_has_plugin(){
     asdf plugin list | grep $1 >/dev/null 2>&1
 }
 
-install_node_packages(){
-    _shared_package_info_message "Node"
+__install_node_packages(){
+    __shared_package_info_message "Node"
 
     asdf install nodejs 22.14.0
 
@@ -25,9 +25,9 @@ install_node_packages(){
     fi
 }
 
-install_python_packages(){
+__install_python_packages(){
     # https://github.com/pypa/pip/issues/5240
-    _shared_package_info_message "Python"
+    __shared_package_info_message "Python"
 
     # should get this from ~/.tool-versions
     asdf install python 3.11.0
@@ -42,8 +42,8 @@ install_python_packages(){
     pip install --user --upgrade -r ../_shared/python.local  | (grep -v 'Requirement already satisfied:' || :)
 }
 
-install_ruby_packages(){
-    _shared_package_info_message Ruby
+__install_ruby_packages(){
+    __shared_package_info_message Ruby
 
     # requires
     # apt install libyaml-dev
@@ -66,7 +66,7 @@ install_ruby_packages(){
 
 # todo: replace with `asdf` and rename to install_jvm_stuff
 install_sdkman_packages(){
-    _shared_package_info_message "SDKMAN"
+    __shared_package_info_message "SDKMAN"
     init="$HOME/.sdkman/bin/sdkman-init.sh"
 
     # The SDKMAN_DIR env var gets added by the init script, but it can also already exist in some config file,
@@ -106,14 +106,14 @@ install_sdkman_packages(){
     sdk install kotlin
 }
 
-add_plugin(){
-    if ! asdf_has_plugin $1; then
+__add_plugin(){
+    if ! __asdf_has_plugin $1; then
         asdf plugin add $1
     fi
 }
 
 install_asdf_tooling(){
-    _shared_package_info_message "ASDF"
+    __shared_package_info_message "ASDF"
     init="$HOME/.asdf/asdf.sh"
 
     # recommended download for all os's
@@ -126,15 +126,15 @@ install_asdf_tooling(){
     # To show all plugins available: `asdf plugin list all`
 
     # for faster, cached lookups
-    add_plugin direnv
+    __add_plugin direnv
     asdf direnv setup --shell bash --version latest
     asdf install direnv 2.32.3
 
-    add_plugin python
-    add_plugin ruby
-    add_plugin nodejs
+    __add_plugin python
+    __add_plugin ruby
+    __add_plugin nodejs
 
-    install_node_packages
-    install_ruby_packages
-    install_python_packages
+    __install_node_packages
+    __install_ruby_packages
+    __install_python_packages
 }

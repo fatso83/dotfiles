@@ -18,5 +18,8 @@ let g:ale_fixers = {
             \   'html': ['prettier']
             \}
 
+let g:ale_linters = {
+    \ 'sh': ['language_server'],
+    \ }
 
 " vi: ft=vim
