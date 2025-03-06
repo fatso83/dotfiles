@@ -16,9 +16,7 @@
     },
     "ada": {
       "settings": {
-        "ada": {
-          "projectFile": "gnat/vss_text.gpr"
-        }
+        "ada": {}
       },
       "command": "ada_language_server",
       "filetypes": [
