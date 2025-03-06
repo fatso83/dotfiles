@@ -1,5 +1,5 @@
 # source this package
-# set ft=bash
+# vim: ft=bash
 
 __shared_package_info_message(){
     h2 "Installing shared setup for:  $1"
@@ -187,6 +187,15 @@ install_ada_packages(){
         tar xzf ada_lsp.tar.gz $lsp_file
         mv $lsp_file ~/bin/
         rm -r integration
+    fi
+
+    if is_wsl && ! command_exists gnatstudio; then
+        h3 "Installing GNAT Studio"
+        __download_if_not_exist https://github.com/AdaCore/gnatstudio/releases/download/gnatstudio-cr-20240506/gnatstudio-25.0w-20240506-${alire_arch}-bin.tar.gz gnatstudio.tgz
+
+        tar xzf gnatstudio.tgz -C tmp
+        cd tmp/gnatstudio* 
+        ./doinstall ~/gnatstudio
     fi
 
     h3 Done

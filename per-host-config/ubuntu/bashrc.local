@@ -94,6 +94,9 @@ complete -C '/usr/local/bin/aws_completer' aws
 export PNPM_HOME="$HOME/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 
+# GNAT Studio for Ada
+export PATH="$HOME/gnatstudio/bin:$PATH"
+
 # Android development
 ANDROID_HOME="$HOME/Android/Sdk/"
 mkdir -p $ANDROID_HOME
