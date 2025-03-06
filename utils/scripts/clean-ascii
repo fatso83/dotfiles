@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+# vim: ft=python
+
+import unittest
+import re
+import string
+import sys
+
+# Function being tested
+non_printable_pattern = f"[^{re.escape(string.printable)}]"
+
+def remove_non_printable(s):
+    """Removes all non-printable characters from a string."""
+    return re.sub(non_printable_pattern, "", s)
+
+# Test Suite
+class TestRemoveNonPrintable(unittest.TestCase):
+
+    def test_basic_text(self):
+        """Test that a normal string is unchanged."""
+        self.assertEqual(remove_non_printable("Hello, World!"), "Hello, World!")
+
+    def test_non_printable_chars(self):
+        """Test removal of non-printable ASCII characters."""
+        self.assertEqual(remove_non_printable("Hello\x00 World!\x1F\x7F"), "Hello World!")
+
+    def test_mixed_text(self):
+        """Test removal from a mix of printable and non-printable characters."""
+        self.assertEqual(remove_non_printable("ABC\x01\x02DEF\x03"), "ABCDEF")
+
+    def test_only_non_printable(self):
+        """Test a string with only non-printable characters."""
+        self.assertEqual(remove_non_printable("\x00\x01\x02\x03\x04"), "")
+
+    def test_whitespace_retained(self):
+        """Ensure that standard whitespace characters are not removed."""
+        self.assertEqual(remove_non_printable("Hello\tWorld\n"), "Hello\tWorld\n")
+
+    def test_extended_ascii(self):
+        """Ensure that extended ASCII characters are not preserved."""
+        self.assertEqual(remove_non_printable("Café — Déjà vu!"), "Caf  Dj vu!")
+
+    def test_unicode_handling(self):
+        """Ensure that Unicode characters (beyond ASCII) are not preserved."""
+        self.assertEqual(remove_non_printable("你好, мир, 안녕하세요!"), ", , !")
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1 and sys.argv[1] == "--self-test":
+        unittest.main(argv=[sys.argv[0]])  # Ensures unittest doesn't parse other args
+    else:
+        # Loop over lines from stdin
+        for line in sys.stdin:
+            cleaned_line = remove_non_printable(line)
+            sys.stdout.write(cleaned_line)  # Use sys.stdout.write to avoid extra newlines
+
