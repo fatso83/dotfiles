@@ -54,8 +54,7 @@ function fancy-cat(){
 }
 
 
-# Strip junk left from converting utf8<->cp1252
-alias strip-non-ascii='python -c "import sys,re;[sys.stdout.write(re.sub('\''[^\x09\x0A\x0D\x20-\x7F]'\'', '\'''\'', line)) for line in sys.stdin]"'
+function clean-ascii(){ python -c "import sys, re, string; pattern = f'[^{re.escape(string.printable)}]'; [sys.stdout.write(re.sub(pattern, '', line)) for line in sys.stdin]"; }
 alias strip-empty="egrep -v '^\s*$'"
 
 t_debug Setting up aliases for conversions
@@ -114,7 +113,7 @@ alias my-ip-json='curl -s http://ifconfig.co/json'
 alias socks_proxy='ssh -v -D 22222 carl-erik@timbuktu.kopseng.no -N'
 alias socks_proxy_all='ssh -v -D :22222 carl-erik@timbuktu.kopseng.no -N'
 
-# text manipulation "library". Just type "text<TAB>" to see all
+# text manipulation "library". Just type "text.<TAB>" to see all
 function text.ltrim ()
 {
     util.esed 's/^[[:space:]]+//'
@@ -127,7 +126,7 @@ function text.rtrim ()
 
 function text.trim ()
 {
-    text.ltrim | text.rtrim
+    util.esed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'
 }
 
 function text.lowercase(){
@@ -136,6 +135,26 @@ function text.lowercase(){
 
 function text.uppercase(){
     tr "[:lower:]" "[:upper:]"
+}
+
+function text.count(){
+    grep -o "$1" | wc -l
+}
+
+function text.delete_empty_line() { 
+    sed '/^[[:space:]]*$/d'; 
+}
+
+# Based on https://stackoverflow.com/a/12579554/200987
+function text.remove-last-newline(){
+    local file=$(mktemp)
+    cat > $file
+    if [[ $(tail -c1 $file | wc -l) == 1 ]]; then
+        head -c -1 $file > $file.tmp
+        mv $file.tmp $file
+    fi
+    cat $file
+    rm $file&
 }
 
 # Used with the git alias functions; gd, gds, gdw, gdws
