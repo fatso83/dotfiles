@@ -92,6 +92,7 @@ source ../_shared/install-utils.inc
 
 install_asdf_tooling
 install_sdkman_packages
+install_ada_packages
 
 # copy mac specific utils
 ln -f ./bin/* ~/bin/

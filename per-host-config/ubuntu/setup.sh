@@ -135,9 +135,10 @@ if ! command_exists fzf; then
     mv fzf ~/bin/
 fi
 
-# Python, Ruby, Node all handled via ASDF
+# Python, Ruby, Node handled via ASDF
 install_asdf_tooling
 install_sdkman_packages
+install_ada_packages
 source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
 h2 "Install QR copier"

@@ -1,8 +1,5 @@
 {
   "suggest.snippetIndicator": "►",
-  "clangd": {
-    "path": "~/.config/coc/extensions/coc-clangd-data/install/19.1.2/clangd_19.1.2/bin/clangd"
-  },
   "languageserver": {
     "bash": {
       "command": "bash-language-server",
@@ -15,6 +12,19 @@
       ],
       "ignoredRootPaths": [
         "~"
+      ]
+    },
+    "ada": {
+      "settings": {
+        "ada": {
+          "projectFile": "gnat/vss_text.gpr"
+        }
+      },
+      "command": "ada_language_server",
+      "filetypes": [
+        "ads",
+        "adb",
+        "ada"
       ]
     }
   }

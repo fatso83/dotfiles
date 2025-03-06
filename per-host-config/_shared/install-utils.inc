@@ -139,36 +139,55 @@ install_asdf_tooling(){
     __install_python_packages
 }
 
+__download_if_not_exist(){
+    local url="$1"
+    local file="$2"
+
+    if [[ ! -e $file ]]; then
+        curl --fail -L -o "$file" "$url"
+    fi
+}
+
 install_ada_packages(){
-    local arch
-    set -x
+    local alire_arch
+    local lsp_arch
     set -e
 
-    if ! command_exists alr; then
-        h2 "Installing Alire for ADA"
+    h2 "Installing ADA packages"
 
-        if is_mac; then
-            arch=aarch64-macos
-        else 
-            if [[ $(arch) != x86_64 ]]; then
-                printf "ASSERTION ERROR: Architecture is not matching ($(arch))"
-                return 255
-            fi
-
-            arch=x86_64-linux
+    if is_mac; then
+        alire_arch=aarch64-macos
+        lsp_arch=darwin-arm64
+        lsp_file=integration/vscode/ada/arm64/darwin/ada_language_server
+    else 
+        if [[ $(arch) != x86_64 ]]; then
+            printf "ASSERTION ERROR: Architecture is not matching known architecture ($(arch))"
+            return 255
         fi
 
-        curl --fail -L -o alire.zip https://github.com/alire-project/alire/releases/download/v2.0.2/alr-2.0.2-bin-${arch}.zip
+        alire_arch=x86_64-linux
+        lsp_arch=linux-x64
+        lsp_file=integration/vscode/ada/x64/linux/ada_language_server
+    fi
+
+
+    if ! command_exists alr; then
+        h3 "Installing Alire for ADA"
+
+        __download_if_not_exist https://github.com/alire-project/alire/releases/download/v2.0.2/alr-2.0.2-bin-${alire_arch}.zip alire.zip
 
         [[ ! -e alire.zip ]] && echo Alire download failed && exit 1
         unzip alire.zip bin/alr   -d "$HOME" # will put alr directly into ~/bin
     fi
 
-    alr settings --global --set dependencies.shared false
-    cd ~/dev
-    gh repo clone AdaCore/ada_language_server
-    cd ada_language_server
-    git checkout edge
-    alr toolchain --select
-    ./scripts/build_als.sh
+    if ! command_exists ada_language_server; then
+        h3 "Installing LSP for ADA"
+        __download_if_not_exist "https://github.com/AdaCore/ada_language_server/releases/download/26.0.202502240/als-26.0.202502240-${lsp_arch}.tar.gz" ada_lsp.tar.gz
+
+        tar xzf ada_lsp.tar.gz $lsp_file
+        mv $lsp_file ~/bin/
+        rm -r integration
+    fi
+
+    h3 Done
 }
