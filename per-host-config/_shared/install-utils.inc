@@ -1,5 +1,6 @@
 # source this package
 # vim: ft=bash
+# Requires shared.lib to have been sourced
 
 __shared_package_info_message(){
     h2 "Installing shared setup for:  $1"
@@ -139,15 +140,6 @@ install_asdf_tooling(){
     __install_python_packages
 }
 
-__download_if_not_exist(){
-    local url="$1"
-    local file="$2"
-
-    if [[ ! -e $file ]]; then
-        curl --fail -L -o "$file" "$url"
-    fi
-}
-
 install_ada_packages(){
     local alire_arch
     local lsp_arch
@@ -174,7 +166,7 @@ install_ada_packages(){
     if ! command_exists alr; then
         h3 "Installing Alire for ADA"
 
-        __download_if_not_exist https://github.com/alire-project/alire/releases/download/v2.0.2/alr-2.0.2-bin-${alire_arch}.zip alire.zip
+        download_if_not_exist https://github.com/alire-project/alire/releases/download/v2.0.2/alr-2.0.2-bin-${alire_arch}.zip alire.zip
 
         [[ ! -e alire.zip ]] && echo Alire download failed && exit 1
         unzip alire.zip bin/alr   -d "$HOME" # will put alr directly into ~/bin
@@ -182,16 +174,21 @@ install_ada_packages(){
 
     if ! command_exists ada_language_server; then
         h3 "Installing LSP for ADA"
-        __download_if_not_exist "https://github.com/AdaCore/ada_language_server/releases/download/26.0.202502240/als-26.0.202502240-${lsp_arch}.tar.gz" ada_lsp.tar.gz
+        download_if_not_exist "https://github.com/AdaCore/ada_language_server/releases/download/26.0.202502240/als-26.0.202502240-${lsp_arch}.tar.gz" ada_lsp.tar.gz
 
         tar xzf ada_lsp.tar.gz $lsp_file
-        mv $lsp_file ~/bin/
+        cp $lsp_file ~/bin/
+
+        if is_mac; then
+            cp integration/vscode/ada/arm64/darwin/libgmp.10.dylib ~/bin/
+        fi
+
         rm -r integration
     fi
 
     if is_wsl && ! command_exists gnatstudio; then
         h3 "Installing GNAT Studio"
-        __download_if_not_exist https://github.com/AdaCore/gnatstudio/releases/download/gnatstudio-cr-20240506/gnatstudio-25.0w-20240506-${alire_arch}-bin.tar.gz gnatstudio.tgz
+        download_if_not_exist https://github.com/AdaCore/gnatstudio/releases/download/gnatstudio-cr-20240506/gnatstudio-25.0w-20240506-${alire_arch}-bin.tar.gz gnatstudio.tgz
 
         tar xzf gnatstudio.tgz -C tmp
         cd tmp/gnatstudio* 

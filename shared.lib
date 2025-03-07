@@ -28,6 +28,15 @@ mkdir_if_not_exist(){
     if [[ ! -e "$1" ]]; then mkdir "$1"; fi
 }
 
+download_if_not_exist(){
+    local url="$1"
+    local file="$2"
+
+    if [[ ! -e $file ]]; then
+        curl -s --fail -L -o "$file" "$url"
+    fi
+}
+
 # header1
 h1() {
     printf "%s\n" "$(green "$@")"
