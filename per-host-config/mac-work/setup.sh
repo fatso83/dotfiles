@@ -39,7 +39,6 @@ if _is_old_brew; then
     brew update
     touch "$BREW_LATEST_UPDATE"
 fi
-exit
 
 # Cargo/Rust
 # tms / https://github.com/jrmoulton/tmux-sessionizer
