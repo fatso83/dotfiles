@@ -5,3 +5,4 @@ ubuntu-diffia
 common-setup/vim/dotvim/autoload/plug.vim.old
 per-host-config/mac-work/.latest_brew_update
 common-setup/fonts
+per-host-config/mac-work/integration/

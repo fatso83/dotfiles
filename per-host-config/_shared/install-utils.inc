@@ -176,14 +176,14 @@ install_ada_packages(){
         h3 "Installing LSP for ADA"
         download_if_not_exist "https://github.com/AdaCore/ada_language_server/releases/download/26.0.202502240/als-26.0.202502240-${lsp_arch}.tar.gz" ada_lsp.tar.gz
 
-        tar xzf ada_lsp.tar.gz $lsp_file
+        tar xzf ada_lsp.tar.gz
         cp $lsp_file ~/bin/
 
         if is_mac; then
-            cp integration/vscode/ada/arm64/darwin/libgmp.10.dylib ~/bin/
+            cp -f integration/vscode/ada/arm64/darwin/libgmp.10.dylib ~/bin/
         fi
 
-        rm -r integration
+        rm -rf integration
     fi
 
     if is_wsl && ! command_exists gnatstudio; then
