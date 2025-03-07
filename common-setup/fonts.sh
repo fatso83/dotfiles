@@ -6,8 +6,8 @@ customize_per_os(){
 
     FONTS_DIR="$SCRIPT_DIR/fonts"
     if is_mac; then
-        install_font() { install_font_mac; }
-        is_installed() { is_installed_mac; }
+        install_font() { install_font_mac $@; }
+        is_installed() { is_installed_mac $@; }
     elif is_wsl; then
         WINHOME_WIN=$(cmd.exe /c "<nul set /p=%UserProfile%" 2>/dev/null | sed 's/\\/\//g' )
         WINHOME_NIX="$(wslpath $WINHOME_WIN)"
