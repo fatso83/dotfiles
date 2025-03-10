@@ -193,6 +193,13 @@ install_ada_packages(){
         tar xzf gnatstudio.tgz -C tmp
         cd tmp/gnatstudio* 
         ./doinstall ~/gnatstudio
+
+        # gprbuild
+        download_if_not_exist https://github.com/alire-project/GNAT-FSF-builds/releases/download/gprbuild-24.0.0-2/gprbuild-x86_64-linux-24.0.0-2.tar.gz gprbuild.tgz
+        # TODO: add untar and mv
+        # gnat
+        download_if_not_exist https://github.com/alire-project/GNAT-FSF-builds/releases/download/gnat-14.2.0-1/gnat-x86_64-linux-14.2.0-1.tar.gz gnat.tgz
+        # TODO: add untar and mv
     fi
 
     h3 Done
