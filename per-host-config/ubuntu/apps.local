@@ -60,6 +60,7 @@ powertop
 python3-cairo-dev
 rxvt-unicode
 silversearcher-ag
+sphinx
 socat
 synapse
 thunar
