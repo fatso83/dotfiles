@@ -58,6 +58,10 @@ warn(){
     printf "%s\n" "$(dark_yellow "$@")" >> /dev/stderr
 }
 
+TODO(){
+    info "TODO: " $@
+}
+
 banner(){
     printf "\n################################################################################\n"
     printf "##    %s\n" "$(dark_red "$@")"

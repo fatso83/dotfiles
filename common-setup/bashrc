@@ -142,6 +142,9 @@ read_config_if_exists "$HOME/.bashrc.local"
 . "$HOME/.asdf/completions/asdf.bash"
 source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/bashrc"
 
+# Alire (ADA source package manager)
+export PATH="$HOME/.alire/bin:$PATH"
+
 BASH_MAJOR_VERSION=$(BASH_MAJOR_VERSION=$(echo $BASH_VERSION |  util.esed -n 's/([0-9])\..*/\1/p'))
 if [[ "$BASH_MAJOR_VERSION" > 3 ]] ; then
     # Shell options

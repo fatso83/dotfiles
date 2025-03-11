@@ -28,22 +28,36 @@ function is_mac() {
   fi
 }
 
-# Check if running Windows Subsystem for Linux
-# @returns 0 if running WSL, 1 if not
-function is_wsl() {
+
+function is_linux() {
     local cmd=`which uname`
     # no point in checking further if uname is not present
     if [ -z $cmd ];then
         return 1
-    else
-        # dynamically redefines the function definition to avoid recomputing 
-        if uname -a | grep microsoft 1>/dev/null; then
-            is_wsl(){ return 0; };
-        else 
-            is_wsl(){ return 1; };
-        fi
-        is_wsl
     fi
+
+    # dynamically redefines the function definition to avoid recomputing
+    if [[ $(uname) == "Linux" ]]; then
+        is_linux(){ return 0; }
+    else
+        is_linux(){ return 1; }
+    fi
+}
+
+# Check if running Windows Subsystem for Linux
+# @returns 0 if running WSL, 1 if not
+function is_wsl() {
+    if ! is_linux;then
+        return 1
+    fi
+
+    # dynamically redefines the function definition to avoid recomputing
+    if uname -a | grep microsoft 1>/dev/null; then
+        is_wsl(){ return 0; };
+    else
+        is_wsl(){ return 1; };
+    fi
+    is_wsl
 }
 
 
