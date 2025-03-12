@@ -174,6 +174,10 @@ install_ada_packages(){
 
     if ! command_exists ada_language_server; then
         h3 "Installing LSP for ADA"
+
+        # I was unaware that Alire could do this ...
+        info "Installing latest release instead of getting from Alire (alr install ada_language_server)"
+
         download_if_not_exist "https://github.com/AdaCore/ada_language_server/releases/download/26.0.202502240/als-26.0.202502240-${lsp_arch}.tar.gz" ada_lsp.tar.gz
 
         tar xzf ada_lsp.tar.gz
@@ -204,22 +208,25 @@ install_ada_packages(){
     if ! command_exists gprbuild; then
         h3 "Installing GPRBuild"
 
+        alr install gprbuild
+
         if is_linux; then
+            info "Getting latest gprbuild from official releases"
             download_if_not_exist https://github.com/alire-project/GNAT-FSF-builds/releases/download/gprbuild-24.0.0-2/gprbuild-x86_64-linux-24.0.0-2.tar.gz gprbuild.tgz
             TODO "[gprbuild] add untar and moving to right location"
-        else
-            TODO "[gprbuild] installing on macOS"
         fi
     fi
 
     if ! command_exists gnat; then
         h3 "Installing GNAT FSF"
 
+        alr install gnat_native
+
+        # I am not sure if I can skip this if I need aunit globally available for stuff not using Alire?
         if is_linux; then
+            info "Getting latest GNAT FSF from official releases"
             download_if_not_exist https://github.com/alire-project/GNAT-FSF-builds/releases/download/gnat-14.2.0-1/gnat-x86_64-linux-14.2.0-1.tar.gz gnat.tgz
             TODO "[GNAT] add untar and moving to right location"
-        else
-            TODO: "[GNAT] installing on macOS"
         fi
     fi
 
@@ -227,14 +234,8 @@ install_ada_packages(){
         h3 "Installing libadalong-tools using Alire: gnattest, gnatpp, ..."
 
         # This will not get the latest release (24 vs 25.2 as of this date), as the crates are out of date
-        alr get libadalang_tools=24.0.0
-        cd "libadalang_tools_24.0.0_d864b5a8/"
-
-        info "Building libadalang-tools will take a long time, require loads of RAM (like 12GB + at least 4GB swap)"
-        nice alr install
-        cd ..
-
-        info "gnattest et al are now available in \$HOME/.alire/bin!"
+        # https://github.com/AdaCore/libadalang-tools/pull/40
+        alr install libadalang_tools
     fi
 
     h3 Done
