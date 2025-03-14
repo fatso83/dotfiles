@@ -78,8 +78,10 @@ endif
 autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
 
 " text files
-autocmd Filetype text set wrap | set linebreak
-autocmd Filetype markdown set wrap | set linebreak
+autocmd Filetype text,markdown set wrap | set linebreak
+"autocmd FileType markdown,text :call CocActionAsync('toggleAutoTrigger')
+autocmd FileType markdown,text silent! call CocDisable()
+autocmd FileType * silent! call CocEnable()
 
 " associate *.vss (VectorScript) with Pascal filetype
 au BufRead,BufNewFile *.vss set filetype=pascal
