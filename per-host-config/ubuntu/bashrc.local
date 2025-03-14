@@ -70,6 +70,7 @@ if is_wsl; then
 
     t_debug "Setting up custom SSH agent bridge to 1Password on Windows"
     source $HOME/.agent-bridge.sh
+    __1password_ssh__start # type __1password_ssh__restart in trouble
 fi
 
 # For Remote Mob programming on Nimble where develop is the base branch, not master
