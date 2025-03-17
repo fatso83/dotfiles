@@ -1,4 +1,4 @@
-# To debug how long init takes, run "DEBUG=1 source-rc"
+# To debug how long init takes, run "DEBUG=1 bash"
 function t_debug() {
         if [[ x == ${DEBUG+x} ]]; then echo [$(timer_now)] $@ >&2; fi
 }
