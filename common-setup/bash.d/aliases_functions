@@ -176,7 +176,7 @@ function websafe(){
     local projects
     local domain_terms
     employers="avinor|diffia|posten|bring|ptflow"
-    projects="avinor|nimble|posten|bring|ptflow|pete"
+    projects="avinor|nimble|posten|bring|ptflow"
     domain_terms="notification|ph"
     domains='[a-z0-9.-]+.lv.no(:[0-9]+)?'
     util.esed \
