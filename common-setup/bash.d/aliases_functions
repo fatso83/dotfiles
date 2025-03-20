@@ -1,4 +1,4 @@
-# vim: syntax=sh
+# vim: ft=bash
 
 # since this is sourced from shared.lib in the dotfiles repo, we need 
 # to source other files
@@ -32,8 +32,9 @@ function function_exists(){
     [[ "$(type -t $1)" == "function" ]]
 }
 
-# I just cannot remember to use ccat, glow or bat
-function fancy-cat(){
+# fancy cat
+# I just cannot remember when to use ccat, glow or bat
+function fcat(){
     if [[ $# > 0 ]]; then 
         local file="$(readlink -f $1)"
         case "$file" in
@@ -169,8 +170,24 @@ function strip-color-codes(){
     util.esed -e 's/\[.{0,3}3.m//g'
 }
 
-# For stack overflow pasting
-alias websafe='util.esed -e "s/(posten|bring|ptflow)/acme-org/gi" -e "s/$USER/my-user/gi" -e "s/(posten|bring|ptflow|pete)/foo-project/gi" -e "s/Notification/ze-domain/gi" -e "s/PH/otherdep/gi" '
+# For stack overflow or ChatGPT pasting where you could accidentally leak info from source code
+function websafe(){
+    local employers
+    local projects
+    local domain_terms
+    employers="avinor|diffia|posten|bring|ptflow"
+    projects="avinor|nimble|posten|bring|ptflow|pete"
+    domain_terms="notification|ph"
+    domains='[a-z0-9.-]+.lv.no(:[0-9]+)?'
+    util.esed \
+        -e "s/($employers)/acme-org/gi" \
+        -e "s/($projects)/foo-project/gi" \
+        -e "s/$domain_terms/domainTerm/gi" \
+        -e "s/$domain_terms/domainTerm/gi" \
+        -e "s/$USER/my-user/gi" \
+        -e "s/$domains/censored.com/gi"
+}
+
 alias stack-overflow-no-copy='websafe | indent4 '
 alias stack-overflow='stack-overflow-no-copy | pbcopy; pbpaste; echo -e "\n\nCopied to pastebuffer (use stack-overflow-no-copy to avoid this)!"'
 
@@ -322,6 +339,14 @@ kafkabin() {
 # works perfectly with `send_sms.py --phone-file --file message.txt`
 kidplan_html_phonenumbers(){
     util.esed -n  's/.*([0-9]{3}) ([0-9]{2}) ([0-9]{3}).*/\1\2\3/gp' 
+}
+
+# paste your environment variables, but strip away the secrets you expose in the .secret file
+# can be combined with websafe
+env.no-secrets(){
+    local re_secrets
+    re_secrets=$(util.esed 's/export (.*)=.*/\1/' ~/.secret | strip-comments | paste -sd '|')
+    env | egrep -v $re_secrets 
 }
 
 t_debug "global aliases and functions finished"
