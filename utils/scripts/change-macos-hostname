@@ -1,0 +1,27 @@
+#!/bin/bash
+# ref https://www.youtube.com/watch?v=JeztVHKfkSo
+
+usage(){
+    printf "USAGE: %s <hostname>\n\n" "$(basename $0)"
+    printf "Changes the hostname, local hostname and the computer name in macOS\n"
+    exit 1
+}
+
+source ~/bin/cross-platform-utils.bashlib
+
+if ! is_mac; then
+    echo "This is only for macOS."
+    usage
+fi
+
+if [[ -z $1 ]]; then 
+    usage
+fi
+
+sudo scutil --set HostName $1
+sudo scutil --set LocalHostName $1
+sudo scutil --set ComputerName $1
+
+dscacheutil -flushcache
+
+echo now, try logging out and logging in or simply reboot to observe the change in all UI apps
