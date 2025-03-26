@@ -131,3 +131,5 @@
 # See https://www.youtube.com/watch?v=aolI_Rz0ZqY&t=537s
 [includeIf "gitdir:~/dev/bring/"]
     path = ~/dev/bring/gitconfig-posten
+[blame]
+	ignoreRevsFile = .git-blame-ignore-revs
