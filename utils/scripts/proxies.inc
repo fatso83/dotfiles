@@ -6,13 +6,13 @@
 # This script is meant to be _sourced_ in the shell
 
 APT_PROXY_CONF=/etc/apt/apt.conf.d/80proxy
+SETTINGS=$HOME/.proxy.setting
 
 # for use in bashrc: test if there is a proxy setting and if so parse and fix all settings
 function proxies.test-and-set(){
-    if proxies.has-wsl-proxy; then
+    if proxies.use-proxy; then
+        echo "Setting up proxy settings ..."
         proxies.parse-and-set
-    else
-        proxies.clear
     fi
 }
 
@@ -34,6 +34,7 @@ function proxies.parse-and-set(){
         parsed_proxy_value=$MY_HTTP_PROXY # fallback value set in .secrets
     fi
     proxies.__export_proxies_and_configure_apt $parsed_proxy_value
+    echo $parsed_proxy_value > "$SETTINGS"
 }
 
 # Set all environment variables and update proxy config for apt
@@ -44,7 +45,11 @@ function proxies.__export_proxies_and_configure_apt(){
     export https_proxy="$1"
 
     # Create a proxy setting for APT
-    echo "Acquire::http::Proxy \"$1\"" | sudo tee $APT_PROXY_CONF
+    local val
+    val="Acquire::http::Proxy \"$1\"" 
+    if ! grep "$val" $APT_PROXY_CONF > /dev/null; then
+        proxies.__sudo-write "$APT_PROXY_CONF" "$val"
+    fi
 }
 
 function proxies.clear(){
@@ -54,8 +59,20 @@ function proxies.clear(){
     unset https_proxy
     unset WSL_PAC_URL
 
-    sudo rm $APT_PROXY_CONF
-    echo "# Settings removed by proxies.clear. Try proxies.parse-and-set to reinstate" | sudo tee $APT_PROXY_CONF > /dev/null
+    if [[ -e $APT_PROXY_CONF ]]; then
+        sudo rm -f $APT_PROXY_CONF
+        proxies.__sudo-write "$APT_PROXY_CONF" "# Settings removed by proxies.clear. Try proxies.parse-and-set to reinstate" 
+    fi
+
+    # clear settings - meaning we have intentionally disabled using proxy setting
+    rm -f $SETTINGS
+    touch $SETTINGS
+}
+
+# arg1: filename
+# arg2: string
+function proxies.__sudo-write(){
+        echo "$2" | sudo tee "$1" > /dev/null
 }
 
 function proxies.show(){
@@ -70,6 +87,6 @@ function proxies.__wsl-proxy(){
     }'
 }
 
-function proxies.has-wsl-proxy(){
-    [[ "" != "$(proxies.__wsl-proxy)" ]]
+function proxies.use-proxy(){
+    [[ "" != "$(cat $SETTINGS)" ]]
 }
