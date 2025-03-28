@@ -104,7 +104,7 @@ mkdir -p $ANDROID_HOME
 
 # Avinor adjustment to handle WSL2 quirks
 source ~/bin/proxies.inc
-parse-and-set-proxies # use clear-proxies to clear
+proxies.test-and-set # reverse: proxies.clear
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
