@@ -1,6 +1,7 @@
 # source this package
 # vim: ft=bash
 # Requires shared.lib to have been sourced
+SHARED_DIR="$ROOT/per-host-config/_shared"
 
 __shared_package_info_message(){
     h2 "Installing shared setup for:  $1"
@@ -19,7 +20,7 @@ __install_node_packages(){
     installed=$(mktemp)
     npm list -g --depth 1 --json | jq -r -c '.dependencies | keys | .[]' > $installed
     #filters out patterns that are present in the other file, see https://stackoverflow.com/questions/4780203/deleting-lines-from-one-file-which-are-in-another-file
-    node_apps=$(grep -v -f $installed ../_shared/node.local || true) 
+    node_apps=$(grep -v -f $installed "$SHARED_DIR/node.local" || true) 
     # if non-zero, https://unix.stackexchange.com/a/146945/18594
     if [[ -n "${node_apps// }" ]]; then
         npm -g install $node_apps 
@@ -33,6 +34,11 @@ __install_python_packages(){
     # should get this from ~/.tool-versions
     asdf install python 3.11.0
 
+    if ! command_exists uv; then
+        h3 Get the UV package manager
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+    fi
+
     # No longer needed/wanted/possible when using ASDF to manage
     #h3 "Upgrading pip\n"
     #pip(){ python3 -m pip $@; } # to avoid warning about script wrapper and old python
@@ -40,7 +46,7 @@ __install_python_packages(){
     #pip3 install --upgrade pip
 
     h3 "Installing Python packages ...\n"
-    pip install --user --upgrade -r ../_shared/python.local  | (grep -v 'Requirement already satisfied:' || :)
+    pip install --user --upgrade -r "$SHARED_DIR/python.local"  | (grep -v 'Requirement already satisfied:' || :)
 }
 
 __install_ruby_packages(){
@@ -62,7 +68,7 @@ __install_ruby_packages(){
         fi
 
         gem install $line; 
-    done < ../_shared/ruby.local 
+    done < "$SHARED_DIR/ruby.local" 
 }
 
 # todo: replace with `asdf` and rename to install_jvm_stuff
