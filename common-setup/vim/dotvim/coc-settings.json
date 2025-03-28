@@ -25,5 +25,6 @@
         "ada"
       ]
     }
-  }
+  },
+  "snippets.ultisnips.pythonPrompt": false
 }
