@@ -71,5 +71,5 @@ function proxies.__wsl-proxy(){
 }
 
 function proxies.has-wsl-proxy(){
-    [[ "" != "$(proxies.__wsl-proxy > /dev/null)" ]]
+    [[ "" != "$(proxies.__wsl-proxy)" ]]
 }
