@@ -49,6 +49,9 @@ function proxies.__export_proxies_and_configure_apt(){
     val="Acquire::http::Proxy \"$1\"" 
     if ! grep "$val" $APT_PROXY_CONF > /dev/null; then
         proxies.__sudo-write "$APT_PROXY_CONF" "$val"
+
+        sudo snap set system proxy.http="$http_proxy"
+        sudo snap set system proxy.https="$https_proxy"
     fi
 }
 
@@ -62,6 +65,8 @@ function proxies.clear(){
     if [[ -e $APT_PROXY_CONF ]]; then
         sudo rm -f $APT_PROXY_CONF
         proxies.__sudo-write "$APT_PROXY_CONF" "# Settings removed by proxies.clear. Try proxies.parse-and-set to reinstate" 
+        sudo snap unset system proxy.http
+        sudo snap unset system proxy.https
     fi
 
     # clear settings - meaning we have intentionally disabled using proxy setting

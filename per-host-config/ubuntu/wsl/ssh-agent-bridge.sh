@@ -8,6 +8,7 @@ __1password_ssh__check_running(){
     # need `ps -ww` to get non-truncated command for matching
     # use square brackets to generate a regex match for the process we want but that doesn't match the grep command running it!
     ALREADY_RUNNING="$(ps -auxww | grep -q "$__1password_ssh__MATCH_RE"; echo $?)"
+    return $ALREADY_RUNNING
 }
 
 __1password_ssh__start(){
