@@ -10,13 +10,15 @@ SETTINGS=$HOME/.proxy.setting
 
 # for use in bashrc: test if there is a proxy setting and if so parse and fix all settings
 function proxies.test-and-set(){
-    if proxies.use-proxy; then
+    if __proxies.should-use-proxy; then
         echo "Setting up proxy settings ..."
-        proxies.parse-and-set
+        proxies.start
     fi
 }
 
-function proxies.parse-and-set(){
+# start using proxy 
+# persists the setting across shells
+function proxies.start(){
 
     # https://unix.stackexchange.com/questions/792763/wsl2-ubuntu-somehow-adds-quotes-around-wsl-related-environment-variables
     # In my enterprise Windows 11, WSL sets the env values in a weird manner:
@@ -28,18 +30,18 @@ function proxies.parse-and-set(){
     
     # extract the quoted env var, if it exists
     local parsed_proxy_value
-    parsed_proxy_value=$(proxies.__wsl-proxy)
+    parsed_proxy_value=$(__proxies.wsl-proxy)
 
     if [ -z $parsed_proxy_value ]; then 
         parsed_proxy_value=$MY_HTTP_PROXY # fallback value set in .secrets
     fi
-    proxies.__export_proxies_and_configure_apt $parsed_proxy_value
+    __proxies.export_proxies_and_configure_apt $parsed_proxy_value
     echo $parsed_proxy_value > "$SETTINGS"
 }
 
 # Set all environment variables and update proxy config for apt
 # private
-function proxies.__export_proxies_and_configure_apt(){
+function __proxies.export_proxies_and_configure_apt(){
     export http_proxy="$1"
     export HTTPS_PROXY="$1"
     export https_proxy="$1"
@@ -48,14 +50,14 @@ function proxies.__export_proxies_and_configure_apt(){
     local val
     val="Acquire::http::Proxy \"$1\"" 
     if ! grep "$val" $APT_PROXY_CONF > /dev/null; then
-        proxies.__sudo-write "$APT_PROXY_CONF" "$val"
+        __proxies.sudo-write "$APT_PROXY_CONF" "$val"
 
         sudo snap set system proxy.http="$http_proxy"
         sudo snap set system proxy.https="$https_proxy"
     fi
 }
 
-function proxies.clear(){
+function proxies.stop(){
     unset HTTP_PROXY
     unset http_proxy
     unset HTTPS_PROXY
@@ -64,7 +66,7 @@ function proxies.clear(){
 
     if [[ -e $APT_PROXY_CONF ]]; then
         sudo rm -f $APT_PROXY_CONF
-        proxies.__sudo-write "$APT_PROXY_CONF" "# Settings removed by proxies.clear. Try proxies.parse-and-set to reinstate" 
+        __proxies.sudo-write "$APT_PROXY_CONF" "# Settings removed by proxies.stop . Try proxies.start to reinstate" 
         sudo snap unset system proxy.http
         sudo snap unset system proxy.https
     fi
@@ -76,7 +78,7 @@ function proxies.clear(){
 
 # arg1: filename
 # arg2: string
-function proxies.__sudo-write(){
+function __proxies.sudo-write(){
         echo "$2" | sudo tee "$1" > /dev/null
 }
 
@@ -84,7 +86,7 @@ function proxies.show(){
     env | egrep -i 'http.?_proxy'
 }
 
-function proxies.__wsl-proxy(){
+function __proxies.wsl-proxy(){
     env | grep "'http_proxy=" | awk -F'=' '{
         $2 now contains the end quote character
         http_proxy_value =  substr($2, 1, length($2)-1)
@@ -92,6 +94,10 @@ function proxies.__wsl-proxy(){
     }'
 }
 
-function proxies.use-proxy(){
+function __proxies.should-use-proxy(){
     [[ "" != "$(cat $SETTINGS)" ]]
+}
+
+function proxies.can-connect(){
+    curl -L vg.no -s --fail -o /dev/null
 }
