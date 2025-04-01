@@ -40,12 +40,9 @@ __install_python_packages(){
     fi
 
     # No longer needed/wanted/possible when using ASDF to manage
-    #h3 "Upgrading pip\n"
-    #pip(){ python3 -m pip $@; } # to avoid warning about script wrapper and old python
-    #pip install --upgrade --user pip
-    #pip3 install --upgrade pip
 
     h3 "Installing Python packages ...\n"
+    TODO "Start using 'uv' instead of pip for package installs"
     pip install --user --upgrade -r "$SHARED_DIR/python.local"  | (grep -v 'Requirement already satisfied:' || :)
 }
 
