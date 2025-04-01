@@ -83,6 +83,3 @@ export PATH="$PNPM_HOME:$PATH"
 # ADA support. Needed to build GNAT Studio
 export GPR_PROJECT_PATH=/opt/gcc-14.2.0-3-aarch64/lib/gnat
 export ADA_PROJECT_PATH=/opt/gcc-14.2.0-3-aarch64/share/gpr
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"

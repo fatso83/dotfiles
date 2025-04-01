@@ -106,7 +106,5 @@ mkdir -p $ANDROID_HOME
 source ~/bin/proxies.inc
 proxies.test-and-set # to clear use of proxies permanently, use proxies.stop
 
-( proxies.can-connect  || printf "\nUnable to connect to internet. Check proxy settings using proxies.show\n\n" )&
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+# run as background process. suppress all output by running inside of another shell process
+( ( proxies.can-connect  || printf "\nUnable to connect to internet. Check proxy settings using proxies.show\n\n" )&)
