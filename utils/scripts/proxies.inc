@@ -48,7 +48,7 @@ function __proxies.export_proxies_and_configure_apt(){
 
     # Create a proxy setting for APT
     local val
-    val="Acquire::http::Proxy \"$1\"" 
+    val="Acquire::http::Proxy \"$1\";" 
     if ! grep "$val" $APT_PROXY_CONF > /dev/null; then
         __proxies.sudo-write "$APT_PROXY_CONF" "$val"
 
