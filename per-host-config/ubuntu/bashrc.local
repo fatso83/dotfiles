@@ -54,7 +54,7 @@ function decrypt(){
 if is_wsl; then
     t_debug "Custom setup for WSL Ubuntu"
     
-    WINHOME=$HOME/win-home
+    export WINHOME=$HOME/win-home
     alias win-powershell='/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe'
     alias win-home="cd $WINHOME"
     alias pbcopy="clip.exe"
