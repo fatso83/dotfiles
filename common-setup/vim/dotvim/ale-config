@@ -15,7 +15,7 @@ nnoremap <F9> :let g:ale_fix_on_save = !g:ale_fix_on_save<CR>
 let g:ale_fixers = {
             \   'javascript': ['eslint', 'prettier'],
             \   'typescript': ['eslint', 'prettier'],
-            \   'html': ['prettier']
+            \   'html': ['eslint','prettier']
             \}
 
 let g:ale_linters = {
