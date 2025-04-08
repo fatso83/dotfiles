@@ -129,7 +129,7 @@
 
 # Conditional include based on which subdir you are in
 # See https://www.youtube.com/watch?v=aolI_Rz0ZqY&t=537s
-[includeIf "gitdir:~/dev/bring/"]
-    path = ~/dev/bring/gitconfig-posten
+[includeIf "gitdir:~/dev/avinor/"]
+    path = ~/dev/avinor/gitconfig-avinor
 [blame]
 	ignoreRevsFile = .git-blame-ignore-revs
