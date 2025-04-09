@@ -72,6 +72,7 @@ ln -sf "$SCRIPT_DIR"/profile "$HOME"/.profile
 ln -sf "$SCRIPT_DIR"/bashrc "$HOME"/.bashrc
 ln -sf "$SCRIPT_DIR"/gitignore_global "$HOME"/.gitignore_global
 ln -sf "$SCRIPT_DIR"/pystartup "$HOME"/.pystartup
+ln -sf "$SCRIPT_DIR"/pdbrc "$HOME"/.pdbrc
 ln -sf "$SCRIPT_DIR"/tmux.conf "$HOME"/.tmux.conf
 
 TMS_CONF_DIR="$HOME/.config/tms"
