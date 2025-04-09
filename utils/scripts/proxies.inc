@@ -99,5 +99,5 @@ function __proxies.should-use-proxy(){
 }
 
 function proxies.can-connect(){
-    curl -L vg.no -s --fail -o /dev/null
+    curl -L vg.no -s --fail -o /dev/null  --connect-timeout 0.5
 }
