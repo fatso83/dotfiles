@@ -1,0 +1,36 @@
+#!/bin/bash
+# vi: ft=bash
+
+# exit on error
+set +e
+
+usage(){
+    printf "USAGE: $0 <branch-base>\n"
+    printf "\nWill create a set of patches starting from the commit after <branch-base> and zip it\n"
+    exit 1
+}
+
+if [[ $# < 1 ]]; then
+    usage
+fi
+
+LAST_COMMIT=$(git rev-parse --short HEAD)
+BASE_COMMIT=$(git rev-parse --short $1)
+
+if [[ $LAST_COMMIT == $BASE_COMMIT ]]; then
+    echo "ERROR: Base commit is the same as the last commit. Nothing to do!"
+    exit 200
+fi
+
+MAX_LEN=30
+DATETIME_NOW="$( date +"%Y%m%d-%H%M" )"
+MSG_LAST_COMMIT="$(git log -n1 --pretty=format:'%s' | cut -c1-$MAX_LEN)"
+FILENAME="${DATETIME_NOW}__${LAST_COMMIT}__$(change-case --kebab \"$MSG_LAST_COMMIT\")"
+OUTPUT="patches-$RANDOM"
+mkdir $OUTPUT
+cd $OUTPUT
+git format-patch "$BASE_COMMIT"
+zip -q ../$FILENAME *.patch
+cd ..
+rm -r $OUTPUT
+printf "\nPatch archive created: %s\n" "$FILENAME"
