@@ -160,7 +160,6 @@ fi
 t_debug ASDF tool setup
 . "$HOME/.asdf/asdf.sh"
 . "$HOME/.asdf/completions/asdf.bash"
-source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/bashrc"
 
 # Alire (ADA source package manager)
 export PATH="$HOME/.alire/bin:$PATH"

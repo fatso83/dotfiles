@@ -110,33 +110,51 @@ install_sdkman_packages(){
     sdk install kotlin
 }
 
-__add_plugin(){
-    if ! __asdf_has_plugin $1; then
-        asdf plugin add $1
+__install_asdf_exe(){
+    local arch
+    local asdf_version
+
+    if command_exists asdf; then
+        return;
     fi
+
+    # After rewrite in Go, using the OS specific package manager version is recommended, but no Ubuntu package is available ...
+    # Thus using the built releases
+    if is_mac && [[ $(arch) == arm64* ]]; then
+        arch=darwin-arm64
+    elif is_mac && [[ $(arch) == x8664* ]]; then
+        arch=darwin-amd64
+    else 
+        if [[ $(arch) != x86_64 ]]; then
+            printf "ASSERTION ERROR: Architecture is not matching known architecture ($(arch))"
+            return 255
+        fi
+        arch=linux-amd64
+    fi
+    asdf_version=0.16.7
+    curl -L -o - https://github.com/asdf-vm/asdf/releases/download/v${asdf_version}/asdf-v${asdf_version}-${arch}.tar.gz | tar xz -C ~/bin/
 }
 
 install_asdf_tooling(){
+    local init
+
     __shared_package_info_message "ASDF"
     init="$HOME/.asdf/asdf.sh"
 
-    # recommended download for all os's
-    if ! [[ -e "$HOME/.asdf" ]]; then
-        git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.12.0
-    fi
+    __install_asdf_exe
 
     [[ -e "$init" ]] && source "$init"
 
     # To show all plugins available: `asdf plugin list all`
 
     # for faster, cached lookups
-    __add_plugin direnv
-    asdf direnv setup --shell bash --version latest
-    asdf install direnv 2.32.3
 
-    __add_plugin python
-    __add_plugin ruby
-    __add_plugin nodejs
+    strip-comments $ROOT/common-setup/tool-versions | while read plugin version; do
+        if ! __asdf_has_plugin $1; then
+            asdf plugin add $plugin
+        fi
+        asdf install $plugin $version
+    done
 
     __install_node_packages
     __install_ruby_packages
@@ -154,7 +172,7 @@ install_ada_packages(){
         alire_arch=aarch64-macos
         lsp_arch=darwin-arm64
         lsp_file=integration/vscode/ada/arm64/darwin/ada_language_server
-    else 
+    else
         if [[ $(arch) != x86_64 ]]; then
             printf "ASSERTION ERROR: Architecture is not matching known architecture ($(arch))"
             return 255
