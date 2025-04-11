@@ -5,6 +5,8 @@ My dot files
 These are my config files for Bash, VIM, Python, tmux and more. Also includes a handful of [utility scripts](./utils/scripts) 
 and quite a lot of [aliases/functions](https://github.com/fatso83/dotfiles/blob/7958268/common-setup/bash.d/aliases_functions) I find useful and re-use quite often.
 
+_I have made the repo public as a source of inspiration for others, not as a general base for everyone to contribute to_. This setup works for me. You do you!
+
 This repo is under a [do as you please license](./LICENSE) :)
 
 
@@ -34,7 +36,7 @@ git clone https://github.com/fatso83/dotfiles
 ```
 ![install vid](./dotfiles-install.gif "Install video")
 
-The first time you run the install it will take some time, mostly due [YouCompleteMe](https://github.com/Valloric/YouCompleteMe), which needs to be downloaded and compiled. It might seem as if the install hangs on this step, but this only takes a lot of time the first time you run setup. On subsequent `./setup.sh` runs, it should not take more than a second or two.
+The first time you run the install it will take some time, though this only takes a lot of time the first time you run setup. On subsequent `./setup.sh` runs, it should be over in a handful of seconds.
 
 ## Debugging
 
