@@ -13,3 +13,5 @@ if which npm > /dev/null; then
     echo "Updating BASH completion scripts for NPM ..."
     npm completion > "$COMPLETIONS/npm"
 fi
+
+bun completions

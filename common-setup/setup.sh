@@ -161,6 +161,11 @@ if ! command_exists starship; then
     curl -sS https://starship.rs/install.sh | sh
 fi
 
+if ! command_exists bun; then
+    h2 "Installing Bun from online installer"
+    curl -fsSL https://bun.sh/install | bash
+fi
+
 [[ ! -e ~/.ssh ]] && mkdir ~/.ssh
 rm -f ~/.ssh/allowed_signers 2>/dev/null
 ln ./allowed_signers ~/.ssh/

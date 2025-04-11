@@ -5,10 +5,8 @@
 #export DEBUG=1
 
 # include selfmade binaries and scripts
-# Needed for some of the utility functions in this rc file, therefore 
-# cannot be in the profile file, which is read later on
-# Otherwise, we will for instance get "millis: command not found" on
-# every new terminal, even though it is found on the CLI when testing
+# You might get "millis: command not found" on first time setup, but this if fixed by restarting 
+# or logging in again, as the file is only read once (at login), not in every shell (as bashrc)
 if [ -d ~/bin ] ; then
     PATH=~/bin:"${PATH}"
 fi
@@ -41,6 +39,10 @@ export PATH="$GOPATH/bin:$HOME/.go/bin:$PATH"
 
 # Node stuff
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# Bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Symfony
 export PATH="$HOME/.symfony/bin:$PATH"
