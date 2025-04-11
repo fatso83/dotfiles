@@ -100,7 +100,11 @@
 
 [rebase]
 	autoStash = true
+	autosquash = true
 
+    ################################
+    # For stacked branches workflow!
+    ################################
     # This will also affect creating backup branches, so should be off by default!
     # Use --update-refs manually when rebasing to update stacked branches
     # updateRefs = true
@@ -113,6 +117,12 @@
 
 [column]
     ui = auto # puts them into columns if the terminal allows for it
+
+#[blame]
+    # This really does not work all that well as a global config. `git blame` fails 
+    # if this is missing, so better to have it as a local setup everyone can run using direnv
+    # or similar approaches
+	# ignoreRevsFile = .git-blame-ignore-revs
 
 # Do not add stuff after this point in the global config
 
@@ -131,5 +141,3 @@
 # See https://www.youtube.com/watch?v=aolI_Rz0ZqY&t=537s
 [includeIf "gitdir:~/dev/avinor/"]
     path = ~/dev/avinor/gitconfig-avinor
-[blame]
-	ignoreRevsFile = .git-blame-ignore-revs
