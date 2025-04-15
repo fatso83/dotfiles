@@ -34,7 +34,8 @@ Plug 'lumiliet/vim-twig'
 "Plug 'maxmellon/vim-jsx-pretty'
 Plug 'vim-scripts/SyntaxRange' " :[range]SyntaxInclude {filetype}
 "Plug 'lambdatoast/elm.vim'
-Plug 'elmcast/elm-vim'
+"Plug 'elmcast/elm-vim'
+Plug 'mityu/vim-applescript'
 
 " color schemes
 Plug 'romainl/Apprentice'
