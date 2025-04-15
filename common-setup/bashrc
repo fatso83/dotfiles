@@ -158,8 +158,8 @@ fi
 ################################################################################
 
 t_debug ASDF tool setup
-. "$HOME/.asdf/asdf.sh"
-. "$HOME/.asdf/completions/asdf.bash"
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+. <(asdf completion bash)
 
 # Alire (ADA source package manager)
 export PATH="$HOME/.alire/bin:$PATH"
