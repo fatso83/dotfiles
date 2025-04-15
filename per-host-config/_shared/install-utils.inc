@@ -122,7 +122,7 @@ __install_asdf_exe(){
     # Thus using the built releases
     if is_mac && [[ $(arch) == arm64* ]]; then
         arch=darwin-arm64
-    elif is_mac && [[ $(arch) == x8664* ]]; then
+    elif is_mac && [[ $(arch) == x86_64* ]]; then
         arch=darwin-amd64
     else 
         if [[ $(arch) != x86_64 ]]; then
