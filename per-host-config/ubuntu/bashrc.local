@@ -10,8 +10,16 @@ if [ -e ~/.tlf ]; then
 fi
 
 alias ls="/bin/ls $IGNORE --color  --group-directories-first "
-alias vim='nvim'
-alias pip='python3 -m pip'
+alias pip='uv pip'
+
+vim(){
+    local logfile
+    local short_formatted_time
+    short_formatted_time=$(date +"%Y%m%d_%H%M%S")
+    logfile="$HOME/.vim/logs/log-$short_formatted_time.txt"
+    echo "Log starting at $(iso8601-local) for arguments: $@" >> $logfile
+    nvim -V9"$logfile" $@
+}
 
 # makes the usual 'open' command from osx work in linux as well
 # Defining it as a function overwrites the `open` definition used in other functions,
