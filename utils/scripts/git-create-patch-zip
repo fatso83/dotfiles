@@ -22,10 +22,11 @@ if [[ $LAST_COMMIT == $BASE_COMMIT ]]; then
     exit 200
 fi
 
+CURRENT_BRANCH=$(git branch --show-current)
 MAX_LEN=30
 DATETIME_NOW="$( date +"%Y%m%d-%H%M" )"
 MSG_LAST_COMMIT="$(git log -n1 --pretty=format:'%s' | cut -c1-$MAX_LEN)"
-FILENAME="${DATETIME_NOW}__${LAST_COMMIT}__$(change-case --kebab \"$MSG_LAST_COMMIT\")"
+FILENAME="${DATETIME_NOW}__patches_on_top_of__$1_${BASE_COMMIT}__${CURRENT_BRANCH}___$(change-case --kebab \"$MSG_LAST_COMMIT\")"
 OUTPUT="patches-$RANDOM"
 mkdir $OUTPUT
 cd $OUTPUT
