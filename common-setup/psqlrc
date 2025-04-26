@@ -1,3 +1,14 @@
+-- Beware: this setup is for making interactive sessions nicer,
+-- but it can break psql scripts, as they will source this first!
+--
+-- To skip reading this, always invoke scripts something like this:
+-- `psql -X -v ON_ERROR_STOP=on --file restore.sql myuser@myhost mydb `
+--
+-- The important bit is the `-X`. From `man psql`:
+--    -X
+--   --no-psqlrc
+--          Do not read the start-up file (neither the system-wide psqlrc file nor the user's ~/.psqlrc file).
+
 \timing on
 \pset linestyle unicode 
 \pset border 2
