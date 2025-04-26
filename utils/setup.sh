@@ -69,5 +69,10 @@ cat ./jar-executable.preamble java-formatter.jar > ~/bin/google-java-format
 rm ./java-formatter.jar
 chmod +x ~/bin/google-java-format
 
+# This works together with a git config for the type "vimcrypt"
+h3 'Vim encrypted file diffing support'
+curl -s -o ~/bin/vimdecrypt.py https://raw.githubusercontent.com/fatso83/vimdecrypt/refs/heads/publicbranch/vimdecrypt.py
+chmod +x ~/bin/vimdecrypt.py
+
 # Restore current directory of user
-popd > /dev/null
+(popd > /dev/null || exit)

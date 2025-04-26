@@ -28,6 +28,10 @@
     # This is set in the `gitlocal` settings, which is specific to each machine. See the individual 
     # 'gitlocal' files in mac-work, etc
 
+[diff "vimcrypt"]
+    textconv = vimdecrypt.py -p $VIMPASSWORD
+    cachetextconv = false
+
 # related to the commit signing
 [gpg]
   format = ssh
