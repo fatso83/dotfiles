@@ -5,6 +5,11 @@ customize_per_os(){
     source "$SCRIPT_DIR"/../utils/scripts/cross-platform-utils.bashlib
 
     FONTS_DIR="$SCRIPT_DIR/fonts"
+
+    # default implementation: noop
+    install_font(){ echo "TODO: implement font installation"; }
+    is_installed(){ echo "TODO: implement font installation"; }
+
     if is_mac; then
         install_font() { install_font_mac $@; }
         is_installed() { is_installed_mac $@; }
@@ -17,8 +22,6 @@ customize_per_os(){
             echo "Open $WINHOME_WIN/$SUBDIR in Explorer and manually install fonts"
         }
         is_installed() { is_installed_wsl; }
-    else
-        install_font(){ echo "TODO: not implemented font installation"; }
     fi
 }
 
