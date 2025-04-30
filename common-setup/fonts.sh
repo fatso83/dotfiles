@@ -18,7 +18,7 @@ customize_per_os(){
         }
         is_installed() { is_installed_wsl; }
     else
-        echo "TODO: not implemented font installation"
+        install_font(){ echo "TODO: not implemented font installation"; }
     fi
 }
 
