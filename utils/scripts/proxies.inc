@@ -52,8 +52,9 @@ function __proxies.export_proxies_and_configure_apt(){
     if ! grep "$val" $APT_PROXY_CONF > /dev/null; then
         __proxies.sudo-write "$APT_PROXY_CONF" "$val"
 
-        sudo snap set system proxy.http="$http_proxy"
-        sudo snap set system proxy.https="$https_proxy"
+        # I cannot get Snap to work, no matter what network I am on, so commenting it out
+        #sudo snap set system proxy.http="$http_proxy"
+        #sudo snap set system proxy.https="$https_proxy"
     fi
 }
 
@@ -67,8 +68,10 @@ function proxies.stop(){
     if [[ -e $APT_PROXY_CONF ]]; then
         sudo rm -f $APT_PROXY_CONF
         __proxies.sudo-write "$APT_PROXY_CONF" "# Settings removed by proxies.stop . Try proxies.start to reinstate" 
-        sudo snap unset system proxy.http
-        sudo snap unset system proxy.https
+
+        # I cannot get Snap to work, no matter what network I am on, so commenting it out
+        #sudo snap unset system proxy.http
+        #sudo snap unset system proxy.https
     fi
 
     # clear settings - meaning we have intentionally disabled using proxy setting
