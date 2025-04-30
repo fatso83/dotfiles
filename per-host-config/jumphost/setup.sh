@@ -1,0 +1,6 @@
+echo "This is a server with minimal ram and disk that does not require the full developer setup ..."
+echo "We should see if we can move some of the 'common' bits into a shared developer setup"
+echo "Stuff I installed manually"
+echo " - fzf (looked at the Ubuntu machine)"
+echo " - gh (from https://github.com/cli/cli/blob/trunk/docs/install_linux.md)"
+echo " - install_asdf_tooling (from the shared tooling)"

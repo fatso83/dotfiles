@@ -1,6 +1,16 @@
 # source this package
 # vim: ft=bash
-# Requires shared.lib to have been sourced
+
+if [[ -z $ROOT ]]; then
+    echo "\$ROOT was not defined before sourcing this script."
+    ROOT="$(git rev-parse --show-toplevel)"
+    echo "Assuming ROOT=$ROOT ..."
+fi
+
+if ! command_exists h3; then
+    echo "shared.lib was not sourced before sourcing this script. Fixing ..."
+    . "$ROOT/shared.lib"
+fi
 SHARED_DIR="$ROOT/per-host-config/_shared"
 
 __shared_package_info_message(){
