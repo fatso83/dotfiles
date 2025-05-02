@@ -31,6 +31,7 @@ google-chrome-stable
 google-cloud-sdk
 gobject-introspection
 htop
+imagemagick
 jotta-cli
 jq
 libgmp-dev # used by ada language server install

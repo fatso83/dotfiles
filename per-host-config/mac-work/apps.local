@@ -23,6 +23,7 @@ gtk4
 hashicorp/tap/terraform
 homebrew/cask/macvim
 htop
+imagemagick
 jq
 kcat
 llvm

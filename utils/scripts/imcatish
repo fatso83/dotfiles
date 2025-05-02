@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Convert an image to SIXEL format, which most terminals support. High-res viewing.
+# Assumes we have installed ImageMagick and `convert` is on the path
+# https://unix.stackexchange.com/questions/35333/what-is-the-fastest-way-to-view-images-from-the-terminal
+
+usage(){
+    echo "USAGE: $0 <picture>"
+    echo Will show an image on the terminal using the SIXEL output format
+    exit 1
+}
+
+if [[ $# < 1 ]]; then
+    usage
+fi
+
+convert "$1" six:-
