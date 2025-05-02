@@ -1,0 +1,5 @@
+[Interface]
+Address = ${SERVER_WG_IP}/24
+PrivateKey = ${SERVER_PRIVATE_KEY}
+ListenPort = ${SERVER_WG_PORT}
+
