@@ -55,6 +55,7 @@ npm
 php
 php-redis
 php-xdebug
+qrencode
 ripgrep
 powertop
 python3-cairo-dev
