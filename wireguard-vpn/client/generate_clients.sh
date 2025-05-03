@@ -23,8 +23,7 @@ get_ip_for_client() {
   fi
 }
 
-i=0
-while read client || [ -n "$client" ]; do
+while IFS= read -r client || [ -n "$client" ]; do
   [ -z "$client" ] && continue
 
   CLIENT_DIR="../keys/$client"
@@ -32,7 +31,10 @@ while read client || [ -n "$client" ]; do
 
   if [ ! -f "$CLIENT_DIR/privatekey" ]; then
     echo "🔐 No private key found for '$client'. Generating one automatically."
-    wg genkey > "$CLIENT_DIR/privatekey"
+    (
+      umask 077
+      wg genkey > "$CLIENT_DIR/privatekey"
+    )
     cat "$CLIENT_DIR/privatekey" | wg pubkey > "$CLIENT_DIR/publickey"
   fi
 
@@ -41,23 +43,22 @@ while read client || [ -n "$client" ]; do
 
   echo "💡 Select mode for $client:"
   echo "1) Full tunnel (route all traffic)"
-  echo "2) Peer-to-peer only (route to server + selected peers)"
-  printf "Mode [1/2]: "
-  read mode
+  echo "2) Peer-to-peer only (route to server + subnet)"
+  printf "Mode [1/2]: " > /dev/tty
+  read mode < /dev/tty
 
   if [ "$mode" = "2" ]; then
-    printf "Enter peer IPs (comma-separated, e.g. 10.0.0.3,10.0.0.4): "
-    read extra_peers
-    allowed_ips="10.0.0.1/32"
-    IFS=','; for peer in $extra_peers; do
-      peer_trim=$(echo "$peer" | tr -d ' ')
-      allowed_ips="$allowed_ips, $peer_trim/32"
-    done
+    printf "Enter subnet to allow (default 10.0.0.0/24): " > /dev/tty
+    read extra_subnet < /dev/tty
+    [ -z "$extra_subnet" ] && extra_subnet="10.0.0.0/24"
+    allowed_ips="10.0.0.1/32, $extra_subnet"
+    suffix="peer-to-peer"
   else
     allowed_ips="0.0.0.0/0, ::/0"
+    suffix="full"
   fi
 
-  CONFIG_FILE="$CLIENT_DIR/wg0.conf"
+  CONFIG_FILE="$CLIENT_DIR/wg0-$suffix.conf"
   {
     echo "[Interface]"
     echo "Address = $WG_IP/24"
@@ -71,9 +72,10 @@ while read client || [ -n "$client" ]; do
   } > "$CONFIG_FILE"
 
   if command -v qrencode >/dev/null 2>&1; then
-    qrencode -o "$CLIENT_DIR/wg0.png" < "$CONFIG_FILE"
-    echo "📱 QR code saved to $CLIENT_DIR/wg0.png"
+    qrencode -o "$CLIENT_DIR/wg0-$suffix.png" < "$CONFIG_FILE"
+    echo "📱 QR code saved to $CLIENT_DIR/wg0-$suffix.png"
   fi
 
   echo "✅ Config created: $CONFIG_FILE"
 done < ../clients.list
+
