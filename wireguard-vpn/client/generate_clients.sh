@@ -5,6 +5,15 @@ set -e
 mkdir -p ../keys
 touch ../ip_map.txt
 
+assert_defined(){
+    eval env_var_value='$'$1
+    if [ -z "$env_var_value" ]; then
+        echo "Missing value: \$$1"
+        echo "Set value in .env"
+        exit 2
+    fi
+}
+
 get_ip_for_client() {
   client="$1"
   ip=$(grep "^$client " ../ip_map.txt | awk '{print $2}')
@@ -22,6 +31,10 @@ get_ip_for_client() {
     echo "$candidate"
   fi
 }
+
+assert_defined SERVER_PUBLIC_IP
+assert_defined SERVER_WG_PORT
+assert_defined SERVER_PUBLIC_KEY
 
 while IFS= read -r client || [ -n "$client" ]; do
   [ -z "$client" ] && continue
@@ -41,11 +54,16 @@ while IFS= read -r client || [ -n "$client" ]; do
   PRIVATE_KEY=$(cat "$CLIENT_DIR/privatekey")
   WG_IP=$(get_ip_for_client "$client")
 
-  echo "💡 Select mode for $client:"
+  printf "\n\n💡 Select mode for $client:\n"
   echo "1) Full tunnel (route all traffic)"
   echo "2) Peer-to-peer only (route to server + subnet)"
-  printf "Mode [1/2]: " > /dev/tty
+  echo "3) Skip"
+  printf "Mode [1/2/3]: " > /dev/tty
   read mode < /dev/tty
+
+  if [ "$mode" = "3" ]; then
+      continue
+  fi
 
   if [ "$mode" = "2" ]; then
     printf "Enter subnet to allow (default 10.0.0.0/24): " > /dev/tty
@@ -63,7 +81,11 @@ while IFS= read -r client || [ -n "$client" ]; do
     echo "[Interface]"
     echo "Address = $WG_IP/24"
     echo "PrivateKey = $PRIVATE_KEY"
+    # Use DNS from env or fallback to 1.1.1.1 (Cloudflare)
+    DNS_SERVER="${CLIENT_DNS:-1.1.1.1}"
+    echo "DNS = $DNS_SERVER"
     echo ""
+
     echo "[Peer]"
     echo "PublicKey = $SERVER_PUBLIC_KEY"
     echo "Endpoint = $SERVER_PUBLIC_IP:$SERVER_WG_PORT"
@@ -71,11 +93,14 @@ while IFS= read -r client || [ -n "$client" ]; do
     echo "PersistentKeepalive = 25"
   } > "$CONFIG_FILE"
 
+  echo "✅ Config created: $CONFIG_FILE"
+
   if command -v qrencode >/dev/null 2>&1; then
     qrencode -o "$CLIENT_DIR/wg0-$suffix.png" < "$CONFIG_FILE"
     echo "📱 QR code saved to $CLIENT_DIR/wg0-$suffix.png"
   fi
 
-  echo "✅ Config created: $CONFIG_FILE"
+  echo
+
 done < ../clients.list
 

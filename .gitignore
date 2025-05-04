@@ -7,3 +7,5 @@ per-host-config/mac-work/.latest_brew_update
 common-setup/fonts
 per-host-config/mac-work/integration/
 common-setup/vim/dotvim/logs/
+wireguard-vpn/keys/
+wireguard-vpn/server/peers.generated.conf
