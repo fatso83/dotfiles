@@ -128,9 +128,6 @@ else
     banner "Install NodeJS and run '$ts_cmd' to get TypeScript support in Vim"
 fi
 
-# This fails if it exists as a symlink to a 404 file: touch: cannot touch '/home/oscko/.vimrc.local': No such file or directory
-#touch "$HOME"/.vimrc.local
-
 # Install NeoVim config (we don't have to worry about XDG_CONFIG_HOME stuff
 rm -rf ~/.config/nvim 
 ln -sf ~/.vim ~/.config/nvim

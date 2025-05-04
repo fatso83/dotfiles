@@ -22,10 +22,11 @@ MACHINE=$(cat "$MACHINE_NAME_FILE")
 if [[ -e "$MACHINE" ]]; then 
     h2 "Setting up local settings for this machine"
     cd $MACHINE
-    ln -sf `pwd`/bashrc.local "$HOME/.bashrc.local"
-    ln -sf `pwd`/profile.local "$HOME/.profile.local"
-    ln -sf `pwd`/gitlocal "$HOME/.gitlocal"
-    ln -sf `pwd`/vimrc.local "$HOME/.vimrc.local"
+    ln -sf $PWD/bashrc.local "$HOME/.bashrc.local"
+    ln -sf $PWD/profile.local "$HOME/.profile.local"
+    ln -sf $PWD/gitlocal "$HOME/.gitlocal"
+    ln -sf $PWD/vimrc.local "$HOME/.vimrc.local"
+    ln -sf $PWD/tmux.local "$HOME/.tmux/local"
     [[ -e ./setup.sh ]] && ./setup.sh
 
     warn "You *might* need to re-run the global setup as build tools might not have been available"

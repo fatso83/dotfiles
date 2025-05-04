@@ -1,0 +1,2 @@
+# make sure we know we are on the server
+set status-bg red

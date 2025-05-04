@@ -58,9 +58,11 @@ h3 'Installing dependencies for scripts'
 h3 'Python dependencies'
 (python3 -m pip install --user smsutil && python3 -m pip install --user requests ) | grep -v 'Requirement already satisfied'
 
-if command_exists npm; then
+if command_exists node; then
     h3 'Node dependencies'
     npm install
+else
+    warn "NodeJS is not installed. Utils that rely on NPM or node will fail"
 fi
 
 h3 'Java formatter'
