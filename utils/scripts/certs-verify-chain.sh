@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 #
 #  verify-chain.sh  leaf.pem  [intermediate1.pem …]  [root.pem]
 #
@@ -11,20 +11,37 @@ set -eu
 
 die() { echo "ERROR: $*" >&2; exit 1; }
 
-recipe_for_installing(){
-    FILENAME="$1"
-    CONVERTED="$FILENAME"
-    if ! (echo $FILENAME |  grep -q '\.crt$'); then
-        CONVERTED="$FILENAME.crt"
+prompt_to_install(){
+    local yesno
+    echo
+    read -p "Do you want me to install the intermediary certificate as a trust anchor? (yes/NO)" yesno
+
+    if ( shopt -s nocasematch; 
+        [[ ! "${yesno}" =~ ^y(es)?$ ]]
+        ); then 
+        return 1
     fi
-    printf "\nHOW-TO: installing the intermediate certificate in your trust store:\n"
-    printf '    ```\n'
-    printf "    DOWNLOADED_CERT='%s'\n" "$FILENAME"
-    printf "    NEW_LOCATION='%s'\n" "/usr/local/share/ca-certificates/$CONVERTED"
-    printf '    # Ensure we install a PEM encoded certificate\n'
-    printf '    openssl x509 -in "$DOWNLOADED_CERT" | sudo tee "$NEW_LOCATION"\n'
-    printf '    sudo update-ca-certificates\n'
-    printf '    ```\n'
+
+    install_certificate "$1"
+    echo "Certificate installed. Retry verification to see that it works."
+}
+
+install_certificate(){
+    local DOWNLOADED_CERT
+    local CONVERTED
+    DOWNLOADED_CERT="$1"
+    CONVERTED="$DOWNLOADED_CERT"
+
+    # Ensure it ends in .crt, as it is required for update-ca-certificates
+    if ! (echo $DOWNLOADED_CERT |  grep -q '\.crt$'); then
+        CONVERTED="$DOWNLOADED_CERT.crt"
+    fi
+    NEW_LOCATION="/usr/local/share/ca-certificates/$CONVERTED"
+
+    printf "\nInstalling the intermediate certificate in your trust store:\n"
+    # Ensure we install a PEM encoded certificate
+    openssl x509 -in "$DOWNLOADED_CERT" | sudo tee "$NEW_LOCATION" > /dev/null
+    sudo update-ca-certificates
 }
 
 decode(){
@@ -103,12 +120,17 @@ if ! /usr/bin/openssl verify -CApath /etc/ssl/certs \
     filename="$(filename_of $intermediate_url)"
 
     printf '\nLeaf verification failed :( \n... but found CA Issuer URI in the leaf \n... attempting download and verification using %s\n' "$intermediate_url"
+
+    # we skip security when it comes to getting hold of the intermediate certificate
     curl -s -k -L -o "$filename" $intermediate_url
+
     if openssl verify "$filename" > /dev/null; then
-        echo "Intermediate verified. This means the chain was incomplete, as we could verify the intermediate using existing trust anchors."
+        echo "Intermediate verified. As we could verify the intermediate using existing trust anchors, it should originally have been added to the chain."
         if openssl verify -untrusted "$filename" "$leaf" > /dev/null; then
             echo "Leaf certificate verified using the intermediate certificate!"
-            recipe_for_installing "$filename"
+            echo "This means it should be safe to install this in the trust store, although the 'correct' thing to do would be to fix the deployed certificate by including it in the chain"
+            prompt_to_install "$filename"
+            exit 1
         fi
     else
         echo "Intermediate failed verification as well"
