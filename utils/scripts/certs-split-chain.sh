@@ -13,9 +13,6 @@
 #       → 0-www.vg.no-vg.no.pem
 #         1-www.vg.no-ZeroSSL_RSA_Domain_Secure_Site_CA.pem
 #         2-www.vg.no-USERTrust_RSA_Certification_Authority.pem
-#
-#
-#set -x
 
 set -euo pipefail
 
@@ -69,7 +66,10 @@ for f in "$OUT"/tmp-cert-*.pem; do
 
     NEW=$(printf "%d-%s-%s.pem" "$COUNT" "$HOST" "$CN")
     mv -- "$f" "$OUT/$NEW"
+    echo "Extracted certificate: $OUT/$NEW"
     COUNT=$((COUNT+1))
 done
 
-echo "Wrote $COUNT certificate file(s) to $OUT"
+if [ "$OUT" = "" ]; then
+    echo "Wrote $COUNT certificate file(s) to $OUT"
+fi

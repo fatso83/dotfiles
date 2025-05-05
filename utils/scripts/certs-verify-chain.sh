@@ -6,7 +6,6 @@
 #    leaf being first).                ──────────────────────────────────
 #  • Verifies that they form one valid certificate path that ends in a
 #    root CA already present in the machine’s trust store.
-#
 
 set -eu
 
@@ -14,15 +13,22 @@ die() { echo "ERROR: $*" >&2; exit 1; }
 
 recipe_for_installing(){
     FILENAME="$1"
-    BASE=$(basename "$1")
+    CONVERTED="$FILENAME"
+    if ! (echo $FILENAME |  grep -q '\.crt$'); then
+        CONVERTED="$FILENAME.crt"
+    fi
     printf "\nHOW-TO: installing the intermediate certificate in your trust store:\n"
     printf '    ```\n'
     printf "    DOWNLOADED_CERT='%s'\n" "$FILENAME"
-    printf "    NEW_LOCATION='%s'\n" "/usr/local/share/ca-certificates/$BASE.pem"
+    printf "    NEW_LOCATION='%s'\n" "/usr/local/share/ca-certificates/$CONVERTED"
     printf '    # Ensure we install a PEM encoded certificate\n'
     printf '    openssl x509 -in "$DOWNLOADED_CERT" | sudo tee "$NEW_LOCATION"\n'
     printf '    sudo update-ca-certificates\n'
     printf '    ```\n'
+}
+
+decode(){
+    python3 -c "import sys, urllib.parse as p; print(p.unquote_plus(sys.argv[1]))" "$1"
 }
 
 filename_of(){
@@ -35,7 +41,7 @@ filename_of(){
         filename=$(basename "$url")
     fi
 
-    echo $filename
+    decode "$filename"
 }
 
 [ $# -ge 1 ] || die "usage: $0 leaf.pem [intermediate.pem …] [root.pem]"
@@ -87,28 +93,28 @@ if ! /usr/bin/openssl verify -CApath /etc/ssl/certs \
     intermediate_url=$(openssl x509 -in "$leaf" -noout -text \
         | grep -A3 'Authority Information Access:' | grep 'CA Issuers - URI' | sed 's/.*http/http/')
 
-    if [ -z $intermediate_url ]; then 
+    if [ -z $intermediate_url ]; then
         die "chain validation FAILED"
     fi
 
     # No longer exit at non-ok statuses: we are already planning on failing, so make life easier!
     set +e
     # Make the intermediate file url file‑system safe
-    filename="intermediate-$(filename_of $intermediate_url)"
+    filename="$(filename_of $intermediate_url)"
 
     printf '\nLeaf verification failed :( \n... but found CA Issuer URI in the leaf \n... attempting download and verification using %s\n' "$intermediate_url"
-    curl -s -k -L -o $filename $intermediate_url
-    if openssl verify $filename > /dev/null; then 
+    curl -s -k -L -o "$filename" $intermediate_url
+    if openssl verify "$filename" > /dev/null; then
         echo "Intermediate verified. This means the chain was incomplete, as we could verify the intermediate using existing trust anchors."
-        if openssl verify -untrusted $filename $leaf > /dev/null; then 
+        if openssl verify -untrusted "$filename" "$leaf" > /dev/null; then
             echo "Leaf certificate verified using the intermediate certificate!"
-            recipe_for_installing $filename
+            recipe_for_installing "$filename"
         fi
-    else 
+    else
         echo "Intermediate failed verification as well"
     fi
 
-    die "chain validation FAILED." 
+    die "chain validation FAILED."
 fi
 
 echo "  ✔  chain is valid and ends in a trusted root"
