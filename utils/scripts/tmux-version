@@ -1,0 +1,21 @@
+#!/bin/bash
+# Utility to simplify tmux configs that rely on the 
+# tmux version being greater than x.y
+# Usage: tmux-version "> 2.1"
+# Switch on exit status
+
+# trim away everything non-numeric: 3.0a => 3.0
+# does not handle minor version being multi-digit (edge case)
+FULL_VERSION=$(tmux -V | cut -d' ' -f2)
+CURRENT_VERSION=$(tmux -V | cut -d' ' -f2 | cut -c1-3)
+eval 'EXPR="$CURRENT_VERSION $1"'
+
+# bc will print 1 on true, and 0 on false
+[[ $(bc <<< "$EXPR") = 1 ]]
+EXIT_STATUS=$?
+
+printf "tmux version test (%s %s) is " $FULL_VERSION "$1"
+[[ $EXIT_STATUS = 0 ]] && val=true || val=false
+printf "%s\n" $val
+
+exit $EXIT_STATUS
