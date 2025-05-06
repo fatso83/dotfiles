@@ -1,2 +1,2 @@
 # make sure we know we are on ubuntu, not macos
-set status-bg orange
+set -g status-bg orange
