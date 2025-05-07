@@ -1,29 +1,28 @@
 #!/bin/sh
-# Utility to simplify tmux configs that rely on the
-# tmux version being greater than x.y
-# Usage: tmux-version "> 2.1"
 # Switch on exit status
 
 usage(){
-    echo 'USAGE: tmux-version "<op> <num>"'
-    echo 'Example:  tmux-version "> 3.4"'
+    echo Utility to simplify tmux configs that rely on the echo tmux version being greater than x.y
+    echo
+    echo '  if-shell "tmux-version '\'' >= 3.2'\''" "bind C-j display-popup -E "tms switch";'
     exit 1
 }
 
+main(){
+    FULL_VERSION=$(tmux -V | cut -d' ' -f2)
+
+    eval 'EXPR="$FULL_VERSION $1"'
+
+    # bc will print 1 on true, and 0 on false
+    semver_compare.awk "$EXPR"
+    EXIT_STATUS=$?
+
+    printf "tmux version test (%s %s) is " $FULL_VERSION "$1"
+    [ $EXIT_STATUS = 0 ] && val=true || val=false
+    printf "%s\n" $val
+
+    exit $EXIT_STATUS
+}
+
 if [ $# -lt 1 ]; then usage; fi
-
-# trim away everything non-numeric: 3.0a => 3.0
-# does not handle minor version being multi-digit (edge case)
-FULL_VERSION=$(tmux -V | cut -d' ' -f2)
-CURRENT_VERSION=$(tmux -V | cut -d' ' -f2 | cut -c1-3)
-eval 'EXPR="$CURRENT_VERSION $1"'
-
-# bc will print 1 on true, and 0 on false
-[ $(bc <<< "$EXPR") = 1 ]
-EXIT_STATUS=$?
-
-printf "tmux version test (%s %s) is " $FULL_VERSION "$1"
-[ $EXIT_STATUS = 0 ] && val=true || val=false
-printf "%s\n" $val
-
-exit $EXIT_STATUS
+main "$1"
