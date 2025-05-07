@@ -22,7 +22,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale'
 
 " LSP functionality - requires Node
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Syntax highlighting
 Plug 'OrangeT/vim-csharp' "razor, c#

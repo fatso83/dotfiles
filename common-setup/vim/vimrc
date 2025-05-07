@@ -108,7 +108,7 @@ au BufRead,BufNewFile nginx.conf set ft=nginx
 autocmd! bufwritepost .vimrc source % " in $HOME
 autocmd! bufwritepost vimrc source %  " the linked file in dotfiles
 autocmd! bufwritepost plugins-config source %
-"autocmd! bufwritepost coc-config source %
+autocmd! bufwritepost coc-config source %
 autocmd! bufwritepost ale-config source %
 
 " Make vim work as a crontab editor: http://vim.wikia.com/wiki/Editing_crontab
@@ -183,7 +183,7 @@ set suffixesadd+=.js           " Makes gf work for relative files as well
 set mouse=
 
 " These needs to be before later configuration for objects to be defined
-"source ~/.vim/coc-config
+source ~/.vim/coc-config
 source ~/.vim/ale-config
 
 " js settings
