@@ -13,7 +13,7 @@ fi
 if ! command_exists millis ; then
     h2 "Installing 'millis'"
     pushd millis > /dev/null
-    make install 
+    make install
     popd > /dev/null
 fi
 
@@ -26,7 +26,7 @@ if ! command_exists signal-reset; then
 fi
 
 # inotify-info
-# The better native version of my own script :D 
+# The better native version of my own script :D
 if (! is_mac ) && (! is_wsl)  && (! command_exists inotify-info); then
     h2 "Installing inotify-info"
     pushd inotify-info/
@@ -51,7 +51,7 @@ __DELIM
     chmod +x "$WRAPPER"
 fi
 
-# symlink all scripts
+h3 'Symlink all scripts to ~/bin'
 ln -sf "$SCRIPT_DIR/scripts/"* $HOME/bin/
 
 h3 'Installing dependencies for scripts'
