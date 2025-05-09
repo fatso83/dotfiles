@@ -12,6 +12,6 @@ export LC_TIME=nb_NO.UTF-8
 export LC_NUMERIC=nb_NO.UTF-8
 export PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome
 
-if [[ -e .wsl-profile.local ]]; then
-    . ~/.wsl-profile.local
+if [[ -e .profile.wsl ]]; then
+    . ~/.profile.wsl
 fi

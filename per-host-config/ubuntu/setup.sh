@@ -37,7 +37,7 @@ __install-key https://www.postgresql.org/media/keys/ACCC4CF8.asc  postgresql.org
 __install-key https://packages.cloud.google.com/apt/doc/apt-key.gpg  cloud.google.com
 __install-key https://download.docker.com/linux/ubuntu/gpg  download.docker.com
 __install-key https://repo.charm.sh/apt/gpg.key  repo.charm.sh
-__install-key https://downloads.1password.com/linux/keys/1password.asc 1password 
+__install-key https://downloads.1password.com/linux/keys/1password.asc 1password
 __install-key https://www.charlesproxy.com/packages/apt/PublicKey charlesproxy
 __install-key https://cli.github.com/packages/githubcli-archive-keyring.gpg github-cli-keyring
 
@@ -49,12 +49,12 @@ echo 'deb [signed-by=/etc/apt/trusted.gpg.d/repo.charm.sh.gpg] https://repo.char
 echo 'deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/1password.gpg] https://downloads.1password.com/linux/debian/amd64 stable main' \
     | sudo tee /etc/apt/sources.list.d/1password.list > /dev/null
 
-strip-comments repos.local | while read org_line; do 
+strip-comments repos.local | while read org_line; do
     export RELEASE=$(lsb_release -cs)
 
     # replace bionic -> focal and vice versa
     # this handles having both 18.04, 20.04, 21.04 and 21.10 repos
-    case $RELEASE in 
+    case $RELEASE in
         jammy)
             line=$(echo "$org_line" | envsubst | \
                 sed -e 's/bionic/jammy/g' -e 's/focal/jammy/g' -e 's/hirsute/jammy/g' \
@@ -82,7 +82,7 @@ strip-comments repos.local | while read org_line; do
     # -E required to include proxy settings, could also be done manually by doing myvar=$myvar or something, which would be a bit safer
     sudo -E add-apt-repository --no-update --yes "$line" || :
     APT_SHOULD_UPDATE=yes
-done 
+done
 
 h2 "Updating package lists ..."
 if [[ -n $APT_SHOULD_UPDATE ]]; then
@@ -145,7 +145,9 @@ h2 "Install QR copier"
 go install github.com/claudiodangelis/qrcp@latest
 
 # These bits do not make sense on WSL2 (Windows Subsystem for Linux)
-if ! is_wsl; then
+if is_wsl; then
+    wsl/setup.sh
+else
     h1 "Installing non-WSL2 adjustments\n"
 
     sudo cp services/*.service /etc/systemd/system/
@@ -168,7 +170,7 @@ if ! is_wsl; then
     snap list 2>/dev/null |  awk '{if (NR>1){print $1}}' > $installed
 
     #filters out patterns that are present in the other file, see https://stackoverflow.com/questions/4780203/deleting-lines-from-one-file-which-are-in-another-file
-    snaps=$(grep -v -f $installed snaps.local || true) 
+    snaps=$(grep -v -f $installed snaps.local || true)
     for pkg in $snaps; do
         sudo snap install $pkg --classic
     done
@@ -192,41 +194,6 @@ if ! is_wsl; then
     # Use rc.local for small tweaks
     sudo cp rc.local /etc/
     sudo systemctl start rc-local.service
-else 
-    h1 "Installing WSL2 adjustments\n"
-
-    h2 "Fix snap not working"
-    $PWD/wsl/fix-snap.sh
-
-    h2 "Setup 1Password to use as SSH Agent"
-    if [[ ! -e $HOME/.1password ]]; then
-        mkdir $HOME/.1password
-    fi
-    ln -sf $SCRIPT_DIR/wsl/ssh-agent-bridge.sh ~/.agent-bridge.sh
-
-    ln -sf $SCRIPT_DIR/wsl/wsl-profile.local ~/.wsl-profile.local
-
-    h2 "Setting up win32yank as pbpaste"
-    if ! which win32yank.exe > /dev/null; then
-        echo "Downloading win32yank"
-        wget --quiet https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip
-        unzip win32yank-x64.zip -d tmp
-        chmod +x tmp/win32yank.exe
-        mv tmp/win32yank.exe /usr/local/bin/
-        rm -r tmp
-    fi
-
-    h2 "Setup Git Credential Manager to use the Windows Keystore"
-    ln -sf $PWD/wsl/gitlocal-wsl ~/.gitlocal-wsl
-
-    if  ! locale -a | grep nb_NO > /dev/null; then
-        h2 "Generate locale for Norwegian"
-        sudo locale-gen nb_NO
-        sudo locale-gen nb_NO.UTF-8
-        sudo update-locale
-    fi
-
-    info "Finished WSL2 adjustments\n"
 fi
 
 if ! command_exists pspg; then
@@ -253,7 +220,7 @@ fi
 if ! command_exists cargo; then
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o tmp-rust-install
     sh tmp-rust-install  --no-modify-path
-    rm tmp-rust-install  
+    rm tmp-rust-install
 fi
 
 # Cargo/Rust

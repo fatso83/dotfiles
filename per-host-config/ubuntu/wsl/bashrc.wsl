@@ -1,0 +1,35 @@
+# vi: ft=bash
+
+t_debug "Custom setup for WSL Ubuntu"
+
+export WINHOME=$HOME/win-home
+alias win-powershell='/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe'
+alias win-home="cd $WINHOME"
+alias pbcopy="clip.exe"
+alias pbpaste="win32yank.exe -o"
+
+# Add a /etc/hosts entry for 'host' so that you can connect to say a database running in Windows
+function add_wsl_host(){
+    cat /etc/hosts | \
+    grep 172.; test $? -eq 0 && $1 || \
+    echo -e "$(grep nameserver /etc/resolv.conf | awk '{print $2, " host"}')\n$(cat /etc/hosts)" | \
+    sudo tee /etc/hosts
+}
+
+t_debug "Setting up custom SSH agent bridge to 1Password on Windows"
+source $HOME/.agent-bridge.sh
+__1password_ssh__start # type __1password_ssh__restart in trouble
+
+PYCHARM_BIN="$HOME/apps/pycharm-2025.1.1/bin"
+
+# GNAT Studio for Ada and custom FSF GNAT Ada
+export ADA_BIN_PATHS="/opt/gprbuild-x86_64-linux-24.0.0-2/bin:/opt/gnat-x86_64-linux-14.2.0-1/bin:$HOME/gnatstudio/bin"
+
+export PATH="$PYCHARM_BIN:$ADA_BIN_PATHS:$PATH"
+
+# Avinor adjustment to handle WSL2 quirks and make removing/adding proxies smoother when going home and to office
+source ~/bin/proxies.inc
+proxies.test-and-set # to clear use of proxies permanently, use proxies.stop
+# run as background process. suppress all output by running inside of another shell process
+( ( proxies.can-connect  || printf "\nUnable to connect to internet. Check proxy settings using proxies.show\n\n" )&)
+

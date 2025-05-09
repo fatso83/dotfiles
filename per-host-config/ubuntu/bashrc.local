@@ -25,7 +25,7 @@ vim(){
 # Defining it as a function overwrites the `open` definition used in other functions,
 # unlike the alias definition which expands at function definition.
 # @see https://askubuntu.com/questions/1123186/how-can-i-use-an-alias-in-a-function/1123188#1123188
-function open() { xdg-open $@; }; 
+function open() { xdg-open $@; };
 
 # Make Ctrl-S work again (incremental search forwards)
 # http://stackoverflow.com/questions/791765/unable-to-forward-search-bash-history-similarly-as-with-ctrl-r
@@ -59,28 +59,6 @@ function decrypt(){
     openssl enc -d -aes-256-cbc -a "$@"
 }
 
-if is_wsl; then
-    t_debug "Custom setup for WSL Ubuntu"
-    
-    export WINHOME=$HOME/win-home
-    alias win-powershell='/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe'
-    alias win-home="cd $WINHOME"
-    alias pbcopy="clip.exe"
-    alias pbpaste="win32yank.exe -o"
-
-    # Add a /etc/hosts entry for 'host' so that you can connect to say a database running in Windows
-    function add_wsl_host(){
-    cat /etc/hosts | \
-        grep 172.; test $? -eq 0 && $1 || \
-        echo -e "$(grep nameserver /etc/resolv.conf | awk '{print $2, " host"}')\n$(cat /etc/hosts)" | \
-        sudo tee /etc/hosts
-    }
-
-    t_debug "Setting up custom SSH agent bridge to 1Password on Windows"
-    source $HOME/.agent-bridge.sh
-    __1password_ssh__start # type __1password_ssh__restart in trouble
-fi
-
 # For Remote Mob programming on Nimble where develop is the base branch, not master
 # https://github.com/remotemobprogramming/mob/blob/master/mob.go
 export MOB_BASE_BRANCH=develop
@@ -88,8 +66,8 @@ export MOB_BASE_BRANCH=develop
 export GOPATH=$HOME/go
 export PATH="$GOPATH/bin:$HOME/.local/bin:$HOME/bin/Telegram:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
-SWIFT="/opt/swift-5.3.3-RELEASE-ubuntu20.04/usr/bin"
-export PATH="$SWIFT:$PATH"
+#SWIFT="/opt/swift-5.3.3-RELEASE-ubuntu20.04/usr/bin"
+#export PATH="$SWIFT:$PATH"
 
 export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 export PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
@@ -98,21 +76,16 @@ export PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 export GCM_CREDENTIAL_STORE=secretservice
 
 # Command completion
-complete -C '/usr/local/bin/aws_completer' aws
+#complete -C '/usr/local/bin/aws_completer' aws
 
 export PNPM_HOME="$HOME/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 
-# GNAT Studio for Ada and custom FSF GNAT Ada
-export PATH="/opt/gprbuild-x86_64-linux-24.0.0-2/bin:/opt/gnat-x86_64-linux-14.2.0-1/bin:$HOME/gnatstudio/bin:$PATH"
+
+if is_wsl; then
+    source ~/.bashrc.wsl
+fi
 
 # Android development
 ANDROID_HOME="$HOME/Android/Sdk/"
 mkdir -p $ANDROID_HOME
-
-# Avinor adjustment to handle WSL2 quirks
-source ~/bin/proxies.inc
-proxies.test-and-set # to clear use of proxies permanently, use proxies.stop
-
-# run as background process. suppress all output by running inside of another shell process
-( ( proxies.can-connect  || printf "\nUnable to connect to internet. Check proxy settings using proxies.show\n\n" )&)
