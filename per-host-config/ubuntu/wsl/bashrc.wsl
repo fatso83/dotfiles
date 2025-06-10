@@ -6,7 +6,13 @@ export WINHOME=$HOME/win-home
 alias win-powershell='/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe'
 alias win-home="cd $WINHOME"
 alias pbcopy="clip.exe"
-alias pbpaste="win32yank.exe -o"
+# We are not able to install win32yank.exe in Avinor :(
+#alias pbpaste="win32yank.exe -o"
+unalias pbpaste
+pbpaste() {
+    echo "Paste manually" >/dev/stderr
+    cat
+}
 
 # Add a /etc/hosts entry for 'host' so that you can connect to say a database running in Windows
 function add_wsl_host(){
@@ -32,4 +38,5 @@ source ~/bin/proxies.inc
 proxies.test-and-set # to clear use of proxies permanently, use proxies.stop
 # run as background process. suppress all output by running inside of another shell process
 ( ( proxies.can-connect  || printf "\nUnable to connect to internet. Check proxy settings using proxies.show\n\n" )&)
+
 
