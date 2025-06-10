@@ -24,6 +24,13 @@
         "adb",
         "ada"
       ]
+    },
+    "robot framework": {
+    // deps:   pip install robotframework-lsp && pip install robotframework-lsp"
+      "command": "robotframework_ls",
+      "filetypes": [
+        "robot"
+      ]
     }
   },
   "snippets.ultisnips.pythonPrompt": false
