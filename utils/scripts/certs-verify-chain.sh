@@ -71,10 +71,7 @@ intermediates=""          # will become a space‑separated list
 root=""
 
 if [ $# -gt 0 ]; then
-    last=$(
-      # print the last argument
-      printf '%s\n' "$*" | awk 'END{print}'
-    )
+    last=${!#}
 
     # self‑signed?  (Issuer == Subject)
     if [ "$(openssl x509 -in "$last" -noout -subject)" = \
