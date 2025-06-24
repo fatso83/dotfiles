@@ -1,10 +1,11 @@
+# vi: ft=python
 import inspect
 import sys
- 
- 
+
+
 def src(obj):
     """Read the source of an object in the interpreter."""
- 
+
     def highlight(source):
         try:
             import pygments
@@ -15,44 +16,46 @@ def src(obj):
         lexer = pygments.lexers.get_lexer_by_name('python')
         formatter = pygments.formatters.terminal.TerminalFormatter()
         return pygments.highlight(source, lexer, formatter)
- 
+
     import subprocess
- 
+
     source = inspect.getsource(obj)
     pager = subprocess.Popen(['less', '-R'], stdin=subprocess.PIPE)
     pager.communicate(highlight(source))
     pager.wait()
- 
- 
+
+
 def _completion():
     import atexit
     import os
     import readline
     import rlcompleter
- 
+
     readline.parse_and_bind('tab: complete')
- 
+
     history_dir = os.path.join(os.path.expanduser('~'), '.py_history')
     if not os.path.exists(history_dir):
         os.makedirs(history_dir)
- 
+
     # Support multiple executables, including virtualenvs, by keying history
     # files against the inode of the current Python executable.
     executable_inode = str(os.stat(sys.executable).st_ino)
     history_file = os.path.join(history_dir, executable_inode)
- 
+
     if os.path.exists(history_file):
         readline.read_history_file(history_file)
+
+    readline.set_history_length(5000)
     atexit.register(readline.write_history_file, history_file)
- 
- 
+
+
 try:
     _completion()
     del _completion
 except Exception:
     print >>sys.stderr, "Couldn't get completion and history working."
- 
- 
+
+
 try:
     from see import see
 except ImportError:
