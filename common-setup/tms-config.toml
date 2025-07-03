@@ -1,6 +1,6 @@
 [[search_dirs]]
 path = "~/dev"
-depth = 3
+depth = 2
 
 [shortcuts]
 ctrl-k = "delete_to_line_end"

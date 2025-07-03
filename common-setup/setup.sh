@@ -79,8 +79,8 @@ TMS_CONF_DIR="$HOME/.config/tms"
 if is_mac; then
     TMS_CONF_DIR="$HOME/Library/Application Support/tms"
 fi
-TMS_CONF="$TMS_CONF_DIR/config.toml"
 mkdir -p "$TMS_CONF_DIR"
+TMS_CONF="$TMS_CONF_DIR/config.toml"
 if [[ ! -e "$TMS_CONF" ]]; then
     cp "$SCRIPT_DIR"/tms-config.toml "${TMS_CONF_DIR}/config.toml"
 fi
