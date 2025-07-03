@@ -76,6 +76,9 @@ ln -sf "$SCRIPT_DIR"/pdbrc "$HOME"/.pdbrc
 ln -sf "$SCRIPT_DIR"/tmux.conf "$HOME"/.tmux.conf
 
 TMS_CONF_DIR="$HOME/.config/tms"
+if is_mac; then
+    TMS_CONF_DIR="$HOME/Library/Application Support/tms"
+fi
 TMS_CONF="$TMS_CONF_DIR/config.toml"
 mkdir_if_not_exist "$TMS_CONF_DIR"
 if [[ ! -e "$TMS_CONF" ]]; then
