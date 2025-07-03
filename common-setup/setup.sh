@@ -16,9 +16,9 @@ pushd "$SCRIPT_DIR" > /dev/null
 ROOT="$SCRIPT_DIR/.."
 source "$ROOT/shared.lib"
 
-mkdir_if_not_exist "${BASH_DIR}"
-mkdir_if_not_exist "${HOME}/bin"
-mkdir_if_not_exist "$HOME/.config"
+mkdir -p "${BASH_DIR}"
+mkdir -p "${HOME}/bin"
+mkdir -p "$HOME/.config"
 
 rm -rf "$HOME"/.bash_completion.d 2>/dev/null
 ln -sf "$SCRIPT_DIR"/bash_completion.d "$HOME"/.bash_completion.d 
@@ -80,7 +80,7 @@ if is_mac; then
     TMS_CONF_DIR="$HOME/Library/Application Support/tms"
 fi
 TMS_CONF="$TMS_CONF_DIR/config.toml"
-mkdir_if_not_exist "$TMS_CONF_DIR"
+mkdir -p "$TMS_CONF_DIR"
 if [[ ! -e "$TMS_CONF" ]]; then
     cp "$SCRIPT_DIR"/tms-config.toml "${TMS_CONF_DIR}/config.toml"
 fi
@@ -91,8 +91,8 @@ carefully_replace_gitconfig
 ln -sf "$SCRIPT_DIR"/zsh/zshrc "$HOME"/.zshrc
 
 # create needed dirs
-mkdir_if_not_exist "$HOME/.tmux";
-mkdir_if_not_exist "$HOME/.tmux/plugins";
+mkdir -p "$HOME/.tmux";
+mkdir -p "$HOME/.tmux/plugins";
 
 [[ ! -e "$HOME/.tmux/plugins/tpm" ]] && git clone https://github.com/tmux-plugins/tpm "$HOME"/.tmux/plugins/tpm 
 

@@ -18,15 +18,13 @@ if [[ "$ROOT" == "" ]]; then
     return 1
 fi
 
+# These are set to avoid errors in the sourced files
 BASH_D="$ROOT/common-setup/bash.d"
+# shellcheck disable=SC2034
 BIN_DIR="$ROOT/utils/scripts"
 source "$BASH_D/colors"
 source "$BASH_D/aliases_functions"
 shopt -s expand_aliases
-
-mkdir_if_not_exist(){
-    if [[ ! -e "$1" ]]; then mkdir "$1"; fi
-}
 
 download_if_not_exist(){
     local url="$1"
