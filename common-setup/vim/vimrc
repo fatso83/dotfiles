@@ -57,14 +57,15 @@ set incsearch                   " incremental searching
 set ignorecase                  " searches are case insensitive...
 set smartcase                   " ... unless they contain at least one capital letter
 
-"" NVIM does not support popt / printoptions
+" Vim only - Neovim does not support these options
 if !has('nvim')
+    "" NVIM does not support popt / printoptions
     set printoptions=portrait:n
-endif
 
-"" Pasting text - toggle between paste and insert mode using F2
-"" http://nvie.com/posts/how-i-boosted-my-vim/
-set pastetoggle=<F2>
+    "" Pasting text - toggle between paste and insert mode using F2
+    "" http://nvie.com/posts/how-i-boosted-my-vim/
+    set pastetoggle=<F2>
+endif
 
 
 " Remember last position
