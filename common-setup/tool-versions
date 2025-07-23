@@ -1,6 +1,5 @@
 # Justfile support using `just`
 just 1.40.0
-
 ruby 3.2.2
-nodejs 22.14.0
+nodejs 24.3.0
 python 3.11.0
