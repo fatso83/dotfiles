@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+usage(){
+    echo USAGE: $0 user@host
+    echo
+    echo Imports the terminfo from the current terminal into the .terminfo folder on the remote side
+
+    exit 1
+}
+
+if [[ -z "$1" ]]; then
+    usage
+fi
+
+
+infocmp | ssh "$1" 'tic -x /dev/stdin'
+
