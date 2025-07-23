@@ -21,7 +21,7 @@ mkdir -p "${HOME}/bin"
 mkdir -p "$HOME/.config"
 
 rm -rf "$HOME"/.bash_completion.d 2>/dev/null
-ln -sf "$SCRIPT_DIR"/bash_completion.d "$HOME"/.bash_completion.d 
+ln -sf "$SCRIPT_DIR"/bash_completion.d "$HOME"/.bash_completion.d
 
 if [ -e "$HOME/.bash_profile" ]; then
     info "We don't use .bash_profile to avoid trouble. Renaming to .bash_profile.bak"
@@ -32,6 +32,11 @@ h2 "Setup base tool versions using ASDF"
 ln -sf "$SCRIPT_DIR/tool-versions" $HOME/.tool-versions
 
 carefully_replace_gitconfig(){
+    if ! command_exists envsubst; then
+        warn "Unable to configure Git: missing 'envsubst'. Finish the per-computer setup and re-run ./setup.sh"
+        return
+    fi
+
     h2 "Configuring Git ..."
 
     local personal_details_file="$HOME/.gitconfig-personal"
@@ -94,7 +99,7 @@ ln -sf "$SCRIPT_DIR"/zsh/zshrc "$HOME"/.zshrc
 mkdir -p "$HOME/.tmux";
 mkdir -p "$HOME/.tmux/plugins";
 
-[[ ! -e "$HOME/.tmux/plugins/tpm" ]] && git clone https://github.com/tmux-plugins/tpm "$HOME"/.tmux/plugins/tpm 
+[[ ! -e "$HOME/.tmux/plugins/tpm" ]] && git clone https://github.com/tmux-plugins/tpm "$HOME"/.tmux/plugins/tpm
 
 # copy tmux project settings
 for file in "$SCRIPT_DIR"/tmux/*; do
@@ -107,7 +112,7 @@ done
 
 # Remove any existing symlink (or dir on mingw) - will fail if it is a dir
 rm -rf "$HOME"/.vim 2>/dev/null
-if [ ! -e "$HOME"/.vim ]; then  
+if [ ! -e "$HOME"/.vim ]; then
     ln -sf "$SCRIPT_DIR"/vim/dotvim "$HOME"/.vim
 fi
 
@@ -132,7 +137,7 @@ else
 fi
 
 # Install NeoVim config (we don't have to worry about XDG_CONFIG_HOME stuff
-rm -rf ~/.config/nvim 
+rm -rf ~/.config/nvim
 ln -sf ~/.vim ~/.config/nvim
 ln -sf ~/.vimrc ~/.config/nvim/init.vim
 
@@ -144,7 +149,7 @@ cat > "$NGROK_YML" << EOF
 ###############################################################
 ## WARNING: this file is auto-generated. See dotfiles repo   ##
 ###############################################################
-authtoken: ${NGROK_AUTHTOKEN:-'fill-NGROK_AUTHTOKEN-in-in-~/.secret'} 
+authtoken: ${NGROK_AUTHTOKEN:-'fill-NGROK_AUTHTOKEN-in-in-~/.secret'}
 
 EOF
 cat "$SCRIPT_DIR/ngrok.yml" >> "$NGROK_YML"
@@ -172,7 +177,7 @@ ln ./allowed_signers ~/.ssh/
 
 [[ ! -e ~/.config ]] && mkdir ~/.config
 [[ ! -e ~/.config/alacritty ]] && mkdir ~/.config/alacritty
-ln -sf ~/dev/dotfiles/common-setup/alacritty.toml ~/.config/alacritty/alacritty.toml 
+ln -sf ~/dev/dotfiles/common-setup/alacritty.toml ~/.config/alacritty/alacritty.toml
 
 ./fonts.sh
 "$SCRIPT_DIR/update-completion-scripts.sh"
