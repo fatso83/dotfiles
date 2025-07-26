@@ -169,6 +169,7 @@ fi
 if ! command_exists bun; then
     h2 "Installing Bun from online installer"
     curl -fsSL https://bun.sh/install | bash
+    git checkout ./bashrc
 fi
 
 [[ ! -e ~/.ssh ]] && mkdir ~/.ssh

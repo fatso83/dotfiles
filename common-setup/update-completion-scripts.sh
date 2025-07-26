@@ -14,4 +14,6 @@ if which npm > /dev/null; then
     npm completion > "$COMPLETIONS/npm"
 fi
 
-bun completions
+if which bun > /dev/null; then
+    bun completions
+fi
