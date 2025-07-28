@@ -40,6 +40,22 @@ function compare_versions(v1, op, v2,    a, b, i, cmp) {
     }
 }
 
+function trim(str) {
+    gsub(/^[ \t]+/, "", str)
+    gsub(/[ \t]+$/, "", str)
+    return str
+}
+
+function parse_expr(expr, v, op, w, tokens, nt) {
+    expr = trim(expr)
+    nt = split(expr, tokens, /[ \t]+/)
+    if (nt != 3) return 1
+    v = tokens[1]
+    op = tokens[2]
+    w = tokens[3]
+    return (v != "" && op ~ /^(<|<=|>|>=|==|!=)$/ && w != "")
+}
+
 function self_test() {
     print "Running self-tests..."
 
@@ -54,15 +70,20 @@ function self_test() {
     print "All tests passed."
 }
 
-function test(expr, expected,   result) {
-    if (match(expr, /^[ \t]*([0-9.]+)[ \t]*([<>=!]=?|==)[ \t]*([0-9.]+)[ \t]*$/, m)) {
-        result = compare_versions(m[1], m[2], m[3])
-        if (result != expected) {
-            print "FAILED: " expr " (expected " expected ", got " result ")"
-            exit 1
-        }
-    } else {
+function test(expr, expected,   result, tokens, v1, op, v2) {
+    expr = trim(expr)
+    n = split(expr, tokens, /[ \t]+/)
+    if (n != 3) {
         print "Invalid test expression: " expr
+        exit 1
+    }
+    v1 = tokens[1]
+    op = tokens[2]
+    v2 = tokens[3]
+
+    result = compare_versions(v1, op, v2)
+    if (result != expected) {
+        print "FAILED: " expr " (expected " expected ", got " result ")"
         exit 1
     }
 }
@@ -79,11 +100,16 @@ BEGIN {
     expr = ARGV[1]
     ARGV[1] = ""
 
-    if (match(expr, /^[ \t]*([0-9.]+)[ \t]*([<>=!]=?|==)[ \t]*([0-9.]+)[ \t]*$/, m)) {
-        exit compare_versions(m[1], m[2], m[3])
-    } else {
+    expr = trim(expr)
+    n = split(expr, tokens, /[ \t]+/)
+    if (n != 3) {
         print "Invalid semver expression: '" expr "'" > "/dev/stderr"
         exit 2
     }
-}
 
+    v1 = tokens[1]
+    op = tokens[2]
+    v2 = tokens[3]
+
+    exit compare_versions(v1, op, v2)
+}
