@@ -56,7 +56,7 @@ ln -sf "$SCRIPT_DIR/scripts/"* $HOME/bin/
 
 h3 'Installing dependencies for scripts'
 h3 'Python dependencies'
-(python3 -m pip install --user smsutil && python3 -m pip install --user requests ) | grep -v 'Requirement already satisfied'
+pip install -r python_reqs.txt > /dev/null
 
 if command_exists node; then
     h3 'Node dependencies'

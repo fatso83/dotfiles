@@ -5,29 +5,47 @@ Example capture:  sudo tcpdump -i lo tcp port 56100 -nn -vvv -s 0 -w dump56100.p
 dependency: scapy
 """
 
-from scapy.all import rdpcap, TCP
-
 import sys
+import argparse
+from scapy.all import rdpcap, TCP, IP
 
-if len(sys.argv) != 2:
-    print(f"Usage: {sys.argv[0]} <pcap-file>")
-    sys.exit(1)
+def hexdump(data):
+    """Print data in a format similar to `hexdump -C`."""
+    for i in range(0, len(data), 16):
+        chunk = data[i:i+16]
+        hex_bytes = ' '.join(f'{b:02x}' for b in chunk)
+        ascii_bytes = ''.join((chr(b) if 32 <= b <= 126 else '.') for b in chunk)
+        print(f'{i:08x}  {hex_bytes:<48}  |{ascii_bytes}|')
 
-pcap_file = sys.argv[1]
+def main():
+    parser = argparse.ArgumentParser(description="Extract TCP payloads from a pcap file.")
+    parser.add_argument("pcap_file", help="Path to the pcap file")
+    parser.add_argument("--hexdump", action="store_true", help="Display payloads as hexdump")
+    parser.add_argument("--port", type=int, help="Filter by TCP port")
+    parser.add_argument("--ip", help="Filter by IP address (source or destination)")
+    args = parser.parse_args()
 
-try:
-    packets = rdpcap(pcap_file)
-except FileNotFoundError:
-    print(f"File '{pcap_file}' not found.")
-    sys.exit(1)
+    try:
+        packets = rdpcap(args.pcap_file)
+    except FileNotFoundError:
+        print(f"File '{args.pcap_file}' not found.")
+        sys.exit(1)
 
-for pkt in packets:
-    if pkt.haslayer(TCP):
-        payload = bytes(pkt[TCP].payload)
-        if payload:
-            try:
-                print(payload.decode(errors='replace'))  # Try decoding as text
-            except Exception as e:
-                print(f"[Binary data] {payload}")
+    for pkt in packets:
+        if pkt.haslayer(TCP):
+            if args.port and not (pkt[TCP].sport == args.port or pkt[TCP].dport == args.port):
+                continue
+            if args.ip and pkt.haslayer(IP):
+                if not (pkt[IP].src == args.ip or pkt[IP].dst == args.ip):
+                    continue
 
-# vi: ft=python
+            payload = bytes(pkt[TCP].payload)
+            if payload:
+                if args.hexdump:
+                    hexdump(payload)
+                else:
+                    print(payload.decode(errors='replace'))
+
+if __name__ == "__main__":
+    main()
+
