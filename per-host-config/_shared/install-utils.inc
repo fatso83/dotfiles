@@ -30,10 +30,10 @@ __install_node_packages(){
     installed=$(mktemp)
     npm list -g --depth 1 --json | jq -r -c '.dependencies | keys | .[]' > $installed
     #filters out patterns that are present in the other file, see https://stackoverflow.com/questions/4780203/deleting-lines-from-one-file-which-are-in-another-file
-    node_apps=$(grep -v -f $installed "$SHARED_DIR/node.local" || true) 
+    node_apps=$(grep -v -f $installed "$SHARED_DIR/node.local" || true)
     # if non-zero, https://unix.stackexchange.com/a/146945/18594
     if [[ -n "${node_apps// }" ]]; then
-        npm -g install $node_apps 
+        npm -g install $node_apps
     fi
 }
 
@@ -69,13 +69,13 @@ __install_ruby_packages(){
     asdf install ruby 3.2.2
 
     h3 "Installing Ruby packages ...\n"
-    while read line; do 
+    while read line; do
         if gem list -i $line > /dev/null; then
             continue
         fi
 
-        gem install $line; 
-    done < "$SHARED_DIR/ruby.local" 
+        gem install $line;
+    done < "$SHARED_DIR/ruby.local"
 }
 
 # todo: replace with `asdf` and rename to install_jvm_stuff
@@ -132,16 +132,16 @@ __install_asdf_exe(){
     # Thus using the built releases
     if is_mac && [[ $(arch) == arm64* ]]; then
         arch=darwin-arm64
-    elif is_mac && [[ $(arch) == x86_64* ]]; then
+    elif is_mac && [[ $(arch) == i386 || $(arch) == x86_64* ]]; then
         arch=darwin-amd64
-    else 
+    else
         if [[ $(arch) != x86_64 ]]; then
             printf "ASSERTION ERROR: Architecture is not matching known architecture ($(arch))"
             return 255
         fi
         arch=linux-amd64
     fi
-    asdf_version=0.16.7
+    asdf_version=0.18.0
     curl -L -o - https://github.com/asdf-vm/asdf/releases/download/v${asdf_version}/asdf-v${asdf_version}-${arch}.tar.gz | tar xz -C ~/bin/
 }
 
@@ -228,7 +228,7 @@ install_ada_packages(){
             download_if_not_exist https://github.com/AdaCore/gnatstudio/releases/download/gnatstudio-cr-20240506/gnatstudio-25.0w-20240506-${alire_arch}-bin.tar.gz gnatstudio.tgz
 
             tar xzf gnatstudio.tgz -C tmp
-            cd tmp/gnatstudio* 
+            cd tmp/gnatstudio*
             ./doinstall ~/gnatstudio
 
         else

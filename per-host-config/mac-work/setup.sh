@@ -28,26 +28,16 @@ if ! which -s brew; then
 fi
 BREW_LATEST_UPDATE="$SCRIPT_DIR/.latest_brew_update"
 _is_old_brew(){
-    if [[ ! -e "$BREW_LATEST_UPDATE" ]]; then 
+    if [[ ! -e "$BREW_LATEST_UPDATE" ]]; then
         return 0;
     fi
     # just return a zero code if it is more than a day old (no print)
     find "$BREW_LATEST_UPDATE" -mtime +1d  | grep "$BREW_LATEST_UPDATE" > /dev/null
 }
-if _is_old_brew; then 
+if _is_old_brew; then
     h2 "Updating old Homebrew"
     brew update
     touch "$BREW_LATEST_UPDATE"
-fi
-
-# Cargo/Rust
-# tms / https://github.com/jrmoulton/tmux-sessionizer
-cargo install tmux-sessionizer
-
-# CMake
-if ! which -s cmake; then
-    brew install cmake
-    error "CMake was not installed earlier. Re-start the top level setup"
 fi
 
 function _f1(){ # create throw-away function to not pollute global namespace with local variables
@@ -63,24 +53,24 @@ function _f1(){ # create throw-away function to not pollute global namespace wit
     local installed=$(printf '%s\n%s\n' "$casks" "$formulae" | sort)
     local not_installed=$(comm -23 <(printf '%s\n' "$to_install") <(printf '%s\n' "$installed" ) )
     local formula
-    while read APP; do 
+    while read APP; do
         if [ "$APP" == "" ]; then continue; fi
         formula=$(awk -v APP="$APP" -F'\t' '$1==APP{print $2}' <(printf "%s\n" "$app_to_formula_map" ) )
-        brew install "$formula" < /dev/null
+        brew install "$formula" < /dev/null || true # do not exit
     done <<< "$not_installed"
     h3 "finished installing Homebrew apps"
 }; _f1
 
 _f2(){
     local homebrew_bash_path=$(echo $(brew --prefix)/bin/bash)
-    
-    if grep "$homebrew_bash_path" /etc/shells > /dev/null; then 
+
+    if grep "$homebrew_bash_path" /etc/shells > /dev/null; then
         return
     fi
 
     h2 "Use the Homebrew version of Bash"
     sudo bash -c "echo $homebrew_bash_path >> /etc/shells"
-    chsh -s "$homebrew_bash_path/bin/bash"
+    chsh -s "$homebrew_bash_path"
 }; _f2
 
 if ! command_exists git-credential-manager; then
@@ -92,6 +82,16 @@ source ../_shared/install-utils.inc
 install_asdf_tooling
 install_sdkman_packages
 install_ada_packages
+
+# Cargo/Rust
+# tms / https://github.com/jrmoulton/tmux-sessionizer
+cargo install tmux-sessionizer
+
+# CMake
+if ! which -s cmake; then
+    brew install cmake
+    error "CMake was not installed earlier. Re-start the top level setup"
+fi
 
 # copy mac specific utils
 ln -f ./bin/* ~/bin/
@@ -111,7 +111,7 @@ if [[ ! -d /opt/google-cloud-sdk ]]; then
 
     if [[ -n $GSDK ]]; then
         pushd /tmp
-        curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/"$GSDK" 
+        curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/"$GSDK"
         tar xzf $GSDK -C /opt
         /opt/google-cloud-sdk/install.sh
 
