@@ -1,0 +1,33 @@
+#!/usr/bin/env python
+"""
+Decodes pcap files containing TCP payloads
+Example capture:  sudo tcpdump -i lo tcp port 56100 -nn -vvv -s 0 -w dump56100.pcap
+dependency: scapy
+"""
+
+from scapy.all import rdpcap, TCP
+
+import sys
+
+if len(sys.argv) != 2:
+    print(f"Usage: {sys.argv[0]} <pcap-file>")
+    sys.exit(1)
+
+pcap_file = sys.argv[1]
+
+try:
+    packets = rdpcap(pcap_file)
+except FileNotFoundError:
+    print(f"File '{pcap_file}' not found.")
+    sys.exit(1)
+
+for pkt in packets:
+    if pkt.haslayer(TCP):
+        payload = bytes(pkt[TCP].payload)
+        if payload:
+            try:
+                print(payload.decode(errors='replace'))  # Try decoding as text
+            except Exception as e:
+                print(f"[Binary data] {payload}")
+
+# vi: ft=python

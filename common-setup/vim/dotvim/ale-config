@@ -4,7 +4,7 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " Automatically do :ALEFix
 " http://liuchengxu.org/posts/use-vim-as-a-python-ide/
-let g:ale_fix_on_save = 1
+" let g:ale_fix_on_save = 1
 
 " On demand ale fix
 nmap <F8> <Plug>(ale_fix)
