@@ -142,7 +142,12 @@ __install_asdf_exe(){
         arch=linux-amd64
     fi
     asdf_version=0.18.0
-    curl -L -o - https://github.com/asdf-vm/asdf/releases/download/v${asdf_version}/asdf-v${asdf_version}-${arch}.tar.gz | tar xz -C ~/bin/
+
+    h3 "Installing 'asdf' executable"
+    local file="asdf-v${asdf_version}-${arch}.tar.gz"
+    download_if_not_exist "https://github.com/asdf-vm/asdf/releases/download/v${asdf_version}/${file}" "$file"
+    tar xzf "$file" -C ~/bin/
+    rm "$file"
 }
 
 install_asdf_tooling(){
