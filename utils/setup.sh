@@ -73,8 +73,10 @@ chmod +x ~/bin/google-java-format
 
 # This works together with a git config for the type "vimcrypt"
 h3 'Vim encrypted file diffing support'
-curl -s -o ~/bin/vimdecrypt.py https://raw.githubusercontent.com/fatso83/vimdecrypt/refs/heads/publicbranch/vimdecrypt.py
-chmod +x ~/bin/vimdecrypt.py
+if ! command_exists vimdecrypt;then
+    gclone fatso83/vimdecrypt-1
+    pip install . --user
+fi
 
 # Restore current directory of user
 (popd > /dev/null || exit)

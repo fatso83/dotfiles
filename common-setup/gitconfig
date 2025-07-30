@@ -1,4 +1,4 @@
-# vi: filetype=gitconfig       
+# vi: filetype=gitconfig
 
 [core]
     editor = nvim
@@ -9,12 +9,12 @@
 
     # ensures case sensitivity in filenames is not ignored on macOS
     ignorecase = false
-    
+
     # gitattributes in each repo is a better solution: https://git-scm.com/docs/gitattributes
     # Just `echo '* text=auto' >> .gitattributes` # will normalize all text files
     #
     # Excerpt from https://help.github.com/articles/dealing-with-line-endings:
-    #    > The advantage of a .gitattributes file is that your line configurations are associated with your repository. 
+    #    > The advantage of a .gitattributes file is that your line configurations are associated with your repository.
     #    > You don't need to worry about whether or not collaborators have the same line ending settings that you do.
 
 [commit]
@@ -25,11 +25,11 @@
     # Required settings to have this work are custom to each machine:
     # - gpg.allowedSignersFile
     # - gpg.program
-    # This is set in the `gitlocal` settings, which is specific to each machine. See the individual 
+    # This is set in the `gitlocal` settings, which is specific to each machine. See the individual
     # 'gitlocal' files in mac-work, etc
 
 [diff "vimcrypt"]
-    textconv = vimdecrypt.py -p $VIMPASSWORD
+    textconv = vimdecrypt
     cachetextconv = false
 
 # related to the commit signing
@@ -48,7 +48,7 @@
     default = simple
     autoSetupRemote = true
 
-[alias] 
+[alias]
 
     au = add --update
     st = status -sb     # show short format and branch info
@@ -57,21 +57,21 @@
     cm = commit --message
     fap = fetch --all --prune
 
-    # List all the files touched in this commit 
+    # List all the files touched in this commit
     files = "![ x$# != x1 ]&&echo "commit-ish required" >&2 || git diff --name-status \"$1\"^ \"$1\" #"
 
     # log aliases
-    
+
     ## show branching graphically as ascii art
     lg = log -w --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     lgng = log -w --pretty=format:'%h %d %s (%cr) <%an>' # ng = no graph
 
     svnlog = log --name-status
 
-    ## logwork 
+    ## logwork
     standup = log --since '1 day ago' --oneline --author carlerik@gmail.com # hack it with your email and uncomment
     jira = log --since '6am' --oneline --author carlerik@gmail.com # hack it with your email and uncomment
-    mwlis = log --since '7 days ago' --author carlerik@gmail.com --format='%ai %s%n%b' 
+    mwlis = log --since '7 days ago' --author carlerik@gmail.com --format='%ai %s%n%b'
 
     # other
     root = rev-parse --show-toplevel
@@ -123,7 +123,7 @@
     ui = auto # puts them into columns if the terminal allows for it
 
 #[blame]
-    # This really does not work all that well as a global config. `git blame` fails 
+    # This really does not work all that well as a global config. `git blame` fails
     # if this is missing, so better to have it as a local setup everyone can run using direnv
     # or similar approaches
 	# ignoreRevsFile = .git-blame-ignore-revs
@@ -139,7 +139,7 @@
     path = .gitlocal
     path = .gitlocal-non-wsl
     # This will for some reason not be used when doing `git config --global user.name`, but will if leaving `--global` out
-    path = .gitconfig-personal 
+    path = .gitconfig-personal
 
 # Conditional include based on which subdir you are in
 # See https://www.youtube.com/watch?v=aolI_Rz0ZqY&t=537s
