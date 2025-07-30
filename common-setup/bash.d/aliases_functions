@@ -1,6 +1,6 @@
 # vim: ft=bash
 
-# since this is sourced from shared.lib in the dotfiles repo, we need 
+# since this is sourced from shared.lib in the dotfiles repo, we need
 # to source other files
 if [[ "$BASH_D" == "" || "$BIN_DIR" == "" ]]; then
     printf "('${BASH_SOURCE[0]}'): Missing \$BASH_D and \$BIN_DIR environment variable.\n\n"
@@ -35,22 +35,22 @@ function function_exists(){
 # fancy cat
 # I just cannot remember when to use ccat, glow or bat
 function fcat(){
-    if [[ $# > 0 ]]; then 
+    if [[ $# > 0 ]]; then
         local file="$(readlink -f $1)"
         case "$file" in
         *.md)
             glow "$file"
             # recurse on the next files
             shift 1
-            if [[ $# > 0 ]]; then 
+            if [[ $# > 0 ]]; then
                 cat $@
             fi
-            ;; 
+            ;;
         *) bat $*
             ;;
-        esac 
+        esac
     else
-        bat   
+        bat
     fi
 }
 
@@ -80,7 +80,7 @@ IGNORE=""
 if ! is_mac; then
   t_debug Add custom ignore pattern for GNU ls
   #ignore patterns
-  for i in '*~' '*.pyc'; do 
+  for i in '*~' '*.pyc'; do
       IGNORE="$IGNORE --ignore=$i"
   done
 fi
@@ -131,7 +131,7 @@ function text.trim ()
 }
 
 function text.lowercase(){
-    tr "[:upper:]" "[:lower:]" 
+    tr "[:upper:]" "[:lower:]"
 }
 
 function text.uppercase(){
@@ -142,8 +142,12 @@ function text.count(){
     grep -o "$1" | wc -l
 }
 
-function text.delete_empty_line() { 
-    sed '/^[[:space:]]*$/d'; 
+function text.delete_empty_lines() {
+    sed '/^[[:space:]]*$/d';
+}
+
+function text.delete-comments-empty-lines() {
+    strip-comments | text.delete_empty_lines
 }
 
 # Based on https://stackoverflow.com/a/12579554/200987
@@ -159,7 +163,7 @@ function text.remove-last-newline(){
 }
 
 # Used with the git alias functions; gd, gds, gdw, gdws
-alias strip-diff-prefix='sed "s/^\([^-+ ]*\)[-+ ]/\\1/"' 
+alias strip-diff-prefix='sed "s/^\([^-+ ]*\)[-+ ]/\\1/"'
 
 # Used a lot in utility setup scripts
 function strip-comments(){
@@ -201,7 +205,7 @@ function psgrep() { ps -ef | grep -i "$@"; };
 # System shortcuts
 alias apt='sudo apt'
 
-# Restore the original system path if for some reason some 
+# Restore the original system path if for some reason some
 # command in your ~/bin directory does not work
 function restore_path() {
         PATH="${ORIGINAL_PATH}"
@@ -221,21 +225,21 @@ function gds() {  git diff --staged --color $@ | strip-diff-prefix | less -rF; }
 function gdw() {  git diff          --color --word-diff $@         | less -rF; }
 function gdws() { git diff --staged --color --word-diff $@         | less -rF; }
 alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
-alias glg='git lg' 
-alias gco='git co' 
+alias glg='git lg'
+alias gco='git co'
 alias gbr='git branch'
 alias gstash='git staash'
 
-function gclone(){ 
+function gclone(){
     [[ $# == 0 ]] && echo "USAGE: gclone org/repo [subdir]" && return 1
 
-    pushd ~/dev/; 
+    pushd ~/dev/;
     if [[ $# == 2 ]]; then
         [[ -e $2 ]] || mkdir $2
         cd $2
     fi
-    gh repo clone $1; 
-    cd $(basename $1); 
+    gh repo clone $1;
+    cd $(basename $1);
 }
 
 # utility function that returns myname/repo
@@ -245,15 +249,15 @@ function local-repo(){
 }
 
 # View commits in GitHub web
-function gh-commit(){ 
+function gh-commit(){
     local repo=$(local-repo)
     [[ -n $1 ]] && open "https://github.com/$repo/commit/$1" && return
     echo "Usage: gh-commit 779490"
 }
-function gh-compare(){ 
+function gh-compare(){
     local repo=$(local-repo)
     [[ -n $2 ]] &&  open "https://github.com/$repo/compare/$1...$2" \
-    || echo "Usage: gh-compare 779490 master"; 
+    || echo "Usage: gh-compare 779490 master";
 }
 
 # Maven - fail as soon as a test fails
@@ -268,8 +272,8 @@ alias list-functions='declare | egrep '\''^[[:alpha:]][[:alnum:]_]* ()'\''; echo
 
 tmux-restore () {
     if [[ -n $1 ]]; then
-        local setup_file="$HOME/.tmux/$1.proj" 
-        local dir_file="$HOME/.tmux/$1.dir" 
+        local setup_file="$HOME/.tmux/$1.proj"
+        local dir_file="$HOME/.tmux/$1.dir"
         if [[ -e $setup_file ]]; then
             [[ -e $dir_file ]] && cd $(bash -c "echo $(cat $dir_file)") # set CWD
             command tmux new-session -s "$1" "tmux source-file $setup_file"
@@ -308,10 +312,10 @@ alias timbuktu_reverse_tunnel='ssh -v -R 10001:localhost:22 timbuktu.kopseng.no 
 function delete-untagged-aws-images(){
     aws ecr  describe-repositories \
     | jq --raw-output .repositories[].repositoryName \
-    | while read repo; do  
+    | while read repo; do
         imageIds=$(aws ecr list-images --repository-name $repo --filter tagStatus=UNTAGGED --query 'imageIds[*]' --output json  | jq -r '[.[].imageDigest] | map("imageDigest="+.) | join (" ")');
         if [[ "$imageIds" == "" ]]; then continue; fi
-        aws ecr batch-delete-image --repository-name $repo --image-ids $imageIds; 
+        aws ecr batch-delete-image --repository-name $repo --image-ids $imageIds;
     done
 }
 
@@ -328,7 +332,7 @@ dps() { docker ps --format '{{.ID}}\t{{.Names}}\t{{.Ports}}'; }
 
 # Kafka
 kafkabin() {
-    if [[ "$#" == 0 ]]; then 
+    if [[ "$#" == 0 ]]; then
         printf "No scripts to run. Available commands in /opt/kafka/bin/:\n"
         kafkabin ls /opt/kafka/bin
         return 1
@@ -338,7 +342,7 @@ kafkabin() {
 
 # works perfectly with `send_sms.py --phone-file --file message.txt`
 kidplan_html_phonenumbers(){
-    util.esed -n  's/.*([0-9]{3}) ([0-9]{2}) ([0-9]{3}).*/\1\2\3/gp' 
+    util.esed -n  's/.*([0-9]{3}) ([0-9]{2}) ([0-9]{3}).*/\1\2\3/gp'
 }
 
 # paste your environment variables, but strip away the secrets you expose in the .secret file
@@ -346,7 +350,7 @@ kidplan_html_phonenumbers(){
 env.no-secrets(){
     local re_secrets
     re_secrets=$(util.esed 's/export (.*)=.*/\1/' ~/.secret | strip-comments | paste -sd '|')
-    env | egrep -v $re_secrets 
+    env | egrep -v $re_secrets
 }
 
 t_debug "global aliases and functions finished"
