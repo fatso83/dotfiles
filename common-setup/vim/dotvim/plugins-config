@@ -12,7 +12,6 @@ endif
 Plug 'Raimondi/delimitMate'
 Plug 'alvan/vim-closetag'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'mwnx/vimcrypt' " GPG & OpenSSL support (AES, ...)
 Plug 'nvie/vim-togglemouse' " F12 will switch mouse mode between terminal and vim
 Plug 'ruanyl/vim-sort-imports'
 Plug 'sbdchd/neoformat' " Used with prettier
