@@ -10,7 +10,6 @@ if [ -e ~/.tlf ]; then
 fi
 
 alias ls="/bin/ls $IGNORE --color  --group-directories-first "
-alias pip='uv pip'
 
 vim(){
     local logfile
