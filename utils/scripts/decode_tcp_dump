@@ -23,6 +23,8 @@ def main():
     parser.add_argument("--hexdump", action="store_true", help="Display payloads as hexdump")
     parser.add_argument("--port", type=int, help="Filter by TCP port")
     parser.add_argument("--ip", help="Filter by IP address (source or destination)")
+    parser.add_argument("--raw-output", metavar="FILE", help="Write raw TCP payloads to FILE, or '-' for stdout")
+    parser.add_argument("--skip", type=int, help="Skip n bytes before outputting a payload (useful for prefix encoded packages)")
     args = parser.parse_args()
 
     try:
@@ -30,6 +32,17 @@ def main():
     except FileNotFoundError:
         print(f"File '{args.pcap_file}' not found.")
         sys.exit(1)
+
+    output_stream = None
+    if args.raw_output:
+        if args.raw_output == '-':
+            output_stream = sys.stdout.buffer
+        else:
+            try:
+                output_stream = open(args.raw_output, 'wb')
+            except Exception as e:
+                print(f"Could not open output file: {e}")
+                sys.exit(1)
 
     for pkt in packets:
         if pkt.haslayer(TCP):
@@ -41,10 +54,16 @@ def main():
 
             payload = bytes(pkt[TCP].payload)
             if payload:
-                if args.hexdump:
+                if args.raw_output:
+                    output_stream.write(payload)
+                elif args.hexdump:
                     hexdump(payload)
                 else:
-                    print(payload.decode(errors='replace'))
+                    skip_bytes = args.skip or 0
+                    print(payload[skip_bytes:].decode(errors='replace'))
+
+    if output_stream and output_stream is not sys.stdout.buffer:
+        output_stream.close()
 
 if __name__ == "__main__":
     main()
