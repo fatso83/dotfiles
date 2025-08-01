@@ -98,6 +98,12 @@ sudo apt-get purge avahi-daemon    # ZeroConf for local networks, printers, etc.
 
 source ../_shared/install-utils.inc
 
+# Python, Ruby, Node handled via ASDF
+install_asdf_tooling
+install_sdkman_packages
+install_ada_packages
+source "$SDKMAN_DIR/bin/sdkman-init.sh"
+
 # This cannot be a shared app, as the install fails on macOS due to some node-gyp thingie
 npm i -g @fatso83/luxafor-cli
 
@@ -134,12 +140,6 @@ if ! command_exists fzf; then
     rm tmp-fzf.tar.gz
     mv fzf ~/bin/
 fi
-
-# Python, Ruby, Node handled via ASDF
-install_asdf_tooling
-install_sdkman_packages
-install_ada_packages
-source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
 h2 "Install QR copier"
 go install github.com/claudiodangelis/qrcp@latest

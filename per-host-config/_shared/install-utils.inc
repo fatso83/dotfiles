@@ -165,7 +165,7 @@ install_asdf_tooling(){
     # for faster, cached lookups
 
     strip-comments $ROOT/common-setup/tool-versions | while read plugin version; do
-        if ! __asdf_has_plugin $1; then
+        if ! __asdf_has_plugin $plugin; then
             asdf plugin add $plugin
         fi
         asdf install $plugin $version

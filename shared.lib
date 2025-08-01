@@ -1,6 +1,6 @@
 # vi: ft=bash
 
-# since this is sourced from ANYWHERE, we need to know the root to be able to 
+# since this is sourced from ANYWHERE, we need to know the root to be able to
 # source other files
 
 
@@ -57,7 +57,7 @@ warn(){
 }
 
 TODO(){
-    info "TODO: " $@
+    info "TODO: $@"
 }
 
 banner(){
@@ -73,7 +73,7 @@ fail(){
 
 
 add_1password_identity_agent_ssh_config(){
-    if ! grep IdentityAgent.*1password/agent.sock ~/.ssh/config > /dev/null; then 
+    if ! grep IdentityAgent.*1password/agent.sock ~/.ssh/config > /dev/null; then
         h2 "Configuring 1Password as SSH Agent"
         cat >> ~/.ssh/config << EOF
 

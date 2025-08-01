@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# Put your machine name in this file. 
+set -e
+
+# Put your machine name in this file.
 # The name must match one of the subdirectories in this dir
 MACHINE_NAME_FILE="$HOME/.dotfiles-machine"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -12,14 +14,14 @@ ROOT="$SCRIPT_DIR/.."
 source "$ROOT/shared.lib"
 
 if [[ ! -e $MACHINE_NAME_FILE ]]; then
-    warn "Missing name of this machine in $MACHINE_NAME_FILE" 
+    warn "Missing name of this machine in $MACHINE_NAME_FILE"
     info "Create it like this: \"echo my-computer-name > $MACHINE_NAME_FILE\""
     exit 1
 fi
 
 MACHINE=$(cat "$MACHINE_NAME_FILE")
 
-if [[ -e "$MACHINE" ]]; then 
+if [[ -e "$MACHINE" ]]; then
     h2 "Setting up local settings for this machine"
     cd $MACHINE
     ln -sf $PWD/bashrc.local "$HOME/.bashrc.local"
