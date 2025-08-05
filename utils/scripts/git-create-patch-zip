@@ -2,7 +2,8 @@
 # vi: ft=bash
 
 # exit on error
-set +e
+set -e
+#set -x
 
 usage(){
     printf "USAGE: $0 <branch-base>\n"
@@ -15,7 +16,9 @@ if [[ $# < 1 ]]; then
 fi
 
 LAST_COMMIT=$(git rev-parse --short HEAD)
-BASE_COMMIT=$(git rev-parse --short $1)
+BASE_COMMIT=$(git rev-parse --short $1 )
+# in case we reference a remote branch, we need to escape directory separators
+BRANCH_SAFE=$(echo "$1" | sed -e 's/\//_/g')
 
 if [[ $LAST_COMMIT == $BASE_COMMIT ]]; then
     echo "ERROR: Base commit is the same as the last commit. Nothing to do!"
@@ -26,7 +29,7 @@ CURRENT_BRANCH=$(git branch --show-current)
 MAX_LEN=30
 DATETIME_NOW="$( date +"%Y%m%d-%H%M" )"
 MSG_LAST_COMMIT="$(git log -n1 --pretty=format:'%s' | cut -c1-$MAX_LEN)"
-FILENAME="${DATETIME_NOW}__patches_on_top_of__$1_${BASE_COMMIT}__${CURRENT_BRANCH}___$(change-case --kebab \"$MSG_LAST_COMMIT\")"
+FILENAME="${DATETIME_NOW}__patches_on_top_of__${BRANCH_SAFE}_${BASE_COMMIT}__${CURRENT_BRANCH}___$(change-case --kebab \"$MSG_LAST_COMMIT\")"
 OUTPUT="patches-$RANDOM"
 mkdir $OUTPUT
 cd $OUTPUT
