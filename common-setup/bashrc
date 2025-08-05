@@ -1,10 +1,10 @@
 # This file is sourced in every bash shell, unlike
 # .profile which is read once at login. This means that .profile
 # can include various environment variables that do not change, but
-# anything that involves dynamically changing the PATH should be in the 
+# anything that involves dynamically changing the PATH should be in the
 # .bashrc file
 
-# short circuit the sourcing for non-interactive shells 
+# short circuit the sourcing for non-interactive shells
 # This means this file will not be sourced by invoking `ssh jdoe@server1 ls my/dir`.
 # http://superuser.com/questions/183870/difference-between-bashrc-and-bash-profile
 # rsync also reads .bashrc and will bork if it results in any output
@@ -140,6 +140,11 @@ export HISTCONTROL=ignoredups
 #read_config_if_exists "$HOME/.zplug/repos/rupa/z/z.sh"
 read_config_if_exists "$HOME/bin/z.sh"
 
+# Read environment variables, such as sauce labs keys
+read_config_if_exists "$HOME/.secret"
+chmod 600 "$HOME/.secret"
+
+
 # FZF https://github.com/junegunn/fzf?tab=readme-ov-file#setting-up-shell-integration
 eval "$(fzf --bash)"
 
@@ -175,7 +180,3 @@ t_debug Dynamic SDKMAN init #must be at the end
 [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
 t_debug Finished bash setup
-
-# Read environment variables, such as sauce labs keys
-read_config_if_exists "$HOME/.secret"
-chmod 600 "$HOME/.secret"
