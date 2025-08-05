@@ -112,8 +112,9 @@ if ! which yarn >> /dev/null; then
     curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
 fi
 
-h2 "fix Alsa for Nforce"
-ln -sf $SCRIPT_DIR/asoundrc ~/.asoundrc
+# This is legacy - until I start using this again
+#h2 "fix Alsa for Nforce USB soundcard"
+#ln -sf $SCRIPT_DIR/asoundrc ~/.asoundrc
 
 h2 "Autoremove unused"
 sudo apt-get autoremove --yes
