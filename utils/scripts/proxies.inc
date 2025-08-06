@@ -6,13 +6,17 @@
 # This script is meant to be _sourced_ in the shell
 
 APT_PROXY_CONF=/etc/apt/apt.conf.d/80proxy
-SETTINGS=$HOME/.proxy.setting
+__PROXIES_SETTINGS=$HOME/.proxy.setting
 
 # for use in bashrc: test if there is a proxy setting and if so parse and fix all settings
 function proxies.test-and-set(){
     if __proxies.should-use-proxy; then
         echo "Setting up proxy settings ..."
         proxies.start
+    else
+        # this is required to clear inherited environment values, for instance, if running tmux!
+        # we use #clear-env over #stop to avoid triggering sudo when not required
+        proxies.clear-env
     fi
 }
 
@@ -36,7 +40,7 @@ function proxies.start(){
         parsed_proxy_value=$MY_HTTP_PROXY # fallback value set in .secrets
     fi
     __proxies.export_proxies_and_configure_apt $parsed_proxy_value
-    echo $parsed_proxy_value > "$SETTINGS"
+    echo $parsed_proxy_value > "$__PROXIES_SETTINGS"
 }
 
 # Set all environment variables and update proxy config for apt
@@ -58,12 +62,16 @@ function __proxies.export_proxies_and_configure_apt(){
     fi
 }
 
-function proxies.stop(){
+function proxies.clear-env(){
     unset HTTP_PROXY
     unset http_proxy
     unset HTTPS_PROXY
     unset https_proxy
     unset WSL_PAC_URL
+}
+
+function proxies.stop(){
+    proxies.clear-env
 
     if [[ -e $APT_PROXY_CONF ]]; then
         sudo rm -f $APT_PROXY_CONF
@@ -75,8 +83,8 @@ function proxies.stop(){
     fi
 
     # clear settings - meaning we have intentionally disabled using proxy setting
-    rm -f $SETTINGS
-    touch $SETTINGS
+    rm -f $__PROXIES_SETTINGS
+    touch $__PROXIES_SETTINGS
 }
 
 # arg1: filename
@@ -98,7 +106,7 @@ function __proxies.wsl-proxy(){
 }
 
 function __proxies.should-use-proxy(){
-    [[ "" != "$(cat $SETTINGS)" ]]
+    [[ "" != "$(cat $__PROXIES_SETTINGS)" ]]
 }
 
 function proxies.can-connect(){
