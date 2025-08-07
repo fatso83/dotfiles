@@ -38,5 +38,3 @@ source ~/bin/proxies.inc
 proxies.test-and-set # to clear use of proxies permanently, use proxies.stop
 # run as background process. suppress all output by running inside of another shell process
 ( ( proxies.can-connect  || printf "\nUnable to connect to internet. Check proxy settings using proxies.show\n\n" )&)
-
-

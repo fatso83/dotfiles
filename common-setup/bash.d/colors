@@ -36,7 +36,7 @@ dark_grey(){
 }
 
 dark_yellow(){
-    __colorized  "${c_yellow}" "$@"
+    __colorized  "${c_dark_yellow}" "$@"
 }
 
 dark_red(){
