@@ -97,10 +97,12 @@
 	keepBackup = false
 
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+    ; These settes were added in 2018, but not documented. They caused some issues when
+    ; checking out Avinor/hermes, and disabling them helped
+	;clean = git-lfs clean -- %f
+	;smudge = git-lfs smudge -- %f
+	;process = git-lfs filter-process
+	;required = true
 
 [rebase]
 	autoStash = true

@@ -122,7 +122,7 @@ sudo apt-get autoremove --yes
 # install GitHub LFS support
 if ! which git-lfs > /dev/null; then
     h2 "Installing Git LFS client..."
-    VERSION="2.4.2"
+    VERSION="3.7.0"
     NAME="git-lfs"
     OS="linux-amd64"
     BASENAME="${NAME}-${OS}-$VERSION"

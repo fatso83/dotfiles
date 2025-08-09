@@ -16,6 +16,7 @@ fswatch
 fzf
 gh
 git-extras
+git-lfs
 glow
 gnupg
 gum
@@ -33,7 +34,7 @@ node
 pam-reattach
 perl # fzf.vim
 postgresql@15
-pygobject3 
+pygobject3
 pspg
 qrencode
 reattach-to-user-namespace
