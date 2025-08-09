@@ -1,11 +1,7 @@
 # Settings for mac-work
 
-[credential]
-  helper = /usr/local/share/gcm-core/git-credential-manager
-
 ## Commit signing for 1Password
 ## @see https://developer.1password.com/docs/ssh/git-commit-signing/
-
 [gpg "ssh"]
   program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
   allowedSignersFile = /Users/carlerik/.ssh/allowed_signers
