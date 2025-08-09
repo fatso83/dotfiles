@@ -92,6 +92,17 @@
 [credential]
     # One week in-mem caching of HTTPS credentials
 	# helper = cache --timeout=604800
+    #
+    # For most things, this should be the right thing to use, but it should probably be configured in ~/.gitlocal
+    #helper = git-credential-manager
+
+# Use the Github CLI client `gh` for anything Github
+[credential "https://github.com"]
+	helper =
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !gh auth git-credential
 
 [mergetool]
 	keepBackup = false
