@@ -1,8 +1,8 @@
 1password
 1password-cli
-apt-transport-https 
+apt-transport-https
 bat
-build-essential 
+build-essential
 ca-certificates
 charles-proxy
 cmake
@@ -12,23 +12,24 @@ cowsay
 cronic
 curl
 direnv
-# docker-ce 
-# docker-ce-cli 
+# docker-ce
+# docker-ce-cli
 dunst
 exiv2
 fail2ban
+fuse3
 feh
 fortune
 freerdp2-x11
 g++
 gcc
 gh
-git-extras 
+git-extras
 glow # markdown highlighter
 gnome-panel
 golang-go
 google-chrome-stable
-google-cloud-sdk
+# google-cloud-sdk
 gobject-introspection
 htop
 imagemagick
@@ -39,18 +40,17 @@ libgirepository1.0-dev
 libcairo2-dev
 libpq-dev
 libpython3-dev
-libsasl2-2 
+libsasl2-2
 libsasl2-modules
 libudev-dev
 libxml2-utils
 lzop
-mailutils 
+mailutils
 make
-maven 
+maven
 mono-devel
 mono-xbuild
 mono-xsp4
-neovim
 npm
 # packer
 php
@@ -72,8 +72,8 @@ tree
 unzip
 uuid
 wget
-xclip 
-xdotool 
+xclip
+xdotool
 zip
 zsh
 libgirepository-2.0-dev

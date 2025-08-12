@@ -1,5 +1,4 @@
 ppa:git-core/ppa
-ppa:neovim-ppa/stable
 ppa:ondrej/php
 deb https://davesteele.github.io/gnome-gmail/repo gnome-gmailppa main
 deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main
@@ -14,7 +13,7 @@ deb https://www.charlesproxy.com/packages/apt/ charles-proxy main
 #deb [arch=amd64 signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main
 deb [arch=amd64] https://cli.github.com/packages stable main
 
-# This does not work as add-apt-repository only support the `arch` and `trusted` options. 
+# This does not work as add-apt-repository only support the `arch` and `trusted` options.
 # See https://askubuntu.com/questions/1450095/does-add-apt-repository-not-support-globs-in-source-list
 # Needs manual workaround
 # deb [signed-by=/etc/apt/trusted.gpg.d/repo.charm.sh.gpg] https://repo.charm.sh/apt/ * *

@@ -52,7 +52,6 @@ __install_python_packages(){
     # No longer needed/wanted/possible when using ASDF to manage
 
     h3 "Installing Python packages ...\n"
-    TODO "Start using 'uv' instead of pip for package installs"
     pip install --user --upgrade -r "$SHARED_DIR/python.local"  | (grep -v 'Requirement already satisfied:' || :)
 }
 

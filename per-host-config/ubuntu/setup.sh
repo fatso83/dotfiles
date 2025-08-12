@@ -112,9 +112,13 @@ if ! which yarn >> /dev/null; then
     curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
 fi
 
-# This is legacy - until I start using this again
-#h2 "fix Alsa for Nforce USB soundcard"
-#ln -sf $SCRIPT_DIR/asoundrc ~/.asoundrc
+# Install recent NVIM (no package repos seems to have updated versions)
+if ! command_exists nvim; then
+    h2 "Downloading recent NVIM ..."
+    download_if_not_exist https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.appimage nvim-linux-x86_64.appimage
+    chmod u+x nvim-linux-x86_64.appimage
+    mv nvim-linux-x86_64.appimage ~/bin/nvim
+fi
 
 h2 "Autoremove unused"
 sudo apt-get autoremove --yes
