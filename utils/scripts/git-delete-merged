@@ -42,7 +42,7 @@ CURRENT=$(git branch -a | sed -n '/^*/s/^* //p')
 ##  Likewise, you can store a permanent override for what constitutes 
 ##  the main branch by setting the x-delete-tool.merge-master property
 ##  Example:
-##  git config --add x-delete-tool.merge-branch origin/develop
+##  git config --add x-delete-tool.merge-master origin/develop
 
 skipped(){
     local override=$1
@@ -102,7 +102,7 @@ main(){
     MAIN_BRANCH=$(merge_branch)
 
     if ! git log $MAIN_BRANCH > /dev/null 2>/dev/null; then 
-        echo "Branch \"$MAIN_BRANCH\" does not exist. Specify another branch using --merge-branch"
+        echo "Branch \"$MAIN_BRANCH\" does not exist. Specify another branch using --merge-master=<your-main-branch>"
         exit 1
     fi
 
