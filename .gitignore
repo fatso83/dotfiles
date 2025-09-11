@@ -9,3 +9,5 @@ per-host-config/mac-work/integration/
 common-setup/vim/dotvim/logs/
 wireguard-vpn/keys/
 wireguard-vpn/server/peers.generated.conf
+utils/package-lock.json
+common-setup/bash_completion.d/
