@@ -6,7 +6,8 @@
     "node-notifier": "^8.0.1",
     "undici": "5",
     "untildify": "^4.0.0",
-    "voca": "^1.4.0"
+    "voca": "^1.4.0",
+    "slug": "11"
   },
   "devDependencies": {
     "mocha": "^10.2.0"

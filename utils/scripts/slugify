@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+// vi: ft=javascript
+const process = require('process')
+const slug = require( 'slug').default
+const args = process.argv.slice(2,)
+
+function usage(err){
+    if(err) {
+        console.error(err)
+    }
+    console.log(
+        `USAGE: ${process.argv[1]} <the string to slugify>`)
+    process.exit(1)
+}
+
+if(!args.length) {
+    usage("Missing arguments");
+}
+
+console.log(slug(args.join(" ")))
