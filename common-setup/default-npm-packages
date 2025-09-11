@@ -1,0 +1,12 @@
+# The asdf-nodejs plugin supports a default package list.
+# 1. Create ~/.default-npm-packages
+# 2. Whenever you install a new Node with asdf:
+# asdf install nodejs latest
+# asdf global nodejs latest   # optional
+# the plugin auto-installs everything in ~/.default-npm-packages
+# asdf reshim nodejs
+bash-language-server
+typescript
+eslint
+slug
+# …whatever you need globally

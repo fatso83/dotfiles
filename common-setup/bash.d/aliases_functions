@@ -296,6 +296,8 @@ function npx(){ if [[ -z "$NPXBIN" ]]; then command npx "$@"; else $NPMBIN "$@";
 alias hub='printf "DEPRECATED: use the Github CLI \`gh\` instead!\n"'
 alias n='printf "DEPRECATED: use ASDF for controlling global versions instead!: \`asdf global nodejs 20.0.0\`\n"'
 
+alias slug='npx slug'
+
 # SSH recipes for myself
 
 # Auto-open Bittorrent Sync
