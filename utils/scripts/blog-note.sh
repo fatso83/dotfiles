@@ -8,7 +8,7 @@ POSTS="${ELEVENTY_DIR}/src/site/notes"
 DATE=$(date +"%Y-%m-%d";)
 
 TOPIC="$*"
-SLUGIFIED_TOPIC=$(npx --yes slug $TOPIC)
+SLUGIFIED_TOPIC=$(npx --yes slug "$TOPIC")
 FILE="$POSTS/$DATE-$SLUGIFIED_TOPIC.md"
 
 cat > "$FILE" << EOF
