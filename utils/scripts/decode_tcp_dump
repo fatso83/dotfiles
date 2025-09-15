@@ -3,6 +3,8 @@
 Decodes pcap files containing TCP payloads
 Example capture:  sudo tcpdump -i lo tcp port 56100 -nn -vvv -s 0 -w dump56100.pcap
 dependency: scapy
+
+Latest version: https://github.com/fatso83/dotfiles/tree/master/utils/scripts
 """
 
 import sys
