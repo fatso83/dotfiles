@@ -23,6 +23,17 @@ mkdir -p "${BASH_DIR}"
 mkdir -p "${HOME}/bin"
 mkdir -p "$HOME/.config"
 
+mkdir -p "$HOME/.config/fish"
+ln -sf "$SCRIPT_DIR"/config.fish "$HOME"/.config/fish/
+if command_exists fisher; then
+    # Bass makes it easy to use utilities written for Bash in fish shell.
+    # Bass is simple to use. Just prefix your bash utility command with bass.
+    # See https://github.com/edc/bass?tab=readme-ov-file#example
+    #
+    # alternative: exec bash -c "source some-bash-setup.sh; exec fish".
+    fisher install edc/bass
+fi
+
 rm -rf "$HOME"/.bash_completion.d 2>/dev/null
 ln -sf "$SCRIPT_DIR"/bash_completion.d "$HOME"/.bash_completion.d
 
