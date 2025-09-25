@@ -162,6 +162,13 @@ function text.remove-last-newline(){
     rm $file&
 }
 
+## @arg join-char, default ""
+function text.join-line(){
+    ARG="$1"
+    JOIN_CHAR=${ARG:-""}
+    sed -e ':a' -e "\$!N;s/\n/$JOIN_CHAR/;ta"
+}
+
 # Used with the git alias functions; gd, gds, gdw, gdws
 alias strip-diff-prefix='sed "s/^\([^-+ ]*\)[-+ ]/\\1/"'
 
