@@ -56,7 +56,6 @@ function fcat(){
 
 
 function clean-ascii(){ python -c "import sys, re, string; pattern = f'[^{re.escape(string.printable)}]'; [sys.stdout.write(re.sub(pattern, '', line)) for line in sys.stdin]"; }
-alias strip-empty="egrep -v '^\s*$'"
 
 t_debug Setting up aliases for conversions
 alias urldecode='python3 -c "import sys, urllib.parse as p; print(p.unquote_plus(sys.argv[1]))"'
@@ -114,7 +113,10 @@ alias my-ip-json='curl -s http://ifconfig.co/json'
 alias socks_proxy='ssh -v -D 22222 carl-erik@timbuktu.kopseng.no -N'
 alias socks_proxy_all='ssh -v -D :22222 carl-erik@timbuktu.kopseng.no -N'
 
+################################################################################
 # text manipulation "library". Just type "text.<TAB>" to see all
+################################################################################
+
 function text.ltrim ()
 {
     util.esed 's/^[[:space:]]+//'
@@ -142,16 +144,29 @@ function text.count(){
     grep -o "$1" | wc -l
 }
 
-function text.delete_empty_lines() {
+# Used with the git alias functions; gd, gds, gdw, gdws
+function text.strip-diff-prefix(){
+    sed "s/^\([^-+ ]*\)[-+ ]/\\1/"
+}
+
+function text.strip-color-codes(){
+    util.esed -e 's/\[.{0,3}3.m//g'
+}
+
+function text.strip-comments(){
+    util.esed -e 's/#.*//' | text.strip-empty
+}
+
+function text.strip-empty-lines() {
     sed '/^[[:space:]]*$/d';
 }
 
-function text.delete-comments-empty-lines() {
-    strip-comments | text.delete_empty_lines
+function text.strip-comments-empty-lines() {
+    text.strip-comments | text.strip-empty-lines
 }
 
 # Based on https://stackoverflow.com/a/12579554/200987
-function text.remove-last-newline(){
+function text.strip-last-newline(){
     local file=$(mktemp)
     cat > $file
     if [[ $(tail -c1 $file | wc -l) == 1 ]]; then
@@ -169,17 +184,24 @@ function text.join-line(){
     sed -e ':a' -e "\$!N;s/\n/$JOIN_CHAR/;ta"
 }
 
-# Used with the git alias functions; gd, gds, gdw, gdws
-alias strip-diff-prefix='sed "s/^\([^-+ ]*\)[-+ ]/\\1/"'
+######################################################
+### old aliases
+### DEPRECATED START 
+### kept to avoid needing to change existing uses
+######################################################
+alias strip-empty=text.strip-empty
+alias strip-diff-prefix=text.strip-diff-prefix
+alias strip-color-codes=text.strip-color-codes
+alias strip-comments=text.strip-comments
+alias text.remove-last-newline=text.strip-last-newline
+alias text.delete_empty_lines=text.strip-empty-lines
+alias text.delete-comments-empty-lines=text.strip-comments-empty-lines
+alias text.strip-empty=text.strip-empty-lines
+######################################################
+### old aliases
+### DEPRECATED END 
+######################################################
 
-# Used a lot in utility setup scripts
-function strip-comments(){
-    util.esed -e 's/#.*//' $@ | strip-empty
-}
-
-function strip-color-codes(){
-    util.esed -e 's/\[.{0,3}3.m//g'
-}
 
 # For stack overflow or ChatGPT pasting where you could accidentally leak info from source code
 function websafe(){
@@ -226,9 +248,9 @@ function restore_path() {
 #   The -r flag to `less` is uses to make it work with the color escape codes
 #     -F  ........  --quit-if-one-screen
 #                 Quit if entire file fits on first screen.
-#   @depends on strip-diff-prefix alias
-function gd() {   git diff          --color $@ | strip-diff-prefix | less -rF; }
-function gds() {  git diff --staged --color $@ | strip-diff-prefix | less -rF; }
+#   @depends on text.strip-diff-prefix alias
+function gd() {   git diff          --color $@ | text.strip-diff-prefix | less -rF; }
+function gds() {  git diff --staged --color $@ | text.strip-diff-prefix | less -rF; }
 function gdw() {  git diff          --color --word-diff $@         | less -rF; }
 function gdws() { git diff --staged --color --word-diff $@         | less -rF; }
 alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
