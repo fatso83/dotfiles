@@ -54,6 +54,7 @@ if parsed.phone_file and parsed.phone:
     print("Can only handle phone numbers from file OR from the command line, not both")
     exit(1)
 
+numbers = []
 if parsed.phone:
     numbers = ["+47" + p if len(p) == 8 else p for p in parsed.phone]
 
