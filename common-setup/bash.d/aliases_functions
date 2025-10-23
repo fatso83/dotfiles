@@ -132,6 +132,15 @@ function text.trim ()
     util.esed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'
 }
 
+# examples:
+#   text.de-indent 4
+#   text.de-indent 1,4
+function text.de-indent ()
+{
+    ARG=${1:-"1,100"};
+    util.esed "s/^ {${ARG}}//"
+}
+
 function text.lowercase(){
     tr "[:upper:]" "[:lower:]"
 }
