@@ -75,7 +75,7 @@ if not smsutil.is_valid_gsm(msg) and not parsed.unicode and not parsed.force_tex
     exit(1)
 
 
-from_nmbr = parsed.from_nmbr or "+4740065078"
+from_nmbr = parsed.from_nmbr or "Kirkevn90"
 
 encoding = "TEXT" if not parsed.unicode else "UNICODE"
 
