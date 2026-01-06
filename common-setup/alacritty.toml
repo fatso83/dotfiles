@@ -10,4 +10,9 @@ draw_bold_text_with_bright_colors = true
 
 [window]
 # "OnlyLeft" | "OnlyRight" | "Both" | "None" # (macos only)
-option_as_alt = "Both" 
+option_as_alt = "Both"
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001B\r"
