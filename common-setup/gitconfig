@@ -156,5 +156,5 @@
 
 # Conditional include based on which subdir you are in
 # See https://www.youtube.com/watch?v=aolI_Rz0ZqY&t=537s
-[includeIf "gitdir:~/dev/avinor/"]
-    path = ~/dev/avinor/gitconfig-avinor
+[includeIf "gitdir:~/dev/mestergruppen/"]
+    path = ~/dev/mestergruppen/gitconfig
