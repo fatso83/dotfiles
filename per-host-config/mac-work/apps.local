@@ -6,6 +6,7 @@ bash-completion
 bat # syntax highlighting for fzf.vim
 ccat
 cmake
+cloc
 cowsay
 # distribute ssh commands. used at posten/bring
 csshx
