@@ -180,3 +180,5 @@ t_debug Dynamic SDKMAN init #must be at the end
 [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
 t_debug Finished bash setup
+
+. "$HOME/.local/bin/env"

@@ -2,6 +2,10 @@
 
 set -e
 
+if [[ -n $DEBUG ]]; then
+    set -x
+fi
+
 # Put your machine name in this file.
 # The name must match one of the subdirectories in this dir
 MACHINE_NAME_FILE="$HOME/.dotfiles-machine"

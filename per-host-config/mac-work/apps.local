@@ -20,6 +20,7 @@ git-extras
 git-lfs
 glow
 gnupg
+golang
 gum
 gtk4
 hashicorp/tap/terraform

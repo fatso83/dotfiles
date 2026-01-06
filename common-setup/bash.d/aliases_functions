@@ -163,7 +163,7 @@ function text.strip-color-codes(){
 }
 
 function text.strip-comments(){
-    util.esed -e 's/#.*//' | text.strip-empty
+    util.esed -e 's/#.*//' "$@" | text.strip-empty
 }
 
 function text.strip-empty-lines() {
@@ -171,7 +171,7 @@ function text.strip-empty-lines() {
 }
 
 function text.strip-comments-empty-lines() {
-    text.strip-comments | text.strip-empty-lines
+    text.strip-comments "$@" | text.strip-empty-lines
 }
 
 # Based on https://stackoverflow.com/a/12579554/200987
@@ -195,7 +195,7 @@ function text.join-line(){
 
 ######################################################
 ### old aliases
-### DEPRECATED START 
+### DEPRECATED START
 ### kept to avoid needing to change existing uses
 ######################################################
 alias strip-empty=text.strip-empty
@@ -208,7 +208,7 @@ alias text.delete-comments-empty-lines=text.strip-comments-empty-lines
 alias text.strip-empty=text.strip-empty-lines
 ######################################################
 ### old aliases
-### DEPRECATED END 
+### DEPRECATED END
 ######################################################
 
 

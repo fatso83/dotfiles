@@ -31,7 +31,7 @@ fi
 # Load completion library for those sweet [tab] squares
 zplug "lib/completion", from:oh-my-zsh
 
-# Never got the oh-my-zsh version to work without manual configuration, 
+# Never got the oh-my-zsh version to work without manual configuration,
 zplug "rupa/z", use:z.sh
 
 # Syntax highlighting for commands, load last
@@ -53,5 +53,15 @@ fi
 # Then, source plugins and add commands to $PATH
 zplug load --verbose
 
+
+# bun completions
+[ -s "/Users/carlerik/.bun/_bun" ] && source "/Users/carlerik/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+
+. "$HOME/.local/bin/env"

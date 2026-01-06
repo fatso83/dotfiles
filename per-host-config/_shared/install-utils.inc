@@ -176,6 +176,10 @@ install_asdf_tooling(){
 }
 
 install_ada_packages(){
+    echo "INSTALLING ADA disabled"
+    return 0
+
+
     local alire_arch
     local lsp_arch
     set -e

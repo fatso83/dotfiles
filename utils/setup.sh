@@ -6,6 +6,8 @@ pushd "$SCRIPT_DIR" > /dev/null
 ROOT="$SCRIPT_DIR/.."
 source "$ROOT/shared.lib"
 
+[[ -n $DEBUG ]] && set -x
+
 if [[ ! -e ~/bin ]]; then
     mkdir ~/bin
 fi
