@@ -59,7 +59,7 @@ fi
 export PATH
 
 # For google cloud sdk to work on mac13.5 (only works with Python 3.5-3.9 per June 2023)
-export CLOUDSDK_PYTHON=/opt/homebrew/bin/python3.9
+#export CLOUDSDK_PYTHON=/opt/homebrew/bin/python3.9
 
 
 # bun

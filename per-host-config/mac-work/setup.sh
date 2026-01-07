@@ -102,10 +102,10 @@ if [[ ! -d /opt/google-cloud-sdk ]]; then
 
     case $ARCH in
         arm64)
-            GSDK=google-cloud-cli-435.0.1-darwin-arm.tar.gz
+            GSDK=google-cloud-cli-darwin-x86_64.tar.gz
             ;;
         x86_64)
-            GSDK=google-cloud-cli-435.0.1-darwin-x86_64.tar.gz
+            GSDK=google-cloud-cli-darwin-arm.tar.gz
             ;;
     esac
 
