@@ -36,6 +36,7 @@ neovim
 node
 pam-reattach
 perl # fzf.vim
+pinentry-mac # integrate openpgp with the keychain
 postgresql@15
 pygobject3
 pspg

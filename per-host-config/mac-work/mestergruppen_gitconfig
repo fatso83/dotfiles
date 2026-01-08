@@ -1,0 +1,8 @@
+[user]
+    email = carl.erik.kopseng@mestergruppen.no
+    # public key 5538B0F643277336BA7F0E457FFFC09ACAC05FD0
+    signingkey = ACFC4328FBE5C480
+
+[gpg]
+  # Bitbucket does not support SSH keys, see mac-work/pgp-keychain.sh
+  format = openpgp
