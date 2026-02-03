@@ -185,7 +185,10 @@ ln ./allowed_signers ~/.ssh/
 
 [[ ! -e ~/.config ]] && mkdir ~/.config
 [[ ! -e ~/.config/alacritty ]] && mkdir ~/.config/alacritty
-ln -sf ~/dev/dotfiles/common-setup/alacritty.toml ~/.config/alacritty/alacritty.toml
+ln -sf "$PWD"/alacritty.toml ~/.config/alacritty/alacritty.toml
+
+mkdir -p "$PWD/.gemini"
+ln -sf "$PWD"/gemini/settings.json ~/.gemini/
 
 ./fonts.sh
 "$SCRIPT_DIR/update-completion-scripts.sh"

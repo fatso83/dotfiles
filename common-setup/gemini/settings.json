@@ -1,0 +1,16 @@
+{
+  "security": {
+    "auth": {
+      "selectedType": "oauth-personal"
+    }
+  },
+  "tools": {
+      "approvalMode": "auto_edit",
+      "allowed": ["run_shell_command(git)",
+          "run_shell_command(./gradlew)",
+          "run_shell_command(gradlew)",
+          "run_shell_command(npm ci)",
+          "run_shell_command(npm test)"
+      ]
+  }
+}
