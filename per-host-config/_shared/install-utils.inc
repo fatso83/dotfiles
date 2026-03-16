@@ -21,20 +21,32 @@ __asdf_has_plugin(){
     asdf plugin list | grep $1 >/dev/null 2>&1
 }
 
+__install_volta(){
+    if command_exists volta; then
+        return
+    fi
+
+    h3 "Installing Volta"
+    curl https://get.volta.sh | bash -s -- --skip-setup
+}
+
+__use_volta(){
+    export VOLTA_HOME="$HOME/.volta"
+    export PATH="$VOLTA_HOME/bin:$PATH"
+}
+
 __install_node_packages(){
     __shared_package_info_message "Node"
 
-    asdf install nodejs 22.14.0
+    __install_volta
+    __use_volta
 
     h3 "Installing Node packages ...\n"
-    installed=$(mktemp)
-    npm list -g --depth 1 --json | jq -r -c '.dependencies | keys | .[]' > $installed
-    #filters out patterns that are present in the other file, see https://stackoverflow.com/questions/4780203/deleting-lines-from-one-file-which-are-in-another-file
-    node_apps=$(grep -v -f $installed "$SHARED_DIR/node.local" || true)
-    # if non-zero, https://unix.stackexchange.com/a/146945/18594
-    if [[ -n "${node_apps// }" ]]; then
-        npm -g install $node_apps
-    fi
+    volta install node@24
+    strip-comments "$SHARED_DIR/node.local" | while read -r node_app; do
+        [[ -z "$node_app" ]] && continue
+        volta install "$node_app"
+    done
 }
 
 __install_python_packages(){

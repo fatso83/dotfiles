@@ -150,4 +150,4 @@ defaults write org.alacritty AppleFontSmoothing -int 0
 # OpenPGP signing (required for Bitbucket, which does not support signing via SSH keys)
 ./pgp-keychain.sh
 mkdir -p ~/dev/mestergruppen
-ln -s mestergruppen_gitconfig ~/dev/mestergruppen/gitconfig
+ln -fs mestergruppen_gitconfig ~/dev/mestergruppen/gitconfig

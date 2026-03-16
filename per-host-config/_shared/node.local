@@ -1,4 +1,5 @@
 bash-language-server
+eslint
 gifify
 import-sort-cli 
 import-sort-parser-babylon 
@@ -8,4 +9,7 @@ neovim
 ngrok
 pnpm
 prettier
+slug
 tldr
+tsx
+typescript

@@ -81,7 +81,7 @@
 	bb = !better-branch.sh
 
 [pull]
-    rebase = true
+	rebase = true
 
 #[help]
 #	autocorrect = 0

@@ -163,8 +163,17 @@ fi
 ################################################################################
 
 t_debug ASDF tool setup
-export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
-. <(asdf completion bash)
+if [[ -s "${ASDF_DATA_DIR:-$HOME/.asdf}/asdf.sh" ]]; then
+    . "${ASDF_DATA_DIR:-$HOME/.asdf}/asdf.sh"
+fi
+if command_exists asdf; then
+    export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+    . <(asdf completion bash)
+fi
+
+t_debug Volta tool setup
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
 
 # Alire (ADA source package manager)
 export PATH="$HOME/.alire/bin:$PATH"
