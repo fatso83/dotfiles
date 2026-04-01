@@ -1,0 +1,122 @@
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "curl"
+decision = "allow"
+priority = 100
+
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "git"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "./gradlew"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "gradlew"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "npm"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "pnpm"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "bun"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "./scripts/"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "ls"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "cat"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "npx"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "agent-browser"
+decision = "allow"
+priority = 100
+
+
+[[rule]]
+decision = "allow"
+priority = 950
+toolName = "run_shell_command"
+commandPrefix = [ "find" ]
+
+[[rule]]
+decision = "allow"
+priority = 950
+toolName = "run_shell_command"
+commandPrefix = [ "stat" ]
+
+[[rule]]
+decision = "allow"
+priority = 950
+toolName = "activate_skill"
+
+
+[[rule]]
+decision = "allow"
+priority = 950
+toolName = "run_shell_command"
+commandPrefix = [ "tail" ]
+
+[[rule]]
+decision = "allow"
+priority = 950
+toolName = "run_shell_command"
+commandPrefix = [ "wc" ]
+
+[[rule]]
+decision = "allow"
+priority = 950
+toolName = "enter_plan_mode"
+
+[[rule]]
+decision = "allow"
+priority = 950
+toolName = "run_shell_command"
+commandPrefix = [ "sed" ]
+
+[[rule]]
+decision = "allow"
+priority = 950
+toolName = "run_shell_command"
+commandPrefix = [ "mv" ]
+
