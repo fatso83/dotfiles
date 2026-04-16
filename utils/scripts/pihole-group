@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# 0 8 * * 6,0 pihole-group disable Spill-blokk
+# 0 8 * * 6,0 pihole-group disable Youtube-blokk
+# 0 13 * * 6,0 pihole-group enable Spill-blokk
+# 0 13 * * 6,0 pihole-group enable Youtube-blokk
+#
+set -euo pipefail
+
+DB="/etc/pihole/gravity.db"
+
+usage() {
+  echo "Usage: $0 list|enable|disable <group-name>" >&2
+  exit 2
+}
+
+
+list(){
+	sudo sqlite3 /etc/pihole/gravity.db 'SELECT id,name,enabled FROM "group";'
+	exit 0
+}
+
+if [[ $1 == "list" ]]; then
+	list
+fi
+
+action="$1"
+group="$2"
+
+case "$action" in
+  enable)  enabled=1 ;;
+  disable) enabled=0 ;;
+  *) usage ;;
+esac
+
+[[ $# -eq 2 ]] || usage
+
+# Escape single quotes for SQLite string literal
+sql_group=$(printf "%s" "$group" | sed "s/'/''/g")
+
+# Check that the group exists
+count=$(
+  sqlite3 "$DB" "SELECT COUNT(*) FROM \"group\" WHERE name = '$sql_group';"
+)
+
+if [[ "$count" != "1" ]]; then
+  echo "Group not found: $group" >&2
+  exit 1
+fi
+
+# Update enabled flag
+sqlite3 "$DB" "UPDATE \"group\" SET enabled = $enabled WHERE name = '$sql_group';"
+
+# Ask FTL for SIGRTMIN and send RT signal 0 (preferred after manual gravity.db edits)
+SIGRTMIN="$(pihole-FTL sigrtmin)"
+pkill "-SIG${SIGRTMIN}" pihole-FTL
+
+echo "Group '$group' ${action}d."
