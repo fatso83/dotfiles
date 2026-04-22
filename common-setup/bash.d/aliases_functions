@@ -390,7 +390,14 @@ kidplan_html_phonenumbers(){
 env.no-secrets(){
     local re_secrets
     re_secrets=$(util.esed 's/export (.*)=.*/\1/' ~/.secret | strip-comments | paste -sd '|')
-    env | egrep -v $re_secrets
+    env | egrep -v "$re_secrets"
 }
+
+if is_mac; then
+    function flush-dns(){
+        sudo dscacheutil -flushcache
+        sudo killall -HUP mDNSResponder
+    }
+fi
 
 t_debug "global aliases and functions finished"
