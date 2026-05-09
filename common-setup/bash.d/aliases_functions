@@ -393,10 +393,19 @@ env.no-secrets(){
     env | egrep -v "$re_secrets"
 }
 
+## MACOS specific
 if is_mac; then
     function flush-dns(){
         sudo dscacheutil -flushcache
         sudo killall -HUP mDNSResponder
+    }
+
+    function mac-add-loopback(){
+        if [[ "x$1" == x ]]; then
+            echo "USAGE: mac-add-loopback 127.x.y.z";
+            return 1;
+        fi;
+        sudo ifconfig lo0 alias "$1" up;
     }
 fi
 
