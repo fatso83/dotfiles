@@ -26,6 +26,12 @@ filetype plugin indent on       " load file type plugins + indentation
 syntax enable
 set encoding=utf-8
 
+" Default fold on
+set foldmethod=syntax
+" Keep all folds open while working:
+set foldlevel=99 
+
+
 "" GUI
 " This is a default scheme that works well
 " Override in ~/vimrc.local
