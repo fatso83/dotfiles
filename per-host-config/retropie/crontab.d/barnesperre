@@ -1,7 +1,25 @@
 SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-0 8 * * 6,0 root /usr/local/bin/pihole-group disable Spill-blokk >>/var/log/barnesperre.log 2>&1
-0 8 * * 6,0 root /usr/local/bin/pihole-group disable Youtube-blokk >>/var/log/barnesperre.log 2>&1
-0 18 * * 6,0 root /usr/local/bin/pihole-group enable Spill-blokk >>/var/log/barnesperre.log 2>&1
-0 18 * * 6,0 root /usr/local/bin/pihole-group enable Youtube-blokk >>/var/log/barnesperre.log 2>&1
+# m h dom mon dow user command
+# m = minute, h = hour, dom = day of month, dow = day of week,
+
+# Disable DNS block for Youtube and games in the weekends
+# Run once an hour, in case the machine was switched off
+0 8-17 * * 6,7 root /usr/local/bin/pihole-group disable Spill-blokk >>/var/log/barnesperre.log 2>&1
+0 8-17 * * 6,7 root /usr/local/bin/pihole-group disable Youtube-blokk >>/var/log/barnesperre.log 2>&1
+
+*/15 8-17 * * 6,7 root echo "DNS block for games and youtube disabled on the weekend between 8 and 18" >>/var/log/barnesperre.log 2>&1
+
+# Re-enable DNS block for Youtube and games 18:06
+6 18 * * 6,7 root /usr/local/bin/pihole-group enable Spill-blokk >>/var/log/barnesperre.log 2>&1
+6 18 * * 6,7 root /usr/local/bin/pihole-group enable Youtube-blokk >>/var/log/barnesperre.log 2>&1
+
+
+# after changing, you can test the format using:
+#   ssh pi@retropie 'sudo grep CRON /var/log/syslog | tail -50'
+# or in systems with journald:
+#   ssh pi@retropie 'sudo journalctl -u cron --since "today"'
+# manual reload not required, but you can check the status regardless:
+#   ssh pi@retropie 'sudo systemctl status cron'
+
