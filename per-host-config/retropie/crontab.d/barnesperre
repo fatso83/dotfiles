@@ -1,0 +1,7 @@
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+0 8 * * 6,0 root /usr/local/bin/pihole-group disable Spill-blokk >>/var/log/barnesperre.log 2>&1
+0 8 * * 6,0 root /usr/local/bin/pihole-group disable Youtube-blokk >>/var/log/barnesperre.log 2>&1
+0 18 * * 6,0 root /usr/local/bin/pihole-group enable Spill-blokk >>/var/log/barnesperre.log 2>&1
+0 18 * * 6,0 root /usr/local/bin/pihole-group enable Youtube-blokk >>/var/log/barnesperre.log 2>&1
