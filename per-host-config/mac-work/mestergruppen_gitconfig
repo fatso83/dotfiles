@@ -6,3 +6,29 @@
 [gpg]
   # Bitbucket does not support SSH keys, see mac-work/pgp-keychain.sh
   format = openpgp
+
+  ## If it should hang on some lock ...
+    #  gpg --list-secret-keys ACFC4328FBE5C480
+    #That timed out with the same:
+    #
+    #database_open 134217901 waiting for lock (held by 8074)
+    #And the lock state is:
+    #
+    #~/.gnupg/public-keys.d/pubring.db.lock
+    #owner PID: 8074
+    #host: Carl-Erik-sin-MacBook-Pro-553.local
+    #ps shows no process 8074 now. The lock file is still present, dated April 14, so GnuPG is waiting on stale lock metadata while trying to open pubring.db. GnuPG’s own guidance for this failure mode points at the pubring.db.lock file and stale lock owner metadata.
+    #
+    #Why it shows up during rebase
+    #
+    #A rebase replays commits. Because commit.gpgsign=true, Git must sign each recreated commit. When OpenPGP signing cannot read the key database, Git cannot create the next commit object, so the rebase stops.
+    #
+    #Recovery sequence
+    #
+    #After confirming PID 8074 is still absent, use:
+    #
+    #gpgconf --kill keyboxd
+    #rm ~/.gnupg/public-keys.d/pubring.db.lock
+    #rm ~/.gnupg/public-keys.d/.#lk0x000000010309a820.Carl-Erik-sin-MacBook-Pro-553.local.8074
+    #gpg --list-secret-keys ACFC4328FBE5C480
+    #git rebase --continue
