@@ -25,11 +25,6 @@ export SERVER_PRIVATE_KEY
 export SERVER_WG_IP
 export WG_SUBNET
 
-# Enable IP forwarding
-echo "Enabling IP forwarding..."
-sysctl -w net.ipv4.ip_forward=1
-grep -q '^net.ipv4.ip_forward=1' /etc/sysctl.conf || echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
-
 # Create WireGuard config from template + peers
 echo "Generating wg0.conf from template and peers..."
 cd "$(dirname "$0")"
