@@ -23,8 +23,12 @@ read SERVER_WG_PORT
 SERVER_WG_IP="10.0.0.1"
 WG_SUBNET="10.0.0.0/24"
 
+# Ensure we use the right network adapter when substituting
+EXT_IF=$(ip route | awk '/default/ {print $5}')
+
 echo "✅ Writing new .env to $ENV_FILE"
 cat > "$ENV_FILE" <<EOF
+EXT_IF=$EXT_IF
 SERVER_PUBLIC_IP=$SERVER_PUBLIC_IP
 SERVER_WG_PORT=$SERVER_WG_PORT
 SERVER_PUBLIC_KEY=$SERVER_PUBLIC_KEY

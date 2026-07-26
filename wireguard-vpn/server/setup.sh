@@ -25,9 +25,6 @@ export SERVER_PRIVATE_KEY
 export SERVER_WG_IP
 export WG_SUBNET
 
-# Ensure we use the right network adapter
-EXT_IF=$(ip route | awk '/default/ {print $5}')
-
 # Enable IP forwarding
 echo "Enabling IP forwarding..."
 sysctl -w net.ipv4.ip_forward=1
@@ -41,17 +38,4 @@ envsubst < wg0.conf.template > wg0.header.tmp
 cat wg0.header.tmp peers.generated.conf > /etc/wireguard/wg0.conf
 rm wg0.header.tmp
 rm peers.generated.conf
-
-# Set up NAT 
-echo "Setting up iptables NAT..."
-if command -v iptables >/dev/null 2>&1; then 
-    iptables -t nat -C POSTROUTING -o $EXT_IF -j MASQUERADE 2>/dev/null || \
-        iptables -t nat -A POSTROUTING -o $EXT_IF -j MASQUERADE
-else
-   echo "⚠️ iptables not found. You must configure NAT manually."
-fi
-
-# Start WireGuard
-echo "Starting WireGuard interface..."
-wg-quick up wg0
 

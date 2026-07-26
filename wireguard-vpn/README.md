@@ -3,7 +3,6 @@
 ## Up and running on the VPN Gateway
 
 - Populate .env by `./server/gen-env.sh`
-- Try running `./server/setup.sh` and add what is missing to `.env`, like the public IP
 - Add some clients in `clients.list`. Run `client/generate-clients.sh`
 - Run `./server/setup.sh` for one-time setup
 - Export the configs (use `imcat wg0-full.png` to get a QR code for the Android/iPhone apps )
