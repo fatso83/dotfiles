@@ -390,23 +390,16 @@ kidplan_html_phonenumbers(){
 env.no-secrets(){
     local re_secrets
     re_secrets=$(util.esed 's/export (.*)=.*/\1/' ~/.secret | strip-comments | paste -sd '|')
-    env | egrep -v "$re_secrets"
+    env | egrep -v $re_secrets
 }
 
 ## MACOS specific
-if is_mac; then
-    function flush-dns(){
-        sudo dscacheutil -flushcache
-        sudo killall -HUP mDNSResponder
-    }
-
-    function mac-add-loopback(){
-        if [[ "x$1" == x ]]; then
-            echo "USAGE: mac-add-loopback 127.x.y.z";
-            return 1;
-        fi;
-        sudo ifconfig lo0 alias "$1" up;
-    }
-fi
+function mac-add-loopback(){ 
+    if [[ "x$1" == x ]]; then 
+        echo "USAGE: mac-add-loopback 127.x.y.z"; 
+        return 1; 
+    fi; 
+    sudo ifconfig lo0 alias "$1" up; 
+}
 
 t_debug "global aliases and functions finished"
