@@ -3,7 +3,7 @@
 ## Up and running on the VPN Gateway
 
 - Populate .env by `./server/gen-env.sh`
-- Add some clients in `clients.list`. Run `client/generate-clients.sh`
+- Add clients to `clients.list` using `<name> <ip>`, then run `client/generate-clients.sh`
 - Run `./server/setup.sh` for one-time setup
 - Export the configs (use `imcat wg0-full.png` to get a QR code for the Android/iPhone apps )
 
@@ -66,4 +66,3 @@ Defaults to:
 SERVER_WG_PORT=51820
 ```
 You can change it if needed, but remember to open it in your firewall and NAT (if applicable).
-

@@ -3,7 +3,6 @@ set -e
 . ../.env
 
 mkdir -p ../keys
-touch ../ip_map.txt
 
 assert_defined(){
     eval env_var_value='$'$1
@@ -14,30 +13,23 @@ assert_defined(){
     fi
 }
 
-get_ip_for_client() {
-  client="$1"
-  ip=$(grep "^$client " ../ip_map.txt | awk '{print $2}')
-  if [ -n "$ip" ]; then
-    echo "$ip"
-  else
-    used_ips=$(awk '{print $2}' ../ip_map.txt)
-    next=2
-    while :; do
-      candidate="10.0.0.$next"
-      echo "$used_ips" | grep -q "$candidate" || break
-      next=$((next + 1))
-    done
-    echo "$client $candidate" >> ../ip_map.txt
-    echo "$candidate"
-  fi
-}
-
 assert_defined SERVER_PUBLIC_IP
 assert_defined SERVER_WG_PORT
 assert_defined SERVER_PUBLIC_KEY
 
-while IFS= read -r client || [ -n "$client" ]; do
+while IFS= read -r line || [ -n "$line" ]; do
+  set -- $line
+  client="$1"
+  WG_IP="$2"
+
   [ -z "$client" ] && continue
+  [ "${client#\#}" != "$client" ] && continue
+
+  if [ -z "$WG_IP" ]; then
+    echo "Missing IP for client '$client' in ../clients.list"
+    echo "Expected format: <client> <ip>"
+    exit 2
+  fi
 
   CLIENT_DIR="../keys/$client"
   mkdir -p "$CLIENT_DIR"
@@ -52,7 +44,6 @@ while IFS= read -r client || [ -n "$client" ]; do
   fi
 
   PRIVATE_KEY=$(cat "$CLIENT_DIR/privatekey")
-  WG_IP=$(get_ip_for_client "$client")
 
   printf "\n\n💡 Select mode for $client:\n"
   echo "1) Full tunnel (route all traffic)"
@@ -103,4 +94,3 @@ while IFS= read -r client || [ -n "$client" ]; do
   echo
 
 done < ../clients.list
-
