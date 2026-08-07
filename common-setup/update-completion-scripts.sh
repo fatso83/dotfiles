@@ -19,5 +19,6 @@ if which bun > /dev/null; then
     # Patch the bun completion script because of a bug in bun where re_comp_word_script is undefined
     # See https://github.com/oven-sh/bun/issues/24847
     # Note that on macOS, sed -i requires an empty string for the extension: sed -i ''
-    sed -i '' 's/re_prev_script="(^| )${prev}($| )";/re_prev_script="(^| )${prev}($| )"; local re_comp_word_script=".*";/' "$COMPLETIONS/bun.completion.bash"
+    sed -i.bak 's/re_prev_script="(^| )${prev}($| )";/re_prev_script="(^| )${prev}($| )"; local re_comp_word_script=".*";/' "$COMPLETIONS/bun.completion.bash"
+    rm -f "$COMPLETIONS/bun.completion.bash.bak"
 fi
