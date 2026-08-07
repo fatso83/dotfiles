@@ -1,11 +1,11 @@
 # vim: ft=sh
 # WARNING: This file is just read ONCE on login (at least on Linux, not sure about BSD/macOS)
-# That means it and any changes will not be read in the current session and will 
+# That means it and any changes will not be read in the current session and will
 # need to be manually sourced in the first time, or until you logout and in again.
 #export DEBUG=1
 
 # include selfmade binaries and scripts
-# You might get "millis: command not found" on first time setup, but this if fixed by restarting 
+# You might get "millis: command not found" on first time setup, but this if fixed by restarting
 # or logging in again, as the file is only read once (at login), not in every shell (as bashrc)
 if [ -d ~/bin ] ; then
     PATH=~/bin:"${PATH}"
@@ -21,7 +21,7 @@ export VISUAL='vim'
 export EDITOR='vim'
 export PYTHONSTARTUP="$HOME/.pystartup"
 export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss,SSS \
-                   -Dorg.slf4j.simpleLogger.showDateTime=true" 
+                   -Dorg.slf4j.simpleLogger.showDateTime=true"
 
 # Python binaries
 PATH=$HOME/.local/bin:$PATH
@@ -69,6 +69,7 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-. "$HOME/.local/bin/env"
+[ -e "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
+
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
