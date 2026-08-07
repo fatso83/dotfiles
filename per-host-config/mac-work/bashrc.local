@@ -74,10 +74,6 @@ export PATH="$PNPM_HOME:$PATH"
 # to get b-scripts `cdp` command to work, I need a completion function _get_cword
 . /opt/homebrew/etc/bash_completion
 
-
-# local bash
-[ -e "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
-
 # ADA support. Needed to build GNAT Studio
 export GPR_PROJECT_PATH=/opt/gcc-14.2.0-3-aarch64/lib/gnat
 export ADA_PROJECT_PATH=/opt/gcc-14.2.0-3-aarch64/share/gpr
