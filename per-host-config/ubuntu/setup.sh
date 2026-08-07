@@ -140,7 +140,7 @@ fi
 
 if ! command_exists fzf; then
     h2 "Installing FZF"
-    curl -L -o tmp-fzf.tar.gz https://github.com/junegunn/fzf/releases/download/v0.60.2/fzf-0.60.2-linux_amd64.tar.gz
+    curl -L -o tmp-fzf.tar.gz https://github.com/junegunn/fzf/releases/download/v0.74.2/fzf-0.74.2-linux_amd64.tar.gz
     tar xvzf tmp-fzf.tar.gz
     rm tmp-fzf.tar.gz
     mv fzf ~/bin/
