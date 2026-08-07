@@ -148,6 +148,10 @@ chmod 600 "$HOME/.secret"
 # FZF https://github.com/junegunn/fzf?tab=readme-ov-file#setting-up-shell-integration
 eval "$(fzf --bash)"
 
+
+t_debug "Reading env from .local/bin/env"
+[ -e "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
+
 t_debug "Reading local settings for this machine"
 # This needs to be at the bottom to be able to override earlier settings/variables/functions
 read_config_if_exists "$HOME/.bashrc.local"
@@ -189,5 +193,3 @@ t_debug Dynamic SDKMAN init #must be at the end
 [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
 t_debug Finished bash setup
-
-. "$HOME/.local/bin/env"
