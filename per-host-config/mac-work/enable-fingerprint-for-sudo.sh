@@ -6,11 +6,13 @@
 # exit on error
 set -e
 
+HOMEBREW_PREFIX="$(brew --prefix)"
+
 # https://gist.github.com/fraune/0831edc01fa89f46ce43b8bbc3761ac7?permalink_comment_id=5171048#gistcomment-5171048
 SUDO_FILE=/etc/pam.d/sudo_local
 
 tmux_fix(){
-  PAM_REATTACH_MODULE=/opt/homebrew/lib/pam/pam_reattach.so
+  PAM_REATTACH_MODULE="$HOMEBREW_PREFIX/lib/pam/pam_reattach.so"
   if ! command -v tmux > /dev/null; then
       # tmux is not installed, quitting early
       return 0
@@ -22,9 +24,9 @@ Install it using Homebrew to have Touch ID work in tmux." "$PAM_REATTACH_MODULE"
       return 1
   fi
 
-  grep -q "$PAM_REATTACH_MODULE" $SUDO_FILE || sudo sed -i '' '1i\
-auth       optional       /opt/homebrew/lib/pam/pam_reattach.so ignore_ssh
-' $SUDO_FILE
+  grep -q "$PAM_REATTACH_MODULE" $SUDO_FILE || sudo sed -i '' "1i\\
+auth       optional       $PAM_REATTACH_MODULE ignore_ssh
+" $SUDO_FILE
 }
 
 

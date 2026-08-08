@@ -24,8 +24,10 @@ sudo chown "$USER" /opt
 if ! which -s brew; then
     h2 "Installing Homebrew\n"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
+HOMEBREW_PREFIX="$(brew --prefix)"
+export HOMEBREW_PREFIX
+eval "$(brew shellenv)"
 BREW_LATEST_UPDATE="$SCRIPT_DIR/.latest_brew_update"
 _is_old_brew(){
     if [[ ! -e "$BREW_LATEST_UPDATE" ]]; then

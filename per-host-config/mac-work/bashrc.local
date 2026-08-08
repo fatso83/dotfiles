@@ -1,3 +1,8 @@
+# Resolve Homebrew dynamically when this file is sourced without profile.local.
+if command -v brew >/dev/null 2>&1; then
+  export HOMEBREW_PREFIX="${HOMEBREW_PREFIX:-$(brew --prefix)}"
+fi
+
 #Se man bash i delen som heter "Prompting"
 #PS1="skinny \W \u\$  "
 t_debug "Load personalized bashrc for mac"
@@ -35,7 +40,7 @@ stty -ixon
 # c_dark_grey='\033[39m'
 # set_prompt
 
-export LLVM="/usr/local/opt/emscripten/libexec/llvm/bin"
+export LLVM="$HOMEBREW_PREFIX/opt/emscripten/libexec/llvm/bin"
 
 #t_debug "Load DNVM (.NET VM manager)"
 #[ -s "/Users/carl-erik.kopseng/.dnx/dnvm/dnvm.sh" ] && . "/Users/carl-erik.kopseng/.dnx/dnvm/dnvm.sh" # Load dnvm
@@ -49,17 +54,17 @@ if which ruby >/dev/null && which gem >/dev/null; then
 fi
 
 # Postgres: psql, etc
-#export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+#export PATH="$HOMEBREW_PREFIX/opt/postgresql@15/bin:$PATH"
 #For compilers to find postgresql@15 you may need to set:
-#export LDFLAGS="-L/opt/homebrew/opt/postgresql@15/lib"
-#export CPPFLAGS="-I/opt/homebrew/opt/postgresql@15/include"
+#export LDFLAGS="-L$HOMEBREW_PREFIX/opt/postgresql@15/lib"
+#export CPPFLAGS="-I$HOMEBREW_PREFIX/opt/postgresql@15/include"
 #For pkg-config to find postgresql@15 you may need to set:
-#export PKG_CONFIG_PATH="/opt/homebrew/opt/postgresql@15/lib/pkgconfig"
+#export PKG_CONFIG_PATH="$HOMEBREW_PREFIX/opt/postgresql@15/lib/pkgconfig"
 
 export PATH
 
 # For google cloud sdk to work on mac13.5 (only works with Python 3.5-3.9 per June 2023)
-#export CLOUDSDK_PYTHON=/opt/homebrew/bin/python3.9
+#export CLOUDSDK_PYTHON=$HOMEBREW_PREFIX/bin/python3.9
 
 
 # bun
@@ -72,7 +77,9 @@ export PATH="$PNPM_HOME:$PATH"
 # pnpm end
 
 # to get b-scripts `cdp` command to work, I need a completion function _get_cword
-. /opt/homebrew/etc/bash_completion
+if [[ -n "$HOMEBREW_PREFIX" && -f "$HOMEBREW_PREFIX/etc/bash_completion" ]]; then
+  . "$HOMEBREW_PREFIX/etc/bash_completion"
+fi
 
 # ADA support. Needed to build GNAT Studio
 export GPR_PROJECT_PATH=/opt/gcc-14.2.0-3-aarch64/lib/gnat

@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+HOMEBREW_PREFIX="$(brew --prefix)"
+
 PRIVATEKEY_PATH="${PRIVATEKEY_PATH:-$HOME/Downloads/privatekey.asc}"
 # Mestergruppen OpenPGP nøkkel
 GPG_KEY_ID="${GPG_KEY_ID:-A9ED76646B3BCBCFA232F26BACFC4328FBE5C480}"
@@ -25,8 +27,8 @@ if ! have_gpg_key; then
     gpg --import "$PRIVATEKEY_PATH"
 
     mkdir -p ~/.gnupg
-    cat > ~/.gnupg/gpg-agent.conf <<'EOF'
-pinentry-program /opt/homebrew/bin/pinentry-mac
+    cat > ~/.gnupg/gpg-agent.conf <<EOF
+pinentry-program $HOMEBREW_PREFIX/bin/pinentry-mac
 default-cache-ttl 3600
 max-cache-ttl 86400
 EOF

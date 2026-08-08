@@ -4,28 +4,29 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 export APPLE_SSH_ADD_BEHAVIOR=macos
 
 # OpenJDK macOS Homebrew
-export PATH="/usr/local/opt/openjdk/bin:$PATH" 
-
-PATH="/usr/local/opt/postgresql@10/bin:$PATH"
-PATH="/usr/local/opt/php@7.2/sbin:$PATH"
 PATH="$HOME/Library/Python/3.7/bin:$PATH"
 PATH="$HOME/Library/Python/3.9/bin:$PATH" # macOS 11.5
 
 export LANG=no_NO.UTF-8
 
-# Homebrew 2021
-export HOMEBREW_PREFIX="/opt/homebrew";
-export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
-export HOMEBREW_REPOSITORY="/opt/homebrew";
-export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
-export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
-export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
+# Homebrew
+if command -v brew >/dev/null 2>&1; then
+    export HOMEBREW_PREFIX="$(brew --prefix)"
+    export HOMEBREW_CELLAR="$(brew --cellar)"
+    export HOMEBREW_REPOSITORY="$(brew --repository)"
+    export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin${PATH+:$PATH}"
+    export MANPATH="$HOMEBREW_PREFIX/share/man${MANPATH+:$MANPATH}:"
+    export INFOPATH="$HOMEBREW_PREFIX/share/info:${INFOPATH:-}"
 
-export PATH="/opt/homebrew/opt/php@7.4/bin:$PATH"
-#export PATH="/opt/homebrew/opt/php@7.4/sbin:$PATH" #contains php-fpm
-# For compilers to find php@7.4 you may need to set:
-#export LDFLAGS="-L/opt/homebrew/opt/php@7.4/lib"
-#export CPPFLAGS="-I/opt/homebrew/opt/php@7.4/include"
+    export PATH="$HOMEBREW_PREFIX/opt/openjdk/bin:$PATH"
+    PATH="$HOMEBREW_PREFIX/opt/postgresql@10/bin:$PATH"
+    PATH="$HOMEBREW_PREFIX/opt/php@7.2/sbin:$PATH"
+    export PATH="$HOMEBREW_PREFIX/opt/php@7.4/bin:$PATH"
+    #export PATH="$HOMEBREW_PREFIX/opt/php@7.4/sbin:$PATH" #contains php-fpm
+    # For compilers to find php@7.4 you may need to set:
+    #export LDFLAGS="-L$HOMEBREW_PREFIX/opt/php@7.4/lib"
+    #export CPPFLAGS="-I$HOMEBREW_PREFIX/opt/php@7.4/include"
+fi
 
 export PUPPETEER_EXECUTABLE_PATH=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
 
