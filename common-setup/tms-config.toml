@@ -1,5 +1,9 @@
 [[search_dirs]]
-path = "~/dev"
+path = "/Users/carlerik/dev/mestergruppen/project-pilarr/repos"
+depth = 1
+
+[[search_dirs]]
+path = "/Users/carlerik/dev"
 depth = 2
 
 [shortcuts]
