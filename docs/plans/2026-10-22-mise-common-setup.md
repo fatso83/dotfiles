@@ -491,7 +491,9 @@ poetry and pgcli — no compiler needed. Three findings, all fixed on the branch
 ## Follow-ups (new issues)
 
 - Replace `direnv` with Mise `[env]` / `mise.local.toml` (first, because of D11).
-- #28: `per-host-config/mac-work` — Homebrew list via `[bootstrap.packages]`
+- **Done** by [2026-10-22-mise-mac-work.md](2026-10-22-mise-mac-work.md) (as a Mise module
+  `per-host-config/mac-work/mise.toml` rather than `config.local.toml`; Java is `temurin-25`).
+  #28: `per-host-config/mac-work` — Homebrew list via `[bootstrap.packages]`
   `brew:`/`brew-cask:` entries in `config.local.toml`, drop `starship`/`direnv` from
   `apps.local` (and `gh`, which the Docker smoke test showed common-setup needs before
   the per-host step: it is now a Mise tool), Java via Mise (`java = "temurin-21.0.2"`, `maven`, `kotlin`) replacing

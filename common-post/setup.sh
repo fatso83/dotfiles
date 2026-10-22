@@ -8,7 +8,7 @@ ROOT="$SCRIPT_DIR/.."
 source "$ROOT/shared.lib"
 pushd "$SCRIPT_DIR" > /dev/null || fail
 
-# Per-host setup may have added ~/.config/mise/config.local.toml; make sure everything is installed
+# Per-host setup may have added tools in per-host-config/<machine>/mise.toml; make sure everything is installed
 use_mise_shims
 if [[ -x "$MISE_BIN" ]]; then
     h3 "Installing any tools added by the per-host setup"

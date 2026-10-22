@@ -99,10 +99,8 @@ sudo apt-get purge avahi-daemon    # ZeroConf for local networks, printers, etc.
 source ../_shared/install-utils.inc
 
 # Python libraries; Python, Ruby and Node themselves come from mise (common-setup)
-install_asdf_tooling
+install_language_packages
 install_sdkman_packages
-install_ada_packages
-source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
 # This cannot be a shared app, as the install fails on macOS due to some node-gyp thingie
 npm i -g @fatso83/luxafor-cli
