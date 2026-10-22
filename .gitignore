@@ -3,9 +3,7 @@ common-setup/vim/dotvim/init.vim
 common-setup/vim/dotvim/repo_vimrcs/
 ubuntu-diffia
 common-setup/vim/dotvim/autoload/plug.vim.old
-per-host-config/mac-work/.latest_brew_update
 common-setup/fonts
-per-host-config/mac-work/integration/
 common-setup/vim/dotvim/logs/
 wireguard-vpn/keys/
 wireguard-vpn/server/peers.generated.conf

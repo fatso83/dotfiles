@@ -3,10 +3,6 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 # silence warning, make ssh-add load from keychain 
 export APPLE_SSH_ADD_BEHAVIOR=macos
 
-# OpenJDK macOS Homebrew
-PATH="$HOME/Library/Python/3.7/bin:$PATH"
-PATH="$HOME/Library/Python/3.9/bin:$PATH" # macOS 11.5
-
 export LANG=no_NO.UTF-8
 
 # Homebrew
@@ -18,9 +14,6 @@ if command -v brew >/dev/null 2>&1; then
     export MANPATH="$HOMEBREW_PREFIX/share/man${MANPATH+:$MANPATH}:"
     export INFOPATH="$HOMEBREW_PREFIX/share/info:${INFOPATH:-}"
 
-    export PATH="$HOMEBREW_PREFIX/opt/openjdk/bin:$PATH"
-    PATH="$HOMEBREW_PREFIX/opt/postgresql@10/bin:$PATH"
-    PATH="$HOMEBREW_PREFIX/opt/php@7.2/sbin:$PATH"
     export PATH="$HOMEBREW_PREFIX/opt/php@7.4/bin:$PATH"
     #export PATH="$HOMEBREW_PREFIX/opt/php@7.4/sbin:$PATH" #contains php-fpm
     # For compilers to find php@7.4 you may need to set:
@@ -29,11 +22,3 @@ if command -v brew >/dev/null 2>&1; then
 fi
 
 export PUPPETEER_EXECUTABLE_PATH=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
-
-export PATH="/opt/gcc-14.2.0-3-aarch64/bin:$PATH"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/opt/google-cloud-sdk/path.bash.inc' ]; then . '/opt/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/opt/google-cloud-sdk/completion.bash.inc' ]; then . '/opt/google-cloud-sdk/completion.bash.inc'; fi

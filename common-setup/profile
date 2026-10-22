@@ -43,9 +43,6 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # Symfony
 export PATH="$HOME/.symfony/bin:$PATH"
 
-# SDKMAN
-export SDKMAN_DIR="$HOME/.sdkman"
-
 # Local overrides
 if [ -f "$HOME/.profile.local" ]; then
     t_debug "Reading local profile overrides"

@@ -3,7 +3,7 @@
 # Replaces the old asdf ~/.tool-versions and Volta's global toolchain.
 #
 # Edit THIS file, never `mise use -g` (that would rewrite the symlink target).
-# Machine specific additions belong in ~/.config/mise/config.local.toml (see #28).
+# Machine specific additions belong in per-host-config/<machine>/mise.toml (a Mise module, see per-host-config/README.md).
 # Project specific versions still come from the project's .tool-versions / mise.toml.
 
 [settings]
@@ -24,6 +24,16 @@ python = "3.14.0"
 ruby   = "3.2.2"
 just   = "1.40.0"
 bun    = "latest"
+
+# ---- JVM (previously SDKMAN via per-host-config/_shared/install-utils.inc) ----
+java   = "temurin-25"   # current LTS; projects pin their own in .tool-versions / .sdkmanrc
+maven  = "latest"
+kotlin = "latest"
+
+# ---- Toolchains previously from Homebrew (mac) / apt (ubuntu) ----
+go   = "latest"
+rust = "stable"
+"cargo:tmux-sessionizer" = "latest"   # tms; was `cargo install` in both per-host scripts
 
 # ---- Previously installed via curl|sh ----
 starship = "latest"

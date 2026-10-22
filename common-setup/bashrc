@@ -161,18 +161,12 @@ fi
 # Dynamic configuration/init below - needs to be after local customization
 ################################################################################
 
-# Alire (ADA source package manager)
-export PATH="$HOME/.alire/bin:$PATH"
-
 t_debug direnv integration
 if command -v direnv &> /dev/null; then
     eval "$(direnv hook bash)"
 else
     echo "This setup is missing 'direnv'. Please install it for per-directory overrides"
 fi
-
-t_debug Dynamic SDKMAN init # prepends to PATH, so it must come before mise activation
-[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
 t_debug Mise activation  # last PATH manipulation on purpose: anything prepended later would win. See docs/plans/2026-10-22-mise-common-setup.md
 if [[ -x "$HOME/.local/bin/mise" ]]; then
