@@ -158,3 +158,5 @@
 # See https://www.youtube.com/watch?v=aolI_Rz0ZqY&t=537s
 [includeIf "gitdir:~/dev/mestergruppen/"]
     path = ~/dev/mestergruppen/gitconfig
+[credential "https://bitbucket.org"]
+	helper = manager
