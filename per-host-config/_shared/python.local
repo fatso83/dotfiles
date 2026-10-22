@@ -1,8 +1,6 @@
-poetry
 bitwarden-keyring
 keyring
 setuptools
 neovim
-pgcli
 pynvim
 pygobject
