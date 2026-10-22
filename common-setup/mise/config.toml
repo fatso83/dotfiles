@@ -38,7 +38,6 @@ uv = "latest"
 "npm:neovim"               = "latest"     # provides neovim-node-host
 "npm:prettier"             = "latest"
 "npm:slug"                 = "latest"
-"npm:tldr"                 = "latest"
 "npm:tsx"                  = "latest"
 "npm:typescript"           = "latest"
 "npm:ngrok" = { version = "latest", allow_builds = true }   # postinstall script downloads the binary
