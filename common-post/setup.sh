@@ -12,5 +12,5 @@ pushd "$SCRIPT_DIR" > /dev/null || fail
 use_mise_shims
 if [[ -x "$MISE_BIN" ]]; then
     h3 "Installing any tools added by the per-host setup"
-    MISE_YES=1 "$MISE_BIN" install
+    MISE_YES=1 "$MISE_BIN" install || warn "mise install failed for some tool. Fix and re-run ./setup.sh"
 fi
