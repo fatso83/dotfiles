@@ -54,6 +54,3 @@ pnpm = "latest"                           # registry binary (aqua:pnpm/pnpm), no
 
 # ---- Ruby CLIs (previously gem install from ruby.local) ----
 "gem:gist"   = "latest"
-# mdless builds a native extension (redcarpet): fails on a fresh machine without make/gcc,
-# and is retried by common-post/setup.sh after the per-host step has installed build tools
-"gem:mdless" = "latest"
