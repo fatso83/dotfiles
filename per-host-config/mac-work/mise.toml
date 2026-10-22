@@ -63,7 +63,7 @@ gcloud = { version = "latest", components = ["gke-gcloud-auth-plugin"] }
 "brew:tmux" = "latest"
 "brew:universal-ctags" = "latest"     # fzf.vim
 "brew:xmlstarlet" = "latest"
-"brew:macvim" = "latest"                        # a bottled formula nowadays (the cask is gone); conflicts with a `vim` formula
+"brew-cask:macvim-app" = { os = "macos" }       # the cask `macvim` was renamed to macvim-app (old apps.local: homebrew/cask/macvim). Not the `macvim` formula: that would link a second vim into /opt/homebrew/bin
 "brew-cask:vagrant" = { os = "macos" }          # pkg cask (no formula exists); already installed → no-op
 "brew-cask:git-credential-manager" = { os = "macos" }   # was `brew install --cask git-credential-manager-core`; pkg cask, see Task 6 pre-checks
 # Removed vs apps.local: gh, starship, node, golang, rust, maven, hashicorp/tap/terraform — all mise tools now.

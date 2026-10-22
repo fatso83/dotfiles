@@ -132,7 +132,7 @@ gcloud = { version = "latest", components = ["gke-gcloud-auth-plugin"] }
 "brew:tmux" = "latest"
 "brew:universal-ctags" = "latest"     # fzf.vim
 "brew:xmlstarlet" = "latest"
-"brew:macvim" = "latest"                        # a bottled formula nowadays (the cask is gone); conflicts with a `vim` formula
+"brew-cask:macvim-app" = { os = "macos" }       # the cask `macvim` was renamed to macvim-app (old apps.local: homebrew/cask/macvim). Not the `macvim` formula: that would link a second vim into /opt/homebrew/bin
 "brew-cask:vagrant" = { os = "macos" }          # pkg cask (no formula exists); already installed → no-op
 "brew-cask:git-credential-manager" = { os = "macos" }   # was `brew install --cask git-credential-manager-core`; pkg cask, see Task 6 pre-checks
 # Removed vs apps.local: gh, starship, node, golang, rust, maven, hashicorp/tap/terraform — all mise tools now.
@@ -305,8 +305,10 @@ and `per-host-config/mac-work/integration/` lines — neither is written any mor
 
 Checks before committing:
 - TOML parses. Formula/cask kinds were verified against the Homebrew API on
-  2026-10-22 (`macvim` = formula, `vagrant` and `git-credential-manager` = pkg casks,
-  `alacritty` = disabled cask); `mise bootstrap packages status` on the Mac is the real check (Task 6).
+  2026-10-22 (`macvim-app` = app cask, old token `macvim`; `vagrant` and
+  `git-credential-manager` = pkg casks; `alacritty` = disabled cask). The Task 6 dry run
+  caught that the reviewer-suggested `brew:macvim` *formula* would have installed a
+  second MacVim next to the already-installed `macvim-app` cask.
 - `{{ env.HOME }}` in the launchd `args` is rendered (every string value in an agent is a
   Tera template; `env` is available everywhere). `~` is expanded only in `program`,
   `working_directory`, `stdout_path`, `stderr_path`, not in `args`, so the template is required.
@@ -377,7 +379,6 @@ Before letting `mac-work/setup.sh` run `mise bootstrap` for real, preview from a
 ```bash
 cat /etc/pam.d/sudo_local                       # anything hand-added here? mise will replace the whole file
 ls /opt/homebrew/Caskroom                       # is git-credential-manager there under that token? else mise runs its pkg installer (sudo)
-brew list --formula | grep -E '^(vim|ex-vi)$'   # would conflict with the macvim formula
 mise config ls                                  # config.toml then config.mac-work.toml
 mise bootstrap packages status                  # every brew: entry "installed"; look for "missing", "needs repair", "unknown"
 mise bootstrap --dry-run                        # files: sudo_local "update"; user: unchanged; launchd gui-path: missing → launchctl commands; tools: java/maven/... install
