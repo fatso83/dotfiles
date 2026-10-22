@@ -6,9 +6,9 @@
 
 error(){
     if ! command -v dark_red; then
-        printf "ERROR: %s\n" "$@" >> /dev/stderr
+        printf "ERROR: %s\n" "$@" >&2
     else
-        printf "ERROR: %s\n" "$(dark_red "$@")" >> /dev/stderr
+        printf "ERROR: %s\n" "$(dark_red "$@")" >&2
     fi
     exit 1
 }
@@ -64,7 +64,7 @@ info(){
 }
 
 warn(){
-    printf "%s\n" "$(dark_yellow "$@")" >> /dev/stderr
+    printf "%s\n" "$(dark_yellow "$@")" >&2
 }
 
 TODO(){

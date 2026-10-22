@@ -110,13 +110,17 @@ bun    = "latest"
 # ---- Previously installed via curl|sh ----
 starship = "latest"
 
+# ---- Previously installed per host (brew/apt). Needed already in common-setup:
+# gitconfig uses `gh auth git-credential` and utils/setup.sh uses `gclone` (gh repo clone)
+gh = "latest"
+
 # ---- Needed by the pypi: backend ----
 uv = "latest"
 
 # ---- Global Node CLIs (previously per-host-config/_shared/node.local, via Volta) ----
 "npm:bash-language-server" = "latest"
 "npm:eslint"               = "latest"
-"npm:gifify"               = "latest"     # needs ffmpeg + imagemagick on the host at runtime
+"npm:gifify" = { version = "latest", allow_low_downloads = true }   # needs ffmpeg + imagemagick at runtime
 "npm:neovim"               = "latest"     # provides neovim-node-host
 "npm:prettier"             = "latest"
 "npm:slug"                 = "latest"
@@ -272,8 +276,11 @@ Files: `common-setup/bashrc`, `common-setup/profile`, `common-setup/zsh/zshrc`,
 
   t_debug Finished bash setup
   ```
-- Resulting `PROMPT_COMMAND` chain is roughly `starship_precmd; _mise_hook; _direnv_hook; history -a`
-  — that is fine; direnv's `.envrc` PATH edits still win inside a directory.
+- Starship replaces `PROMPT_COMMAND` with just `starship_precmd` and moves the previous
+  chain (`_mise_hook; _direnv_hook; history -a …`) into `STARSHIP_PROMPT_COMMAND`, which
+  `starship_precmd` evals every prompt. So `declare -p PROMPT_COMMAND` showing only
+  `starship_precmd` is expected; check `echo "$STARSHIP_PROMPT_COMMAND"` instead.
+  direnv's `.envrc` PATH edits still win inside a directory.
 - Known quirk to document in README: `restore_path` resets to `ORIGINAL_PATH`
   (snapshotted after `profile`, so it contains the shims dir in login shells); the
   real Mise bin dirs come back at the next prompt.
@@ -424,15 +431,28 @@ Mise's main selling point here is that a clean machine can run
 
 ```bash
 docker run --rm -it -v "$PWD":/src ubuntu:24.04 bash -c '
+  export DEBIAN_FRONTEND=noninteractive &&   # otherwise tzdata (pulled in by fontconfig) waits for a hidden prompt
   apt-get update -qq && apt-get install -y -qq curl git ca-certificates gettext-base vim fontconfig unzip >/dev/null &&
-  useradd -m dev && su - dev -c "git clone /src dotfiles && cd dotfiles && ./common-setup/setup.sh && ~/.local/bin/mise doctor && ~/.local/bin/mise ls"'
+  useradd -m dev && su - dev -c "git clone /src dotfiles && cd dotfiles && git switch mise-common-setup && ./common-setup/setup.sh && ~/.local/bin/mise doctor && ~/.local/bin/mise ls"'
 ```
 
 Expected: no compile steps for node/python/ruby (all precompiled; works on x86_64 and
-arm64 hosts), `mise ls` shows every tool, `mise doctor` reports no problems. If
-`gifify` or `ngrok` fail to install, mark them `os = ["macos"]` or move them to the
-per-host apps list rather than letting them block the global install (the
-`|| warn` in Task 1 keeps the rest of the setup going either way).
+arm64 hosts), `mise ls` shows every tool, `mise doctor` reports no problems.
+
+Result of the first run (2026-10-22, Podman, ubuntu:24.04 arm64): 19 of 21 tools
+installed in one go, including node, python, ruby, bun, starship, uv, pnpm, ngrok,
+poetry and pgcli — no compiler needed. Three findings, all fixed on the branch:
+
+- `npm:gifify` stopped on an interactive "128 downloads last week, continue?" prompt
+  from mise's npm backend → `allow_low_downloads = true` on that entry.
+- `gem:mdless` fails without `make` (its `redcarpet` dependency builds a native
+  extension). Accepted: the per-host step installs build tools (`build-essential` on
+  Ubuntu, Xcode CLT via Homebrew on macOS) and `common-post/setup.sh` re-runs
+  `mise install`, which then succeeds. Documented in the config.
+- `warn` in `shared.lib` wrote to `>> /dev/stderr`, which is `Permission denied` under
+  `su - dev` in a container (the tty belongs to root) and, with `set -e`, aborted the
+  whole setup right after `mise install` reported the two failures. Changed to `>&2`.
+  Pre-existing bug, only surfaced now that the warn path is exercised.
 
 ## Migration on an existing machine (one-off, manual)
 
@@ -473,7 +493,8 @@ per-host apps list rather than letting them block the global install (the
 - Replace `direnv` with Mise `[env]` / `mise.local.toml` (first, because of D11).
 - #28: `per-host-config/mac-work` — Homebrew list via `[bootstrap.packages]`
   `brew:`/`brew-cask:` entries in `config.local.toml`, drop `starship`/`direnv` from
-  `apps.local`, Java via Mise (`java = "temurin-21.0.2"`, `maven`, `kotlin`) replacing
+  `apps.local` (and `gh`, which the Docker smoke test showed common-setup needs before
+  the per-host step: it is now a Mise tool), Java via Mise (`java = "temurin-21.0.2"`, `maven`, `kotlin`) replacing
   SDKMAN, rename `install_asdf_tooling` calls, clean `BUN_INSTALL` from `bashrc.local`,
   and make Mise tools visible to Dock-launched GUI apps (e.g. a LaunchAgent running
   `launchctl setenv PATH "$HOME/.local/share/mise/shims:..."`, or

@@ -28,13 +28,18 @@ bun    = "latest"
 # ---- Previously installed via curl|sh ----
 starship = "latest"
 
+# ---- Previously installed per host (brew/apt). Needed already in common-setup:
+# gitconfig uses `gh auth git-credential` and utils/setup.sh uses `gclone` (gh repo clone)
+gh = "latest"
+
 # ---- Needed by the pypi: backend ----
 uv = "latest"
 
 # ---- Global Node CLIs (previously per-host-config/_shared/node.local, via Volta) ----
 "npm:bash-language-server" = "latest"
 "npm:eslint"               = "latest"
-"npm:gifify"               = "latest"     # needs ffmpeg + imagemagick on the host at runtime
+# gifify: few weekly downloads, so mise's npm backend would otherwise stop and ask. Needs ffmpeg + imagemagick at runtime
+"npm:gifify" = { version = "latest", allow_low_downloads = true }
 "npm:neovim"               = "latest"     # provides neovim-node-host
 "npm:prettier"             = "latest"
 "npm:slug"                 = "latest"
@@ -49,4 +54,6 @@ pnpm = "latest"                           # registry binary (aqua:pnpm/pnpm), no
 
 # ---- Ruby CLIs (previously gem install from ruby.local) ----
 "gem:gist"   = "latest"
+# mdless builds a native extension (redcarpet): fails on a fresh machine without make/gcc,
+# and is retried by common-post/setup.sh after the per-host step has installed build tools
 "gem:mdless" = "latest"
