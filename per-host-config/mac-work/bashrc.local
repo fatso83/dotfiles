@@ -9,8 +9,6 @@ t_debug "Load personalized bashrc for mac"
 
 PATH="/opt/kafka/bin:/Applications/IntelliJ IDEA.app/Contents/MacOS:/usr/local/bin:$PATH"
 
-#source /usr/local/etc/autojump.bash
-
 #Add SSH keys using the keychain
 if ! ssh-add -l > /dev/null;then
     ssh-add -K
@@ -48,11 +46,6 @@ export LLVM="$HOMEBREW_PREFIX/opt/emscripten/libexec/llvm/bin"
 # AWS auto-completion
 complete -C '/usr/local/bin/aws_completer' aws
 
-# docker-sync: https://docker-sync.readthedocs.io/en/latest/getting-started/installation.html
-if which ruby >/dev/null && which gem >/dev/null; then
-  PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
-fi
-
 # Postgres: psql, etc
 #export PATH="$HOMEBREW_PREFIX/opt/postgresql@15/bin:$PATH"
 #For compilers to find postgresql@15 you may need to set:
@@ -63,14 +56,6 @@ fi
 
 export PATH
 
-# For google cloud sdk to work on mac13.5 (only works with Python 3.5-3.9 per June 2023)
-#export CLOUDSDK_PYTHON=$HOMEBREW_PREFIX/bin/python3.9
-
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH=$BUN_INSTALL/bin:$PATH
-
 # pnpm
 export PNPM_HOME="/Users/carlerik/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
@@ -80,7 +65,3 @@ export PATH="$PNPM_HOME:$PATH"
 if [[ -n "$HOMEBREW_PREFIX" && -f "$HOMEBREW_PREFIX/etc/bash_completion" ]]; then
   . "$HOMEBREW_PREFIX/etc/bash_completion"
 fi
-
-# ADA support. Needed to build GNAT Studio
-export GPR_PROJECT_PATH=/opt/gcc-14.2.0-3-aarch64/lib/gnat
-export ADA_PROJECT_PATH=/opt/gcc-14.2.0-3-aarch64/share/gpr
