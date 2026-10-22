@@ -132,6 +132,36 @@ ln -sf "$SCRIPT_DIR"/vim/vimrc "$HOME"/.vimrc
 # Checks out the Vundle submodule
 git submodule update --init --recursive
 
+# Before the vim plugins: gh (a mise tool) is the git credential helper in gitconfig
+h2 "Mise: tool version manager (replaces asdf and Volta)"
+if [[ ! -x "$MISE_BIN" ]]; then
+    h3 "Installing mise to $MISE_BIN"
+    # Official installer, verifies checksums. MISE_INSTALL_HELP=0 silences the "add this to your rc" hint.
+    curl -fsSL https://mise.run | MISE_INSTALL_HELP=0 sh
+fi
+
+MISE_CONF="$HOME/.config/mise/config.toml"
+mkdir -p "$(dirname "$MISE_CONF")"
+if [[ -e "$MISE_CONF" && ! -L "$MISE_CONF" ]]; then
+    info "Found a hand-made $MISE_CONF. Renaming to config.toml.bak"
+    mv "$MISE_CONF" "$MISE_CONF.bak"
+fi
+ln -sf "$SCRIPT_DIR/mise/config.toml" "$MISE_CONF"
+
+# mise also reads ~/.tool-versions; remove the old asdf symlink so it cannot shadow the config
+if [[ -L "$HOME/.tool-versions" ]]; then
+    h3 "Removing legacy asdf ~/.tool-versions symlink"
+    rm "$HOME/.tool-versions"
+fi
+
+for legacy in "$HOME/.asdf" "$HOME/.volta" "$HOME/bin/asdf" "$HOME/.bun"; do
+    [[ -e "$legacy" ]] && warn "Legacy tool install found: $legacy — safe to remove now that mise manages it"
+done
+
+use_mise_shims
+h3 "Installing tools from ~/.config/mise/config.toml (first run takes a while)"
+MISE_YES=1 "$MISE_BIN" install || warn "mise install failed for some tool. Fix and re-run ./setup.sh (the rest of the setup continues)"
+
 h2 "Installing all VIM plugins"
 info "(might take some time the first time ... )"
 vim +PlugInstall +qall
@@ -176,35 +206,6 @@ ln -sf "$PWD"/alacritty.toml ~/.config/alacritty/alacritty.toml
 mkdir -p "$HOME/.gemini/policies"
 ln -sf "$PWD"/gemini/settings.json ~/.gemini/
 ln -sf "$PWD"/gemini/my-rules.toml ~/.gemini/policies/
-
-h2 "Mise: tool version manager (replaces asdf and Volta)"
-if [[ ! -x "$MISE_BIN" ]]; then
-    h3 "Installing mise to $MISE_BIN"
-    # Official installer, verifies checksums. MISE_INSTALL_HELP=0 silences the "add this to your rc" hint.
-    curl -fsSL https://mise.run | MISE_INSTALL_HELP=0 sh
-fi
-
-MISE_CONF="$HOME/.config/mise/config.toml"
-mkdir -p "$(dirname "$MISE_CONF")"
-if [[ -e "$MISE_CONF" && ! -L "$MISE_CONF" ]]; then
-    info "Found a hand-made $MISE_CONF. Renaming to config.toml.bak"
-    mv "$MISE_CONF" "$MISE_CONF.bak"
-fi
-ln -sf "$SCRIPT_DIR/mise/config.toml" "$MISE_CONF"
-
-# mise also reads ~/.tool-versions; remove the old asdf symlink so it cannot shadow the config
-if [[ -L "$HOME/.tool-versions" ]]; then
-    h3 "Removing legacy asdf ~/.tool-versions symlink"
-    rm "$HOME/.tool-versions"
-fi
-
-for legacy in "$HOME/.asdf" "$HOME/.volta" "$HOME/bin/asdf" "$HOME/.bun"; do
-    [[ -e "$legacy" ]] && warn "Legacy tool install found: $legacy — safe to remove now that mise manages it"
-done
-
-use_mise_shims
-h3 "Installing tools from ~/.config/mise/config.toml (first run takes a while)"
-MISE_YES=1 "$MISE_BIN" install || warn "mise install failed for some tool. Fix and re-run ./setup.sh (the rest of the setup continues)"
 
 ./fonts.sh
 "$SCRIPT_DIR/update-completion-scripts.sh"

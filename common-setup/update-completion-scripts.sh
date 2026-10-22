@@ -15,7 +15,7 @@ if command -v npm > /dev/null; then
 fi
 
 if command -v bun > /dev/null; then
-    bun completions
+    SHELL=bash bun completions   # bun picks the target dir from $SHELL; not set under su/cron
     # Patch the bun completion script because of a bug in bun where re_comp_word_script is undefined
     # See https://github.com/oven-sh/bun/issues/24847
     # Note that on macOS, sed -i requires an empty string for the extension: sed -i ''

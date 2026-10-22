@@ -58,7 +58,7 @@ download(){
     local url="$1"
     local file="$(basename $url)"
     if is_installed "$file" ; then 
-        printf "Already installed %s\n" "$file" > /dev/stderr
+        printf "Already installed %s\n" "$file" >&2
         return 1
     fi
 
