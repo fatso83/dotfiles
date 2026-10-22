@@ -1,0 +1,111 @@
+# Mise module for the mac-work host (https://mise.jdx.dev/bootstrap/modules.html)
+# Symlinked to ~/.config/mise/config.mac-work.toml by per-host-config/setup.sh, which also
+# selects it in ~/.config/mise/miserc.local.toml. Applied with `mise bootstrap` from
+# per-host-config/mac-work/setup.sh. Edit this file, never `mise bootstrap packages use`.
+
+# ---------------------------------------------------------------------------
+# Tools that only this host needs (the common ones live in common-setup/mise/config.toml)
+# ---------------------------------------------------------------------------
+[tools]
+terraform = "latest"   # Posten repos pin 1.6.2 in their own .tool-versions
+# vfox:jdx/vfox-gcloud. `components` is the plugin's own option: added on the next `mise install`
+# without re-downloading the SDK. Needs a Python matching gcloud's required minor (see Risks).
+gcloud = { version = "latest", components = ["gke-gcloud-auth-plugin"] }
+
+# ---------------------------------------------------------------------------
+# Homebrew formulae and casks (previously apps.local + a brew install loop).
+# Mise installs bottles itself; the `brew` CLI is still installed by setup.sh for brew services etc.
+# https://mise.jdx.dev/bootstrap/packages/brew.html
+# ---------------------------------------------------------------------------
+[bootstrap.packages]
+# alacritty: NOT here. There is no formula, and Homebrew disabled the cask on 2026-09-01
+# ("fails_gatekeeper_check"). Install by hand from https://github.com/alacritty/alacritty/releases
+"brew:ansifilter" = "latest"          # strip color codes and junk
+"brew:bash" = "latest"                # tj/git-extras needs Bash 4+; also the login shell (see [bootstrap.user])
+"brew:bash-completion" = "latest"
+"brew:bat" = "latest"                 # syntax highlighting for fzf.vim
+"brew:ccat" = "latest"
+"brew:cmake" = "latest"
+"brew:cloc" = "latest"
+"brew:cowsay" = "latest"
+"brew:csshx" = "latest"               # distribute ssh commands (posten/bring)
+"brew:direnv" = "latest"              # until #30
+"brew:erlang" = "latest"
+"brew:fisher" = "latest"
+"brew:fortune" = "latest"
+"brew:fswatch" = "latest"
+"brew:fzf" = "latest"                 # bashrc runs `fzf --bash` before mise activation, so not a mise tool
+"brew:git-extras" = "latest"
+"brew:git-lfs" = "latest"
+"brew:glow" = "latest"
+"brew:gnupg" = "latest"
+"brew:gum" = "latest"
+"brew:gtk4" = "latest"
+"brew:htop" = "latest"
+"brew:imagemagick" = "latest"
+"brew:jq" = "latest"
+"brew:kcat" = "latest"
+"brew:llvm" = "latest"
+"brew:neovim" = "latest"
+"brew:pam-reattach" = "latest"        # Touch ID for sudo inside tmux (see [bootstrap.files])
+"brew:perl" = "latest"                # fzf.vim
+"brew:pinentry-mac" = "latest"        # integrate openpgp with the keychain
+"brew:postgresql@15" = "latest"
+"brew:pygobject3" = "latest"
+"brew:pspg" = "latest"
+"brew:qrencode" = "latest"
+"brew:reattach-to-user-namespace" = "latest"
+"brew:ripgrep" = "latest"             # fzf.vim
+"brew:shellcheck" = "latest"
+"brew:shfmt" = "latest"
+"brew:sox" = "latest"
+"brew:the_silver_searcher" = "latest"
+"brew:tmux" = "latest"
+"brew:universal-ctags" = "latest"     # fzf.vim
+"brew:xmlstarlet" = "latest"
+"brew:macvim" = "latest"                        # a bottled formula nowadays (the cask is gone); conflicts with a `vim` formula
+"brew-cask:vagrant" = { os = "macos" }          # pkg cask (no formula exists); already installed → no-op
+"brew-cask:git-credential-manager" = { os = "macos" }   # was `brew install --cask git-credential-manager-core`; pkg cask, see Task 6 pre-checks
+# Removed vs apps.local: gh, starship, node, golang, rust, maven, hashicorp/tap/terraform — all mise tools now.
+# shivammathur/php/php@7.4 stays a real `brew install` in setup.sh: mise would build the tap's
+# Ruby formula from source (gcc, patches, pear post_install) instead of pouring the tap's bottle.
+
+# ---------------------------------------------------------------------------
+# Login shell: Homebrew bash (previously /etc/shells + chsh in setup.sh)
+# https://mise.jdx.dev/bootstrap/shell.html#set-your-login-shell
+# ---------------------------------------------------------------------------
+[bootstrap.user]
+login_shell = "/opt/homebrew/bin/bash"
+
+# ---------------------------------------------------------------------------
+# Touch ID for sudo, also inside tmux (previously enable-fingerprint-for-sudo.sh).
+# pam_reattach must come before pam_tid. Written with sudo (owner/group declared).
+# https://mise.jdx.dev/bootstrap/files.html
+# ---------------------------------------------------------------------------
+[bootstrap.files."/etc/pam.d/sudo_local"]
+os = "macos"
+owner = "root"
+group = "wheel"
+mode = "0444"
+content = """
+# sudo_local: local config file which survives system update and is included for sudo
+# Managed by mise, see per-host-config/mac-work/mise.toml in the dotfiles repo
+auth       optional       /opt/homebrew/lib/pam/pam_reattach.so ignore_ssh
+auth       sufficient     pam_tid.so
+"""
+
+# ---------------------------------------------------------------------------
+# macOS defaults (previously `defaults write org.alacritty AppleFontSmoothing -int 0`)
+# ---------------------------------------------------------------------------
+[bootstrap.macos.defaults]
+"org.alacritty" = { AppleFontSmoothing = 0 }
+
+# ---------------------------------------------------------------------------
+# PATH for GUI apps. Dock-launched apps never read ~/.profile, so this agent sets the
+# login session's PATH at login (applies to apps started afterwards). Not a documented
+# mise feature, a standard launchd technique. Remove with `mise bootstrap services remove gui-path`.
+# ---------------------------------------------------------------------------
+[bootstrap.macos.launchd.agents.gui-path]
+program = "/bin/launchctl"
+args = ["setenv", "PATH", "{{ env.HOME }}/.local/share/mise/shims:{{ env.HOME }}/.local/bin:{{ env.HOME }}/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"]
+run_at_load = true

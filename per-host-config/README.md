@@ -12,3 +12,6 @@ symlinks it to `~/.config/mise/config.<machine>.toml` and selects it by writing
 `~/.config/mise/miserc.local.toml` (`env = ["<machine>"]`); that file is generated, do not hand-edit it.
 The module is applied with `mise bootstrap` from that machine's own `setup.sh`. Edit the repo file,
 never `mise use -g` / `mise bootstrap packages use`.
+
+mac-work: Alacritty is not declared (no formula, and Homebrew disabled the cask); install it by hand
+from https://github.com/alacritty/alacritty/releases when needed.
