@@ -42,9 +42,6 @@ if [ -e "$HOME/.bash_profile" ]; then
     mv ~/.bash_profile{,.bak}
 fi
 
-h2 "Setup base tool versions using ASDF"
-ln -sf "$SCRIPT_DIR/tool-versions" $HOME/.tool-versions
-
 carefully_replace_gitconfig(){
     if ! command_exists envsubst; then
         warn "Unable to configure Git: missing 'envsubst'. Finish the per-computer setup and re-run ./setup.sh"
@@ -168,17 +165,6 @@ ln -sf "$SCRIPT_DIR"/psqlrc "$HOME/.psqlrc"
 h2 "Fetching rupa/z (Jump Around)"
 curl -s https://raw.githubusercontent.com/rupa/z/master/z.sh -o ~/bin/z.sh
 
-if ! command_exists starship; then
-    h2 "Installing Starship from source"
-    curl -sS https://starship.rs/install.sh | sh
-fi
-
-if ! command_exists bun; then
-    h2 "Installing Bun from online installer"
-    curl -fsSL https://bun.sh/install | bash
-    git checkout ./bashrc
-fi
-
 [[ ! -e ~/.ssh ]] && mkdir ~/.ssh
 rm -f ~/.ssh/allowed_signers 2>/dev/null
 ln ./allowed_signers ~/.ssh/
@@ -190,6 +176,35 @@ ln -sf "$PWD"/alacritty.toml ~/.config/alacritty/alacritty.toml
 mkdir -p "$HOME/.gemini/policies"
 ln -sf "$PWD"/gemini/settings.json ~/.gemini/
 ln -sf "$PWD"/gemini/my-rules.toml ~/.gemini/policies/
+
+h2 "Mise: tool version manager (replaces asdf and Volta)"
+if [[ ! -x "$MISE_BIN" ]]; then
+    h3 "Installing mise to $MISE_BIN"
+    # Official installer, verifies checksums. MISE_INSTALL_HELP=0 silences the "add this to your rc" hint.
+    curl -fsSL https://mise.run | MISE_INSTALL_HELP=0 sh
+fi
+
+MISE_CONF="$HOME/.config/mise/config.toml"
+mkdir -p "$(dirname "$MISE_CONF")"
+if [[ -e "$MISE_CONF" && ! -L "$MISE_CONF" ]]; then
+    info "Found a hand-made $MISE_CONF. Renaming to config.toml.bak"
+    mv "$MISE_CONF" "$MISE_CONF.bak"
+fi
+ln -sf "$SCRIPT_DIR/mise/config.toml" "$MISE_CONF"
+
+# mise also reads ~/.tool-versions; remove the old asdf symlink so it cannot shadow the config
+if [[ -L "$HOME/.tool-versions" ]]; then
+    h3 "Removing legacy asdf ~/.tool-versions symlink"
+    rm "$HOME/.tool-versions"
+fi
+
+for legacy in "$HOME/.asdf" "$HOME/.volta" "$HOME/bin/asdf" "$HOME/.bun"; do
+    [[ -e "$legacy" ]] && warn "Legacy tool install found: $legacy — safe to remove now that mise manages it"
+done
+
+use_mise_shims
+h3 "Installing tools from ~/.config/mise/config.toml (first run takes a while)"
+MISE_YES=1 "$MISE_BIN" install || warn "mise install failed for some tool. Fix and re-run ./setup.sh (the rest of the setup continues)"
 
 ./fonts.sh
 "$SCRIPT_DIR/update-completion-scripts.sh"

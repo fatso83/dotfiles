@@ -1,0 +1,53 @@
+# Global Mise configuration (https://mise.jdx.dev/configuration.html)
+# Symlinked to ~/.config/mise/config.toml by common-setup/setup.sh.
+# Replaces the old asdf ~/.tool-versions and Volta's global toolchain.
+#
+# Edit THIS file, never `mise use -g` (that would rewrite the symlink target).
+# Machine specific additions belong in ~/.config/mise/config.local.toml (see #28).
+# Project specific versions still come from the project's .tool-versions / mise.toml.
+
+[settings]
+# Mise ignores .nvmrc/.python-version/.ruby-version unless listed here.
+idiomatic_version_file_enable_tools = ["node", "python", "ruby"]
+# A `ruby "x.y.z"` line in a Gemfile would otherwise auto-install (compile) that Ruby
+idiomatic_version_file_disable_files = ["ruby:Gemfile"]
+
+[settings.status]
+show_tools = true   # say which tool versions changed when cd-ing
+show_env = false
+
+[tools]
+# ---- Runtimes (previously common-setup/tool-versions) ----
+# import-sort plugins are not CLIs; import-sort-cli loads them from the global node_modules
+node   = { version = "24.8.0", postinstall = "npm install -g import-sort-cli import-sort-parser-babylon import-sort-parser-typescript import-sort-style-module" }
+python = "3.14.0"
+ruby   = "3.2.2"
+just   = "1.40.0"
+bun    = "latest"
+
+# ---- Previously installed via curl|sh ----
+starship = "latest"
+
+# ---- Needed by the pypi: backend ----
+uv = "latest"
+
+# ---- Global Node CLIs (previously per-host-config/_shared/node.local, via Volta) ----
+"npm:bash-language-server" = "latest"
+"npm:eslint"               = "latest"
+"npm:gifify"               = "latest"     # needs ffmpeg + imagemagick on the host at runtime
+"npm:neovim"               = "latest"     # provides neovim-node-host
+"npm:prettier"             = "latest"
+"npm:slug"                 = "latest"
+"npm:tldr"                 = "latest"
+"npm:tsx"                  = "latest"
+"npm:typescript"           = "latest"
+"npm:ngrok" = { version = "latest", allow_builds = true }   # postinstall script downloads the binary
+pnpm = "latest"                           # registry binary (aqua:pnpm/pnpm), not npm:pnpm
+
+# ---- Python CLIs (previously pip --user from python.local) ----
+"pypi:poetry" = "latest"
+"pypi:pgcli"  = "latest"
+
+# ---- Ruby CLIs (previously gem install from ruby.local) ----
+"gem:gist"   = "latest"
+"gem:mdless" = "latest"

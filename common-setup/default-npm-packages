@@ -1,5 +1,0 @@
-# Deprecated: global Node CLIs are installed with Volta from
-# per-host-config/_shared/node.local.
-#
-# This file is intentionally no longer linked to ~/.default-npm-packages so
-# asdf-managed Node installs do not auto-populate global npm packages.
