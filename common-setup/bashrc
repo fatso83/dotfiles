@@ -72,23 +72,18 @@ done
 t_debug Reading color codes
 read_config_if_exists "$HOME/.bash.d/colors"
 
-if command_exists starship; then
-    eval "$(starship init bash)"
-else
-    #Se man bash i delen som heter "Prompting"
-    __set_prompt(){
-        local user="\[${c_green}\]\u"
-        local host="\[${c_dark_yellow}\]\h"
-        local workdir="\[${c_pink}\]\w"
-        local gitbranch="\[${c_dark_red}\]\$(__git_ps1  \(%s\) )"
-        local at="\[${c_dark_grey}\]at"
-        local in="\[${c_dark_grey}\]in"
-        export PS1="\n${user} ${at} ${host} ${in} ${workdir} ${gitbranch}\[$c_X_reset_all\]"$'\n\$ '
-    }
-
-    # Now set it. If any of these colors are later overridden, then just rerun `__set_prompt`
-    __set_prompt
-fi
+# Fallback prompt, used at the end of this file if starship (a mise tool) is missing
+#Se man bash i delen som heter "Prompting"
+__set_prompt(){
+    local user="\[${c_green}\]\u"
+    local host="\[${c_dark_yellow}\]\h"
+    local workdir="\[${c_pink}\]\w"
+    local gitbranch="\[${c_dark_red}\]\$(__git_ps1  \(%s\) )"
+    local at="\[${c_dark_grey}\]at"
+    local in="\[${c_dark_grey}\]in"
+    export PS1="\n${user} ${at} ${host} ${in} ${workdir} ${gitbranch}\[$c_X_reset_all\]"$'\n\$ '
+}
+# If any of these colors are later overridden, then just rerun `__set_prompt`
 
 function _setup-ssh-agent(){
     # Start ssh-agent
@@ -166,19 +161,6 @@ fi
 # Dynamic configuration/init below - needs to be after local customization
 ################################################################################
 
-t_debug ASDF tool setup
-if [[ -s "${ASDF_DATA_DIR:-$HOME/.asdf}/asdf.sh" ]]; then
-    . "${ASDF_DATA_DIR:-$HOME/.asdf}/asdf.sh"
-fi
-if command_exists asdf; then
-    export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
-    . <(asdf completion bash)
-fi
-
-t_debug Volta tool setup
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
-
 # Alire (ADA source package manager)
 export PATH="$HOME/.alire/bin:$PATH"
 
@@ -189,7 +171,19 @@ else
     echo "This setup is missing 'direnv'. Please install it for per-directory overrides"
 fi
 
-t_debug Dynamic SDKMAN init #must be at the end
+t_debug Dynamic SDKMAN init # prepends to PATH, so it must come before mise activation
 [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+
+t_debug Mise activation  # last PATH manipulation on purpose: anything prepended later would win. See docs/plans/2026-10-22-mise-common-setup.md
+if [[ -x "$HOME/.local/bin/mise" ]]; then
+    eval "$("$HOME/.local/bin/mise" activate bash)"
+fi
+
+# Prompt. Starship is a mise tool, so this must come after activation
+if command_exists starship; then
+    eval "$(starship init bash)"
+else
+    __set_prompt
+fi
 
 t_debug Finished bash setup
