@@ -53,9 +53,6 @@ fi
 # Then, source plugins and add commands to $PATH
 zplug load --verbose
 
-# SDKMAN prepends to PATH, so it must come before mise activation (which must be last)
-[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
-
 [ -e "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
 # Mise activation: must be the last PATH manipulation
