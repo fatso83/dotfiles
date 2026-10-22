@@ -38,6 +38,17 @@ git clone https://github.com/fatso83/dotfiles
 
 The first time you run the install it will take some time, though this only takes a lot of time the first time you run setup. On subsequent `./setup.sh` runs, it should be over in a handful of seconds.
 
+## Tool versions (mise)
+Node, Python, Ruby, Bun, Starship, just and the global CLIs (prettier, eslint, poetry, gist, ...) are managed by [mise](https://mise.jdx.dev), which replaced asdf and Volta. The global set lives in [`common-setup/mise/config.toml`](./common-setup/mise/config.toml), symlinked to `~/.config/mise/config.toml`. Projects override it with their own `.tool-versions` or `mise.toml`, as before.
+
+- To change a global version: edit `common-setup/mise/config.toml` and run `mise install`. Never use `mise use -g`, as it rewrites the repo file behind the symlink.
+- Something off? `mise doctor` first, then `DEBUG=1 bash -i` to see the init order. Mise must be the last thing touching `PATH` in `bashrc`.
+- `restore_path` resets `PATH` to the login snapshot, which only has the mise shims. The real mise bin dirs come back at the next prompt.
+- zsh completion is a one-off: `mise completion zsh > ~/.zfunc/_mise`
+- direnv is still hooked in, before mise. The mise docs say running both together is unsupported, as their hooks can disagree about `PATH`. It works for me for now; replacing direnv with mise `[env]` is the next step.
+
+Background and decisions: [`docs/plans/2026-10-22-mise-common-setup.md`](./docs/plans/2026-10-22-mise-common-setup.md)
+
 ## Debugging
 
 ### bash.rc related shell issues

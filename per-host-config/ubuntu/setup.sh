@@ -98,7 +98,7 @@ sudo apt-get purge avahi-daemon    # ZeroConf for local networks, printers, etc.
 
 source ../_shared/install-utils.inc
 
-# Python, Ruby, Node handled via ASDF
+# Python libraries; Python, Ruby and Node themselves come from mise (common-setup)
 install_asdf_tooling
 install_sdkman_packages
 install_ada_packages

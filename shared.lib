@@ -6,9 +6,9 @@
 
 error(){
     if ! command -v dark_red; then
-        printf "ERROR: %s\n" "$@" >> /dev/stderr
+        printf "ERROR: %s\n" "$@" >&2
     else
-        printf "ERROR: %s\n" "$(dark_red "$@")" >> /dev/stderr
+        printf "ERROR: %s\n" "$(dark_red "$@")" >&2
     fi
     exit 1
 }
@@ -35,6 +35,17 @@ download_if_not_exist(){
     fi
 }
 
+# Makes mise and its shims available to non-interactive setup scripts.
+# ~/.local/bin is only added to PATH by ~/.profile, which a first run has not read yet.
+# Safe to call before mise is installed (no-op).
+MISE_BIN="$HOME/.local/bin/mise"
+use_mise_shims(){
+    if [[ -x "$MISE_BIN" ]]; then
+        case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) export PATH="$HOME/.local/bin:$PATH";; esac
+        eval "$("$MISE_BIN" activate bash --shims)"
+    fi
+}
+
 # header1
 h1() {
     printf "%s\n" "$(green "$@")"
@@ -53,7 +64,7 @@ info(){
 }
 
 warn(){
-    printf "%s\n" "$(dark_yellow "$@")" >> /dev/stderr
+    printf "%s\n" "$(dark_yellow "$@")" >&2
 }
 
 TODO(){

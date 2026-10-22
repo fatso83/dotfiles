@@ -3,7 +3,7 @@ echo "We should see if we can move some of the 'common' bits into a shared devel
 echo "Stuff I installed manually"
 echo " - fzf (looked at the Ubuntu machine)"
 echo " - gh (from https://github.com/cli/cli/blob/trunk/docs/install_linux.md)"
-echo " - install_asdf_tooling (from the shared tooling)"
+echo " - install_language_packages (from the shared tooling; runtimes and CLIs come from mise in common-setup)"
 echo " - wireguard"
 echo " - qrencode"
 echo " - wormhole"

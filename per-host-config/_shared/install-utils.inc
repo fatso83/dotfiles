@@ -17,79 +17,22 @@ __shared_package_info_message(){
     h2 "Installing shared setup for:  $1"
 }
 
-__asdf_has_plugin(){
-    asdf plugin list | grep $1 >/dev/null 2>&1
+# Things mise cannot express: Python *libraries* that must live in the
+# interpreter (nvim's pynvim, keyring backends, ...). CLIs are mise tools.
+install_language_packages(){
+    __shared_package_info_message "Python libraries"
+    use_mise_shims
+    "$MISE_BIN" exec -- python -m pip install --user --upgrade -r "$SHARED_DIR/python.local" \
+        | (grep -v 'Requirement already satisfied:' || :)
 }
 
-__install_volta(){
-    if command_exists volta; then
-        return
-    fi
-
-    h3 "Installing Volta"
-    curl https://get.volta.sh | bash -s -- --skip-setup
+# Deprecated name, kept until #28 updates the per-host setup scripts
+install_asdf_tooling(){
+    warn "install_asdf_tooling is deprecated; call install_language_packages (tools come from mise now)"
+    install_language_packages
 }
 
-__use_volta(){
-    export VOLTA_HOME="$HOME/.volta"
-    export PATH="$VOLTA_HOME/bin:$PATH"
-}
-
-__install_node_packages(){
-    __shared_package_info_message "Node"
-
-    __install_volta
-    __use_volta
-
-    h3 "Installing Node packages ...\n"
-    volta install node@24
-    strip-comments "$SHARED_DIR/node.local" | while read -r node_app; do
-        [[ -z "$node_app" ]] && continue
-        volta install "$node_app"
-    done
-}
-
-__install_python_packages(){
-    # https://github.com/pypa/pip/issues/5240
-    __shared_package_info_message "Python"
-
-    # should get this from ~/.tool-versions
-    asdf install python 3.11.0
-
-    if ! command_exists uv; then
-        h3 Get the UV package manager
-        curl -LsSf https://astral.sh/uv/install.sh | sh
-    fi
-
-    # No longer needed/wanted/possible when using ASDF to manage
-
-    h3 "Installing Python packages ...\n"
-    pip install --user --upgrade -r "$SHARED_DIR/python.local"  | (grep -v 'Requirement already satisfied:' || :)
-}
-
-__install_ruby_packages(){
-    __shared_package_info_message Ruby
-
-    # requires
-    # apt install libyaml-dev
-    # apt install libedit-dev
-    # apt install libreadline-dev
-    # apt install libffi-dev
-    # required for older Bundler / Jekyll setups
-    asdf install ruby 2.7.8
-    asdf install ruby 3.2.2
-
-    h3 "Installing Ruby packages ...\n"
-    while read line; do
-        if gem list -i $line > /dev/null; then
-            continue
-        fi
-
-        gem install $line;
-    done < "$SHARED_DIR/ruby.local"
-}
-
-# todo: replace with `asdf` and rename to install_jvm_stuff
+# todo: replace with mise (java, maven, kotlin) and rename to install_jvm_stuff (#28)
 install_sdkman_packages(){
     __shared_package_info_message "SDKMAN"
     init="$HOME/.sdkman/bin/sdkman-init.sh"
@@ -129,62 +72,6 @@ install_sdkman_packages(){
     fi
 
     sdk install kotlin
-}
-
-__install_asdf_exe(){
-    local arch
-    local asdf_version
-
-    if command_exists asdf; then
-        return;
-    fi
-
-    # After rewrite in Go, using the OS specific package manager version is recommended, but no Ubuntu package is available ...
-    # Thus using the built releases
-    if is_mac && [[ $(arch) == arm64* ]]; then
-        arch=darwin-arm64
-    elif is_mac && [[ $(arch) == i386 || $(arch) == x86_64* ]]; then
-        arch=darwin-amd64
-    else
-        if [[ $(arch) != x86_64 ]]; then
-            printf "ASSERTION ERROR: Architecture is not matching known architecture ($(arch))"
-            return 255
-        fi
-        arch=linux-amd64
-    fi
-    asdf_version=0.18.0
-
-    h3 "Installing 'asdf' executable"
-    local file="asdf-v${asdf_version}-${arch}.tar.gz"
-    download_if_not_exist "https://github.com/asdf-vm/asdf/releases/download/v${asdf_version}/${file}" "$file"
-    tar xzf "$file" -C ~/bin/
-    rm "$file"
-}
-
-install_asdf_tooling(){
-    local init
-
-    __shared_package_info_message "ASDF"
-    init="$HOME/.asdf/asdf.sh"
-
-    __install_asdf_exe
-
-    [[ -e "$init" ]] && source "$init"
-
-    # To show all plugins available: `asdf plugin list all`
-
-    # for faster, cached lookups
-
-    strip-comments $ROOT/common-setup/tool-versions | while read plugin version; do
-        if ! __asdf_has_plugin $plugin; then
-            asdf plugin add $plugin
-        fi
-        asdf install $plugin $version
-    done
-
-    __install_node_packages
-    __install_ruby_packages
-    __install_python_packages
 }
 
 install_ada_packages(){

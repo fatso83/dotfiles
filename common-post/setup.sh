@@ -8,13 +8,9 @@ ROOT="$SCRIPT_DIR/.."
 source "$ROOT/shared.lib"
 pushd "$SCRIPT_DIR" > /dev/null || fail
 
-if command_exists asdf; then
-    V_WANTED=$(sed -n -e '/nodejs/s/nodejs //p' "$ROOT/common-setup/tool-versions")
-    V_IN_USE=$(asdf current nodejs 2> /dev/null | awk '{print $2}')
-
-    if [[ "$V_IN_USE" != "$V_WANTED" ]]; then
-        h3 'Current wanted NodeJS version not matching target. Re-shimming ...'
-        asdf install nodejs "$V_WANTED"
-        asdf reshim nodejs
-    fi
+# Per-host setup may have added ~/.config/mise/config.local.toml; make sure everything is installed
+use_mise_shims
+if [[ -x "$MISE_BIN" ]]; then
+    h3 "Installing any tools added by the per-host setup"
+    MISE_YES=1 "$MISE_BIN" install || warn "mise install failed for some tool. Fix and re-run ./setup.sh"
 fi

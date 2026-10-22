@@ -53,19 +53,10 @@ fi
 # Then, source plugins and add commands to $PATH
 zplug load --verbose
 
-
-# bun completions
-[ -s "/Users/carlerik/.bun/_bun" ] && source "/Users/carlerik/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# Volta should win for globally installed Node CLIs.
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+# SDKMAN prepends to PATH, so it must come before mise activation (which must be last)
 [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
-. "$HOME/.local/bin/env"
+[ -e "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
+
+# Mise activation: must be the last PATH manipulation
+[[ -x "$HOME/.local/bin/mise" ]] && eval "$("$HOME/.local/bin/mise" activate zsh)"
