@@ -5,6 +5,7 @@ pushd "$SCRIPT_DIR" > /dev/null
 
 ROOT="$SCRIPT_DIR/.."
 source "$ROOT/shared.lib"
+use_mise_shims # so npm, pip and node resolve on a first run, before ~/.profile has been read
 
 [[ -n $DEBUG ]] && set -x
 

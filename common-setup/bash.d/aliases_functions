@@ -332,7 +332,7 @@ function npm(){ if [[ -z "$NPMBIN" ]]; then command npm "$@"; else $NPMBIN "$@";
 function npx(){ if [[ -z "$NPXBIN" ]]; then command npx "$@"; else $NPMBIN "$@"; fi; }
 
 alias hub='printf "DEPRECATED: use the Github CLI \`gh\` instead!\n"'
-alias n='printf "DEPRECATED: use ASDF for controlling global versions instead!: \`asdf global nodejs 20.0.0\`\n"'
+alias n='printf "Node version is managed by mise: edit common-setup/mise/config.toml (global) or the project'"'"'s .tool-versions\n"'
 
 alias slug='npx slug'
 
