@@ -14,15 +14,12 @@ fi
 
 h1 "Installing WSL2 adjustments\n"
 
-ln -sf $PWD/profile.wsl ~/.profile.wsl
-ln -sf $PWD/bashrc.wsl ~/.bashrc.wsl
-ln -sf $PWD/gitlocal-wsl ~/.gitlocal-wsl
+"$ROOT/per-host-config/chezmoi-host.sh" ubuntu wsl
 
 h2 "Setup 1Password to use as SSH Agent"
 if [[ ! -e $HOME/.1password ]]; then
     mkdir $HOME/.1password
 fi
-ln -sf $PWD/ssh-agent-bridge.sh ~/.agent-bridge.sh
 
 h2 "Setting up win32yank as pbpaste"
 if ! which win32yank.exe > /dev/null; then

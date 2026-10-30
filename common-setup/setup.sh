@@ -11,7 +11,9 @@ set -e #exit on error
 
 # read local environment variables, like auth tokens
 if [ -e "${HOME}/.secret" ]; then
+  [[ -n $DEBUG ]] && set +x
   source "${HOME}/.secret"
+  [[ -n $DEBUG ]] && set -x
 fi
 
 pushd "$SCRIPT_DIR" > /dev/null
@@ -24,7 +26,7 @@ mkdir -p "${HOME}/bin"
 mkdir -p "$HOME/.config"
 
 mkdir -p "$HOME/.config/fish"
-ln -sf "$SCRIPT_DIR"/config.fish "$HOME"/.config/fish/
+"$SCRIPT_DIR/chezmoi-link.sh" fish
 if command_exists fisher; then
     # Bass makes it easy to use utilities written for Bash in fish shell.
     # Bass is simple to use. Just prefix your bash utility command with bass.
@@ -34,100 +36,23 @@ if command_exists fisher; then
     fisher install edc/bass
 fi
 
-rm -rf "$HOME"/.bash_completion.d 2>/dev/null
-ln -sf "$SCRIPT_DIR"/bash_completion.d "$HOME"/.bash_completion.d
-
 if [ -e "$HOME/.bash_profile" ]; then
     info "We don't use .bash_profile to avoid trouble. Renaming to .bash_profile.bak"
-    mv ~/.bash_profile{,.bak}
-fi
-
-carefully_replace_gitconfig(){
-    if ! command_exists envsubst; then
-        warn "Unable to configure Git: missing 'envsubst'. Finish the per-computer setup and re-run ./setup.sh"
-        return
+    if [ -e "$HOME/.bash_profile.bak" ] || [ -L "$HOME/.bash_profile.bak" ]; then
+        echo 'Existing .bash_profile.bak: refusing to overwrite backup' >&2; exit 1
     fi
-
-    h2 "Configuring Git ..."
-
-    local personal_details_file="$HOME/.gitconfig-personal"
-    local git_name
-    local git_email
-    git_name=$(git config --global user.name || :)
-    git_email=$(git config --global user.email || :)
-
-    debug "Git user.name: $git_name"
-    debug "Git user.email: $git_email"
-
-    if [[ -e "$personal_details_file" ]]; then
-        debug "Found personal details file for Git. Re-using."
-    else
-        h3 "Creating personal details file for Git ($personal_details_file)"
-
-        if [[ "" == "$git_name" ]]; then
-            debug "No committer name set in the global gitconfig."
-            read -r -p "Input the name to be used by Git in your commits (e.g. \"John Doe\"): " git_name
-        fi
-        if [[ "" == "$git_email" ]]; then
-            debug "No committer email set in the global gitconfig."
-            read -r -p "Input the email to be used by Git in your commits (e.g. \"john.doe@google.com\"): " git_email
-        fi
-
-        if [[ -z "$git_email" || -z "$git_name" ]]; then
-            error "Both email and name must be specified"
-            exit 1
-        fi
-
-        GIT_NAME=$git_name GIT_EMAIL=$git_email envsubst < ./git-personal.template > "$personal_details_file"
-    fi
-
-    ln -sf "$SCRIPT_DIR"/gitconfig "$HOME"/.gitconfig
-}
-
-ln -sf "$SCRIPT_DIR"/profile "$HOME"/.profile
-ln -sf "$SCRIPT_DIR"/bashrc "$HOME"/.bashrc
-ln -sf "$SCRIPT_DIR"/gitignore_global "$HOME"/.gitignore_global
-ln -sf "$SCRIPT_DIR"/pystartup "$HOME"/.pystartup
-ln -sf "$SCRIPT_DIR"/pdbrc "$HOME"/.pdbrc
-ln -sf "$SCRIPT_DIR"/tmux.conf "$HOME"/.tmux.conf
-
-TMS_CONF_DIR="$HOME/.config/tms"
-if is_mac; then
-    TMS_CONF_DIR="$HOME/Library/Application Support/tms"
-fi
-mkdir -p "$TMS_CONF_DIR"
-TMS_CONF="$TMS_CONF_DIR/config.toml"
-if [[ ! -e "$TMS_CONF" ]]; then
-    cp "$SCRIPT_DIR"/tms-config.toml "${TMS_CONF_DIR}/config.toml"
+    mv "$HOME/.bash_profile" "$HOME/.bash_profile.bak"
 fi
 
-carefully_replace_gitconfig
+
 
 # Zsh
-ln -sf "$SCRIPT_DIR"/zsh/zshrc "$HOME"/.zshrc
 
 # create needed dirs
 mkdir -p "$HOME/.tmux";
 mkdir -p "$HOME/.tmux/plugins";
 
 [[ ! -e "$HOME/.tmux/plugins/tpm" ]] && git clone https://github.com/tmux-plugins/tpm "$HOME"/.tmux/plugins/tpm
-
-# copy tmux project settings
-for file in "$SCRIPT_DIR"/tmux/*; do
-  ln -sf "$file" "${HOME}/.tmux/"
-done
-
-for file in "$SCRIPT_DIR"/bash.d/*; do
-  ln -sf "$file" "${BASH_DIR}"/
-done
-
-# Remove any existing symlink (or dir on mingw) - will fail if it is a dir
-rm -rf "$HOME"/.vim 2>/dev/null
-if [ ! -e "$HOME"/.vim ]; then
-    ln -sf "$SCRIPT_DIR"/vim/dotvim "$HOME"/.vim
-fi
-
-ln -sf "$SCRIPT_DIR"/vim/vimrc "$HOME"/.vimrc
 
 # Checks out the Vundle submodule
 git submodule update --init --recursive
@@ -142,11 +67,13 @@ fi
 
 MISE_CONF="$HOME/.config/mise/config.toml"
 mkdir -p "$(dirname "$MISE_CONF")"
-if [[ -e "$MISE_CONF" && ! -L "$MISE_CONF" ]]; then
-    info "Found a hand-made $MISE_CONF. Renaming to config.toml.bak"
-    mv "$MISE_CONF" "$MISE_CONF.bak"
+if [[ -e "$MISE_CONF" && ! -L "$MISE_CONF" ]] && ! cmp -s "$MISE_CONF" "$SCRIPT_DIR/mise/config.toml"; then
+    echo "Preserving local mise configuration: $MISE_CONF" >&2
+    exit 1
 fi
-ln -sf "$SCRIPT_DIR/mise/config.toml" "$MISE_CONF"
+if [[ ! -e "$MISE_CONF" && ! -L "$MISE_CONF" ]]; then
+    ln -s "$SCRIPT_DIR/mise/config.toml" "$MISE_CONF"
+fi
 
 # mise also reads ~/.tool-versions; remove the old asdf symlink so it cannot shadow the config
 if [[ -L "$HOME/.tool-versions" ]]; then
@@ -162,6 +89,26 @@ use_mise_shims
 h3 "Installing tools from ~/.config/mise/config.toml (first run takes a while)"
 MISE_YES=1 "$MISE_BIN" install || warn "mise install failed for some tool. Fix and re-run ./setup.sh (the rest of the setup continues)"
 
+"$SCRIPT_DIR/chezmoi-link.sh" mise
+"$SCRIPT_DIR/chezmoi-link.sh" fish
+
+h2 "Setting up Git identity"
+"$SCRIPT_DIR/git-identity-setup.sh"
+
+h2 "Setting up chezmoi-managed config"
+"$SCRIPT_DIR/chezmoi-setup.sh" gitconfig
+"$SCRIPT_DIR/chezmoi-setup.sh" gitignore_global
+"$SCRIPT_DIR/chezmoi-setup.sh" psqlrc
+"$SCRIPT_DIR/chezmoi-setup.sh" pystartup
+"$SCRIPT_DIR/chezmoi-setup.sh" pdbrc
+"$SCRIPT_DIR/chezmoi-setup.sh" tmux.conf
+"$SCRIPT_DIR/chezmoi-setup.sh" profile
+"$SCRIPT_DIR/chezmoi-setup.sh" bashrc
+"$SCRIPT_DIR/chezmoi-setup.sh" zshrc
+"$SCRIPT_DIR/chezmoi-setup.sh" vimrc
+
+"$SCRIPT_DIR/chezmoi-runtime.sh"
+
 h2 "Installing all VIM plugins"
 info "(might take some time the first time ... )"
 vim +PlugInstall +qall
@@ -170,42 +117,29 @@ h2 "Vim Fugitive setup"
 vim -X -u NONE -c "helptags ~/.vim/plugged/vim-fugitive/doc" -c q
 
 
-# Install NeoVim config (we don't have to worry about XDG_CONFIG_HOME stuff
-rm -rf ~/.config/nvim
-ln -sf ~/.vim ~/.config/nvim
-ln -sf ~/.vimrc ~/.config/nvim/init.vim
+# Resolve an explicitly configured 1Password reference without logging values.
+if [[ -n $DEBUG ]]; then set +x; fi
+"$SCRIPT_DIR/chezmoi-secret.sh"
+if [ -f "$HOME/.secret" ]; then source "$HOME/.secret"; fi
+if [[ -n $DEBUG ]]; then set -x; fi
 
-# Make a config file for ngrok, passing in the secret auth token
-[[ ! -e "$HOME"/.ngrok2 ]] && mkdir "$HOME/.ngrok2"
-NGROK_YML="$HOME/.ngrok2/ngrok.yml"
-rm "$NGROK_YML" 2> /dev/null || :;
-cat > "$NGROK_YML" << EOF
-###############################################################
-## WARNING: this file is auto-generated. See dotfiles repo   ##
-###############################################################
-authtoken: ${NGROK_AUTHTOKEN:-'fill-NGROK_AUTHTOKEN-in-in-~/.secret'}
-
-EOF
-cat "$SCRIPT_DIR/ngrok.yml" >> "$NGROK_YML"
-
-h2 "Copying psql config"
-ln -sf "$SCRIPT_DIR"/psqlrc "$HOME/.psqlrc"
+# A token from ~/.secret or an optional 1Password reference is rendered privately.
+# Disable xtrace around credentials, including shell variable assignments.
+if [[ -n $DEBUG ]]; then set +x; fi
+NGROK_AUTHTOKEN="${NGROK_AUTHTOKEN:-}" "$SCRIPT_DIR/chezmoi-ngrok.sh"
+if [[ -n $DEBUG ]]; then set -x; fi
 
 # Download to latest to home dir
 h2 "Fetching rupa/z (Jump Around)"
 curl -s https://raw.githubusercontent.com/rupa/z/master/z.sh -o ~/bin/z.sh
 
-[[ ! -e ~/.ssh ]] && mkdir ~/.ssh
-rm -f ~/.ssh/allowed_signers 2>/dev/null
-ln ./allowed_signers ~/.ssh/
-
 [[ ! -e ~/.config ]] && mkdir ~/.config
 [[ ! -e ~/.config/alacritty ]] && mkdir ~/.config/alacritty
-ln -sf "$PWD"/alacritty.toml ~/.config/alacritty/alacritty.toml
+"$SCRIPT_DIR/chezmoi-link.sh" alacritty
 
 mkdir -p "$HOME/.gemini/policies"
-ln -sf "$PWD"/gemini/settings.json ~/.gemini/
-ln -sf "$PWD"/gemini/my-rules.toml ~/.gemini/policies/
+"$SCRIPT_DIR/chezmoi-link.sh" gemini-settings
+"$SCRIPT_DIR/chezmoi-link.sh" gemini-rules
 
 ./fonts.sh
 "$SCRIPT_DIR/update-completion-scripts.sh"

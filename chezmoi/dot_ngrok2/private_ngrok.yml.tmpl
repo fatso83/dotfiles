@@ -1,0 +1,10 @@
+{{- $token := env "DOTFILES_NGROK_TOKEN" -}}
+{{- if env "DOTFILES_NGROK_OP_REF" -}}
+{{- $token = onepasswordRead (env "DOTFILES_NGROK_OP_REF") -}}
+{{- end }}
+###############################################################
+## WARNING: this file is auto-generated. See dotfiles repo   ##
+###############################################################
+authtoken: {{ $token | quote }}
+
+{{ include ".chezmoitemplates/ngrok.yml" }}

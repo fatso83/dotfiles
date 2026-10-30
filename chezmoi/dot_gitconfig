@@ -1,0 +1,162 @@
+# vi: filetype=gitconfig
+
+[core]
+    editor = nvim
+    excludesfile = ~/.gitignore_global
+
+    # auto-converts crlf=>lf on checkin
+    autocrlf = input
+
+    # ensures case sensitivity in filenames is not ignored on macOS
+    ignorecase = false
+
+    # gitattributes in each repo is a better solution: https://git-scm.com/docs/gitattributes
+    # Just `echo '* text=auto' >> .gitattributes` # will normalize all text files
+    #
+    # Excerpt from https://help.github.com/articles/dealing-with-line-endings:
+    #    > The advantage of a .gitattributes file is that your line configurations are associated with your repository.
+    #    > You don't need to worry about whether or not collaborators have the same line ending settings that you do.
+
+[commit]
+    ## Commit signing for 1Password
+    ## @see https://developer.1password.com/docs/ssh/git-commit-signing/
+    gpgsign = true
+
+    # Required settings to have this work are custom to each machine:
+    # - gpg.allowedSignersFile
+    # - gpg.program
+    # This is set in the `gitlocal` settings, which is specific to each machine. See the individual
+    # 'gitlocal' files in mac-work, etc
+
+[diff "vimcrypt"]
+    textconv = vimdecrypt
+    cachetextconv = false
+
+# related to the commit signing
+[gpg]
+  format = ssh
+
+[user]
+    # The public key of "Privat nøkkel" (held in 1Password)
+    # If you are reading this, you should probably want to change it ...
+    signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCtB10ag2fipH7Cnls3gZvl5eBJx0OvQaLu7hndL5sif3m4CTGmrN/MuP0lei0Rt23cBy5Ey2DqAjmizCAhdc3jSQm0pXisKG92Juo2HxiJw+eMUucoPhjbEy35sKKrru2//5uPpK5IEeVEve3bIXCAQUQgyOESmHBgXmKSCz0jQXEvcV8GxxkdXK7/UQVSe5wtxzPHOoP+yeRdNGfMdl1SeXwUCEXwexAn7YM8ZlISufuxXMInpBMrxVXLAih0ZG2WGD2BAJZcwXmMjLPPVP+bjHXnQkiqk5oDeP3ewPorrvxbOeOcqk0b1qrAQYSXHqXv6lENfWIceIz1EsZlRsIV
+
+[color]
+    ui = true
+
+[push]
+    default = simple
+    autoSetupRemote = true
+
+[alias]
+
+    au = add --update
+    st = status -sb     # show short format and branch info
+    co = checkout
+    cam = commit --all --message
+    cm = commit --message
+    fap = fetch --all --prune
+
+    # List all the files touched in this commit
+    files = "![ x$# != x1 ]&&echo "commit-ish required" >&2 || git diff --name-status \"$1\"^ \"$1\" #"
+
+    # log aliases
+
+    ## show branching graphically as ascii art
+    lg = log -w --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    lgng = log -w --pretty=format:'%h %d %s (%cr) <%an>' # ng = no graph
+
+    svnlog = log --name-status
+
+    ## logwork
+    standup = log --since '1 day ago' --oneline --author carlerik@gmail.com # hack it with your email and uncomment
+    jira = log --since '6am' --oneline --author carlerik@gmail.com # hack it with your email and uncomment
+    mwlis = log --since '7 days ago' --author carlerik@gmail.com --format='%ai %s%n%b'
+
+    # other
+    root = rev-parse --show-toplevel
+    head-sha = rev-parse --short HEAD
+	staash = stash --all
+    blame-lines = blame -w -C -C -C -L # https://youtu.be/aolI_Rz0ZqY?si=QDBq4OF4Les6Hpvi&t=745
+	bb = !better-branch.sh
+
+[pull]
+	rebase = true
+
+#[help]
+#	autocorrect = 0
+
+[rerere]
+    enabled = true
+
+[credential]
+    # One week in-mem caching of HTTPS credentials
+	# helper = cache --timeout=604800
+    #
+    # For most things, this should be the right thing to use, but it should probably be configured in ~/.gitlocal
+    #helper = git-credential-manager
+
+# Use the Github CLI client `gh` for anything Github
+[credential "https://github.com"]
+	helper =
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !gh auth git-credential
+
+[mergetool]
+	keepBackup = false
+
+[filter "lfs"]
+    ; These settes were added in 2018, but not documented. They caused some issues when
+    ; checking out Avinor/hermes, and disabling them helped
+	;clean = git-lfs clean -- %f
+	;smudge = git-lfs smudge -- %f
+	;process = git-lfs filter-process
+	;required = true
+
+[rebase]
+	autoStash = true
+	autosquash = true
+
+    ################################
+    # For stacked branches workflow!
+    ################################
+    # This will also affect creating backup branches, so should be off by default!
+    # Use --update-refs manually when rebasing to update stacked branches
+    # updateRefs = true
+
+[init]
+	defaultBranch = master
+
+[branch]
+	sort = committerdate
+
+[column]
+    ui = auto # puts them into columns if the terminal allows for it
+
+#[blame]
+    # This really does not work all that well as a global config. `git blame` fails
+    # if this is missing, so better to have it as a local setup everyone can run using direnv
+    # or similar approaches
+	# ignoreRevsFile = .git-blame-ignore-revs
+
+# Do not add stuff after this point in the global config
+
+################################################################################
+# This should probably stay at the end to overwrite global defaults
+################################################################################
+#
+# https://www.semipol.de/2013/08/26/sharing-the-git-config-across-different-computers-with-individual-modifications.html
+[include]
+    path = .gitlocal
+    path = .gitlocal-non-wsl
+    # This will for some reason not be used when doing `git config --global user.name`, but will if leaving `--global` out
+    path = .gitconfig-personal
+
+# Conditional include based on which subdir you are in
+# See https://www.youtube.com/watch?v=aolI_Rz0ZqY&t=537s
+[includeIf "gitdir:~/dev/mestergruppen/"]
+    path = ~/dev/mestergruppen/gitconfig
+[credential "https://bitbucket.org"]
+	helper = manager

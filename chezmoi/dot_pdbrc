@@ -1,0 +1,3 @@
+# vi: ft=python
+import os
+exec(open(os.path.expanduser("~/.pdbrc.py")).read())

@@ -1,0 +1,11 @@
+# Identitet og hemmeligheter
+
+Git-identitet opprettes som privat `~/.gitconfig-personal` av `git-identity-setup.sh`. Eksisterende fil beholdes. På ny maskin brukes `DOTFILES_GIT_NAME` og `DOTFILES_GIT_EMAIL`, eksisterende global Git-identitet eller interaktiv inntasting. Identitet skal ikke gjettes fra maskinnavn.
+
+`~/.secret` er kjørbar shell-konfigurasjon, brukt av Bash, oppsett og eksempel-cronjobben. Eksisterende innhold beholdes uten å leses inn i Git. Valgfri bootstrap: sett `DOTFILES_SECRET_OP_REF` til en faktisk 1Password-feltreferanse med hele shell-innholdet og kjør `common-setup/chezmoi-secret.sh`. Chezmoi lager bare en manglende fil, med modus 0600. En eksisterende fil eller symlink endres aldri; rotasjon av denne filen er eksplisitt manuelt arbeid. Bare betrodd shell-innhold skal lagres i feltet. Ingen referanse er hardkodet fordi riktig hvelv og element ikke er kjent.
+
+Ngrok-konfigurasjon genereres med modus 0600 fra `NGROK_AUTHTOKEN` eller `DOTFILES_NGROK_OP_REF`; sistnevnte har prioritet. Manglende token gir ingen endring. Lokale avvik stopper oppdateringen. Kun en hash brukes som baseline, ikke en ekstra kopi av tokenet. Ikke bruk `chezmoi diff` eller `cat` på hemmelighetsmål: disse viser nødvendigvis klartekst.
+
+1Password beholder eierskap til innlogging, hvelv, SSH-private nøkler og agent. Disse skal ikke importeres til dotfiles. Bootstrap krever fungerende `op` og brukerens tilgang. Tester bruker en falsk CLI med fiktive verdier; de verifiserer ikke tilgang til et reelt hvelv. Ingen eksisterende hemmeligheter er flyttet til 1Password automatisk.
+
+SSH-agentoppsettet bruker en chezmoi-styrt `~/.ssh/dotfiles-1password.conf`. Oppsettet legger en Include til sist i eksisterende vanlig `~/.ssh/config`, slik at eksisterende spesifikke valg beholder prioritet. Gjentatt kjøring legger ikke til flere Includes. Lokalt endret fragment eller symlink for hovedkonfigurasjonen stopper oppsettet. På macOS styres kompatibilitetslenken `~/.1password/agent.sock` av chezmoi; selve socketen og private nøkler eies fortsatt av 1Password. På Linux forventes socketen fra 1Password. Testen bekrefter bevaring av eksisterende IdentityAgent-valg med `ssh -G`; den kobler ikke til noen server.
