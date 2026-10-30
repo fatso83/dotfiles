@@ -1,0 +1,48 @@
+{{ if not (env "DOTFILES_MACHINE") }}
+.bashrc.local
+.profile.local
+.gitlocal
+.vimrc.local
+.tmux/local
+{{ end }}
+{{ if not (env "DOTFILES_WSL") }}
+.profile.wsl
+.bashrc.wsl
+.gitlocal-wsl
+.agent-bridge.sh
+{{ end }}
+{{ if not (env "DOTFILES_CREATE_GIT_IDENTITY") }}
+.gitconfig-personal
+{{ end }}
+{{ if not (env "DOTFILES_NGROK_APPLY") }}
+.ngrok2/ngrok.yml
+{{ end }}
+{{ if ne (env "DOTFILES_MACHINE") "mac-work" }}
+.config/mise/config.mac-work.toml
+.config/mise/miserc.local.toml
+{{ end }}
+{{ if ne (env "DOTFILES_MACHINE") "mac-work" }}
+.bin/imgcat
+.bin/ramdisk
+bin/imgcat
+bin/ramdisk
+dev/mestergruppen/gitconfig
+{{ end }}
+{{ if not (env "DOTFILES_UBUNTU_DESKTOP") }}
+.gitlocal-non-wsl
+.config/Dharkael
+{{ end }}
+{{ if not (env "DOTFILES_SECRET_APPLY") }}
+.secret
+{{ end }}
+{{ if ne .chezmoi.os "darwin" }}
+Library/Application Support/tms/config.toml
+{{ else }}
+.config/tms/config.toml
+{{ end }}
+{{ if not (env "DOTFILES_SSH_APPLY") }}
+.ssh/dotfiles-1password.conf
+.1password/agent.sock
+{{ else if ne .chezmoi.os "darwin" }}
+.1password/agent.sock
+{{ end }}

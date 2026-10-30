@@ -55,7 +55,7 @@ __DELIM
 fi
 
 h3 'Symlink all scripts to ~/bin'
-ln -sf "$SCRIPT_DIR/scripts/"* $HOME/bin/
+"$ROOT/common-setup/chezmoi-runtime.sh" || exit $?
 
 h3 'Installing dependencies for scripts'
 h3 'Python dependencies'

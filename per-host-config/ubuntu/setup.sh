@@ -187,7 +187,7 @@ else
 
     # Note 2025-02-25: I do not understand why it says "Windows Keystore" in the non-wsl section?!
     h2 "Setup Git Credential Manager to use the Windows Keystore"
-    ln -sf $PWD/gitlocal-non-wsl ~/.gitlocal-non-wsl
+    "$SCRIPT_DIR/../chezmoi-host.sh" ubuntu desktop
 
     add_1password_identity_agent_ssh_config
 

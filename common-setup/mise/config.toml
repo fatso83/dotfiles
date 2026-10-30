@@ -35,6 +35,9 @@ go   = "latest"
 rust = "stable"
 "cargo:tmux-sessionizer" = "latest"   # tms; was `cargo install` in both per-host scripts
 
+# Chezmoi manages the first migrated dotfiles; setup uses mise shims after install.
+chezmoi = "2.73.0"
+
 # ---- Previously installed via curl|sh ----
 starship = "latest"
 

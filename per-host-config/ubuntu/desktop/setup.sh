@@ -29,8 +29,7 @@ grep -v XKBOPTIONS= /etc/default/keyboard > $TMP; sudo mv $TMP /etc/default/keyb
 
 h2 "Pointing Flameshot config to dotfiles folder"
 # hack to get around the fact that a new file is created on Save, preventing hard links
-rm -rf ~/.config/Dharkael 2>/dev/null
-ln -sf "$SCRIPT_DIR" ~/.config/Dharkael
+"$SCRIPT_DIR/../../chezmoi-host.sh" ubuntu desktop
 
 popd  > /dev/null
 

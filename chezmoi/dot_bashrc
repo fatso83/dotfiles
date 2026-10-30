@@ -1,0 +1,183 @@
+# This file is sourced in every bash shell, unlike
+# .profile which is read once at login. This means that .profile
+# can include various environment variables that do not change, but
+# anything that involves dynamically changing the PATH should be in the
+# .bashrc file
+
+# short circuit the sourcing for non-interactive shells
+# This means this file will not be sourced by invoking `ssh jdoe@server1 ls my/dir`.
+# http://superuser.com/questions/183870/difference-between-bashrc-and-bash-profile
+# rsync also reads .bashrc and will bork if it results in any output
+[[ $- != *i* ]] && return
+
+# To enable debug printing, just set the DEBUG environment variable
+# You can then use `debug` or `t_debug` statements to echo debug info
+#export DEBUG=1
+#set -x
+
+source $HOME/.bash.d/core_utils # clearly not portable across shells, but should be easy to port
+timer_start_if_unset
+t_debug "bashrc PATH=$PATH"
+
+################################################################################
+# Prolog start
+#
+# These timer_* functions rely on a utility called `millis`
+# @see https://gist.github.com/fatso83/86e94e91926d1311f3fa
+################################################################################
+
+# To debug how long init takes, run "DEBUG=1 source-rc"
+
+t_debug Executing '$HOME'/.bashrc
+
+################################################################################
+# Prolog finished
+################################################################################
+
+# These two are needed for scripts used in both the setup and the shell scripts
+BASH_D="$HOME/.bash.d"
+BIN_DIR="$HOME/bin"
+
+declare -x CLICOLOR
+umask 022
+
+function read_config {
+  if [ -a "$1" ]; then
+      . "$1"
+  else echo Missing $1
+  fi
+}
+
+function read_config_if_exists {
+  [ -e "$1" ] && . "$1" && t_debug Read $1
+}
+
+# Needed for the utility function "restore_path"
+if [ -z "${ORIGINAL_PATH}" ]; then
+        ORIGINAL_PATH="${PATH}"
+fi
+
+t_debug "Reading utility functions and aliases"
+read_config "$HOME/.bash.d/aliases_functions"
+
+t_debug "Reading utils for git prompt"
+read_config "$HOME/.bash.d/git-prompt.sh"
+
+t_debug "Reading bash completion files"
+for f in "${HOME}"/.bash_completion.d/*; do
+    t_debug $f
+    read_config "$f"
+done
+
+t_debug Reading color codes
+read_config_if_exists "$HOME/.bash.d/colors"
+
+# Fallback prompt, used at the end of this file if starship (a mise tool) is missing
+#Se man bash i delen som heter "Prompting"
+__set_prompt(){
+    local user="\[${c_green}\]\u"
+    local host="\[${c_dark_yellow}\]\h"
+    local workdir="\[${c_pink}\]\w"
+    local gitbranch="\[${c_dark_red}\]\$(__git_ps1  \(%s\) )"
+    local at="\[${c_dark_grey}\]at"
+    local in="\[${c_dark_grey}\]in"
+    export PS1="\n${user} ${at} ${host} ${in} ${workdir} ${gitbranch}\[$c_X_reset_all\]"$'\n\$ '
+}
+# If any of these colors are later overridden, then just rerun `__set_prompt`
+
+function _setup-ssh-agent(){
+    # Start ssh-agent
+    # This somehow started failing on OS X at some time, as `ssh-add -l`
+    # never exits with status 2, always 1
+    # The fix on OS X is simply to add the keys using the keychain like this: `ssh-add -K`
+    # Unsafe on shared machines: http://rabexc.org/posts/pitfalls-of-ssh-agents
+    ssh-add -l &>/dev/null
+    if [ "$?" == 2 ]; then
+        test -r ~/.ssh-agent && \
+            eval "$(<~/.ssh-agent)" >/dev/null
+
+        ssh-add -l &>/dev/null
+        if [ "$?" == 2 ]; then
+            (umask 066; ssh-agent > ~/.ssh-agent)
+            eval "$(<~/.ssh-agent)" >/dev/null
+            ssh-add
+        fi
+    fi
+}
+
+if [[ "$NO_RUN_SSH_AGENT" != "true" ]]; then
+    _setup-ssh-agent
+fi
+
+
+# From http://stackoverflow.com/questions/9457233/unlimited-bash-history
+# Eternal bash history.
+# ---------------------
+# Undocumented feature which sets the size to "unlimited".
+# http://stackoverflow.com/questions/9457233/unlimited-bash-history
+export HISTFILESIZE=
+export HISTSIZE=
+export HISTTIMEFORMAT="[%F %T] "
+# Change the file location because certain bash sessions truncate .bash_history file upon close.
+# http://superuser.com/questions/575479/bash-history-truncated-to-500-lines-on-each-login
+export HISTFILE=~/.bash_eternal_history
+# Force prompt to write history after every command.
+# http://superuser.com/questions/20900/bash-history-loss
+PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+
+# Disable per-session history file on OSX
+# https://stackoverflow.com/questions/32418438/how-can-i-disable-bash-sessions-in-os-x-el-capitan
+SHELL_SESSION_HISTORY=0
+
+export HISTCONTROL=ignoredups
+
+# Z utility :-)
+#read_config_if_exists "$HOME/.zplug/repos/rupa/z/z.sh"
+read_config_if_exists "$HOME/bin/z.sh"
+
+# Read environment variables, such as sauce labs keys
+read_config_if_exists "$HOME/.secret"
+chmod 600 "$HOME/.secret"
+
+
+# FZF https://github.com/junegunn/fzf?tab=readme-ov-file#setting-up-shell-integration
+eval "$(fzf --bash)"
+
+
+t_debug "Reading env from .local/bin/env"
+[ -e "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
+
+t_debug "Reading local settings for this machine"
+# This needs to be at the bottom to be able to override earlier settings/variables/functions
+read_config_if_exists "$HOME/.bashrc.local"
+
+BASH_MAJOR_VERSION=$(BASH_MAJOR_VERSION=$(echo $BASH_VERSION |  util.esed -n 's/([0-9])\..*/\1/p'))
+if [[ "$BASH_MAJOR_VERSION" > 3 ]] ; then
+    # Shell options
+    shopt -s globstar # makes ls **/*.ts match on all subdirs - at any level
+fi
+
+################################################################################
+# Dynamic configuration/init below - needs to be after local customization
+################################################################################
+
+t_debug direnv integration
+if command -v direnv &> /dev/null; then
+    eval "$(direnv hook bash)"
+else
+    echo "This setup is missing 'direnv'. Please install it for per-directory overrides"
+fi
+
+t_debug Mise activation  # last PATH manipulation on purpose: anything prepended later would win. See docs/plans/2026-10-22-mise-common-setup.md
+if [[ -x "$HOME/.local/bin/mise" ]]; then
+    eval "$("$HOME/.local/bin/mise" activate bash)"
+fi
+
+# Prompt. Starship is a mise tool, so this must come after activation
+if command_exists starship; then
+    eval "$(starship init bash)"
+else
+    __set_prompt
+fi
+
+t_debug Finished bash setup

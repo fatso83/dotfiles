@@ -38,6 +38,41 @@ git clone https://github.com/fatso83/dotfiles
 
 The first time you run the install it will take some time, though this only takes a lot of time the first time you run setup. On subsequent `./setup.sh` runs, it should be over in a handful of seconds.
 
+## Chezmoi migration
+
+Chezmoi now owns the common configuration, runtime links, host configuration,
+mac-work mise module and mac-specific configuration links. Package installation,
+plugin downloads, compiled utilities and OS settings remain provisioning steps.
+
+Use `scripts/apply-chezmoi.sh` for configuration only; it reads
+`~/.dotfiles-machine`, or accepts the machine profile as its argument. Run
+`./setup.sh` for the full installation, including packages and plugins.
+The helpers use this checkout and isolated chezmoi configuration/state, and stop
+instead of overwriting differing local files. Backups have a `.pre-chezmoi`
+suffix; last-applied state is in `${XDG_STATE_HOME:-~/.local/state}/dotfiles`.
+Do not delete this state to bypass a conflict.
+
+Git identity stays local. Existing `~/.gitconfig-personal` and `~/.secret` are
+preserved. Optional 1Password bootstrap needs your actual field reference and an
+authenticated `op`; no credentials or vault references are stored in Git.
+Secret files must never be included in shared diffs or logs.
+
+Repository symlinks remain live: pulling Git changes their contents before any
+apply. The migration is not an atomic rollout. Do not run unattended
+`chezmoi update`; follow the [update procedure](docs/chezmoi-update.md).
+
+Details and boundaries:
+
+- [Common configuration and provisioning](docs/chezmoi-common-inventory.md)
+- [Host and macOS inventory](docs/chezmoi-host-inventory.md)
+- [Identity, secrets and SSH](docs/chezmoi-secrets.md)
+- [Migration checklist](docs/chezmoi-migration-checklist.md)
+
+Run the isolated regression suite with
+`CHEZMOI_BIN=/path/to/chezmoi scripts/test-chezmoi.sh`.
+Tests use temporary home directories and fake secrets. They do not certify real
+1Password authentication or execute package/system provisioning on other hosts.
+
 ## Tool versions (mise)
 Node, Python, Ruby, Bun, Starship, just and the global CLIs (prettier, eslint, poetry, gist, ...) are managed by [mise](https://mise.jdx.dev), which replaced asdf and Volta. The global set lives in [`common-setup/mise/config.toml`](./common-setup/mise/config.toml), symlinked to `~/.config/mise/config.toml`. Projects override it with their own `.tool-versions` or `mise.toml`, as before.
 

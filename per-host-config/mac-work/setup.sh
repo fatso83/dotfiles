@@ -38,15 +38,10 @@ if [[ -n "$mise_java_home" && -d "$mise_java_home/Contents" ]]; then
     sudo ln -sfn "$mise_java_home/Contents" /Library/Java/JavaVirtualMachines/mise-java.jdk/Contents
 fi
 
-ln -f ./bin/* ~/bin/
+./chezmoi-mac.sh
 
-if [[ ! -e "$HOME/.1password" ]]; then
-    h2 "Use 1Password for SSH"
-    add_1password_identity_agent_ssh_config
-    mkdir -p ~/.1password && ln -s ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock ~/.1password/agent.sock
-fi
+h2 "Use 1Password for SSH"
+add_1password_identity_agent_ssh_config
 
 ./pgp-keychain.sh
-mkdir -p ~/dev/mestergruppen
-ln -fs "$PWD/mestergruppen_gitconfig" ~/dev/mestergruppen/gitconfig
 popd > /dev/null
