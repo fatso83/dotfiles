@@ -51,7 +51,7 @@ uv = "latest"
 # ---- Global Node CLIs (previously per-host-config/_shared/node.local, via Volta) ----
 "npm:bash-language-server" = "latest"
 "npm:eslint"               = "latest"
-# gifify: few weekly downloads, so mise's npm backend would otherwise stop and ask. Needs ffmpeg + imagemagick at runtime
+# gifify: few weekly downloads, so mise's npm backend would otherwise stop and ask. Needs ffmpeg, imagemagick and gifsicle at runtime.
 "npm:gifify" = { version = "latest", allow_low_downloads = true }
 "npm:neovim"               = "latest"     # provides neovim-node-host
 "npm:prettier"             = "latest"

@@ -12,6 +12,10 @@ terraform = "latest"   # Posten repos pin 1.6.2 in their own .tool-versions
 # without re-downloading the SDK. Needs a Python matching gcloud's required minor (see Risks).
 gcloud = { version = "latest", components = ["gke-gcloud-auth-plugin"] }
 
+# gifify requires the subtitle-enabled, keg-only Homebrew build of ffmpeg.
+[env]
+_.path = ["/opt/homebrew/opt/ffmpeg-full/bin", "/usr/local/opt/ffmpeg-full/bin"]
+
 # ---------------------------------------------------------------------------
 # Homebrew formulae and casks (previously apps.local + a brew install loop).
 # Mise installs bottles itself; the `brew` CLI is still installed by setup.sh for brew services etc.
@@ -33,10 +37,12 @@ gcloud = { version = "latest", components = ["gke-gcloud-auth-plugin"] }
 "brew:erlang" = "latest"
 "brew:fisher" = "latest"
 "brew:fortune" = "latest"
+"brew:ffmpeg-full" = "latest"
 "brew:fswatch" = "latest"
 "brew:fzf" = "latest"                 # bashrc runs `fzf --bash` before mise activation, so not a mise tool
 "brew:git-extras" = "latest"
 "brew:git-lfs" = "latest"
+"brew:gifsicle" = "latest"
 "brew:glow" = "latest"
 "brew:gnupg" = "latest"
 "brew:gum" = "latest"

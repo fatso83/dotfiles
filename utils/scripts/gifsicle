@@ -1,2 +1,7 @@
 #!/bin/bash
-giflossy $@
+for executable in /opt/homebrew/bin/gifsicle /usr/local/bin/gifsicle /usr/bin/gifsicle; do
+    if [[ -x "$executable" ]]; then
+        exec "$executable" "$@"
+    fi
+done
+exec giflossy "$@"

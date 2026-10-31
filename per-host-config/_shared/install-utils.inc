@@ -24,6 +24,10 @@ install_language_packages(){
     use_mise_shims
     "$MISE_BIN" exec -- python -m pip install --user --upgrade -r "$SHARED_DIR/python.local" \
         | (grep -v 'Requirement already satisfied:' || :)
+    # pip may leave an existing pynvim-python launcher pointing at an old
+    # interpreter (for example, after migrating from asdf to mise).
+    "$MISE_BIN" exec -- python -m pip install --user --force-reinstall --no-deps pynvim \
+        || warn "Could not refresh the Neovim Python host launcher"
 }
 
 # Deprecated no-op: Java, Maven and Kotlin are mise tools now (common-setup/mise/config.toml).
